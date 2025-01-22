@@ -32,6 +32,9 @@ public enum HeroSubClass {
 
 	NONE(HeroIcon.NONE),
 
+	LIGHT_HERO(HeroIcon.HERO_OF_LIGHT),
+	BALANCE_COLLAPSE(HeroIcon.BALANCE_COLLAPSE),
+
 	BERSERKER(HeroIcon.BERSERKER),
 	GLADIATOR(HeroIcon.GLADIATOR),
 

@@ -77,6 +77,8 @@ import com.watabou.utils.DeviceCompat;
 
 public enum HeroClass {
 
+	ARIS(HeroSubClass.LIGHT_HERO, HeroSubClass.BALANCE_COLLAPSE),
+
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
 	ROGUE( HeroSubClass.ASSASSIN, HeroSubClass.FREERUNNER ),
@@ -228,6 +230,21 @@ public enum HeroClass {
 
 		new PotionOfStrength().identify();
 		new ScrollOfMirrorImage().identify();
+	}
+
+	private static void initAris(Hero hero) {
+		(hero.belongings.weapon = new WornShortsword()).identify();
+		ThrowingStone stones = new ThrowingStone();
+		stones.quantity(3).collect();
+		Dungeon.quickslot.setSlot(0, stones);
+
+		if (hero.belongings.armor != null){
+			hero.belongings.armor.affixSeal(new BrokenSeal());
+			Catalog.setSeen(BrokenSeal.class); //as it's not added to the inventory
+		}
+
+		new PotionOfHealing().identify();
+		new ScrollOfRage().identify();
 	}
 
 	public String title() {

@@ -62,8 +62,8 @@ public class HeroIcon extends Image {
 //	public static final int 			= 18;
 //	public static final int 			= 19;
 
-//	public static final int 			= 20;
-//	public static final int 			= 21;
+	public static final int HERO_OF_LIGHT		= 20;
+	public static final int BALANCE_COLLAPSE	= 21;
 //	public static final int 			= 22;
 //	public static final int 			= 23;
 
