@@ -311,8 +311,6 @@ public enum Talent {
 	//Ratmogrify T4
 	RATSISTANCE(215, 4), RATLOMACY(216, 4), RATFORCEMENTS(217, 4);
 
-	public static final int TALENT_NUMBER = 32;
-
 	public static class ImprovisedProjectileCooldown extends FlavourBuff{
 		public int icon() { return BuffIndicator.TIME; }
 		public void tintIcon(Image icon) { icon.hardlight(0.15f, 0.2f, 0.5f); }
@@ -526,6 +524,8 @@ public enum Talent {
 	// tiers 1/2/3/4 start at levels 2/7/13/21
 	public static int[] tierLevelThresholds = new int[]{0, 2, 7, 13, 21, 31};
 
+	public static final int TALENT_NUMBER = 32;
+
 	Talent( int x, int y ){
 		this(x, y, 2);
 	}
@@ -537,22 +537,42 @@ public enum Talent {
 
 	public int icon(){
 		if (this == HEROIC_ENERGY){
-			if (Ratmogrify.useRatroicEnergy){
-				return 218;
-			}
+			int x = 26;
+			int y = 0;
 			HeroClass cls = Dungeon.hero != null ? Dungeon.hero.heroClass : GamesInProgress.selectedClass;
 			switch (cls){
-				case WARRIOR: default:
-					return 26;
-				case MAGE:
-					return 58;
-				case ROGUE:
-					return 90;
-				case HUNTRESS:
-					return 122;
-				case DUELIST:
-					return 154;
+				case ARIS: default:
+					y = 0;
+					break;
+//				case NONOMI:
+//					y = 1;
+//					break;
+//				case MIYAKO:
+//					y = 2;
+//					break;
+//				case HOSHINO:
+//					y = 3;
+//					break;
+//				case SHIROKO:
+//					y = 4;
+//					break;
+//				case NOA:
+//					y = 5;
+//					break;
+//				case MIYU:
+//					y = 6;
+//					break;
+//				case YUZU:
+//					y = 7;
+//					break;
+//				case IZUNA:
+//					y = 8;
+//					break;
 			}
+			if (Ratmogrify.useRatroicEnergy){
+				y = 9;
+			}
+			return x+TALENT_NUMBER*y;
 		} else {
 			return icon;
 		}
@@ -989,6 +1009,10 @@ public enum Talent {
 			case DUELIST:
 				Collections.addAll(tierTalents, STRENGTHENING_MEAL, ADVENTURERS_INTUITION, PATIENT_STRIKE, AGGRESSIVE_BARRIER);
 				break;
+			case ARIS:
+				Collections.addAll(tierTalents, ARIS_T1_1, ARIS_T1_2, ARIS_T1_3, ARIS_T1_4);
+				break;
+
 		}
 		for (Talent talent : tierTalents){
 			if (replacements.containsKey(talent)){
@@ -1015,6 +1039,9 @@ public enum Talent {
 			case DUELIST:
 				Collections.addAll(tierTalents, FOCUSED_MEAL, LIQUID_AGILITY, WEAPON_RECHARGING, LETHAL_HASTE, SWIFT_EQUIP);
 				break;
+			case ARIS:
+				Collections.addAll(tierTalents, ARIS_T2_1, ARIS_T2_2, ARIS_T2_3, ARIS_T2_4, ARIS_T2_5);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			if (replacements.containsKey(talent)){
@@ -1040,6 +1067,9 @@ public enum Talent {
 				break;
 			case DUELIST:
 				Collections.addAll(tierTalents, PRECISE_ASSAULT, DEADLY_FOLLOWUP);
+				break;
+			case ARIS:
+				Collections.addAll(tierTalents, ARIS_T3_1, ARIS_T3_2);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1098,6 +1128,12 @@ public enum Talent {
 				break;
 			case MONK:
 				Collections.addAll(tierTalents, UNENCUMBERED_SPIRIT, MONASTIC_VIGOR, COMBINED_ENERGY);
+				break;
+			case LIGHT_HERO:
+				Collections.addAll(tierTalents, ARIS_EX1_1, ARIS_EX1_2, ARIS_EX1_3);
+				break;
+			case BALANCE_COLLAPSE:
+				Collections.addAll(tierTalents, ARIS_EX2_1, ARIS_EX2_2, ARIS_EX2_3);
 				break;
 		}
 		for (Talent talent : tierTalents){

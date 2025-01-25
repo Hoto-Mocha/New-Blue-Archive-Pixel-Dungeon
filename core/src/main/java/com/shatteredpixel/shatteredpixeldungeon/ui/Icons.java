@@ -459,7 +459,8 @@ public enum Icons {
 			case HUNTRESS:
 				return new ItemSprite(ItemSpriteSheet.SPIRIT_BOW);
 			case DUELIST:
-				return new ItemSprite(ItemSpriteSheet.RAPIER);
+			case ARIS:
+				return new ItemSprite(ItemSpriteSheet.SEAL);
 			default:
 				return null;
 		}

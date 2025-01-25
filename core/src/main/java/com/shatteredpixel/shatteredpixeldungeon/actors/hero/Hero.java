@@ -1560,8 +1560,14 @@ public class Hero extends Char {
 			if (isAlive()) {
 				if (flashIntensity >= 1/6f) {
 					Sample.INSTANCE.play(Assets.Sounds.HEALTH_CRITICAL, 1/3f + flashIntensity * 2f);
+					if (Random.Int(2) == 0) {
+						Dungeon.hero.yellN(Messages.get(this, Dungeon.hero.heroClass.name() + "_health_critical_" + (Random.Int(3) + 1)));
+					}
 				} else {
 					Sample.INSTANCE.play(Assets.Sounds.HEALTH_WARN, 1/3f + flashIntensity * 4f);
+					if (Random.Int(2) == 0) {
+						Dungeon.hero.yellN(Messages.get(this, Dungeon.hero.heroClass.name() + "_health_warn_" + (Random.Int(3) + 1)));
+					}
 				}
 				//hero gets interrupted on taking serious damage, regardless of any other factor
 				interrupt();
@@ -1954,6 +1960,11 @@ public class Hero extends Char {
 					WndHero.lastIdx = 1;
 				}
 			}
+			if (Random.Int(100) == 0) {
+				Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.name() + "_levelup_rare"));
+			} else {
+				Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.name() + "_levelup_" + (1 + Random.Int(5))));
+			}
 			
 			Item.updateQuickslot();
 			
@@ -2117,6 +2128,8 @@ public class Hero extends Char {
 		GameScene.updateFog();
 				
 		Dungeon.hero.belongings.identify();
+
+		Dungeon.hero.yellN(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_die"));
 
 		int pos = Dungeon.hero.pos;
 
@@ -2501,5 +2514,38 @@ public class Hero extends Char {
 
 	public static interface Doom {
 		public void onDeath();
+	}
+
+	public void yellI( String str ) { //흰색
+		GLog.newLine();
+		GLog.i( "%s: \"%s\" ", Messages.titleCase(name()), str );
+	}
+
+	public void yellP( String str ) { //초록색
+		GLog.newLine();
+		GLog.p( "%s: \"%s\" ", Messages.titleCase(name()), str );
+	}
+
+	public void yellN( String str ) { //빨간색
+		GLog.newLine();
+		GLog.n( "%s: \"%s\" ", Messages.titleCase(name()), str );
+	}
+
+	public void yellW( String str ) { //주황색
+		GLog.newLine();
+		GLog.w( "%s: \"%s\" ", Messages.titleCase(name()), str );
+	}
+
+	public void yellH( String str ) { //노란색
+		GLog.newLine();
+		GLog.h( "%s: \"%s\" ", Messages.titleCase(name()), str );
+	}
+
+	public void resetTalent() {
+		for (LinkedHashMap<Talent, Integer> tier : talents){
+			for (Talent f : tier.keySet()){
+				tier.put(f, 0);
+			}
+		}
 	}
 }

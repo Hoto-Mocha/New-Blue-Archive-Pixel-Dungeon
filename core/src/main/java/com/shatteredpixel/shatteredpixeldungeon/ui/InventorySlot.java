@@ -34,8 +34,8 @@ import com.watabou.noosa.audio.Sample;
 
 public class InventorySlot extends ItemSlot {
 
-	private static final int NORMAL		= 0x9953564D;
-	private static final int EQUIPPED	= 0x9991938C;
+	private static final int NORMAL		= 0x60707070;
+	private static final int EQUIPPED	= 0x60999999;
 
 	private ColorBlock bg;
 

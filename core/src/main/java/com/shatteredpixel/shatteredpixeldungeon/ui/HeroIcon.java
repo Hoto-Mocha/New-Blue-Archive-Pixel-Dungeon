@@ -62,14 +62,14 @@ public class HeroIcon extends Image {
 //	public static final int 			= 18;
 //	public static final int 			= 19;
 
-	public static final int HERO_OF_LIGHT		= 20;
-	public static final int BALANCE_COLLAPSE	= 21;
+//	public static final int 			= 20;
+//	public static final int 			= 21;
 //	public static final int 			= 22;
 //	public static final int 			= 23;
 
 	//new classes
-//	public static final int 			= 24;
-//	public static final int 			= 25;
+	public static final int HERO_OF_LIGHT		= 24;
+	public static final int BALANCE_COLLAPSE	= 25;
 //	public static final int 			= 26;
 //	public static final int 			= 27;
 
@@ -130,9 +130,9 @@ public class HeroIcon extends Image {
 //	public static final int 				= 71;
 
 	//new abilities
-//	public static final int 				= 72;
-//	public static final int 				= 73;
-//	public static final int 				= 74;
+	public static final int ARIS_1			= 72;
+	public static final int ARIS_2			= 73;
+	public static final int ARIS_3			= 74;
 //	public static final int 				= 75;
 
 //	public static final int 				= 76;
@@ -160,58 +160,58 @@ public class HeroIcon extends Image {
 //	public static final int 				= 94;
 //	public static final int 				= 95;
 
-	public static final int RATMOGRIFY      = 96;
+	public static final int RATMOGRIFY      = 32+96;
 
 	//action indicator visuals
-	public static final int BERSERK         = 104;
-	public static final int COMBO           = 105;
-//	public static final int 		        = 106;
-//	public static final int					= 107;
+	public static final int BERSERK         = 32+104;
+	public static final int COMBO           = 32+105;
+//	public static final int 		        = 32+106;
+//	public static final int					= 32+107;
 
-//	public static final int					= 108;
-//	public static final int					= 109;
-//	public static final int					= 110;
-//	public static final int					= 111;
+//	public static final int					= 32+108;
+//	public static final int					= 32+109;
+//	public static final int					= 32+110;
+//	public static final int					= 32+111;
 
-	public static final int PREPARATION     = 112;
-	public static final int MOMENTUM        = 113;
-//	public static final int					= 114;
-//	public static final int					= 115;
+	public static final int PREPARATION     = 32+112;
+	public static final int MOMENTUM        = 32+113;
+//	public static final int					= 32+114;
+//	public static final int					= 32+115;
 
-	public static final int SNIPERS_MARK    = 116;
-//	public static final int					= 117;
-//	public static final int					= 118;
-//	public static final int					= 119;
+	public static final int SNIPERS_MARK    = 32+116;
+//	public static final int					= 32+117;
+//	public static final int					= 32+118;
+//	public static final int					= 32+119;
 
-	public static final int WEAPON_SWAP     = 120;
-	public static final int MONK_ABILITIES  = 121;
-//	public static final int 				= 122;
-//	public static final int 				= 123;
+	public static final int WEAPON_SWAP     = 32+120;
+	public static final int MONK_ABILITIES  = 32+121;
+//	public static final int 				= 32+122;
+//	public static final int 				= 32+123;
 
-//	public static final int 				= 124;
-//	public static final int 				= 125;
-//	public static final int 				= 126;
-//	public static final int 				= 127;
+//	public static final int 				= 32+124;
+//	public static final int 				= 32+125;
+//	public static final int 				= 32+126;
+//	public static final int 				= 32+127;
 
-//  public static final int  				= 128;
-//  public static final int  				= 129;
-//  public static final int  				= 130;
-//	public static final int  				= 131;
+//  public static final int  				= 32+128;
+//  public static final int  				= 32+129;
+//  public static final int  				= 32+130;
+//	public static final int  				= 32+131;
 
-//	public static final int  				= 132;
-//	public static final int  				= 133;
-//	public static final int  				= 134;
-//	public static final int  				= 135;
+//	public static final int  				= 32+132;
+//	public static final int  				= 32+133;
+//	public static final int  				= 32+134;
+//	public static final int  				= 32+135;
 
-//	public static final int  				= 136;
-//	public static final int  				= 137;
-//	public static final int  				= 138;
-//	public static final int  				= 139;
+//	public static final int  				= 32+136;
+//	public static final int  				= 32+137;
+//	public static final int  				= 32+138;
+//	public static final int  				= 32+139;
 
-//	public static final int  				= 140;
-//	public static final int  				= 141;
-//	public static final int  				= 142;
-//	public static final int 				= 143;
+//	public static final int  				= 32+140;
+//	public static final int  				= 32+141;
+//	public static final int  				= 32+142;
+//	public static final int 				= 32+143;
 
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );

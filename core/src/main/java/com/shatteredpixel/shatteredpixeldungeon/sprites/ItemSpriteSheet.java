@@ -157,7 +157,7 @@ public class ItemSpriteSheet {
 		assignItemRect(ANKH,            10, 16);
 		assignItemRect(STYLUS,          12, 13);
 		
-		assignItemRect(SEAL,            9,  15);
+		assignItemRect(SEAL,            15, 12);
 		assignItemRect(TORCH,           12, 15);
 		assignItemRect(BEACON,          16, 15);
 		
@@ -361,7 +361,7 @@ public class ItemSpriteSheet {
 		for (int i = DARTS; i < DARTS+16; i++)
 			assignItemRect(i, 15, 15);
 	}
-	
+
 	private static final int ARMOR          =                               xy(1, 12);  //16 slots
 	public static final int ARMOR_CLOTH     = ARMOR+0;
 	public static final int ARMOR_LEATHER   = ARMOR+1;
@@ -795,6 +795,36 @@ public class ItemSpriteSheet {
 	static {
 		assignItemRect(SUPER_NOVA, 16, 16);
 	}
+
+	private static final int NEW_ARMOR 	= 								xy(1, 34);
+	public static final int ARMOR_ARIS  	= NEW_ARMOR+0;
+	public static final int ARMOR_NONOMI    = NEW_ARMOR+1;
+	public static final int ARMOR_MIYAKO    = NEW_ARMOR+2;
+	public static final int ARMOR_HOSHINO  	= NEW_ARMOR+3;
+	public static final int ARMOR_SHIROKO   = NEW_ARMOR+4;
+	public static final int ARMOR_NOA	    = NEW_ARMOR+5;
+	public static final int ARMOR_MIYU	    = NEW_ARMOR+6;
+	public static final int ARMOR_YUZU	    = NEW_ARMOR+7;
+	public static final int ARMOR_IZUNA	    = NEW_ARMOR+8;
+	static{
+		assignItemRect(ARMOR_ARIS,   	13, 10);
+		assignItemRect(ARMOR_NONOMI,    14, 10);
+		assignItemRect(ARMOR_MIYAKO,    15, 10);
+		assignItemRect(ARMOR_HOSHINO,  	13, 11);
+		assignItemRect(ARMOR_SHIROKO,   15, 12);
+		assignItemRect(ARMOR_NOA,	    14, 12);
+		assignItemRect(ARMOR_MIYU,	    13, 12);
+		assignItemRect(ARMOR_YUZU,	    13, 12);
+		assignItemRect(ARMOR_IZUNA,	    15, 11);
+	}
+	private static final int SPECIAL_ITEMS 	= 								xy(1, 35);
+	public static final int EX_DISC	  		= SPECIAL_ITEMS+0;
+	public static final int TELEPORTER    	= SPECIAL_ITEMS+1;
+	static {
+		assignItemRect(EX_DISC,   		16, 14);
+		assignItemRect(TELEPORTER,    	14, 14);
+	}
+
 	//for smaller 8x8 icons that often accompany an item sprite
 	public static class Icons {
 

@@ -204,6 +204,8 @@ public class Badges {
 		CHAMPION_2                  ( 124 ),
 		CHAMPION_3                  ( 125 );
 
+		//UNLOCK_ARIS				(120+24),
+
 		public boolean meta;
 
 		public int image;
