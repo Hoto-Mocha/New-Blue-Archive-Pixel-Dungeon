@@ -1,25 +1,19 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
+
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.PurpleParticle;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LightParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
@@ -27,9 +21,10 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.watabou.noosa.Image;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.particles.Emitter;
+import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -118,63 +113,84 @@ public class SuperNova extends MeleeWeapon {
         return coolDown;
     }
 
+    public void shootLaser(int target) {
+        boolean terrainAffected = false;
+        int maxDistance = maxDistance();
+
+        if (hero.subClass == HeroSubClass.BALANCE_COLLAPSE) {
+            maxDistance = Dungeon.level.distance(hero.pos, target);
+        }
+
+        Ballistica beam = new Ballistica(curUser.pos, target, Ballistica.WONT_STOP);
+        ArrayList<Char> chars = new ArrayList<>();
+
+        for (int c : beam.subPath(1, maxDistance)) {
+            Char ch;
+
+            if ((ch = Actor.findChar( c )) != null) {
+                if ((ch instanceof Mob && ((Mob) ch).state == ((Mob) ch).PASSIVE
+                        && !(Dungeon.level.mapped[c] || Dungeon.level.visited[c])) || (ch instanceof Hero)){
+                    //avoid harming undiscovered passive chars
+                } else {
+                    chars.add(ch);
+                }
+            }
+            if (Dungeon.level.flamable[c]) {
+                Dungeon.level.destroy( c );
+                GameScene.updateMap( c );
+                terrainAffected = true;
+            }
+
+            CellEmitter.center( c ).burst( LightParticle.BURST, Random.IntRange( 3, 5 ) );
+
+            if (terrainAffected) {
+                Dungeon.observe();
+            }
+
+        }
+        for (Char ch : chars) {
+            ch.damage( Random.NormalIntRange(beamDamageMin(buffedLvl()), beamDamageMax(buffedLvl())), this );
+            ch.sprite.centerEmitter().burst( LightParticle.BURST, Random.IntRange( 3, 5 ) );
+            ch.sprite.flash();
+        }
+
+        curUser.sprite.zap(target);
+        int cell = beam.path.get(Math.min(beam.dist, maxDistance));
+        curUser.sprite.parent.add(new Beam.SuperNovaRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell )));
+
+//        Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
+
+        hero.spendAndNext(Actor.TICK);
+    }
+
     private CellSelector.Listener shooter = new CellSelector.Listener() {
         @Override
-        public void onSelect( Integer target ) {
-            if (target != null) {
-                if (target == curUser.pos) {
+        public void onSelect( Integer cell ) {
+            if (cell != null) {
+                if (cell == curUser.pos) {
                     hero.yellW(Messages.get(Hero.class, "aris_cannot_self"));
-
                 } else {
-
-                    boolean terrainAffected = false;
-                    int maxDistance = maxDistance();
-
-                    if (hero.subClass == HeroSubClass.BALANCE_COLLAPSE) {
-                        maxDistance = Dungeon.level.distance(hero.pos, target);
-                    }
-
-                    Ballistica beam = new Ballistica(curUser.pos, target, Ballistica.WONT_STOP);
-                    ArrayList<Char> chars = new ArrayList<>();
-
-                    for (int c : beam.subPath(1, maxDistance)) {
-                        Char ch;
-
-                        if ((ch = Actor.findChar( c )) != null) {
-                            if ((ch instanceof Mob && ((Mob) ch).state == ((Mob) ch).PASSIVE
-                                    && !(Dungeon.level.mapped[c] || Dungeon.level.visited[c])) || (ch instanceof Hero)){
-                                //avoid harming undiscovered passive chars
-                            } else {
-                                chars.add(ch);
+                    int dialogNumber = Random.Int(3)+1;
+                    GLog.i( "%s: \"%s ", Messages.titleCase(hero.name()), Messages.get(Hero.class, "aris_supernova_" + dialogNumber) );
+                    float delay = 1.2f;
+                    hero.sprite.parent.add(new Tweener(hero.sprite.parent, delay) { //delay초 후에 작동하도록 설정한 Tweener
+                        @Override
+                        protected void updateValues(float progress) { //시간이 지남에 따라 실행되는 함수
+                            hero.spendAndNext(0); //아직 쏘지 않았을 경우 행동할 수 없다.
+                            if (Math.floor(100*progress % 10f) == 0 && progress < 1f) { // 0~1초 사이에서 0.1초 마다 실행
+                                Emitter e = hero.sprite.centerEmitter();
+                                if (e != null) e.burst(LightParticle.FACTORY, 1);
                             }
                         }
-                        if (Dungeon.level.flamable[c]) {
-                            Dungeon.level.destroy( c );
-                            GameScene.updateMap( c );
-                            terrainAffected = true;
+
+                        @Override
+                        protected void onComplete() { //시간이 다 지나면 실행되는 함수
+                            super.onComplete();
+                            GLog.i( "%s\"", Messages.get(Hero.class, "aris_supernova_shoot_" + dialogNumber) );
+                            GLog.newLine();
+                            shootLaser(cell);
                         }
-
-                        CellEmitter.center( c ).burst( PurpleParticle.BURST, Random.IntRange( 1, 2 ) );
-
-                        if (terrainAffected) {
-                            Dungeon.observe();
-                        }
-
-                    }
-                    for (Char ch : chars) {
-                        ch.damage( Random.NormalIntRange(beamDamageMin(buffedLvl()), beamDamageMax(buffedLvl())), this );
-                        ch.sprite.centerEmitter().burst( PurpleParticle.BURST, Random.IntRange( 1, 2 ) );
-                        ch.sprite.flash();
-                    }
-
-                    curUser.sprite.zap(target);
-                    int cell = beam.path.get(Math.min(beam.dist, maxDistance));
-                    curUser.sprite.parent.add(new Beam.DeathRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell )));
-                    Dungeon.hero.yellI(Messages.get(Hero.class, "aris_supernova_" + (Random.Int(3)+1)));
-
-                    Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
-
-                    hero.spendAndNext(Actor.TICK);
+                    });
                 }
             }
         }
