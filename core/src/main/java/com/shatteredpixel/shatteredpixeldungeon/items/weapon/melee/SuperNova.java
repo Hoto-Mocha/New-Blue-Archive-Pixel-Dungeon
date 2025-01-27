@@ -90,19 +90,19 @@ public class SuperNova extends MeleeWeapon {
     }
 
     public int beamDamageMin(int lvl) {
-        float damage = hero.lvl + Dungeon.scalingDepth() + lvl;
+        float damage = hero.lvl + lvl + 3;
 
         return Math.round(damage);
     }
 
     public int beamDamageMax(int lvl) {
-        float damage = hero.lvl*3 + Dungeon.scalingDepth()*2 + lvl*3;
+        float damage = 3*(hero.lvl + lvl + 3);
 
         return Math.round(damage);
     }
 
     public int maxDistance() {
-        float dist = 8;
+        float dist = 8 + this.buffedLvl();
 
         return (int)dist;
     }
@@ -141,7 +141,7 @@ public class SuperNova extends MeleeWeapon {
                 terrainAffected = true;
             }
 
-            CellEmitter.center( c ).burst( LightParticle.BURST, Random.IntRange( 3, 5 ) );
+            CellEmitter.center( c ).burst( LightParticle.BURST, 8 );
 
             if (terrainAffected) {
                 Dungeon.observe();
@@ -150,7 +150,7 @@ public class SuperNova extends MeleeWeapon {
         }
         for (Char ch : chars) {
             ch.damage( Random.NormalIntRange(beamDamageMin(buffedLvl()), beamDamageMax(buffedLvl())), this );
-            ch.sprite.centerEmitter().burst( LightParticle.BURST, Random.IntRange( 3, 5 ) );
+            ch.sprite.centerEmitter().burst( LightParticle.BURST, 8 );
             ch.sprite.flash();
         }
 
@@ -158,7 +158,8 @@ public class SuperNova extends MeleeWeapon {
         int cell = beam.path.get(Math.min(beam.dist, maxDistance));
         curUser.sprite.parent.add(new Beam.SuperNovaRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell )));
 
-//        Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
+        //TODO: 쿨다운 활성화 시킬 것
+        //Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
 
         hero.spendAndNext(Actor.TICK);
     }
