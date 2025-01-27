@@ -367,6 +367,10 @@ public class Potion extends Item {
 
 		if (!isKnown()) {
 			setKnown();
+
+			if (Dungeon.hero.hasTalent(Talent.ARIS_T1_3)) {
+				Dungeon.hero.earnExp(2+3*Dungeon.hero.pointsInTalent(Talent.ARIS_T1_3), Talent.class);
+			}
 		}
 		return this;
 	}

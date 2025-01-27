@@ -46,7 +46,8 @@ public class SupplyRation extends Food {
 				|| Dungeon.hero.hasTalent(Talent.ENERGIZING_MEAL)
 				|| Dungeon.hero.hasTalent(Talent.MYSTICAL_MEAL)
 				|| Dungeon.hero.hasTalent(Talent.INVIGORATING_MEAL)
-				|| Dungeon.hero.hasTalent(Talent.FOCUSED_MEAL)){
+				|| Dungeon.hero.hasTalent(Talent.FOCUSED_MEAL)
+				|| Dungeon.hero.hasTalent(Talent.ARIS_T2_1)){
 			return 0;
 		} else {
 			return 1;

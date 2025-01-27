@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.EnhancedRings;
@@ -669,6 +670,16 @@ public enum Talent {
 				Dungeon.level.drop(toGive, hero.pos).sprite.drop();
 			}
 		}
+
+
+		if (talent == ARIS_T1_2 && hero.pointsInTalent(ARIS_T1_2) == 2){
+			if (hero.belongings.armor() != null && !ShardOfOblivion.passiveIDDisabled())  {
+				hero.belongings.armor.identify();
+			}
+			if (hero.belongings.weapon() != null && !ShardOfOblivion.passiveIDDisabled())  {
+				hero.belongings.weapon.identify();
+			}
+		}
 	}
 
 	public static class CachedRationsDropped extends CounterBuff{{revivePersists = true;}};
@@ -684,7 +695,7 @@ public enum Talent {
 
 			}
 		}
-		if (hero.hasTalent(IRON_STOMACH)){
+		if (hero.hasTalent(IRON_STOMACH) || hero.hasTalent(Talent.ARIS_T2_1)){
 			if (hero.cooldown() > 0) {
 				Buff.affect(hero, WarriorFoodImmunity.class, hero.cooldown());
 			}
@@ -940,6 +951,16 @@ public enum Talent {
 			}
 		}
 
+		if (hero.hasTalent(Talent.ARIS_T1_1)) {
+			dmg += hero.pointsInTalent(Talent.ARIS_T1_1);
+		}
+
+		if (hero.hasTalent(Talent.ARIS_T2_2)
+				&& enemy.buff(HikariyoTracker.class) == null){
+			Buff.affect(enemy, Blindness.class, 1+hero.pointsInTalent(Talent.ARIS_T2_2));
+			Buff.affect(enemy, HikariyoTracker.class);
+		}
+
 		return dmg;
 	}
 
@@ -974,6 +995,19 @@ public enum Talent {
 			object = bundle.getInt(OBJECT);
 		}
 	};
+
+	//new buff here
+
+	public static class HikariyoTracker extends Buff{};
+
+
+
+
+
+
+
+
+	//new buff here
 
 	public static final int MAX_TALENT_TIERS = 4;
 
