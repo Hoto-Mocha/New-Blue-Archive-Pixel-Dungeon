@@ -137,6 +137,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Quarterstaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Scimitar;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
@@ -399,7 +400,7 @@ public class Hero extends Char {
 	}
 	
 	public String className() {
-		return subClass == null || subClass == HeroSubClass.NONE ? heroClass.title() : subClass.title();
+		return heroClass.title();
 	}
 
 	@Override
@@ -630,6 +631,10 @@ public class Hero extends Char {
 		if (buff(HoldFast.class) != null){
 			dr += buff(HoldFast.class).armorBonus();
 		}
+
+		if (hasTalent(Talent.ARIS_EX1_2) && buff(SuperNova.SuperNovaCooldown.class) != null) {
+			dr += Random.NormalIntRange(pointsInTalent(Talent.ARIS_EX1_2), 4*pointsInTalent(Talent.ARIS_EX1_2));
+		}
 		
 		return dr;
 	}
@@ -701,6 +706,10 @@ public class Hero extends Char {
 		NaturesPower.naturesPowerTracker natStrength = buff(NaturesPower.naturesPowerTracker.class);
 		if (natStrength != null){
 			speed *= (2f + 0.25f*pointsInTalent(Talent.GROWING_POWER));
+		}
+
+		if (hasTalent(Talent.ARIS_T3_1)) {
+			speed *= 1 + 0.05f*pointsInTalent(Talent.ARIS_T3_1);
 		}
 
 		speed = AscensionChallenge.modifyHeroSpeed(speed);

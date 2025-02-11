@@ -583,8 +583,8 @@ public class GameScene extends PixelScene {
 			}
 
 			InterlevelScene.mode = InterlevelScene.Mode.NONE;
+			Talent.onSwitchLevel();
 
-			
 		}
 
 		//Tutorial

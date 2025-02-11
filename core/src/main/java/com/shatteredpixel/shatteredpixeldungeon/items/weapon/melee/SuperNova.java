@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -25,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -56,9 +58,8 @@ public class SuperNova extends MeleeWeapon {
     @Override
     public ArrayList<String> actions(Hero hero ) {
         ArrayList<String> actions = super.actions( hero );
-        actions.remove( AC_EQUIP );
-        if (hero.subClass == HeroSubClass.LIGHT_HERO && !isEquipped(hero)) {
-            actions.add( AC_EQUIP );
+        if (!(hero.subClass == HeroSubClass.LIGHT_HERO && !isEquipped(hero))) {
+            actions.remove( AC_EQUIP );
         }
         actions.add( AC_SHOOT );
         return actions;
@@ -67,7 +68,10 @@ public class SuperNova extends MeleeWeapon {
     @Override
     public int buffedLvl() {
         int lvl = super.buffedLvl();
-
+        if (hero.buff(SuperNovaCooldown.class) == null) {
+            lvl += hero.pointsInTalent(Talent.ARIS_EX1_1);
+        }
+        lvl += hero.pointsInTalent(Talent.ARIS_EX2_3);
         return lvl;
     }
 
@@ -90,13 +94,31 @@ public class SuperNova extends MeleeWeapon {
     }
 
     public int beamDamageMin(int lvl) {
-        float damage = hero.lvl + lvl + 3;
+        float damage = lvl + 3;
+        if (hero != null) {
+            damage += hero.lvl;
+            if (hero.buff(SuperNovaPowerUP.class) != null) {
+                damage *= hero.buff(SuperNovaPowerUP.class).laserDmgMulti();
+            }
+        } else {
+            damage += 1;
+        }
 
         return Math.round(damage);
     }
 
     public int beamDamageMax(int lvl) {
-        float damage = 3*(hero.lvl + lvl + 3);
+        float damage = 3*(lvl + 3);
+
+        if (hero != null) {
+            damage += 3*hero.lvl;
+            if (hero.buff(SuperNovaPowerUP.class) != null) {
+                damage *= hero.buff(SuperNovaPowerUP.class).laserDmgMulti();
+            }
+            damage *= 1f + 0.5f * hero.pointsInTalent(Talent.ARIS_EX2_1);
+        } else {
+            damage += 3;
+        }
 
         return Math.round(damage);
     }
@@ -104,12 +126,16 @@ public class SuperNova extends MeleeWeapon {
     public int maxDistance() {
         float dist = 8 + this.buffedLvl();
 
+        if (hero.subClass == HeroSubClass.BALANCE_COLLAPSE) {
+            dist *= 2;
+        }
+
         return (int)dist;
     }
 
     public float coolDown() {
         float coolDown = 100;
-
+        coolDown -= 10 + 10*hero.pointsInTalent(Talent.ARIS_T2_5);
         return coolDown;
     }
 
@@ -117,49 +143,87 @@ public class SuperNova extends MeleeWeapon {
         boolean terrainAffected = false;
         int maxDistance = maxDistance();
 
-        if (hero.subClass == HeroSubClass.BALANCE_COLLAPSE) {
-            maxDistance = Dungeon.level.distance(hero.pos, target);
-        }
-
         Ballistica beam = new Ballistica(curUser.pos, target, Ballistica.WONT_STOP);
         ArrayList<Char> chars = new ArrayList<>();
 
-        for (int c : beam.subPath(1, maxDistance)) {
-            Char ch;
+        if (hero.subClass == HeroSubClass.BALANCE_COLLAPSE) {
+            ArrayList<Integer> cells = new ArrayList<>();
 
-            if ((ch = Actor.findChar( c )) != null) {
-                if ((ch instanceof Mob && ((Mob) ch).state == ((Mob) ch).PASSIVE
-                        && !(Dungeon.level.mapped[c] || Dungeon.level.visited[c])) || (ch instanceof Hero)){
-                    //avoid harming undiscovered passive chars
-                } else {
-                    chars.add(ch);
+            for (int c : beam.subPath(1, maxDistance)) {
+                for (int i : PathFinder.NEIGHBOURS9) {
+                    int cell = c + i;
+                    if (!cells.contains(cell)) {
+                        cells.add(cell);
+                    }
                 }
-            }
-            if (Dungeon.level.flamable[c]) {
-                Dungeon.level.destroy( c );
-                GameScene.updateMap( c );
-                terrainAffected = true;
-            }
 
-            CellEmitter.center( c ).burst( LightParticle.BURST, 8 );
-
-            if (terrainAffected) {
-                Dungeon.observe();
+                CellEmitter.center( c ).burst( LightParticle.BURST, 8 );
             }
+            for (int c : cells) {
+                if (c < 1) continue;
+                Char ch;
 
+                if ((ch = Actor.findChar( c )) != null) {
+                    if ((ch instanceof Mob && ((Mob) ch).state == ((Mob) ch).PASSIVE
+                            && !(Dungeon.level.mapped[c] || Dungeon.level.visited[c])) || (ch instanceof Hero)){
+                        //avoid harming undiscovered passive chars
+                    } else {
+                        chars.add(ch);
+                    }
+                }
+                if (Dungeon.level.flamable[c]) {
+                    Dungeon.level.destroy( c );
+                    GameScene.updateMap( c );
+                    terrainAffected = true;
+                }
+
+                if (terrainAffected) {
+                    Dungeon.observe();
+                }
+
+            }
+        } else {
+            for (int c : beam.subPath(1, maxDistance)) {
+                Char ch;
+
+                if ((ch = Actor.findChar( c )) != null) {
+                    if ((ch instanceof Mob && ((Mob) ch).state == ((Mob) ch).PASSIVE
+                            && !(Dungeon.level.mapped[c] || Dungeon.level.visited[c])) || (ch instanceof Hero)){
+                        //avoid harming undiscovered passive chars
+                    } else {
+                        chars.add(ch);
+                    }
+                }
+                if (Dungeon.level.flamable[c]) {
+                    Dungeon.level.destroy( c );
+                    GameScene.updateMap( c );
+                    terrainAffected = true;
+                }
+
+                CellEmitter.center( c ).burst( LightParticle.BURST, 8 );
+
+                if (terrainAffected) {
+                    Dungeon.observe();
+                }
+
+            }
         }
         for (Char ch : chars) {
-            ch.damage( Random.NormalIntRange(beamDamageMin(buffedLvl()), beamDamageMax(buffedLvl())), this );
+            if (Random.Float() < 0.2f * hero.pointsInTalent(Talent.ARIS_T2_4)) {
+                ch.damage(Math.max(ch.HP, Random.NormalIntRange(beamDamageMin(buffedLvl()), beamDamageMax(buffedLvl()))),this);
+            } else {
+                ch.damage( Random.NormalIntRange(beamDamageMin(buffedLvl()), beamDamageMax(buffedLvl())), this );
+            }
             ch.sprite.centerEmitter().burst( LightParticle.BURST, 8 );
             ch.sprite.flash();
         }
 
         curUser.sprite.zap(target);
         int cell = beam.path.get(Math.min(beam.dist, maxDistance));
-        curUser.sprite.parent.add(new Beam.SuperNovaRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell )));
+        curUser.sprite.parent.add(new Beam.SuperNovaRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell ), (hero.subClass == HeroSubClass.BALANCE_COLLAPSE) ? 7 : 3));
 
         //TODO: 쿨다운 활성화 시킬 것
-        //Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
+//        Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
 
         hero.spendAndNext(Actor.TICK);
     }
@@ -224,14 +288,14 @@ public class SuperNova extends MeleeWeapon {
         if( hero.subClass == HeroSubClass.LIGHT_HERO ) {
             if (levelKnown) {
                 info += "\n\n" + Messages.get(MeleeWeapon.class, "stats_known", tier, augment.damageFactor(min()), augment.damageFactor(max()), STRReq());
-                if (STRReq() > Dungeon.hero.STR()) {
+                if (STRReq() > hero.STR()) {
                     info += " " + Messages.get(Weapon.class, "too_heavy");
-                } else if (Dungeon.hero.STR() > STRReq()){
-                    info += " " + Messages.get(Weapon.class, "excess_str", Dungeon.hero.STR() - STRReq());
+                } else if (hero.STR() > STRReq()){
+                    info += " " + Messages.get(Weapon.class, "excess_str", hero.STR() - STRReq());
                 }
             } else {
                 info += "\n\n" + Messages.get(MeleeWeapon.class, "stats_unknown", tier, min(0), max(0), STRReq(0));
-                if (STRReq(0) > Dungeon.hero.STR()) {
+                if (STRReq(0) > hero.STR()) {
                     info += " " + Messages.get(MeleeWeapon.class, "probably_too_heavy");
                 }
             }
@@ -254,7 +318,7 @@ public class SuperNova extends MeleeWeapon {
                 info += " " + enchantment.desc();
             }
 
-            if (cursed && isEquipped( Dungeon.hero )) {
+            if (cursed && isEquipped( hero )) {
                 info += "\n\n" + Messages.get(Weapon.class, "cursed_worn");
             } else if (cursedKnown && cursed) {
                 info += "\n\n" + Messages.get(Weapon.class, "cursed");
@@ -275,7 +339,57 @@ public class SuperNova extends MeleeWeapon {
         return Messages.get(this, "desc", beamDamageMin(buffedLvl()), beamDamageMax(buffedLvl()));
     }
 
+    public static class SuperNovaPowerUP extends Buff {
+        final int MAX_BONUS = 100;
+        int bonus = 0;
 
+        {
+            type = buffType.NEUTRAL;
+        }
+
+        public void hit() {
+            bonus = Math.min(MAX_BONUS, bonus+hero.pointsInTalent(Talent.ARIS_EX1_3));
+            BuffIndicator.refreshHero();
+        }
+
+        @Override
+        public int icon() {
+            return BuffIndicator.UPGRADE;
+        }
+
+        @Override
+        public float iconFadePercent() {
+            return Math.max(0, bonus / (float) MAX_BONUS);
+        }
+
+        private static final String BONUS = "bonus";
+
+        @Override
+        public void storeInBundle(Bundle bundle) {
+            super.storeInBundle(bundle);
+            bundle.put(BONUS, bonus);
+        }
+
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+            bonus = bundle.getInt(BONUS);
+        }
+
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc", bonus);
+        }
+
+        @Override
+        public String iconTextDisplay() {
+            return Integer.toString(bonus);
+        }
+
+        public float laserDmgMulti() {
+            return bonus / (float) MAX_BONUS;
+        }
+    }
 
     public static class SuperNovaCooldown extends Buff {
 
@@ -344,7 +458,7 @@ public class SuperNova extends MeleeWeapon {
 
         @Override
         public void detach() {
-            Dungeon.hero.yellP(Messages.get(Hero.class, hero.heroClass.name() + "_supernova_ready_" + (Random.Int(3)+1)));
+            hero.yellP(Messages.get(Hero.class, hero.heroClass.name() + "_supernova_ready_" + (Random.Int(3)+1)));
             super.detach();
         }
 

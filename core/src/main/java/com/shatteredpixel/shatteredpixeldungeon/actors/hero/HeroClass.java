@@ -49,6 +49,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Sh
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Teleporter;
+import com.shatteredpixel.shatteredpixeldungeon.items.TengusMask;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
@@ -116,6 +117,8 @@ public enum HeroClass {
 		if (DeviceCompat.isDebug()) {
 			Teleporter teleporter = new Teleporter();
 			teleporter.collect();
+			TengusMask mask = new TengusMask();
+			mask.collect();
 		}
 
 		new ScrollOfIdentify().identify();

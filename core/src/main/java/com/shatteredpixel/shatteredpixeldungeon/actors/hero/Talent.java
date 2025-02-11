@@ -56,6 +56,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
@@ -64,6 +65,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -71,6 +73,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -961,6 +964,10 @@ public enum Talent {
 			Buff.affect(enemy, HikariyoTracker.class);
 		}
 
+		if (hero.hasTalent(Talent.ARIS_EX1_3)) {
+			Buff.affect(hero, SuperNova.SuperNovaPowerUP.class).hit();
+		}
+
 		return dmg;
 	}
 
@@ -1290,4 +1297,63 @@ public enum Talent {
 		}
 	}
 
+	public static boolean[] compassed = new boolean[32];
+
+	public static float compassChance(){
+		return compassChance(Dungeon.hero.pointsInTalent(Talent.ARIS_T3_2));
+	}
+
+	public static float compassChance( int level ){
+		if (level == 0){
+			return 0f;
+		} else {
+//            if (DeviceCompat.isDebug()) return 1;
+//            else
+			return level/3f;
+		}
+	}
+
+	public static void onSwitchLevel() {
+		if (Dungeon.branch == 0 && !compassed[Dungeon.depth]) { //브랜치 층에서는 작동하지 않음
+			if (Random.Float() < compassChance()) {
+				int len = Dungeon.level.length();
+				boolean[] p = Dungeon.level.passable;
+				boolean[] s = Dungeon.level.secret;
+				boolean[] a = Dungeon.level.avoid;
+				boolean[] passable = new boolean[len];
+				for (int i = 0; i < len; i++) {
+					passable[i] = (p[i] || s[i]) && !a[i];
+				}
+
+				PathFinder.Path path = Dungeon.findPath(Dungeon.hero, Dungeon.level.exit(), passable, passable, false);
+				if (PathFinder.distance[Dungeon.level.exit()] == Integer.MAX_VALUE || path == null){
+					Dungeon.hero.yellN(Messages.get(Hero.class, "aris_cant_find_path"));
+				} else {
+					int[] map = Dungeon.level.map;
+					boolean[] mapped = Dungeon.level.mapped;
+					boolean[] discoverable = Dungeon.level.discoverable;
+					for (int i : path) {
+						if (discoverable[i]) {
+							int terr = map[i];
+
+							mapped[i] = true;
+							if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
+
+								Dungeon.level.discover( i );
+
+								if (Dungeon.level.heroFOV[i]) {
+									GameScene.discoverTile( i, terr );
+									ScrollOfMagicMapping.discover( i );
+								}
+							}
+						}
+					}
+					GameScene.updateFog();
+					Dungeon.hero.yellP(Messages.get(Hero.class, "aris_found_path"));
+				}
+			}
+
+			compassed[Dungeon.depth] = true;
+		}
+	}
 }

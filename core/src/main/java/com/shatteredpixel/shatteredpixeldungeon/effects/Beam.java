@@ -61,16 +61,18 @@ public class Beam extends Image {
 	}
 
 	public static class SuperNovaRay extends Beam {
-		public SuperNovaRay(PointF s, PointF e){
+		float scaleMulti;
+		public SuperNovaRay(PointF s, PointF e, float scaleMulti){
 			super(s, e, Effects.Type.SUPERNOVA_RAY, 2f);
-			scale.set( scale.x, scale.y*3 );
+			this.scaleMulti = scaleMulti;
+			scale.set( scale.x, scale.y*this.scaleMulti );
 		}
 
 		@Override
 		public void update() {
 			super.update();
 
-			float p = timeLeft*3 / duration;
+			float p = timeLeft*this.scaleMulti / duration;
 			alpha( p );
 			scale.set( scale.x, p );
 
