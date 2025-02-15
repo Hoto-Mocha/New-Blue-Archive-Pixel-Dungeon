@@ -83,7 +83,7 @@ import com.watabou.utils.DeviceCompat;
 
 public enum HeroClass {
 
-	ARIS(HeroSubClass.LIGHT_HERO, HeroSubClass.BALANCE_COLLAPSE),
+	ARIS(HeroSubClass.LIGHT_HERO, HeroSubClass.BATTERY_CHARGE),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),

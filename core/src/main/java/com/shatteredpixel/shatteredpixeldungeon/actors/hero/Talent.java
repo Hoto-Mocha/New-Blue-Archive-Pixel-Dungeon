@@ -41,6 +41,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ScrollEmpower;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SuperNovaCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
@@ -73,7 +74,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -968,6 +968,10 @@ public enum Talent {
 			Buff.affect(hero, SuperNova.SuperNovaPowerUP.class).hit();
 		}
 
+		if (hero.subClass == HeroSubClass.BATTERY_CHARGE) {
+			Buff.affect(hero, SuperNovaCharge.class).hit();
+		}
+
 		return dmg;
 	}
 
@@ -1173,7 +1177,7 @@ public enum Talent {
 			case LIGHT_HERO:
 				Collections.addAll(tierTalents, ARIS_EX1_1, ARIS_EX1_2, ARIS_EX1_3);
 				break;
-			case BALANCE_COLLAPSE:
+			case BATTERY_CHARGE:
 				Collections.addAll(tierTalents, ARIS_EX2_1, ARIS_EX2_2, ARIS_EX2_3);
 				break;
 		}

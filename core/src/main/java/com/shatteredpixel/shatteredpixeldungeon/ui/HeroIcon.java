@@ -69,7 +69,7 @@ public class HeroIcon extends Image {
 
 	//new classes
 	public static final int HERO_OF_LIGHT		= 24;
-	public static final int BALANCE_COLLAPSE	= 25;
+	public static final int BATTERY_CHARGE		= 25;
 //	public static final int 			= 26;
 //	public static final int 			= 27;
 
@@ -193,7 +193,7 @@ public class HeroIcon extends Image {
 //	public static final int 				= 32+126;
 //	public static final int 				= 32+127;
 
-//  public static final int  				= 32+128;
+  	public static final int CHARGE			= 32+128;
 //  public static final int  				= 32+129;
 //  public static final int  				= 32+130;
 //	public static final int  				= 32+131;

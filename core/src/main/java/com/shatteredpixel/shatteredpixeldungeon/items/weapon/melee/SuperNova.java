@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SuperNovaCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -71,7 +72,6 @@ public class SuperNova extends MeleeWeapon {
         if (hero.buff(SuperNovaCooldown.class) == null) {
             lvl += hero.pointsInTalent(Talent.ARIS_EX1_1);
         }
-        lvl += hero.pointsInTalent(Talent.ARIS_EX2_3);
         return lvl;
     }
 
@@ -115,7 +115,6 @@ public class SuperNova extends MeleeWeapon {
             if (hero.buff(SuperNovaPowerUP.class) != null) {
                 damage *= hero.buff(SuperNovaPowerUP.class).laserDmgMulti();
             }
-            damage *= 1f + 0.5f * hero.pointsInTalent(Talent.ARIS_EX2_1);
         } else {
             damage += 3;
         }
@@ -125,10 +124,6 @@ public class SuperNova extends MeleeWeapon {
 
     public int maxDistance() {
         float dist = 8 + this.buffedLvl();
-
-        if (hero.subClass == HeroSubClass.BALANCE_COLLAPSE) {
-            dist *= 2;
-        }
 
         return (int)dist;
     }
@@ -146,7 +141,9 @@ public class SuperNova extends MeleeWeapon {
         Ballistica beam = new Ballistica(curUser.pos, target, Ballistica.WONT_STOP);
         ArrayList<Char> chars = new ArrayList<>();
 
-        if (hero.subClass == HeroSubClass.BALANCE_COLLAPSE) {
+        boolean empowered = false;
+
+        if (empowered) {
             ArrayList<Integer> cells = new ArrayList<>();
 
             for (int c : beam.subPath(1, maxDistance)) {
@@ -208,19 +205,27 @@ public class SuperNova extends MeleeWeapon {
 
             }
         }
+        int damage = Random.NormalIntRange(beamDamageMin(buffedLvl()), beamDamageMax(buffedLvl()));
+
+        SuperNovaCharge charge = hero.buff(SuperNovaCharge.class);
+        if (charge != null) {
+            damage = Math.round(damage * charge.getDamageBonus());
+        }
+
         for (Char ch : chars) {
             if (Random.Float() < 0.2f * hero.pointsInTalent(Talent.ARIS_T2_4)) {
-                ch.damage(Math.max(ch.HP, Random.NormalIntRange(beamDamageMin(buffedLvl()), beamDamageMax(buffedLvl()))),this);
+                ch.damage(Math.max(ch.HP, damage),this);
             } else {
-                ch.damage( Random.NormalIntRange(beamDamageMin(buffedLvl()), beamDamageMax(buffedLvl())), this );
+                ch.damage( damage, this );
             }
             ch.sprite.centerEmitter().burst( LightParticle.BURST, 8 );
             ch.sprite.flash();
         }
+        if (charge != null) charge.detach();
 
         curUser.sprite.zap(target);
         int cell = beam.path.get(Math.min(beam.dist, maxDistance));
-        curUser.sprite.parent.add(new Beam.SuperNovaRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell ), (hero.subClass == HeroSubClass.BALANCE_COLLAPSE) ? 7 : 3));
+        curUser.sprite.parent.add(new Beam.SuperNovaRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell ), (empowered) ? 7 : 3));
 
         //TODO: 쿨다운 활성화 시킬 것
 //        Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
@@ -411,6 +416,10 @@ public class SuperNova extends MeleeWeapon {
                 detach();
             }
             BuffIndicator.refreshHero();
+        }
+
+        public float duration() {
+            return this.duration;
         }
 
         @Override
