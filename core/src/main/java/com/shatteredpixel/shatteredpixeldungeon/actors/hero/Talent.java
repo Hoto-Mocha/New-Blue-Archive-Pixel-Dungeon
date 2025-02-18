@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
@@ -73,10 +75,12 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -975,6 +979,11 @@ public enum Talent {
 		return dmg;
 	}
 
+	public static int onDefenseProc(Hero hero, Char enemy, int damage) {
+
+		return damage;
+	}
+
 	public static class ProvokedAngerTracker extends FlavourBuff{
 		{ type = Buff.buffType.POSITIVE; }
 		public int icon() { return BuffIndicator.WEAPON; }
@@ -1010,8 +1019,31 @@ public enum Talent {
 	//new buff here
 
 	public static class HikariyoTracker extends Buff{};
+	
+	public static class RiposteTracker extends Buff {
+		{
+			actPriority = VFX_PRIO;
+		}
 
+		public Char enemy;
 
+		@Override
+		public boolean act() {
+			target.sprite.attack(enemy.pos, new Callback() {
+				@Override
+				public void call() {
+					AttackIndicator.target(enemy);
+					if (hero.attack(enemy, 1f, 0, 1)) {
+						Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
+					}
+
+					next();
+				}
+			});
+			detach();
+			return false;
+		}
+	}
 
 
 

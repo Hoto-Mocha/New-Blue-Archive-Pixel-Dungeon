@@ -552,6 +552,13 @@ public class Hero extends Char {
 		if (buff(RoundShield.GuardTracker.class) != null){
 			return INFINITE_EVASION;
 		}
+
+		if (Random.Float() < 0.1f*pointsInTalent(Talent.ARIS_EX2_2)){
+			if (canAttack(enemy) && !isCharmedBy(enemy)){
+				Buff.affect(this, Talent.RiposteTracker.class).enemy = enemy;
+			}
+			return INFINITE_EVASION;
+		}
 		
 		float evasion = defenseSkill;
 		
@@ -1487,7 +1494,9 @@ public class Hero extends Char {
 		if (rockArmor != null) {
 			damage = rockArmor.absorb(damage);
 		}
-		
+
+		damage = Talent.onDefenseProc(this, enemy, damage);
+
 		return super.defenseProc( enemy, damage );
 	}
 	
