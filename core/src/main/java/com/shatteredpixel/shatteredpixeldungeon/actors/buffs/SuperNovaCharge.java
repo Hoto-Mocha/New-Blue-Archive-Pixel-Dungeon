@@ -46,6 +46,11 @@ public class SuperNovaCharge extends CounterBuff implements ActionIndicator.Acti
     }
 
     @Override
+    public String iconTextDisplay() {
+        return Messages.decimalFormat("#.##", 100*getDamageBonus()) + "%";
+    }
+
+    @Override
     public String desc() {
         return Messages.get(this, "desc", Messages.decimalFormat("#.##", 100*getDamageBonus()));
     }

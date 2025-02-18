@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.EnhancedRings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SuperNovaCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
@@ -352,6 +353,23 @@ public class Ring extends KindofMisc {
 		int lvl = super.buffedLvl();
 		if (Dungeon.hero.buff(EnhancedRings.class) != null){
 			lvl++;
+		}
+		if (Dungeon.hero.buff(SuperNovaCharge.class) != null && Dungeon.hero.hasTalent(Talent.ARIS_EX2_3)) {
+			float upgradePerCount;
+			switch (Dungeon.hero.pointsInTalent(Talent.ARIS_EX2_3)) {
+				case 1: default:
+					upgradePerCount = 100;
+					break;
+				case 2:
+					upgradePerCount = 50;
+					break;
+				case 3:
+					upgradePerCount = 30;
+					break;
+			}
+			int upgrade = (int)(Dungeon.hero.buff(SuperNovaCharge.class).count()/upgradePerCount);
+			if (upgrade > 0) lvl += upgrade;
+			updateQuickslot();
 		}
 		return lvl;
 	}

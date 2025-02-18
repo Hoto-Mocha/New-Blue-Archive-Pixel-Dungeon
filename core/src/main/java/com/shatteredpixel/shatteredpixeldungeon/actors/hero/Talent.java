@@ -273,46 +273,46 @@ public enum Talent {
 	COUNTER_ABILITY				(-1, 4, 4),
 
 	//Aris T1
-	ARIS_T1_1(1, 0, 2),
-	ARIS_T1_2(2, 0, 2),
-	ARIS_T1_3(3, 0, 2),
-	ARIS_T1_4(4, 0, 2),
+	ARIS_T1_1(0, 0, 2),
+	ARIS_T1_2(1, 0, 2),
+	ARIS_T1_3(2, 0, 2),
+	ARIS_T1_4(3, 0, 2),
 
 	//Aris T2
-	ARIS_T2_1(5, 0, 2),
-	ARIS_T2_2(6, 0, 2),
-	ARIS_T2_3(7, 0, 2),
-	ARIS_T2_4(8, 0, 2),
-	ARIS_T2_5(9, 0, 2),
+	ARIS_T2_1(4, 0, 2),
+	ARIS_T2_2(5, 0, 2),
+	ARIS_T2_3(6, 0, 2),
+	ARIS_T2_4(7, 0, 2),
+	ARIS_T2_5(8, 0, 2),
 
 	//Aris T3
-	ARIS_T3_1(10, 0, 3),
-	ARIS_T3_2(11, 0, 3),
+	ARIS_T3_1(9, 0, 3),
+	ARIS_T3_2(10, 0, 3),
 
 	//Hero of Light T3
-	ARIS_EX1_1(12, 0, 3),
-	ARIS_EX1_2(13, 0, 3),
-	ARIS_EX1_3(14, 0, 3),
+	ARIS_EX1_1(11, 0, 3),
+	ARIS_EX1_2(12, 0, 3),
+	ARIS_EX1_3(13, 0, 3),
 
 	//Collapse of Balance T3
-	ARIS_EX2_1(15, 0, 3),
-	ARIS_EX2_2(16, 0, 3),
-	ARIS_EX2_3(17, 0, 3),
+	ARIS_EX2_1(14, 0, 3),
+	ARIS_EX2_2(15, 0, 3),
+	ARIS_EX2_3(16, 0, 3),
 
 	//Armor Ability 1 T4
-	ARIS_ARMOR1_1(18, 0, 3),
-	ARIS_ARMOR1_2(19, 0, 3),
-	ARIS_ARMOR1_3(20, 0, 3),
+	ARIS_ARMOR1_1(17, 0, 3),
+	ARIS_ARMOR1_2(18, 0, 3),
+	ARIS_ARMOR1_3(19, 0, 3),
 
 	//Armor Ability 1 T4
-	ARIS_ARMOR2_1(21, 0, 3),
-	ARIS_ARMOR2_2(22, 0, 3),
-	ARIS_ARMOR2_3(23, 0, 3),
+	ARIS_ARMOR2_1(20, 0, 3),
+	ARIS_ARMOR2_2(21, 0, 3),
+	ARIS_ARMOR2_3(22, 0, 3),
 
 	//Armor Ability 1 T4
-	ARIS_ARMOR3_1(24, 0, 3),
-	ARIS_ARMOR3_2(25, 0, 3),
-	ARIS_ARMOR3_3(26, 0, 3),
+	ARIS_ARMOR3_1(23, 0, 3),
+	ARIS_ARMOR3_2(24, 0, 3),
+	ARIS_ARMOR3_3(25, 0, 3),
 
 	//universal T4
 	HEROIC_ENERGY(26, 4), //See icon() and title() for special logic for this one
@@ -1019,7 +1019,7 @@ public enum Talent {
 	//new buff here
 
 	public static class HikariyoTracker extends Buff{};
-	
+
 	public static class RiposteTracker extends Buff {
 		{
 			actPriority = VFX_PRIO;
