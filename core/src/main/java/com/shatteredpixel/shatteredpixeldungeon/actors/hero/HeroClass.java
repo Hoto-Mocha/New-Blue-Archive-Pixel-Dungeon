@@ -28,7 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.QuickSlot;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Aris_1;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.ExtendedLaser;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Aris_2;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Aris_3;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
@@ -294,7 +294,7 @@ public enum HeroClass {
 			case DUELIST:
 				return new ArmorAbility[]{new Challenge(), new ElementalStrike(), new Feint()};
 			case ARIS:
-				return new ArmorAbility[]{new Aris_1(), new Aris_2(), new Aris_3()};
+				return new ArmorAbility[]{new ExtendedLaser(), new Aris_2(), new Aris_3()};
 		}
 	}
 

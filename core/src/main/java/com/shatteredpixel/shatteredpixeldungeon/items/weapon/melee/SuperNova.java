@@ -5,11 +5,14 @@ import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SuperNovaCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.ExtendedLaser;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -130,6 +133,9 @@ public class SuperNova extends MeleeWeapon {
 
     public float coolDown() {
         float coolDown = 100;
+        if (hero.buff(ExtendedLaser.ExtendedLaserBuff.class) != null) {
+            coolDown += 100 - 25 * hero.pointsInTalent(Talent.ARIS_ARMOR1_1);
+        }
         coolDown -= 10 + 10*hero.pointsInTalent(Talent.ARIS_T2_5);
         return coolDown;
     }
@@ -141,8 +147,9 @@ public class SuperNova extends MeleeWeapon {
         Ballistica beam = new Ballistica(curUser.pos, target, Ballistica.WONT_STOP);
         ArrayList<Char> chars = new ArrayList<>();
 
-        boolean empowered = false;
+        boolean empowered = hero.buff(ExtendedLaser.ExtendedLaserBuff.class) != null;
 
+        //empowered means is the laser thick or not
         if (empowered) {
             ArrayList<Integer> cells = new ArrayList<>();
 
@@ -218,8 +225,16 @@ public class SuperNova extends MeleeWeapon {
             } else {
                 ch.damage( damage, this );
             }
+            if (hero.buff(ExtendedLaser.ExtendedLaserBuff.class) != null && Random.Float() < 0.25f * hero.pointsInTalent(Talent.ARIS_ARMOR1_3)) {
+                Buff.affect(ch, Burning.class).reignite(ch);
+            }
             ch.sprite.centerEmitter().burst( LightParticle.BURST, 8 );
             ch.sprite.flash();
+        }
+
+        if (hero.buff(ExtendedLaser.ExtendedLaserBuff.class) != null && hero.hasTalent(Talent.ARIS_ARMOR1_2)) {
+            //affects barrier to hero by (2*talent level * target's number(up to 8))
+            Buff.affect(hero, Barrier.class).setShield(2*hero.pointsInTalent(Talent.ARIS_ARMOR1_2) * Math.min(chars.size(), 8));
         }
         if (charge != null) charge.detach();
 
@@ -228,7 +243,10 @@ public class SuperNova extends MeleeWeapon {
         curUser.sprite.parent.add(new Beam.SuperNovaRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell ), (empowered) ? 7 : 3));
 
         //TODO: 쿨다운 활성화 시킬 것
-//        Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
+        Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
+        if (hero.buff(ExtendedLaser.ExtendedLaserBuff.class) != null) {
+            hero.buff(ExtendedLaser.ExtendedLaserBuff.class).detach();
+        }
 
         hero.spendAndNext(Actor.TICK);
     }

@@ -21,15 +21,22 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.Image;
 
-public class Aris_1 extends ArmorAbility {
+public class ExtendedLaser extends ArmorAbility {
 
 	{
 		baseChargeUse = 35f;
@@ -37,11 +44,14 @@ public class Aris_1 extends ArmorAbility {
 
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
+		if (hero.buff(ExtendedLaser.ExtendedLaserBuff.class) != null) {
+			GLog.w(Messages.get(this, "already_used"));
+			return;
+		}
 		armor.charge -= chargeUse(hero);
 		armor.updateQuickslot();
-		Invisibility.dispel();
 		hero.spendAndNext(Actor.TICK);
-
+		Buff.affect(hero, ExtendedLaserBuff.class);
 	}
 
 	@Override
@@ -52,5 +62,22 @@ public class Aris_1 extends ArmorAbility {
 	@Override
 	public Talent[] talents() {
 		return new Talent[]{Talent.ARIS_ARMOR1_1, Talent.ARIS_ARMOR1_2, Talent.ARIS_ARMOR1_3, Talent.HEROIC_ENERGY};
+	}
+
+	public static class ExtendedLaserBuff extends Buff {
+		{
+			type = buffType.POSITIVE;
+			announced = true;
+		}
+
+		@Override
+		public int icon() {
+			return BuffIndicator.RECHARGING;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(0x000000);
+		}
 	}
 }
