@@ -100,9 +100,6 @@ public class SuperNova extends MeleeWeapon {
         float damage = lvl + 3;
         if (hero != null) {
             damage += hero.lvl;
-            if (hero.buff(SuperNovaPowerUP.class) != null) {
-                damage *= hero.buff(SuperNovaPowerUP.class).laserDmgMulti();
-            }
         } else {
             damage += 1;
         }
@@ -115,9 +112,6 @@ public class SuperNova extends MeleeWeapon {
 
         if (hero != null) {
             damage += 3*hero.lvl;
-            if (hero.buff(SuperNovaPowerUP.class) != null) {
-                damage *= hero.buff(SuperNovaPowerUP.class).laserDmgMulti();
-            }
         } else {
             damage += 3;
         }
@@ -362,58 +356,6 @@ public class SuperNova extends MeleeWeapon {
         return Messages.get(this, "desc", beamDamageMin(buffedLvl()), beamDamageMax(buffedLvl()));
     }
 
-    public static class SuperNovaPowerUP extends Buff {
-        final int MAX_BONUS = 100;
-        int bonus = 0;
-
-        {
-            type = buffType.NEUTRAL;
-        }
-
-        public void hit() {
-            bonus = Math.min(MAX_BONUS, bonus+hero.pointsInTalent(Talent.ARIS_EX1_3));
-            BuffIndicator.refreshHero();
-        }
-
-        @Override
-        public int icon() {
-            return BuffIndicator.UPGRADE;
-        }
-
-        @Override
-        public float iconFadePercent() {
-            return Math.max(0, bonus / (float) MAX_BONUS);
-        }
-
-        private static final String BONUS = "bonus";
-
-        @Override
-        public void storeInBundle(Bundle bundle) {
-            super.storeInBundle(bundle);
-            bundle.put(BONUS, bonus);
-        }
-
-        @Override
-        public void restoreFromBundle(Bundle bundle) {
-            super.restoreFromBundle(bundle);
-            bonus = bundle.getInt(BONUS);
-        }
-
-        @Override
-        public String desc() {
-            return Messages.get(this, "desc", bonus);
-        }
-
-        @Override
-        public String iconTextDisplay() {
-            return Integer.toString(bonus);
-        }
-
-        public float laserDmgMulti() {
-            return bonus / (float) MAX_BONUS;
-        }
-    }
-
     public static class SuperNovaCooldown extends Buff {
 
         float maxDuration;
@@ -428,8 +370,8 @@ public class SuperNova extends MeleeWeapon {
             duration = maxDuration;
         }
 
-        public void hit() {
-            duration -= 1;
+        public void hit(int amount) {
+            duration -= amount;
             if (duration <= 0) {
                 detach();
             }

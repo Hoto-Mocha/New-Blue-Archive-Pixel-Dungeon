@@ -968,8 +968,8 @@ public enum Talent {
 			Buff.affect(enemy, HikariyoTracker.class);
 		}
 
-		if (hero.hasTalent(Talent.ARIS_EX1_3)) {
-			Buff.affect(hero, SuperNova.SuperNovaPowerUP.class).hit();
+		if (hero.hasTalent(Talent.ARIS_EX1_3) && hero.buff(SuperNova.SuperNovaCooldown.class) != null) {
+			hero.buff(SuperNova.SuperNovaCooldown.class).hit(hero.pointsInTalent(Talent.ARIS_EX1_3));
 		}
 
 		if (hero.subClass == HeroSubClass.BATTERY_CHARGE) {
