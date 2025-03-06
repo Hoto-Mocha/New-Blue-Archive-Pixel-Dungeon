@@ -301,22 +301,22 @@ public enum Talent {
 	ARIS_EX2_3(16, 0, 3),
 
 	//Armor Ability 1 T4
-	ARIS_ARMOR1_1(17, 0, 3),
-	ARIS_ARMOR1_2(18, 0, 3),
-	ARIS_ARMOR1_3(19, 0, 3),
+	ARIS_ARMOR1_1(17, 0, 4),
+	ARIS_ARMOR1_2(18, 0, 4),
+	ARIS_ARMOR1_3(19, 0, 4),
 
 	//Armor Ability 1 T4
-	ARIS_ARMOR2_1(20, 0, 3),
-	ARIS_ARMOR2_2(21, 0, 3),
-	ARIS_ARMOR2_3(22, 0, 3),
+	ARIS_ARMOR2_1(20, 0, 4),
+	ARIS_ARMOR2_2(21, 0, 4),
+	ARIS_ARMOR2_3(22, 0, 4),
 
 	//Armor Ability 1 T4
-	ARIS_ARMOR3_1(23, 0, 3),
-	ARIS_ARMOR3_2(24, 0, 3),
-	ARIS_ARMOR3_3(25, 0, 3),
+	ARIS_ARMOR3_1(23, 0, 4),
+	ARIS_ARMOR3_2(24, 0, 4),
+	ARIS_ARMOR3_3(25, 0, 4),
 
 	//universal T4
-	HEROIC_ENERGY(26, 4), //See icon() and title() for special logic for this one
+	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one
 	//Ratmogrify T4
 	RATSISTANCE(215, 4), RATLOMACY(216, 4), RATFORCEMENTS(217, 4);
 
