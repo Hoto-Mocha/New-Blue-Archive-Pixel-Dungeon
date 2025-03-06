@@ -12,6 +12,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SuperNovaCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.BatteryChange;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.ExtendedLaser;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
@@ -131,6 +132,10 @@ public class SuperNova extends MeleeWeapon {
             coolDown += 100 - 25 * hero.pointsInTalent(Talent.ARIS_ARMOR1_1);
         }
         coolDown -= 10 + 10*hero.pointsInTalent(Talent.ARIS_T2_5);
+        if (hero.buff(BatteryChange.BatteryChangeCooldownBuff.class) != null) {
+            coolDown -= 10*hero.pointsInTalent(Talent.ARIS_ARMOR3_1);
+            hero.buff(BatteryChange.BatteryChangeCooldownBuff.class).detach();
+        }
         return coolDown;
     }
 
@@ -213,6 +218,11 @@ public class SuperNova extends MeleeWeapon {
             damage = Math.round(damage * charge.getDamageBonus());
         }
 
+        if (hero.buff(BatteryChange.BatteryChangeDamageBuff.class) != null) {
+            damage = Math.round(damage * (1 + 0.1f*hero.pointsInTalent(Talent.ARIS_ARMOR3_2)));
+            hero.buff(BatteryChange.BatteryChangeDamageBuff.class).detach();
+        }
+
         for (Char ch : chars) {
             if (Random.Float() < 0.2f * hero.pointsInTalent(Talent.ARIS_T2_4)) {
                 ch.damage(Math.max(ch.HP, damage),this);
@@ -236,7 +246,6 @@ public class SuperNova extends MeleeWeapon {
         int cell = beam.path.get(Math.min(beam.dist, maxDistance));
         curUser.sprite.parent.add(new Beam.SuperNovaRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell ), (empowered) ? 7 : 3));
 
-        //TODO: 쿨다운 활성화 시킬 것
         Buff.affect(hero, SuperNovaCooldown.class).set(coolDown());
         if (hero.buff(ExtendedLaser.ExtendedLaserBuff.class) != null) {
             hero.buff(ExtendedLaser.ExtendedLaserBuff.class).detach();

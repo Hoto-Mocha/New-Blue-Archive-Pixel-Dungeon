@@ -22,14 +22,18 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.watabou.utils.Random;
 
-public class Aris_3 extends ArmorAbility {
+public class BatteryChange extends ArmorAbility {
 
 	{
 		baseChargeUse = 35f;
@@ -37,11 +41,25 @@ public class Aris_3 extends ArmorAbility {
 
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-		armor.charge -= chargeUse(hero);
-		armor.updateQuickslot();
-		Invisibility.dispel();
-		hero.spendAndNext(Actor.TICK);
+		if (hero.buff(SuperNova.SuperNovaCooldown.class) != null) {
+			hero.yellP(Messages.get(Hero.class, "aris_battery_change"));
 
+			armor.charge -= chargeUse(hero);
+			armor.updateQuickslot();
+			Invisibility.dispel();
+			if (Random.Float() < 0.25f * hero.pointsInTalent(Talent.ARIS_ARMOR3_3)) {
+				hero.spendAndNext(Actor.TICK);
+			}
+			if (hero.hasTalent(Talent.ARIS_ARMOR3_1)) {
+				Buff.affect(hero, BatteryChangeCooldownBuff.class);
+			}
+			if (hero.hasTalent(Talent.ARIS_ARMOR3_2)) {
+				Buff.affect(hero, BatteryChangeDamageBuff.class);
+			}
+			hero.sprite.operate(hero.pos);
+		} else {
+			hero.yellW(Messages.get(Hero.class, "aris_no_cooldown"));
+		}
 	}
 
 	@Override
@@ -53,4 +71,7 @@ public class Aris_3 extends ArmorAbility {
 	public Talent[] talents() {
 		return new Talent[]{Talent.ARIS_ARMOR3_1, Talent.ARIS_ARMOR3_2, Talent.ARIS_ARMOR3_3, Talent.HEROIC_ENERGY};
 	}
+
+	public static class BatteryChangeCooldownBuff extends Buff {}
+	public static class BatteryChangeDamageBuff extends Buff {}
 }

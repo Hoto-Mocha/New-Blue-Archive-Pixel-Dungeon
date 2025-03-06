@@ -47,6 +47,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SuperNovaCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
@@ -974,6 +975,10 @@ public enum Talent {
 
 		if (hero.subClass == HeroSubClass.BATTERY_CHARGE) {
 			Buff.affect(hero, SuperNovaCharge.class).hit();
+		}
+
+		if (hero.buff(Division.DivisionBuff.class) != null) {
+			dmg = hero.buff(Division.DivisionBuff.class).attackProc(hero, enemy, dmg);
 		}
 
 		return dmg;
