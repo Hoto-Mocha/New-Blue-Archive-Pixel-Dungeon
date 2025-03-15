@@ -224,7 +224,7 @@ public class SuperNova extends MeleeWeapon {
         }
 
         for (Char ch : chars) {
-            if (Random.Float() < 0.2f * hero.pointsInTalent(Talent.ARIS_T2_4)) {
+            if (Random.Float() < 0.05f * hero.pointsInTalent(Talent.ARIS_T2_4)) {
                 ch.damage(Math.max(ch.HP, damage),this);
             } else {
                 ch.damage( damage, this );
