@@ -679,7 +679,6 @@ public enum Talent {
 			}
 		}
 
-
 		if (talent == ARIS_T1_2 && hero.pointsInTalent(ARIS_T1_2) == 2){
 			if (hero.belongings.armor() != null && !ShardOfOblivion.passiveIDDisabled())  {
 				hero.belongings.armor.identify();
@@ -760,11 +759,13 @@ public enum Talent {
 		if (item instanceof MeleeWeapon){
 			factor *= 1f + 1.5f*hero.pointsInTalent(ADVENTURERS_INTUITION); //instant at +2 (see onItemEquipped)
 			factor *= 1f + 0.75f*hero.pointsInTalent(VETERANS_INTUITION);
+			factor *= 1f + 1.5f*hero.pointsInTalent(ARIS_T1_2);
 		}
 		// Affected by both Warrior(2.5x/inst.) and Duelist(1.75x/2.5x) talents
 		if (item instanceof Armor){
 			factor *= 1f + 0.75f*hero.pointsInTalent(ADVENTURERS_INTUITION);
 			factor *= 1f + hero.pointsInTalent(VETERANS_INTUITION); //instant at +2 (see onItemEquipped)
+			factor *= 1f + 1.5f*hero.pointsInTalent(ARIS_T1_2);
 		}
 		// 3x/instant for Mage (see Wand.wandUsed())
 		if (item instanceof Wand){
@@ -883,6 +884,9 @@ public enum Talent {
 			((Ring) item).setKnown();
 		}
 		if (hero.pointsInTalent(ADVENTURERS_INTUITION) == 2 && item instanceof Weapon){
+			identify = true;
+		}
+		if (hero.pointsInTalent(ARIS_T1_2) == 2 && (item instanceof Weapon || item instanceof Armor)){
 			identify = true;
 		}
 

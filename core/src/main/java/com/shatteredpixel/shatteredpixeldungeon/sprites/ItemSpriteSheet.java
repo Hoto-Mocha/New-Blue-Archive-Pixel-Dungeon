@@ -167,7 +167,7 @@ public class ItemSpriteSheet {
 		assignItemRect(GOLDEN_KEY,      8,  14);
 		assignItemRect(CRYSTAL_KEY,     8,  14);
 		assignItemRect(SKELETON_KEY,    8,  14);
-		assignItemRect(MASK,            11,  9);
+		assignItemRect(MASK,            16, 14);
 		assignItemRect(CROWN,           13,  7);
 		assignItemRect(AMULET,          16, 16);
 		assignItemRect(MASTERY,         13, 16);
@@ -375,10 +375,10 @@ public class ItemSpriteSheet {
 	public static final int ARMOR_DUELIST   = ARMOR+9;
 	static{
 		assignItemRect(ARMOR_CLOTH,     15, 12);
-		assignItemRect(ARMOR_LEATHER,   14, 13);
-		assignItemRect(ARMOR_MAIL,      14, 12);
-		assignItemRect(ARMOR_SCALE,     14, 11);
-		assignItemRect(ARMOR_PLATE,     12, 12);
+		assignItemRect(ARMOR_LEATHER,   15, 13);
+		assignItemRect(ARMOR_MAIL,      15, 15);
+		assignItemRect(ARMOR_SCALE,     15, 13);
+		assignItemRect(ARMOR_PLATE,     15, 12);
 		assignItemRect(ARMOR_WARRIOR,   12, 12);
 		assignItemRect(ARMOR_MAGE,      15, 15);
 		assignItemRect(ARMOR_ROGUE,     14, 12);

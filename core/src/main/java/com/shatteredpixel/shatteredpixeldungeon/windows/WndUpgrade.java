@@ -351,7 +351,7 @@ public class WndUpgrade extends Window {
 				} else {
 					lossChance = Math.min(100, 10 * (int) Math.pow(2, levelFrom - 4));
 				}
-				if (Dungeon.hero.hasTalent(Talent.ARIS_T2_3)) {
+				if (Dungeon.hero.pointsInTalent(Talent.ARIS_T2_3) == 2) {
 					lossChance = 0;
 				}
 
