@@ -53,7 +53,7 @@ public class ExtendedLaser extends ArmorAbility {
 			GLog.w(Messages.get(this, "already_used"));
 			return;
 		}
-		hero.yellI(Messages.get(this, "activate"));
+		hero.yellI(Messages.get(Hero.class, "aris_extendedlaser_activate"));
 		armor.charge -= chargeUse(hero);
 		armor.updateQuickslot();
 		hero.sprite.operate(hero.pos);
