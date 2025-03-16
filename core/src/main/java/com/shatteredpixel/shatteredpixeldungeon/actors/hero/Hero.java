@@ -66,6 +66,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipersMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.TimeStasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
@@ -2537,27 +2538,38 @@ public class Hero extends Char {
 		public void onDeath();
 	}
 
+	public boolean noYell() {
+		if (buff(Division.DivisionBuff.class) != null) return true;
+
+		return false;
+	}
+
 	public void yellI( String str ) { //흰색
+		if (noYell()) str = "...";
 		GLog.newLine();
 		GLog.i( "%s: \"%s\" ", Messages.titleCase(name()), str );
 	}
 
 	public void yellP( String str ) { //초록색
+		if (noYell()) str = "...";
 		GLog.newLine();
 		GLog.p( "%s: \"%s\" ", Messages.titleCase(name()), str );
 	}
 
 	public void yellN( String str ) { //빨간색
+		if (noYell()) str = "...";
 		GLog.newLine();
 		GLog.n( "%s: \"%s\" ", Messages.titleCase(name()), str );
 	}
 
 	public void yellW( String str ) { //주황색
+		if (noYell()) str = "...";
 		GLog.newLine();
 		GLog.w( "%s: \"%s\" ", Messages.titleCase(name()), str );
 	}
 
 	public void yellH( String str ) { //노란색
+		if (noYell()) str = "...";
 		GLog.newLine();
 		GLog.h( "%s: \"%s\" ", Messages.titleCase(name()), str );
 	}
