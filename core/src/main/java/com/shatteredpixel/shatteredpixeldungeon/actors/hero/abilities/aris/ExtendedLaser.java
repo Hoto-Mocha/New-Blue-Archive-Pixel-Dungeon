@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
@@ -44,12 +45,18 @@ public class ExtendedLaser extends ArmorAbility {
 
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
+		if (hero.buff(SuperNova.SuperNovaCooldown.class) != null) {
+			GLog.w(Messages.get(this, "cooldown"));
+			return;
+		}
 		if (hero.buff(ExtendedLaser.ExtendedLaserBuff.class) != null) {
 			GLog.w(Messages.get(this, "already_used"));
 			return;
 		}
+		hero.yellI(Messages.get(this, "activate"));
 		armor.charge -= chargeUse(hero);
 		armor.updateQuickslot();
+		hero.sprite.operate(hero.pos);
 		hero.spendAndNext(Actor.TICK);
 		Buff.affect(hero, ExtendedLaserBuff.class);
 	}
