@@ -46,6 +46,7 @@ public class BatteryChange extends ArmorAbility {
 			return;
 		}
 		hero.yellP(Messages.get(Hero.class, "aris_battery_change"));
+		hero.buff(SuperNova.SuperNovaCooldown.class).detach();
 
 		armor.charge -= chargeUse(hero);
 		armor.updateQuickslot();
