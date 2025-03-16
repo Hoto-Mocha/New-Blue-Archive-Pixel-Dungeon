@@ -41,25 +41,25 @@ public class BatteryChange extends ArmorAbility {
 
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-		if (hero.buff(SuperNova.SuperNovaCooldown.class) != null) {
-			hero.yellP(Messages.get(Hero.class, "aris_battery_change"));
-
-			armor.charge -= chargeUse(hero);
-			armor.updateQuickslot();
-			Invisibility.dispel();
-			if (Random.Float() < 0.25f * hero.pointsInTalent(Talent.ARIS_ARMOR3_3)) {
-				hero.spendAndNext(Actor.TICK);
-			}
-			if (hero.hasTalent(Talent.ARIS_ARMOR3_1)) {
-				Buff.affect(hero, BatteryChangeCooldownBuff.class);
-			}
-			if (hero.hasTalent(Talent.ARIS_ARMOR3_2)) {
-				Buff.affect(hero, BatteryChangeDamageBuff.class);
-			}
-			hero.sprite.operate(hero.pos);
-		} else {
+		if (hero.buff(SuperNova.SuperNovaCooldown.class) == null) {
 			hero.yellW(Messages.get(Hero.class, "aris_no_cooldown"));
+			return;
 		}
+		hero.yellP(Messages.get(Hero.class, "aris_battery_change"));
+
+		armor.charge -= chargeUse(hero);
+		armor.updateQuickslot();
+		Invisibility.dispel();
+		if (Random.Float() < 0.25f * hero.pointsInTalent(Talent.ARIS_ARMOR3_3)) {
+			hero.spendAndNext(Actor.TICK);
+		}
+		if (hero.hasTalent(Talent.ARIS_ARMOR3_1)) {
+			Buff.affect(hero, BatteryChangeCooldownBuff.class);
+		}
+		if (hero.hasTalent(Talent.ARIS_ARMOR3_2)) {
+			Buff.affect(hero, BatteryChangeDamageBuff.class);
+		}
+		hero.sprite.operate(hero.pos);
 	}
 
 	@Override
