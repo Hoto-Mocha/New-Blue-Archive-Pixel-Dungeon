@@ -807,9 +807,9 @@ public class ItemSpriteSheet {
 	public static final int ARMOR_YUZU	    = NEW_ARMOR+7;
 	public static final int ARMOR_IZUNA	    = NEW_ARMOR+8;
 	static{
-		assignItemRect(ARMOR_ARIS,   	13, 10);
-		assignItemRect(ARMOR_NONOMI,    14, 10);
-		assignItemRect(ARMOR_MIYAKO,    15, 10);
+		assignItemRect(ARMOR_ARIS,   	13, 11);
+		assignItemRect(ARMOR_NONOMI,    14, 11);
+		assignItemRect(ARMOR_MIYAKO,    15, 11);
 		assignItemRect(ARMOR_HOSHINO,  	13, 11);
 		assignItemRect(ARMOR_SHIROKO,   15, 12);
 		assignItemRect(ARMOR_NOA,	    14, 12);
