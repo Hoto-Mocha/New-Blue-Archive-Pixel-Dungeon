@@ -123,6 +123,9 @@ public class BuffIndicator extends Component {
 	public static final int DISGUISE    = 71;
 	public static final int WAND        = 72;
 
+	//new buffs
+	public static final int KEY        	= 100;
+
 	public static final int SIZE_SMALL  = 7;
 	public static final int SIZE_LARGE  = 16;
 	
