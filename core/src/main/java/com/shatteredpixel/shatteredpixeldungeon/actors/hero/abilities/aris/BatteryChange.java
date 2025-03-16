@@ -51,7 +51,7 @@ public class BatteryChange extends ArmorAbility {
 		armor.charge -= chargeUse(hero);
 		armor.updateQuickslot();
 		Invisibility.dispel();
-		if (Random.Float() < 0.25f * hero.pointsInTalent(Talent.ARIS_ARMOR3_3)) {
+		if (Random.Float() > 0.25f * hero.pointsInTalent(Talent.ARIS_ARMOR3_3)) {
 			hero.spendAndNext(Actor.TICK);
 		}
 		if (hero.hasTalent(Talent.ARIS_ARMOR3_1)) {
