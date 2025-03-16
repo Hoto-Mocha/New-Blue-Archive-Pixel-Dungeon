@@ -131,7 +131,9 @@ public class SuperNova extends MeleeWeapon {
         if (hero.buff(ExtendedLaser.ExtendedLaserBuff.class) != null) {
             coolDown = Math.round(coolDown * (2f - 0.25f * hero.pointsInTalent(Talent.ARIS_ARMOR1_1))); //2x cooldown and -12.5%/25%/37.5%/50% cooldown
         }
-        coolDown = Math.round(coolDown * (1f - (0.1f * (1 + hero.pointsInTalent(Talent.ARIS_T2_5))))); //-20%/30% cooldown
+        if (hero.hasTalent(Talent.ARIS_T2_5)) {
+            coolDown = Math.round(coolDown * (1f - (0.1f * (1 + hero.pointsInTalent(Talent.ARIS_T2_5))))); //-20%/30% cooldown
+        }
         if (hero.buff(BatteryChange.BatteryChangeCooldownBuff.class) != null) {
             coolDown = Math.round(coolDown * (1f - (0.1f * (hero.pointsInTalent(Talent.ARIS_ARMOR3_1))))); //-10%/20%/30%/40% cooldown
             hero.buff(BatteryChange.BatteryChangeCooldownBuff.class).detach();
