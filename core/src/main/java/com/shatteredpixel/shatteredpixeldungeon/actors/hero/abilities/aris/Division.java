@@ -38,6 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 
 public class Division extends ArmorAbility {
@@ -48,6 +49,10 @@ public class Division extends ArmorAbility {
 
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
+		if (hero.buff(DivisionBuff.class) != null) {
+			GLog.w(Messages.get(this, "already_activated"));
+			return;
+		}
 		armor.charge -= chargeUse(hero);
 		armor.updateQuickslot();
 		Invisibility.dispel();
