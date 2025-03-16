@@ -186,7 +186,7 @@ public class Blacksmith extends NPC {
 
 				}
 			} else {
-
+				((BlacksmithSprite)sprite).swarm();
 				String msg = Messages.get(this, "reminder") + "\n\n";
 				switch (Quest.type){
 					case Quest.CRYSTAL: msg += Messages.get(Blacksmith.this, "reminder_crystal"); break;
