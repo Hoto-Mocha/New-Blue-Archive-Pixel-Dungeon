@@ -96,7 +96,7 @@ public class ItemSpriteSheet {
 	public static final int TENGU_SHOCKER   = UNCOLLECTIBLE+9;
 	public static final int GEO_BOULDER     = UNCOLLECTIBLE+10;
 	static{
-		assignItemRect(GOLD,        15, 13);
+		assignItemRect(GOLD,        16, 14);
 		assignItemRect(ENERGY,      16, 16);
 
 		assignItemRect(DEWDROP,     10, 10);
@@ -748,7 +748,7 @@ public class ItemSpriteSheet {
 		assignItemRect(CANDLE,  12, 12);
 		assignItemRect(EMBER,   12, 11);
 		assignItemRect(PICKAXE, 14, 14);
-		assignItemRect(ORE,     15, 15);
+		assignItemRect(ORE,     13, 14);
 		assignItemRect(TOKEN,   12, 12);
 		assignItemRect(BLOB,    10,  9);
 		assignItemRect(SHARD,    8, 10);
