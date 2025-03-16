@@ -375,7 +375,7 @@ public class Potion extends Item {
 				int exp = 2+3*Dungeon.hero.pointsInTalent(Talent.ARIS_T1_3);
 
 				if (exp > 0) {
-					Dungeon.hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(exp), FloatingText.EXPERIENCE);
+					if (Dungeon.hero.sprite != null) Dungeon.hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(exp), FloatingText.EXPERIENCE);
 					Dungeon.hero.earnExp(exp, Talent.class);
 				}
 			}
