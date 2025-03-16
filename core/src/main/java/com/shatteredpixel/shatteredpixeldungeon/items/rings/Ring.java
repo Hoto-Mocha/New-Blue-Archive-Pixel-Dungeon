@@ -368,7 +368,7 @@ public class Ring extends KindofMisc {
 					break;
 			}
 			int upgrade = (int)(Dungeon.hero.buff(SuperNovaCharge.class).count()/upgradePerCount);
-			if (upgrade > 0) lvl += upgrade;
+			if (upgrade > 0) lvl += Math.min(upgrade, 3);
 			updateQuickslot();
 		}
 		return lvl;
