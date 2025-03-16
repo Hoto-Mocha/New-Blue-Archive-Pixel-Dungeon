@@ -77,7 +77,7 @@ public class ExtendedLaser extends ArmorAbility {
 
 		@Override
 		public void tintIcon(Image icon) {
-			icon.hardlight(0x000000);
+			icon.hardlight(0xFF0000);
 		}
 	}
 }
