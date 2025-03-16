@@ -676,12 +676,12 @@ public abstract class Mob extends Char {
 		if (enemy instanceof Hero
 				&& ((Hero) enemy).belongings.attackingWeapon() instanceof MissileWeapon){
 			Statistics.thrownAttacks++;
-			Badges.validateHuntressUnlock();
+//			Badges.validateHuntressUnlock();
 		}
 		
 		if (surprisedBy(enemy)) {
 			Statistics.sneakAttacks++;
-			Badges.validateRogueUnlock();
+//			Badges.validateRogueUnlock();
 			//TODO this is somewhat messy, it would be nicer to not have to manually handle delays here
 			// playing the strong hit sound might work best as another property of weapon?
 			if (Dungeon.hero.belongings.attackingWeapon() instanceof SpiritBow.SpiritArrow
