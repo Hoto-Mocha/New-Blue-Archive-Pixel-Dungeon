@@ -72,10 +72,10 @@ public class Badges {
 		FOUND_RATMOGRIFY,
 
 		//bronze
-		UNLOCK_MAGE                 ( 1 ),
-		UNLOCK_ROGUE                ( 2 ),
-		UNLOCK_HUNTRESS             ( 3 ),
-		UNLOCK_DUELIST              ( 4 ),
+		UNLOCK_MAGE,
+		UNLOCK_ROGUE,
+		UNLOCK_HUNTRESS,
+		UNLOCK_DUELIST,
 		//UNLOCK_CLERIC             ( 5 ),
 		MONSTERS_SLAIN_1            ( 6 ),
 		MONSTERS_SLAIN_2            ( 7 ),
