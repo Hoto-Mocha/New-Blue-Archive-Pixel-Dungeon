@@ -237,6 +237,7 @@ public class Shopkeeper extends NPC {
 		if (c != Dungeon.hero) {
 			return true;
 		}
+		sprite.turnTo( pos, Dungeon.hero.pos );
 		Game.runOnRenderThread(new Callback() {
 			@Override
 			public void call() {
@@ -260,6 +261,7 @@ public class Shopkeeper extends NPC {
 							GameScene.show(new WndTitledMessage(sprite(), Messages.titleCase(name()), chatText()));
 						} else if (index > 1){
 							GLog.i(Messages.get(Shopkeeper.this, "buyback"));
+							sprite.operate(Dungeon.hero.pos);
 							Item returned = buybackItems.remove(index-2);
 							Dungeon.gold -= returned.value();
 							Statistics.goldCollected -= returned.value();
