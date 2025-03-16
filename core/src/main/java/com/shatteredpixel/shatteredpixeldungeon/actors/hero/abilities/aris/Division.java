@@ -35,6 +35,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.Image;
 
@@ -50,8 +52,8 @@ public class Division extends ArmorAbility {
 		armor.updateQuickslot();
 		Invisibility.dispel();
 		hero.spendAndNext(Actor.TICK);
-		Buff.affect(hero, DivisionBuff.class, 20f);
-
+		hero.yellN(Messages.get(this, "activate"));
+		Buff.prolong(hero, DivisionBuff.class, 20f);
 		if (hero.hasTalent(Talent.ARIS_ARMOR2_1)) {
 			Buff.affect(hero, Barrier.class).setShield(hero.pointsInTalent(Talent.ARIS_ARMOR2_1) * 2);
 		}
@@ -68,9 +70,15 @@ public class Division extends ArmorAbility {
 	}
 
 	public static class DivisionBuff extends Levitation {
+
+		@Override
+		public int icon() {
+			return BuffIndicator.KEY;
+		}
+
 		@Override
 		public void tintIcon(Image icon) {
-			icon.hardlight(0x000000);
+			icon.hardlight(0xFF0000);
 		}
 
 		int extended = 0;
@@ -97,12 +105,19 @@ public class Division extends ArmorAbility {
 					extend(hero.pointsInTalent(Talent.ARIS_ARMOR2_3) * 2);
 					extended++;
 				}
+				return 0;
 			}
 			return damage;
 		}
 
 		public void extend(float time) {
 			this.spend(time);
+		}
+
+		@Override
+		public void detach() {
+			super.detach();
+			Dungeon.hero.yellI(Messages.get(Division.class, "detach"));
 		}
 	}
 }
