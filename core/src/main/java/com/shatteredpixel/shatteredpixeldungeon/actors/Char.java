@@ -98,6 +98,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.YogDzewa;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.MirrorImage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.PrismaticImage;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;

@@ -138,7 +138,7 @@ public class WelcomeScene extends PixelScene {
 		signs.x = title.x + (title.width() - signs.width())/2f;
 		signs.y = title.y;
 		add( signs );
-		
+
 		StyledButton okay = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "continue")){
 			@Override
 			protected void onClick() {
@@ -306,5 +306,5 @@ public class WelcomeScene extends PixelScene {
 
 		SPDSettings.version(ShatteredPixelDungeon.versionCode);
 	}
-	
+
 }

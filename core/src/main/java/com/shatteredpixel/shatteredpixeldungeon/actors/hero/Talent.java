@@ -309,7 +309,7 @@ public enum Talent {
 	RECALL_INSCRIPTION			(-1, 5),
 	SUNRAY						(-1, 5),
 	DIVINE_SENSE				(-1, 5),
-	BLESS(168),
+	BLESS						(-1, 5),
 	//Cleric T3
 	CLEANSE						(-1, 5, 3),
 	LIGHT_READING				(-1, 5, 3),

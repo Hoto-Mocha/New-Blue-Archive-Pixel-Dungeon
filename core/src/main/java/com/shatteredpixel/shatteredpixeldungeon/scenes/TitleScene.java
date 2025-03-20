@@ -56,10 +56,10 @@ import com.watabou.utils.DeviceCompat;
 import java.util.Date;
 
 public class TitleScene extends PixelScene {
-	
+
 	@Override
 	public void create() {
-		
+
 		super.create();
 
 		Music.INSTANCE.playTracks(
@@ -68,10 +68,10 @@ public class TitleScene extends PixelScene {
 				false);
 
 		uiCamera.visible = false;
-		
+
 		int w = Camera.main.width;
 		int h = Camera.main.height;
-		
+
 		Archs archs = new Archs();
 		archs.setSize( w, h );
 		add( archs );
@@ -114,7 +114,7 @@ public class TitleScene extends PixelScene {
 		add( signs );
 
 		final Chrome.Type GREY_TR = Chrome.Type.GREY_BUTTON_TR;
-		
+
 		StyledButton btnPlay = new StyledButton(GREY_TR, Messages.get(this, "enter")){
 			@Override
 			protected void onClick() {
@@ -126,7 +126,7 @@ public class TitleScene extends PixelScene {
 					ShatteredPixelDungeon.switchNoFade( StartScene.class );
 				}
 			}
-			
+
 			@Override
 			protected boolean onLongClick() {
 				//making it easier to start runs quickly while debugging
@@ -183,7 +183,7 @@ public class TitleScene extends PixelScene {
 		};
 		btnAbout.icon(Icons.get(Icons.SHPX));
 		add(btnAbout);
-		
+
 		final int BTN_HEIGHT = 20;
 		int GAP = (int)(h - topRegion - (landscape() ? 3 : 4)*BTN_HEIGHT)/3;
 		GAP /= landscape() ? 3 : 5;

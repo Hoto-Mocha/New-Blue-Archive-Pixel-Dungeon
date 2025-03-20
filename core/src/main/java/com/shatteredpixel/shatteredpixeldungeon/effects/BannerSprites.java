@@ -27,30 +27,38 @@ import com.watabou.noosa.Image;
 public class BannerSprites {
 
 	public enum  Type {
-		PIXEL_DUNGEON,
+		TITLE_PORT,
+		TITLE_GLOW_PORT,
+		TITLE_LAND,
+		TITLE_GLOW_LAND,
 		BOSS_SLAIN,
 		GAME_OVER,
-		SELECT_YOUR_HERO,
-		PIXEL_DUNGEON_SIGNS
+		SELECT_YOUR_HERO
 	}
 
 	public static Image get( Type type ) {
 		Image icon = new Image( Assets.Interfaces.BANNERS );
 		switch (type) {
-			case PIXEL_DUNGEON:
-				icon.frame( icon.texture.uvRect( 0, 0, 188, 103 ) );
+			case TITLE_PORT:
+				icon.frame( icon.texture.uvRect( 0, 0, 184, 98 ) );
+				break;
+			case TITLE_GLOW_PORT:
+				icon.frame( icon.texture.uvRect( 184, 0, 368, 98 ) );
+				break;
+			case TITLE_LAND:
+				icon.frame( icon.texture.uvRect( 0, 98, 216, 178) );
+				break;
+			case TITLE_GLOW_LAND:
+				icon.frame( icon.texture.uvRect( 216, 98, 432, 178 ) );
 				break;
 			case BOSS_SLAIN:
-				icon.frame( icon.texture.uvRect( 0, 210, 128, 245 ) );
+				icon.frame( icon.texture.uvRect( 0, 157+64, 128, 192+64 ) );
 				break;
 			case GAME_OVER:
-				icon.frame( icon.texture.uvRect( 0, 245, 128, 280 ) );
+				icon.frame( icon.texture.uvRect( 0, 192+64, 128, 227+64 ) );
 				break;
 			case SELECT_YOUR_HERO:
-				icon.frame( icon.texture.uvRect( 0, 280, 128, 301 ) );
-				break;
-			case PIXEL_DUNGEON_SIGNS:
-				icon.frame( icon.texture.uvRect( 0, 106, 188, 210 ) );
+				icon.frame( icon.texture.uvRect( 0, 227+64, 128, 248+64 ) );
 				break;
 		}
 		return icon;
