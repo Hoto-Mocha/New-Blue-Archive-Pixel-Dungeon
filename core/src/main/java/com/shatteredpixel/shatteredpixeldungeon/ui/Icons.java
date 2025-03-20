@@ -132,7 +132,11 @@ public enum Icons {
 	KRISTJAN,
 	CUBE_CODE,
 	PURIGRO,
-	ARCNOR;
+	ARCNOR,
+
+	//new icons
+	DISCORD,
+	GITHUB;
 
 	public Image get() {
 		return get( this );
@@ -424,6 +428,14 @@ public enum Icons {
 			case CUBE_CODE:
 				icon.frame( icon.texture.uvRectBySize( 160, 96, 27, 30 ) );
 				icon.scale.set(PixelScene.align(0.49f));
+				break;
+
+			//new icons
+			case DISCORD:
+				icon.frame( icon.texture.uvRectBySize( 0, 128, 16, 16 ) );
+				break;
+			case GITHUB:
+				icon.frame( icon.texture.uvRectBySize( 16, 128, 16, 16 ) );
 				break;
 
 		}
