@@ -1267,6 +1267,7 @@ public enum Talent {
 		switch (cls){
 			case ARIS: default:
 				Collections.addAll(tierTalents, ARIS_T2_1, ARIS_T2_2, ARIS_T2_3, ARIS_T2_4, ARIS_T2_5);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, IRON_STOMACH, LIQUID_WILLPOWER, RUNIC_TRANSFERENCE, LETHAL_MOMENTUM, IMPROVISED_PROJECTILES);
 				break;
@@ -1298,6 +1299,7 @@ public enum Talent {
 		switch (cls){
 			case ARIS: default:
 				Collections.addAll(tierTalents, ARIS_T3_1, ARIS_T3_2);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HOLD_FAST, STRONGMAN);
 				break;
