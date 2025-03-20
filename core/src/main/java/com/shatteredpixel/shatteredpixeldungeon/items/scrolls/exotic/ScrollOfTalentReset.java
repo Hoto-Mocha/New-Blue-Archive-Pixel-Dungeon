@@ -40,10 +40,14 @@ public class ScrollOfTalentReset extends ExoticScroll {
 	@Override
 	public void doRead() {
 		detach(curUser.belongings.backpack);
-		Dungeon.hero.resetTalent();
-		GLog.p(Messages.get(this, "reset"));
+		resetTalent();
 		((HeroSprite)curUser.sprite).read();
 		Sample.INSTANCE.play(Assets.Sounds.READ);
+	}
+
+	public void resetTalent() {
+		Dungeon.hero.resetTalent();
+		GLog.p(Messages.get(this, "reset"));
 		new Flare( 6, 32 ).color(0xFFFF00, true).show( curUser.sprite, 2f );
 		StatusPane.talentBlink = 10f;
 	}
