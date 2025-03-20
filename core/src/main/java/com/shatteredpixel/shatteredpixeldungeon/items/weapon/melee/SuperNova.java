@@ -267,10 +267,10 @@ public class SuperNova extends MeleeWeapon {
                     int dialogNumber = Random.Int(3)+1;
                     GLog.i( "%s: \"%s ", Messages.titleCase(hero.name()), Messages.get(Hero.class, "aris_supernova_" + dialogNumber) );
                     float delay = 1.2f;
+                    hero.busy();
                     hero.sprite.parent.add(new Tweener(hero.sprite.parent, delay) { //delay초 후에 작동하도록 설정한 Tweener
                         @Override
                         protected void updateValues(float progress) { //시간이 지남에 따라 실행되는 함수
-                            hero.spendAndNext(0); //아직 쏘지 않았을 경우 행동할 수 없다.
                             if (Math.floor(100*progress % 10f) == 0 && progress < 1f) { // 0~1초 사이에서 0.1초 마다 실행
                                 Emitter e = hero.sprite.centerEmitter();
                                 if (e != null) e.burst(LightParticle.FACTORY, 1);
