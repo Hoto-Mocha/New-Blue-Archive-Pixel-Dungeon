@@ -53,7 +53,7 @@ public class ChangeButton extends Component {
 	}
 	
 	protected void onClick() {
-		ChangesScene.showChangeInfo(new Image(icon), title, messages);
+//		ChangesScene.showChangeInfo(new Image(icon), title, messages);
 	}
 	
 	@Override
