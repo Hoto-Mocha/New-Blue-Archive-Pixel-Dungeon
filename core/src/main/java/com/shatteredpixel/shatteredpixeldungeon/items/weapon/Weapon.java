@@ -357,6 +357,9 @@ abstract public class Weapon extends KindOfWeapon {
 	}
 	
 	public Item upgrade(boolean enchant ) {
+		if (enchantment != null && Dungeon.hero.pointsInTalent(Talent.ARIS_T2_3) == 2) {
+			enchant = true;
+		}
 
 		if (enchant){
 			if (enchantment == null){

@@ -403,6 +403,9 @@ public class Armor extends EquipableItem {
 	}
 	
 	public Item upgrade( boolean inscribe ) {
+		if (glyph != null && Dungeon.hero.pointsInTalent(Talent.ARIS_T2_3) == 2) {
+			inscribe = true;
+		}
 
 		if (inscribe){
 			if (glyph == null){
