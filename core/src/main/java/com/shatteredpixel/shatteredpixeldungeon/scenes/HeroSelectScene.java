@@ -175,6 +175,7 @@ public class HeroSelectScene extends PixelScene {
 		add(infoButton);
 
 		for (HeroClass cl : HeroClass.values()){
+			//skip the original classes
 			if (cl == HeroClass.WARRIOR || cl == HeroClass.MAGE || cl == HeroClass.ROGUE || cl == HeroClass.HUNTRESS || cl == HeroClass.DUELIST || cl == HeroClass.CLERIC) continue;
 			HeroBtn button = new HeroBtn(cl);
 			add(button);
