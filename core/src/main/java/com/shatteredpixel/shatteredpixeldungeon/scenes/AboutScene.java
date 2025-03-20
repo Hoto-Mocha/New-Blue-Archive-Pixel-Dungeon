@@ -62,6 +62,17 @@ public class AboutScene extends PixelScene {
 		Component content = list.content();
 		content.clear();
 
+		CreditsBlock arranged = new CreditsBlock(true, Window.BAPD_COLOR,
+				"Re Blue Archive Pixel Dungeon",
+				Icons.HIKARI.get(),
+				"Developed by: _Cocoa_\nBased on Shattered Pixel Dungeon's open source",
+				"github repository",
+				"https://github.com/Hoto-Mocha/New-Blue-Archive-Pixel-Dungeon");
+		arranged.setRect((w - fullWidth)/2f, 6, colWidth, 0);
+		content.add(arranged);
+
+		addLine(arranged.bottom() + 4, content);
+
 		//*** Shattered Pixel Dungeon Credits ***
 
 		CreditsBlock shpx = new CreditsBlock(true, Window.SHPX_COLOR,
@@ -71,9 +82,9 @@ public class AboutScene extends PixelScene {
 				"ShatteredPixel.com",
 				"https://ShatteredPixel.com");
 		if (landscape()){
-			shpx.setRect((w - fullWidth)/2f - 6, 10, 120, 0);
+			shpx.setRect(arranged.left(), arranged.bottom()+12, colWidth, 0);
 		} else {
-			shpx.setRect((w - fullWidth)/2f, 6, 120, 0);
+			shpx.setRect((w - fullWidth)/2f, arranged.bottom()+8, colWidth, 0);
 		}
 		content.add(shpx);
 
