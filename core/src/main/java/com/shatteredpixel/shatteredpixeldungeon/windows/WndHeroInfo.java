@@ -175,7 +175,13 @@ public class WndHeroInfo extends WndTabbed {
 			}
 
 			switch (cls){
-				case WARRIOR: default:
+				case ARIS: default:
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SEAL),
+							new ItemSprite(ItemSpriteSheet.WORN_SHORTSWORD),
+							new ItemSprite(ItemSpriteSheet.SUPER_NOVA),
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+					break;
+				case WARRIOR:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SEAL),
 							new ItemSprite(ItemSpriteSheet.WORN_SHORTSWORD),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
@@ -202,11 +208,6 @@ public class WndHeroInfo extends WndTabbed {
 							new ItemSprite(ItemSpriteSheet.WAR_HAMMER),
 							new ItemSprite(ItemSpriteSheet.THROWING_SPIKE),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
-					break;
-				case ARIS:
-					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SEAL),
-							new ItemSprite(ItemSpriteSheet.WORN_SHORTSWORD),
-							new ItemSprite(ItemSpriteSheet.SUPER_NOVA)};
 					break;
 				case CLERIC:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.ARTIFACT_TOME),
