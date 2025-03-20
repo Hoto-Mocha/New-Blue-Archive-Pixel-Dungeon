@@ -82,6 +82,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMappi
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.shatteredpixeldungeon.items.spells.MagicalInfusion;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
@@ -147,6 +148,7 @@ public enum HeroClass {
 			new TengusMask().collect();
 			new KingsCrown().collect();
 			new PotionOfLiquidFlame().identify().quantity(100).collect();
+			new MagicalInfusion().quantity(10).collect();
 		}
 
 		new ScrollOfIdentify().identify();
@@ -208,6 +210,25 @@ public enum HeroClass {
 				return Badges.Badge.MASTERY_CLERIC;
 		}
 		return null;
+	}
+
+	private static void initAris(Hero hero) {
+		(hero.belongings.weapon = new WornShortsword()).identify();
+		SuperNova superNova = new SuperNova();
+		superNova.collect();
+		Dungeon.quickslot.setSlot(0, superNova);
+
+		ThrowingStone stones = new ThrowingStone();
+		stones.quantity(3).collect();
+		Dungeon.quickslot.setSlot(1, stones);
+
+		if (hero.belongings.armor != null){
+			hero.belongings.armor.affixSeal(new BrokenSeal());
+			Catalog.setSeen(BrokenSeal.class); //as it's not added to the inventory
+		}
+
+		new PotionOfHealing().identify();
+		new ScrollOfRage().identify();
 	}
 
 	private static void initWarrior( Hero hero ) {
@@ -281,22 +302,6 @@ public enum HeroClass {
 
 		new PotionOfStrength().identify();
 		new ScrollOfMirrorImage().identify();
-	}
-
-	private static void initAris(Hero hero) {
-		(hero.belongings.weapon = new WornShortsword()).identify();
-		SuperNova superNova = new SuperNova();
-		superNova.collect();
-
-		Dungeon.quickslot.setSlot(0, superNova);
-
-		if (hero.belongings.armor != null){
-			hero.belongings.armor.affixSeal(new BrokenSeal());
-			Catalog.setSeen(BrokenSeal.class); //as it's not added to the inventory
-		}
-
-		new PotionOfHealing().identify();
-		new ScrollOfRage().identify();
 	}
 
 	private static void initCleric( Hero hero ) {
