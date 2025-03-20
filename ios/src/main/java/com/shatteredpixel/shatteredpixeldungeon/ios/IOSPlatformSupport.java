@@ -169,17 +169,29 @@ public class IOSPlatformSupport extends PlatformSupport {
 		}
 	}
 
+<<<<<<< HEAD
 	//splits on newlines, underscores, and chinese/japaneses characters
 	private Pattern regularsplitter = Pattern.compile(
 			"(?<=\n)|(?=\n)|(?<=_)|(?=_)|" +
+=======
+	//splits on newline (for layout), chinese/japanese (for font choice), and '_'/'**' (for highlighting)
+	private Pattern regularsplitter = Pattern.compile(
+			"(?<=\n)|(?=\n)|(?<=_)|(?=_)|(?<=\\*\\*)|(?=\\*\\*)|" +
+>>>>>>> e9739dcc20ea1f969c6a04a4031bd3f81ec667bc
 					"(?<=\\p{InHiragana})|(?=\\p{InHiragana})|" +
 					"(?<=\\p{InKatakana})|(?=\\p{InKatakana})|" +
 					"(?<=\\p{InCJK_Unified_Ideographs})|(?=\\p{InCJK_Unified_Ideographs})|" +
 					"(?<=\\p{InCJK_Symbols_and_Punctuation})|(?=\\p{InCJK_Symbols_and_Punctuation})");
 
+<<<<<<< HEAD
 	//additionally splits on words, so that each word can be arranged individually
 	private Pattern regularsplitterMultiline = Pattern.compile(
 			"(?<= )|(?= )|(?<=\n)|(?=\n)|(?<=_)|(?=_)|" +
+=======
+	//additionally splits on spaces, so that each word can be laid out individually
+	private Pattern regularsplitterMultiline = Pattern.compile(
+			"(?<= )|(?= )|(?<=\n)|(?=\n)|(?<=_)|(?=_)|(?<=\\*\\*)|(?=\\*\\*)|" +
+>>>>>>> e9739dcc20ea1f969c6a04a4031bd3f81ec667bc
 					"(?<=\\p{InHiragana})|(?=\\p{InHiragana})|" +
 					"(?<=\\p{InKatakana})|(?=\\p{InKatakana})|" +
 					"(?<=\\p{InCJK_Unified_Ideographs})|(?=\\p{InCJK_Unified_Ideographs})|" +

@@ -493,7 +493,7 @@ public class WndRanking extends WndTabbed {
 		@Override
 		protected void createChildren() {
 			
-			bg = new ColorBlock( 28, HEIGHT, 0x60707070 );
+			bg = new ColorBlock( 28, HEIGHT, 0x9953564D );
 			add( bg );
 			
 			slot = new ItemSlot();
@@ -560,7 +560,7 @@ public class WndRanking extends WndTabbed {
 
 		@Override
 		protected void createChildren() {
-			bg = new ColorBlock( 1, 1, 0x60707070 );
+			bg = new ColorBlock( 1, 1, 0x9953564D );
 			add( bg );
 
 			super.createChildren();

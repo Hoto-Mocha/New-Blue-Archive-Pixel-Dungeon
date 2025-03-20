@@ -50,6 +50,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.DivineSense;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.RecallInscription;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
@@ -62,6 +70,14 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
+import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
@@ -70,6 +86,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -85,6 +102,15 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.Image;
+import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Bundle;
+import com.watabou.utils.GameMath;
+import com.watabou.utils.PathFinder;
+import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -272,6 +298,41 @@ public enum Talent {
 	FEIGNED_RETREAT				(-1, 4, 4),
 	EXPOSE_WEAKNESS				(-1, 4, 4),
 	COUNTER_ABILITY				(-1, 4, 4),
+
+	//Cleric T1
+	SATIATED_SPELLS				(-1, 5),
+	HOLY_INTUITION				(-1, 5),
+	SEARING_LIGHT				(-1, 5),
+	SHIELD_OF_LIGHT				(-1, 5),
+	//Cleric T2
+	ENLIGHTENING_MEAL			(-1, 5),
+	RECALL_INSCRIPTION			(-1, 5),
+	SUNRAY						(-1, 5),
+	DIVINE_SENSE				(-1, 5),
+	BLESS(168),
+	//Cleric T3
+	CLEANSE						(-1, 5, 3),
+	LIGHT_READING				(-1, 5, 3),
+	//Priest T3
+	HOLY_LANCE					(-1, 5, 3),
+	HALLOWED_GROUND				(-1, 5, 3),
+	MNEMONIC_PRAYER				(-1, 5, 3),
+	//Paladin T3
+	LAY_ON_HANDS				(-1, 5, 3),
+	AURA_OF_PROTECTION			(-1, 5, 3),
+	WALL_OF_LIGHT				(-1, 5, 3),
+	//Ascended Form T4
+	DIVINE_INTERVENTION			(-1, 5, 4),
+	JUDGEMENT					(-1, 5, 4),
+	FLASH						(-1, 5, 4),
+	//Trinity T4
+	BODY_FORM					(-1, 5, 4),
+	MIND_FORM					(-1, 5, 4),
+	SPIRIT_FORM					(-1, 5, 4),
+	//Power of Many T4
+	BEAMING_RAY					(-1, 5, 4),
+	LIFE_LINK					(-1, 5, 4), 
+	STASIS						(-1, 5, 4),
 
 	//Aris T1
 	ARIS_T1_1(0, 0, 2),
@@ -525,7 +586,22 @@ public enum Talent {
 			wepAbilUsed = bundle.getBoolean(WEP_ABIL_USED);
 		}
 	}
-	public static class CounterAbilityTacker extends FlavourBuff{};
+	public static class CounterAbilityTacker extends FlavourBuff{}
+	public static class SatiatedSpellsTracker extends Buff{
+		@Override
+		public int icon() {
+			return BuffIndicator.SPELL_FOOD;
+		}
+	}
+	//used for metamorphed searing light
+	public static class SearingLightCooldown extends FlavourBuff{
+		@Override
+		public int icon() {
+			return BuffIndicator.TIME;
+		}
+		public void tintIcon(Image icon) { icon.hardlight(0f, 0f, 1f); }
+		public float iconFadePercent() { return Math.max(0, visualcooldown() / 20); }
+	}
 
 	int icon;
 	int maxPoints;
@@ -660,11 +736,12 @@ public enum Talent {
 			}
 		}
 
-		if (talent == HEIGHTENED_SENSES || talent == FARSIGHT){
+		if (talent == HEIGHTENED_SENSES || talent == FARSIGHT || talent == DIVINE_SENSE){
 			Dungeon.observe();
 		}
 
-		if (talent == TWIN_UPGRADES || talent == DESPERATE_POWER || talent == STRONGMAN){
+		if (talent == TWIN_UPGRADES || talent == DESPERATE_POWER
+				|| talent == STRONGMAN || talent == DURABLE_PROJECTILES){
 			Item.updateQuickslot();
 		}
 
@@ -686,6 +763,20 @@ public enum Talent {
 			if (hero.belongings.weapon() != null && !ShardOfOblivion.passiveIDDisabled())  {
 				hero.belongings.weapon.identify();
 			}
+		}
+		if (talent == LIGHT_READING && hero.heroClass == HeroClass.CLERIC){
+			for (Item item : Dungeon.hero.belongings.backpack){
+				if (item instanceof HolyTome){
+					if (!hero.belongings.lostInventory() || item.keptThroughLostInventory()) {
+						((HolyTome) item).activate(Dungeon.hero);
+					}
+				}
+			}
+		}
+
+		//if we happen to have spirit form applied with a ring of might
+		if (talent == SPIRIT_FORM){
+			Dungeon.hero.updateHT(false);
 		}
 	}
 
@@ -743,6 +834,37 @@ public enum Talent {
 			} else {
 				// lvl/3 / lvl/2 bonus dmg on next hit for other classes
 				Buff.affect( hero, PhysicalEmpower.class).set(Math.round(hero.lvl / (4f - hero.pointsInTalent(FOCUSED_MEAL))), 1);
+			}
+		}
+		if (hero.hasTalent(SATIATED_SPELLS)){
+			if (hero.heroClass == HeroClass.CLERIC) {
+				Buff.affect(hero, SatiatedSpellsTracker.class);
+			} else {
+				//3/5 shielding, delayed up to 10 turns
+				int amount = 1 + 2*hero.pointsInTalent(SATIATED_SPELLS);
+				Barrier b = Buff.affect(hero, Barrier.class);
+				if (b.shielding() <= amount){
+					b.setShield(amount);
+					b.delay(Math.max(10-b.cooldown(), 0));
+				}
+			}
+		}
+		if (hero.hasTalent(ENLIGHTENING_MEAL)){
+			if (hero.heroClass == HeroClass.CLERIC) {
+				HolyTome tome = hero.belongings.getItem(HolyTome.class);
+				if (tome != null) {
+					tome.directCharge( 0.5f * (1+hero.pointsInTalent(ENLIGHTENING_MEAL)));
+					ScrollOfRecharging.charge(hero);
+				}
+			} else {
+				//2/3 turns of recharging
+				ArtifactRecharge buff = Buff.affect( hero, ArtifactRecharge.class);
+				if (buff.left() < 1 + (hero.pointsInTalent(ENLIGHTENING_MEAL))){
+					Buff.affect( hero, ArtifactRecharge.class).set(1 + (hero.pointsInTalent(ENLIGHTENING_MEAL))).ignoreHornOfPlenty = foodSource instanceof HornOfPlenty;
+				}
+				Buff.prolong( hero, Recharging.class, 1 + (hero.pointsInTalent(ENLIGHTENING_MEAL)) );
+				ScrollOfRecharging.charge( hero );
+				SpellSprite.show(hero, SpellSprite.CHARGE);
 			}
 		}
 	}
@@ -839,7 +961,7 @@ public enum Talent {
 		}
 	}
 
-	public static void onScrollUsed( Hero hero, int pos, float factor ){
+	public static void onScrollUsed( Hero hero, int pos, float factor, Class<?extends Item> cls ){
 		if (hero.hasTalent(INSCRIBED_POWER)){
 			// 2/3 empowered wand zaps
 			Buff.affect(hero, ScrollEmpower.class).reset((int) (factor * (1 + hero.pointsInTalent(INSCRIBED_POWER))));
@@ -849,19 +971,34 @@ public enum Talent {
 			Buff.affect(hero, Invisibility.class, factor * (1 + 2*hero.pointsInTalent(INSCRIBED_STEALTH)));
 			Sample.INSTANCE.play( Assets.Sounds.MELD );
 		}
+		if (hero.hasTalent(RECALL_INSCRIPTION) && Scroll.class.isAssignableFrom(cls) && cls != ScrollOfUpgrade.class){
+			if (hero.heroClass == HeroClass.CLERIC){
+				Buff.prolong(hero, RecallInscription.UsedItemTracker.class, hero.pointsInTalent(RECALL_INSCRIPTION) == 2 ? 300 : 10).item = cls;
+			} else {
+				// 10/15%
+				if (Random.Int(20) < 1 + hero.pointsInTalent(RECALL_INSCRIPTION)){
+					Reflection.newInstance(cls).collect();
+					GLog.p("refunded!");
+				}
+			}
+		}
 	}
 
-	public static void onUpgradeScrollUsed( Hero hero ){
-		if (hero.hasTalent(INSCRIBED_POWER)){
-			if (hero.heroClass == HeroClass.MAGE) {
-				MagesStaff staff = hero.belongings.getItem(MagesStaff.class);
-				if (staff != null) {
-					staff.gainCharge(2 + 2 * hero.pointsInTalent(INSCRIBED_POWER), true);
-					ScrollOfRecharging.charge(Dungeon.hero);
-					SpellSprite.show(hero, SpellSprite.CHARGE);
-				}
+	public static void onRunestoneUsed( Hero hero, int pos, Class<?extends Item> cls ){
+		if (hero.hasTalent(RECALL_INSCRIPTION) && Runestone.class.isAssignableFrom(cls)){
+			if (hero.heroClass == HeroClass.CLERIC){
+				Buff.prolong(hero, RecallInscription.UsedItemTracker.class, hero.pointsInTalent(RECALL_INSCRIPTION) == 2 ? 300 : 10).item = cls;
 			} else {
-				Buff.affect(hero, Recharging.class, 4 + 8 * hero.pointsInTalent(INSCRIBED_POWER));
+
+				//don't trigger on 1st intuition use
+				if (cls.equals(StoneOfIntuition.class) && hero.buff(StoneOfIntuition.IntuitionUseTracker.class) != null){
+					return;
+				}
+				// 10/15%
+				if (Random.Int(20) < 1 + hero.pointsInTalent(RECALL_INSCRIPTION)){
+					Reflection.newInstance(cls).collect();
+					GLog.p("refunded!");
+				}
 			}
 		}
 	}
@@ -869,6 +1006,27 @@ public enum Talent {
 	public static void onArtifactUsed( Hero hero ){
 		if (hero.hasTalent(ENHANCED_RINGS)){
 			Buff.prolong(hero, EnhancedRings.class, 3f*hero.pointsInTalent(ENHANCED_RINGS));
+		}
+
+		if (Dungeon.hero.heroClass != HeroClass.CLERIC
+				&& Dungeon.hero.hasTalent(Talent.DIVINE_SENSE)){
+			Buff.prolong(Dungeon.hero, DivineSense.DivineSenseTracker.class, Dungeon.hero.cooldown()+1);
+		}
+
+		// 10/20/30%
+		if (Dungeon.hero.heroClass != HeroClass.CLERIC
+				&& Dungeon.hero.hasTalent(Talent.CLEANSE)
+				&& Random.Int(10) < Dungeon.hero.pointsInTalent(Talent.CLEANSE)){
+			boolean removed = false;
+			for (Buff b : Dungeon.hero.buffs()) {
+				if (b.type == Buff.buffType.NEGATIVE) {
+					b.detach();
+					removed = true;
+				}
+			}
+			if (removed && Dungeon.hero.sprite != null) {
+				new Flare( 6, 32 ).color(0xFF4CD2, true).show( Dungeon.hero.sprite, 2f );
+			}
 		}
 	}
 
@@ -1054,11 +1212,6 @@ public enum Talent {
 		}
 	}
 
-
-
-
-
-
 	//new buff here
 
 	public static final int MAX_TALENT_TIERS = 4;
@@ -1080,7 +1233,10 @@ public enum Talent {
 
 		//tier 1
 		switch (cls){
-			case WARRIOR: default:
+			case ARIS: default:
+				Collections.addAll(tierTalents, ARIS_T1_1, ARIS_T1_2, ARIS_T1_3, ARIS_T1_4);
+				break;
+			case WARRIOR:
 				Collections.addAll(tierTalents, HEARTY_MEAL, VETERANS_INTUITION, PROVOKED_ANGER, IRON_WILL);
 				break;
 			case MAGE:
@@ -1095,10 +1251,9 @@ public enum Talent {
 			case DUELIST:
 				Collections.addAll(tierTalents, STRENGTHENING_MEAL, ADVENTURERS_INTUITION, PATIENT_STRIKE, AGGRESSIVE_BARRIER);
 				break;
-			case ARIS:
-				Collections.addAll(tierTalents, ARIS_T1_1, ARIS_T1_2, ARIS_T1_3, ARIS_T1_4);
+			case CLERIC:
+				Collections.addAll(tierTalents, SATIATED_SPELLS, HOLY_INTUITION, SEARING_LIGHT, SHIELD_OF_LIGHT);
 				break;
-
 		}
 		for (Talent talent : tierTalents){
 			if (replacements.containsKey(talent)){
@@ -1110,7 +1265,9 @@ public enum Talent {
 
 		//tier 2
 		switch (cls){
-			case WARRIOR: default:
+			case ARIS: default:
+				Collections.addAll(tierTalents, ARIS_T2_1, ARIS_T2_2, ARIS_T2_3, ARIS_T2_4, ARIS_T2_5);
+			case WARRIOR:
 				Collections.addAll(tierTalents, IRON_STOMACH, LIQUID_WILLPOWER, RUNIC_TRANSFERENCE, LETHAL_MOMENTUM, IMPROVISED_PROJECTILES);
 				break;
 			case MAGE:
@@ -1125,8 +1282,8 @@ public enum Talent {
 			case DUELIST:
 				Collections.addAll(tierTalents, FOCUSED_MEAL, LIQUID_AGILITY, WEAPON_RECHARGING, LETHAL_HASTE, SWIFT_EQUIP);
 				break;
-			case ARIS:
-				Collections.addAll(tierTalents, ARIS_T2_1, ARIS_T2_2, ARIS_T2_3, ARIS_T2_4, ARIS_T2_5);
+			case CLERIC:
+				Collections.addAll(tierTalents, ENLIGHTENING_MEAL, RECALL_INSCRIPTION, SUNRAY, DIVINE_SENSE, BLESS);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1139,7 +1296,9 @@ public enum Talent {
 
 		//tier 3
 		switch (cls){
-			case WARRIOR: default:
+			case ARIS: default:
+				Collections.addAll(tierTalents, ARIS_T3_1, ARIS_T3_2);
+			case WARRIOR:
 				Collections.addAll(tierTalents, HOLD_FAST, STRONGMAN);
 				break;
 			case MAGE:
@@ -1154,8 +1313,8 @@ public enum Talent {
 			case DUELIST:
 				Collections.addAll(tierTalents, PRECISE_ASSAULT, DEADLY_FOLLOWUP);
 				break;
-			case ARIS:
-				Collections.addAll(tierTalents, ARIS_T3_1, ARIS_T3_2);
+			case CLERIC:
+				Collections.addAll(tierTalents, CLEANSE, LIGHT_READING);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1185,7 +1344,13 @@ public enum Talent {
 
 		//tier 3
 		switch (cls){
-			case BERSERKER: default:
+			case LIGHT_HERO: default:
+				Collections.addAll(tierTalents, ARIS_EX1_1, ARIS_EX1_2, ARIS_EX1_3);
+				break;
+			case BATTERY_CHARGE:
+				Collections.addAll(tierTalents, ARIS_EX2_1, ARIS_EX2_2, ARIS_EX2_3);
+				break;
+			case BERSERKER:
 				Collections.addAll(tierTalents, ENDLESS_RAGE, DEATHLESS_FURY, ENRAGED_CATALYST);
 				break;
 			case GLADIATOR:
@@ -1215,11 +1380,11 @@ public enum Talent {
 			case MONK:
 				Collections.addAll(tierTalents, UNENCUMBERED_SPIRIT, MONASTIC_VIGOR, COMBINED_ENERGY);
 				break;
-			case LIGHT_HERO:
-				Collections.addAll(tierTalents, ARIS_EX1_1, ARIS_EX1_2, ARIS_EX1_3);
+			case PRIEST:
+				Collections.addAll(tierTalents, HOLY_LANCE, HALLOWED_GROUND, MNEMONIC_PRAYER);
 				break;
-			case BATTERY_CHARGE:
-				Collections.addAll(tierTalents, ARIS_EX2_1, ARIS_EX2_2, ARIS_EX2_3);
+			case PALADIN:
+				Collections.addAll(tierTalents, LAY_ON_HANDS, AURA_OF_PROTECTION, WALL_OF_LIGHT);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -1275,27 +1440,12 @@ public enum Talent {
 		//v2.4.0
 		removedTalents.add("TEST_SUBJECT");
 		removedTalents.add("TESTED_HYPOTHESIS");
-		//v2.2.0
-		removedTalents.add("EMPOWERING_SCROLLS");
 	}
 
 	private static final HashMap<String, String> renamedTalents = new HashMap<>();
 	static{
 		//v2.4.0
 		renamedTalents.put("SECONDARY_CHARGE",          "VARIED_CHARGE");
-
-		//v2.2.0
-		renamedTalents.put("RESTORED_WILLPOWER",        "LIQUID_WILLPOWER");
-		renamedTalents.put("ENERGIZING_UPGRADE",        "INSCRIBED_POWER");
-		renamedTalents.put("MYSTICAL_UPGRADE",          "INSCRIBED_STEALTH");
-		renamedTalents.put("RESTORED_NATURE",           "LIQUID_NATURE");
-		renamedTalents.put("RESTORED_AGILITY",          "LIQUID_AGILITY");
-		//v2.1.0
-		renamedTalents.put("LIGHTWEIGHT_CHARGE",        "PRECISE_ASSAULT");
-		//v2.0.0 BETA
-		renamedTalents.put("LIGHTLY_ARMED",             "UNENCUMBERED_SPIRIT");
-		//v2.0.0
-		renamedTalents.put("ARMSMASTERS_INTUITION",     "VETERANS_INTUITION");
 	}
 
 	public static void restoreTalentsFromBundle( Bundle bundle, Hero hero ){

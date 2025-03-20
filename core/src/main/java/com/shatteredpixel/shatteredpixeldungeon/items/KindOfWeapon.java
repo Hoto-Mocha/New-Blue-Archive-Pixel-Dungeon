@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -92,7 +93,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 
 	@Override
 	public boolean isEquipped( Hero hero ) {
-		return hero.belongings.weapon() == this || hero.belongings.secondWep() == this;
+		return hero != null && (hero.belongings.weapon() == this || hero.belongings.secondWep() == this);
 	}
 
 	private static boolean isSwiftEquipping = false;
@@ -112,6 +113,15 @@ abstract public class KindOfWeapon extends EquipableItem {
 			}
 		}
 
+		// 15/25% chance
+		if (hero.heroClass != HeroClass.CLERIC && hero.hasTalent(Talent.HOLY_INTUITION)
+				&& cursed && !cursedKnown
+				&& Random.Int(20) < 1 + 2*hero.pointsInTalent(Talent.HOLY_INTUITION)){
+			cursedKnown = true;
+			GLog.p(Messages.get(this, "curse_detected"));
+			return false;
+		}
+
 		detachAll( hero.belongings.backpack );
 		
 		if (hero.belongings.weapon == null || hero.belongings.weapon.doUnequip( hero, true )) {
@@ -119,7 +129,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 			hero.belongings.weapon = this;
 			activate( hero );
 			Talent.onItemEquipped(hero, this);
-//			Badges.validateDuelistUnlock();
+			Badges.validateDuelistUnlock();
 			updateQuickslot();
 
 			cursedKnown = true;
@@ -166,7 +176,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 			hero.belongings.secondWep = this;
 			activate( hero );
 			Talent.onItemEquipped(hero, this);
-//			Badges.validateDuelistUnlock();
+			Badges.validateDuelistUnlock();
 			updateQuickslot();
 
 			cursedKnown = true;

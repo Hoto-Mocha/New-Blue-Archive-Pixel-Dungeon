@@ -255,6 +255,7 @@ public class Assets {
 		public static final String ROGUE    = "splashes/rogue.jpg";
 		public static final String HUNTRESS = "splashes/huntress.jpg";
 		public static final String DUELIST  = "splashes/duelist.jpg";
+		public static final String CLERIC   = "splashes/cleric.jpg";
 		public static final String ARIS		= "splashes/aris.jpg";
 
 		public static final String SEWERS   = "splashes/sewers.jpg";

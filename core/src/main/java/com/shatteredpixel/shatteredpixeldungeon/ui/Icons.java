@@ -445,6 +445,8 @@ public enum Icons {
 	
 	public static Image get( HeroClass cl ) {
 		switch (cl) {
+			case ARIS:
+				return new ItemSprite(ItemSpriteSheet.SEAL);
 			case WARRIOR:
 				return new ItemSprite(ItemSpriteSheet.SEAL);
 			case MAGE:
@@ -459,8 +461,9 @@ public enum Icons {
 			case HUNTRESS:
 				return new ItemSprite(ItemSpriteSheet.SPIRIT_BOW);
 			case DUELIST:
-			case ARIS:
-				return new ItemSprite(ItemSpriteSheet.SEAL);
+				return new ItemSprite(ItemSpriteSheet.RAPIER);
+			case CLERIC:
+				return new ItemSprite(ItemSpriteSheet.ARTIFACT_TOME);
 			default:
 				return null;
 		}

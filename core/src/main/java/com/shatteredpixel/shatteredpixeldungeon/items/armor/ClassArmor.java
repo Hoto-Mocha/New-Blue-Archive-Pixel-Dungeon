@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.Trinity;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
@@ -99,6 +100,9 @@ abstract public class ClassArmor extends Armor {
 		ClassArmor classArmor = null;
 		
 		switch (owner.heroClass) {
+			case ARIS:
+				classArmor = new ArisArmor();
+				break;
 			case WARRIOR:
 				classArmor = new WarriorArmor();
 				break;
@@ -114,8 +118,8 @@ abstract public class ClassArmor extends Armor {
 			case DUELIST:
 				classArmor = new DuelistArmor();
 				break;
-			case ARIS:
-				classArmor = new ArisArmor();
+			case CLERIC:
+				classArmor = new ClericArmor();
 				break;
 		}
 		
@@ -300,7 +304,10 @@ abstract public class ClassArmor extends Armor {
 			if (ability != null) {
 				desc += "\n\n" + ability.shortDesc();
 				float chargeUse = ability.chargeUse(Dungeon.hero);
-				desc += " " + Messages.get(this, "charge_use", Messages.decimalFormat("#.##", chargeUse));
+				//trinity has variable charge cost
+				if (!(ability instanceof Trinity)) {
+					desc += " " + Messages.get(this, "charge_use", Messages.decimalFormat("#.##", chargeUse));
+				}
 			} else {
 				desc += "\n\n" + "_" + Messages.get(this, "no_ability") + "_";
 			}
