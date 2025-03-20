@@ -136,7 +136,8 @@ public enum Icons {
 
 	//new icons
 	DISCORD,
-	GITHUB;
+	GITHUB,
+	HIKARI;
 
 	public Image get() {
 		return get( this );
@@ -437,7 +438,9 @@ public enum Icons {
 			case GITHUB:
 				icon.frame( icon.texture.uvRectBySize( 16, 128, 16, 16 ) );
 				break;
-
+			case HIKARI:
+				icon.frame( icon.texture.uvRectBySize( 0, 144, 15, 19 ) );
+				break;
 		}
 		return icon;
 	}

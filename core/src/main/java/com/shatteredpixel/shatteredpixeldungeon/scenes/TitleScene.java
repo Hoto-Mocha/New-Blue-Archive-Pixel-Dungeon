@@ -374,7 +374,7 @@ public class TitleScene extends PixelScene {
 
 		public SupportButton( Chrome.Type type, String label ){
 			super(type, label);
-			icon(Icons.get(Icons.GOLD));
+			icon(Icons.get(Icons.DISCORD));
 			textColor(Window.TITLE_COLOR);
 		}
 
