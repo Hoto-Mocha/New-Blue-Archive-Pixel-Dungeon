@@ -290,27 +290,12 @@ public class Gun extends MeleeWeapon {
 
     @Override
     protected void duelistAbility(Hero hero, Integer target) {
-        if (round >= maxRound()*2) {
-            GLog.w(Messages.get(this, "overloaded"));
-            return;
-        }
 
-        beforeAbilityUsed(hero, null);
-        if (isAllLoaded()) {
-            onReload();
-            manualReload(maxRound(), true);
-        } else {
-            onReload();
-            quickReload();
-        }
-        hero.sprite.operate(hero.pos);
-        Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
-        hero.next();
-        afterAbilityUsed(hero);
     }
 
     public void reload() {
         onReload();
+        quickReload();
 
         hero.busy();
         hero.sprite.operate(hero.pos);
@@ -489,10 +474,10 @@ public class Gun extends MeleeWeapon {
         //근접 무기의 설명을 모두 가져옴, 여기에서 할 것은 근접 무기의 설명에 추가로 생기는 문장을 더하는 것
         if (levelKnown) { //감정되어 있을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_desc",
-                    shotPerShoot(), augment.damageFactor(bulletMin(buffedLvl())), augment.damageFactor(bulletMax(buffedLvl())), round, maxRound(), new DecimalFormat("#.##").format(reloadTime(hero)), bulletUse());
+                    shotPerShoot(), augment.damageFactor(bulletMin(buffedLvl())), augment.damageFactor(bulletMax(buffedLvl())), round, maxRound(), new DecimalFormat("#.##").format(reloadTime(hero)));
         } else { //감정되어 있지 않을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_typical_desc",
-                    shotPerShoot(), augment.damageFactor(bulletMin(0)), augment.damageFactor(bulletMax(0)), round, maxRound(), new DecimalFormat("#.##").format(reloadTime(hero)), bulletUse());
+                    shotPerShoot(), augment.damageFactor(bulletMin(0)), augment.damageFactor(bulletMax(0)), round, maxRound(), new DecimalFormat("#.##").format(reloadTime(hero)));
         }
         //DecimalFormat("#.##")은 .format()에 들어가는 매개변수(실수)를 "#.##"형식으로 표시하는데 사용된다.
         //가령 5.55555가 .format()안에 들어가서 .format(5.55555)라면, new DecimalFormat("#.##").format(5.55555)는 5.55라는 String 타입의 값을 반환한다.
@@ -674,7 +659,7 @@ public class Gun extends MeleeWeapon {
             if (explode) {
                 Char chInPos = Actor.findChar(cell);
                 ArrayList<Char> targets = new ArrayList<>();
-                int shootArea[] = PathFinder.NEIGHBOURS9;
+                int[] shootArea = PathFinder.NEIGHBOURS9;
 
                 for (int i : shootArea){
                     int c = cell + i;
