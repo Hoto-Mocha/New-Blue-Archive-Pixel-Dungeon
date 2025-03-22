@@ -301,6 +301,10 @@ public class MeleeWeapon extends Weapon {
 		}
 		return damage;
 	}
+
+	public int tier() {
+		return this.tier;
+	}
 	
 	@Override
 	public String info() {

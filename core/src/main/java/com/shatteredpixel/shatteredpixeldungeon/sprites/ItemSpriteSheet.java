@@ -827,9 +827,11 @@ public class ItemSpriteSheet {
 	private static final int SPECIAL_ITEMS 	= 								xy(1, 35);
 	public static final int EX_DISC	  		= SPECIAL_ITEMS+0;
 	public static final int TELEPORTER    	= SPECIAL_ITEMS+1;
+	public static final int GUNSMITHING_TOOL= SPECIAL_ITEMS+2;
 	static {
 		assignItemRect(EX_DISC,   		16, 14);
 		assignItemRect(TELEPORTER,    	14, 14);
+		assignItemRect(GUNSMITHING_TOOL,16, 13);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite
