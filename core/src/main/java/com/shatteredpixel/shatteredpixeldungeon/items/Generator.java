@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClericArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
@@ -173,6 +174,42 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WarHammer;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WarScythe;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Whip;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Bolas;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.FishingSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ForceCube;
@@ -224,7 +261,14 @@ public class Generator {
 		WEP_T3	( 0, 0, MeleeWeapon.class),
 		WEP_T4	( 0, 0, MeleeWeapon.class),
 		WEP_T5	( 0, 0, MeleeWeapon.class),
-		
+
+		GUN		( 0, 0, Gun.class ),
+		GUN_T1  ( 0, 0, Gun.class ),
+		GUN_T2  ( 0, 0, Gun.class ),
+		GUN_T3  ( 0, 0, Gun.class ),
+		GUN_T4  ( 0, 0, Gun.class ),
+		GUN_T5  ( 0, 0, Gun.class ),
+
 		ARMOR	( 2, 1, Armor.class ),
 		
 		MISSILE ( 1, 2, MissileWeapon.class ),
@@ -469,6 +513,69 @@ public class Generator {
 			};
 			WEP_T5.defaultProbs = new float[]{ 2, 2, 2, 2, 2, 2, 2 };
 			WEP_T5.probs = WEP_T5.defaultProbs.clone();
+
+			GUN.classes = new Class<?>[]{};
+			GUN.probs = new float[]{};
+
+			GUN_T1.classes = new Class<?>[]{
+					AR_T1.class,
+					GL_T1.class,
+					HG_T1.class,
+					MG_T1.class,
+					SG_T1.class,
+					SMG_T1.class,
+					SR_T1.class
+			};
+			GUN_T1.defaultProbs = new float[]{ 2, 2, 2, 2, 2, 2, 2 };
+			GUN_T1.probs = GUN_T1.defaultProbs.clone();
+
+			GUN_T2.classes = new Class<?>[]{
+					AR_T2.class,
+					GL_T2.class,
+					HG_T2.class,
+					MG_T2.class,
+					SG_T2.class,
+					SMG_T2.class,
+					SR_T2.class
+			};
+			GUN_T2.defaultProbs = new float[]{ 2, 2, 2, 2, 2, 2, 2 };
+			GUN_T2.probs = GUN_T2.defaultProbs.clone();
+
+			GUN_T3.classes = new Class<?>[]{
+					AR_T3.class,
+					GL_T3.class,
+					HG_T3.class,
+					MG_T3.class,
+					SG_T3.class,
+					SMG_T3.class,
+					SR_T3.class
+			};
+			GUN_T3.defaultProbs = new float[]{ 2, 2, 2, 2, 2, 2, 2 };
+			GUN_T3.probs = GUN_T3.defaultProbs.clone();
+
+			GUN_T4.classes = new Class<?>[]{
+					AR_T4.class,
+					GL_T4.class,
+					HG_T4.class,
+					MG_T4.class,
+					SG_T4.class,
+					SMG_T4.class,
+					SR_T4.class
+			};
+			GUN_T4.defaultProbs = new float[]{ 2, 2, 2, 2, 2, 2, 2 };
+			GUN_T4.probs = GUN_T4.defaultProbs.clone();
+
+			GUN_T5.classes = new Class<?>[]{
+					AR_T5.class,
+					GL_T5.class,
+					HG_T5.class,
+					MG_T5.class,
+					SG_T5.class,
+					SMG_T5.class,
+					SR_T5.class
+			};
+			GUN_T5.defaultProbs = new float[]{ 2, 2, 2, 2, 2, 2, 2 };
+			GUN_T5.probs = GUN_T5.defaultProbs.clone();
 			
 			//see Generator.randomArmor
 			ARMOR.classes = new Class<?>[]{
@@ -787,6 +894,14 @@ public class Generator {
 			Category.WEP_T5
 	};
 
+	public static final Category[] gunTiers = new Category[]{
+			Category.GUN_T1,
+			Category.GUN_T2,
+			Category.GUN_T3,
+			Category.GUN_T4,
+			Category.GUN_T5
+	};
+
 	public static MeleeWeapon randomWeapon(){
 		return randomWeapon(Dungeon.depth / 5);
 	}
@@ -804,10 +919,18 @@ public class Generator {
 		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
 
 		MeleeWeapon w;
-		if (useDefaults){
-			w = (MeleeWeapon) randomUsingDefaults(wepTiers[Random.chances(floorSetTierProbs[floorSet])]);
+		if (Dungeon.hero.heroClass == HeroClass.ARIS) {
+			if (useDefaults){
+				w = (MeleeWeapon) randomUsingDefaults(wepTiers[Random.chances(floorSetTierProbs[floorSet])]);
+			} else {
+				w = (MeleeWeapon) random(wepTiers[Random.chances(floorSetTierProbs[floorSet])]);
+			}
 		} else {
-			w = (MeleeWeapon) random(wepTiers[Random.chances(floorSetTierProbs[floorSet])]);
+			if (useDefaults){
+				w = (MeleeWeapon) randomUsingDefaults(gunTiers[Random.chances(floorSetTierProbs[floorSet])]);
+			} else {
+				w = (MeleeWeapon) random(gunTiers[Random.chances(floorSetTierProbs[floorSet])]);
+			}
 		}
 		return w;
 	}
