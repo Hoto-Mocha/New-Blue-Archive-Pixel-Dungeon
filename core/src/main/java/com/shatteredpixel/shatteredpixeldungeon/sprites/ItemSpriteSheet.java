@@ -834,6 +834,139 @@ public class ItemSpriteSheet {
 		assignItemRect(GUNSMITHING_TOOL,16, 13);
 	}
 
+	private static final int BULLETS		=			xy(1, 36);  //16 slots
+	public static final int SINGLE_BULLET	= BULLETS+0;
+	public static final int DOUBLE_BULLET	= BULLETS+1;
+	public static final int TRIPLE_BULLET	= BULLETS+2;
+	public static final int SNIPER_BULLET	= BULLETS+3;
+	public static final int GHOST_BULLET	= BULLETS+4;
+	public static final int NO_BULLET		= BULLETS+5;
+	static{
+		assignItemRect(SINGLE_BULLET	, 8, 8);
+		assignItemRect(DOUBLE_BULLET	, 11, 10);
+		assignItemRect(TRIPLE_BULLET	, 11, 11);
+		assignItemRect(SNIPER_BULLET	, 8, 8);
+		assignItemRect(GHOST_BULLET		, 8, 8);
+		assignItemRect(NO_BULLET		, 0, 0);
+	}
+
+	private static final int SPECIAL_BULLETS=			xy(1, 37);  //16 slots
+	public static final int GRENADE_GREEN	= SPECIAL_BULLETS+0;
+	public static final int GRENADE_RED		= SPECIAL_BULLETS+1;
+	public static final int GRENADE_WHITE	= SPECIAL_BULLETS+2;
+	public static final int ROCKET			= SPECIAL_BULLETS+3;
+	public static final int BATTERY_SINGLE	= SPECIAL_BULLETS+4;
+	public static final int BATTERY_DOUBLE	= SPECIAL_BULLETS+5;
+	public static final int BATTERY_POWER	= SPECIAL_BULLETS+6;
+	static{
+		assignItemRect(GRENADE_GREEN	, 7, 7);
+		assignItemRect(GRENADE_RED		, 7, 7);
+		assignItemRect(GRENADE_WHITE	, 7, 7);
+		assignItemRect(ROCKET			, 9, 9);
+		assignItemRect(BATTERY_SINGLE	, 10, 10);
+		assignItemRect(BATTERY_DOUBLE	, 12, 12);
+		assignItemRect(BATTERY_POWER	, 12, 12);
+	}
+
+	//guns
+	private static final int AR  =                                   xy(1, 38);  //8 slots
+	public static final int AR_TIER_1 = AR+0;
+	public static final int AR_TIER_2 = AR+1;
+	public static final int AR_TIER_3 = AR+2;
+	public static final int AR_TIER_4 = AR+3;
+	public static final int AR_TIER_5 = AR+4;
+	static{
+		assignItemRect(AR_TIER_1,	12, 13);
+		assignItemRect(AR_TIER_2,	13, 14);
+		assignItemRect(AR_TIER_3,	15, 16);
+		assignItemRect(AR_TIER_4,	16, 15);
+		assignItemRect(AR_TIER_5, 	15, 16);
+	}
+
+	private static final int GL  =                                   xy(9, 38);  //8 slots
+	public static final int GL_TIER_1 = GL+0;
+	public static final int GL_TIER_2 = GL+1;
+	public static final int GL_TIER_3 = GL+2;
+	public static final int GL_TIER_4 = GL+3;
+	public static final int GL_TIER_5 = GL+4;
+	static{
+		assignItemRect(GL_TIER_1,	11, 13);
+		assignItemRect(GL_TIER_2,	15, 15);
+		assignItemRect(GL_TIER_3,	15, 15);
+		assignItemRect(GL_TIER_4,	15, 15);
+		assignItemRect(GL_TIER_5, 	16, 16);
+	}
+
+	private static final int HG  =                                   xy(1, 39);  //8 slots
+	public static final int HG_TIER_1	= HG+0;
+	public static final int HG_TIER_2	= HG+1;
+	public static final int HG_TIER_3	= HG+2;
+	public static final int HG_TIER_4	= HG+3;
+	public static final int HG_TIER_5	= HG+4;
+	static{
+		assignItemRect(HG_TIER_1,	9, 12);
+		assignItemRect(HG_TIER_2,	10, 13);
+		assignItemRect(HG_TIER_3,	11, 14);
+		assignItemRect(HG_TIER_4,	12, 16);
+		assignItemRect(HG_TIER_5, 	15, 16);
+	}
+
+	private static final int MG  =                                   xy(9, 39);  //8 slots
+	public static final int MG_TIER_1	= MG+0;
+	public static final int MG_TIER_2	= MG+1;
+	public static final int MG_TIER_3	= MG+2;
+	public static final int MG_TIER_4 	= MG+3;
+	public static final int MG_TIER_5 	= MG+4;
+	static{
+		assignItemRect(MG_TIER_1,	16, 16);	//needs to be redesigned
+		assignItemRect(MG_TIER_2,	16, 16);	//needs to be redesigned
+		assignItemRect(MG_TIER_3,	16, 16);	//needs to be redesigned
+		assignItemRect(MG_TIER_4,	16, 16);	//needs to be redesigned
+		assignItemRect(MG_TIER_5, 	16, 15);
+	}
+
+	private static final int SG  =                                   xy(1, 40);  //8 slots
+	public static final int SG_TIER_1 = SG+0;
+	public static final int SG_TIER_2 = SG+1;
+	public static final int SG_TIER_3 = SG+2;
+	public static final int SG_TIER_4 = SG+3;
+	public static final int SG_TIER_5 = SG+4;
+	static{
+		assignItemRect(SG_TIER_1,	12, 13);
+		assignItemRect(SG_TIER_2,	14, 15);
+		assignItemRect(SG_TIER_3,	14, 16);
+		assignItemRect(SG_TIER_4,	14, 16);
+		assignItemRect(SG_TIER_5, 	15, 16);
+	}
+
+	private static final int SMG  =                                   xy(9, 40);  //8 slots
+	public static final int SMG_TIER_1 = SMG+0;
+	public static final int SMG_TIER_2 = SMG+1;
+	public static final int SMG_TIER_3 = SMG+2;
+	public static final int SMG_TIER_4 = SMG+3;
+	public static final int SMG_TIER_5 = SMG+4;
+	static{
+		assignItemRect(SMG_TIER_1,	12, 15);
+		assignItemRect(SMG_TIER_2,	15, 15);
+		assignItemRect(SMG_TIER_3,	13, 14);
+		assignItemRect(SMG_TIER_4,	15, 16);
+		assignItemRect(SMG_TIER_5, 	15, 15);
+	}
+
+	private static final int SR  =                                   xy(1, 41);  //8 slots
+	public static final int SR_TIER_1	= SR+0;
+	public static final int SR_TIER_2	= SR+1;
+	public static final int SR_TIER_3	= SR+2;
+	public static final int SR_TIER_4	= SR+3;
+	public static final int SR_TIER_5	= SR+4;
+	static{
+		assignItemRect(SR_TIER_1,	13, 16);
+		assignItemRect(SR_TIER_2,	13, 16);
+		assignItemRect(SR_TIER_3,	15, 16);
+		assignItemRect(SR_TIER_4,	15, 16);
+		assignItemRect(SR_TIER_5, 	14, 15);
+	}
+
 	//for smaller 8x8 icons that often accompany an item sprite
 	public static class Icons {
 

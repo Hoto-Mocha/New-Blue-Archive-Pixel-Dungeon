@@ -96,6 +96,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
@@ -138,6 +139,7 @@ public enum HeroClass {
 		waterskin.collect();
 
 		if (DeviceCompat.isDebug() || SPDSettings.customSeed().contains("test")) {
+			new AR_T1().identify().collect();
 			new RingOfMight().identify().upgrade(10).collect();
 			new RingOfHaste().identify().upgrade(100).collect();
 			new RingOfAccuracy().identify().upgrade(100).collect();
