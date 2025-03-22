@@ -151,7 +151,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 				updateQuickslot();
 			}
 
-			Badges.validateClericUnlock();
+//			Badges.validateClericUnlock();
 		}
 		
 		return procced;
