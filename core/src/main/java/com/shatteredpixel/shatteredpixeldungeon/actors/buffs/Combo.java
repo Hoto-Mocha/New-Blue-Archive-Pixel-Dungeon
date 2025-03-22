@@ -102,7 +102,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		if ((getHighestMove() != null)) {
 
 			ActionIndicator.setAction( this );
-			Badges.validateMasteryCombo( count );
+//			Badges.validateMasteryCombo( count );
 
 			GLog.p( Messages.get(this, "combo", count) );
 			

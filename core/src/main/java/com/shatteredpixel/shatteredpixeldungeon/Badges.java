@@ -143,7 +143,7 @@ public class Badges {
 		BAG_BOUGHT_POTION_BANDOLIER,
 		BAG_BOUGHT_MAGICAL_HOLSTER,
 		ALL_BAGS_BOUGHT             ( 66 ),
-		MASTERY_COMBO               ( 67 ),
+		MASTERY_COMBO,
 		MONSTERS_SLAIN_5            ( 68 ),
 		GOLD_COLLECTED_5            ( 69 ),
 		ITEM_LEVEL_4                ( 70 ),
