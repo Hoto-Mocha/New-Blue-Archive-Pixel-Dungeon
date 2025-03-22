@@ -42,8 +42,8 @@ public class Gun extends MeleeWeapon {
     protected int shotPerShoot = 1; //발사 당 탄환의 개수
     protected float shootingSpeed = 1f; //발사 시 소모하는 턴의 배율. 낮을수록 빠르다
     protected float shootingAccuracy = 1f; //발사 시 탄환 정확성의 배율. 높을 수록 정확하다.
-    //총기의 정확성은 근접할 때에는 떨어지지만, 멀리 있다고 증가하진 않는다. Hero.attackSkill()참고
     protected boolean explode = false; //탄환 폭발 여부
+    protected boolean spread = false; //산탄 여부. 멀리 떨어지면 탄환 위력이 감소한다.
     public static final String TXT_STATUS = "%d/%d";
 
     private boolean riot = false;
@@ -186,6 +186,7 @@ public class Gun extends MeleeWeapon {
     private static final String SHOOTING_SPEED = "shootingSpeed";
     private static final String SHOOTING_ACCURACY = "shootingAccuracy";
     private static final String EXPLODE = "explode";
+    private static final String SPREAD = "spread";
     private static final String RIOT = "riot";
     private static final String SHOOTALL = "shootAll";
     private static final String BARREL_MOD = "barrelMod";
@@ -205,6 +206,7 @@ public class Gun extends MeleeWeapon {
         bundle.put(SHOOTING_SPEED, shootingSpeed);
         bundle.put(SHOOTING_ACCURACY, shootingAccuracy);
         bundle.put(EXPLODE, explode);
+        bundle.put(SPREAD, spread);
         bundle.put(RIOT, riot);
         bundle.put(SHOOTALL, shootAll);
         bundle.put(BARREL_MOD, barrelMod);
@@ -226,6 +228,7 @@ public class Gun extends MeleeWeapon {
         shootingSpeed = bundle.getFloat(SHOOTING_SPEED);
         shootingAccuracy = bundle.getFloat(SHOOTING_ACCURACY);
         explode = bundle.getBoolean(EXPLODE);
+        spread = bundle.getBoolean(SPREAD);
         riot = bundle.getBoolean(RIOT);
         shootAll = bundle.getBoolean(SHOOTALL);
         barrelMod = bundle.getEnum(BARREL_MOD, BarrelMod.class);
@@ -606,6 +609,9 @@ public class Gun extends MeleeWeapon {
 
             int distance = Dungeon.level.distance(attacker.pos, defender.pos) - 1; //적과 나 사이의 간격, 근접한 경우 0
             float multiplier = 1;
+            if (spread) {
+                multiplier = multiplier * (float) Math.pow(0.9f, distance);
+            }
             damage = Math.round(damage * multiplier);
 
             return Gun.this.proc(attacker, defender, damage);
