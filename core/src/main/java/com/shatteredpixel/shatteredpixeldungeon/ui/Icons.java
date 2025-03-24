@@ -378,7 +378,7 @@ public enum Icons {
 				icon.frame( icon.texture.uvRectBySize( 160, 80, 7, 7 ) );
 				break;
 			case COIN_SML:
-				icon.frame( icon.texture.uvRectBySize( 168, 80, 7, 7 ) );
+				icon.frame( icon.texture.uvRectBySize( 168, 80, 8, 8 ) );
 				break;
 			case ENERGY_SML:
 				icon.frame( icon.texture.uvRectBySize( 168, 88, 8, 7 ) );
