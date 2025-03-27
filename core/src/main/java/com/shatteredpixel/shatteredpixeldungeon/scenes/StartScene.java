@@ -219,7 +219,8 @@ public class StartScene extends PixelScene {
 				name.text(Messages.titleCase(info.heroClass.title()));
 
 				if (hero == null){
-					hero = new Image(info.heroClass.spritesheet(), 0, 15*info.armorTier, 12, 15);
+//					hero = new Image(info.heroClass.spritesheet(), 0, 15*info.armorTier, 12, 15);
+					hero = new Image(info.heroClass.spritesheet(), 0, 0, 12, 15); //항상 맨 위에 있는 스프라이트만 사용함
 					add(hero);
 					
 					steps = new Image(Icons.get(Icons.STAIRS));
@@ -232,7 +233,8 @@ public class StartScene extends PixelScene {
 					level = new BitmapText(PixelScene.pixelFont);
 					add(level);
 				} else {
-					hero.copy(new Image(info.heroClass.spritesheet(), 0, 15*info.armorTier, 12, 15));
+//					hero.copy(new Image(info.heroClass.spritesheet(), 0, 15*info.armorTier, 12, 15));
+					hero.copy(new Image(info.heroClass.spritesheet(), 0, 0, 12, 15)); //항상 맨 위에 있는 스프라이트만 사용함
 					
 					classIcon.copy(Icons.get(info.heroClass));
 				}
