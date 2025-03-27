@@ -40,7 +40,7 @@ import com.watabou.utils.RectF;
 public class HeroSprite extends CharSprite {
 	
 	private static final int FRAME_WIDTH	= 12;
-	private static final int FRAME_HEIGHT	= 15;
+	private static final int FRAME_HEIGHT	= 17;
 	
 	private static final int RUN_FRAMERATE	= 20;
 	
@@ -168,7 +168,7 @@ public class HeroSprite extends CharSprite {
 	
 	public static TextureFilm tiers() {
 		if (tiers == null) {
-			SmartTexture texture = TextureCache.get( Assets.Sprites.ROGUE );
+			SmartTexture texture = TextureCache.get( Assets.Sprites.ARIS );
 			tiers = new TextureFilm( texture, texture.width, FRAME_HEIGHT );
 		}
 		
@@ -188,7 +188,7 @@ public class HeroSprite extends CharSprite {
 //		RectF patch = tiers().get( armorTier );
 		RectF patch = tiers().get( 0 ); //항상 맨 위의 스프라이트만 사용함
 		Image avatar = new Image( cl.spritesheet() );
-		RectF frame = avatar.texture.uvRect( 1, 0, FRAME_WIDTH, FRAME_HEIGHT );
+		RectF frame = avatar.texture.uvRect( 0, 0, FRAME_WIDTH, FRAME_HEIGHT );
 		frame.shift( patch.left, patch.top );
 		avatar.frame( frame );
 		

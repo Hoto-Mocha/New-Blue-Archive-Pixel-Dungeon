@@ -545,7 +545,7 @@ public class HeroSelectScene extends PixelScene {
 			this.cl = cl;
 
 //			icon(new Image(cl.spritesheet(), 0, 90, 12, 15));
-			icon(new Image(cl.spritesheet(), 0, 0, 12, 15));
+			icon(new Image(cl.spritesheet(), 0, 0, 12, 17)); //맨 위에 있는
 
 		}
 
