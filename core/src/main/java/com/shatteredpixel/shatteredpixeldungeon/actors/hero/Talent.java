@@ -366,15 +366,57 @@ public enum Talent {
 	ARIS_ARMOR1_2(18, 0, 4),
 	ARIS_ARMOR1_3(19, 0, 4),
 
-	//Armor Ability 1 T4
+	//Armor Ability 2 T4
 	ARIS_ARMOR2_1(20, 0, 4),
 	ARIS_ARMOR2_2(21, 0, 4),
 	ARIS_ARMOR2_3(22, 0, 4),
 
-	//Armor Ability 1 T4
+	//Armor Ability 3 T4
 	ARIS_ARMOR3_1(23, 0, 4),
 	ARIS_ARMOR3_2(24, 0, 4),
 	ARIS_ARMOR3_3(25, 0, 4),
+
+	//Nonomi T1
+	NONOMI_T1_1(0, 1, 2),
+	NONOMI_T1_2(1, 1, 2),
+	NONOMI_T1_3(2, 1, 2),
+	NONOMI_T1_4(3, 1, 2),
+
+	//Nonomi T2
+	NONOMI_T2_1(4, 1, 2),
+	NONOMI_T2_2(5, 1, 2),
+	NONOMI_T2_3(6, 1, 2),
+	NONOMI_T2_4(7, 1, 2),
+	NONOMI_T2_5(8, 1, 2),
+
+	//Nonomi T3
+	NONOMI_T3_1(9, 1, 3),
+	NONOMI_T3_2(10, 1, 3),
+
+	//Shoot All T3
+	NONOMI_EX1_1(11, 1, 3),
+	NONOMI_EX1_2(12, 1, 3),
+	NONOMI_EX1_3(13, 1, 3),
+
+	//Spreading Shot T3
+	NONOMI_EX2_1(14, 1, 3),
+	NONOMI_EX2_2(15, 1, 3),
+	NONOMI_EX2_3(16, 1, 3),
+
+	//Armor Ability 1 T4
+	NONOMI_ARMOR1_1(17, 1, 4),
+	NONOMI_ARMOR1_2(18, 1, 4),
+	NONOMI_ARMOR1_3(19, 1, 4),
+
+	//Armor Ability 2 T4
+	NONOMI_ARMOR2_1(20, 1, 4),
+	NONOMI_ARMOR2_2(21, 1, 4),
+	NONOMI_ARMOR2_3(22, 1, 4),
+
+	//Armor Ability 3 T4
+	NONOMI_ARMOR3_1(23, 0, 4),
+	NONOMI_ARMOR3_2(24, 0, 4),
+	NONOMI_ARMOR3_3(25, 0, 4),
 
 	//universal T4
 	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one
@@ -629,9 +671,9 @@ public enum Talent {
 				case ARIS: default:
 					y = 0;
 					break;
-//				case NONOMI:
-//					y = 1;
-//					break;
+				case NONOMI:
+					y = 1;
+					break;
 //				case MIYAKO:
 //					y = 2;
 //					break;
@@ -1236,6 +1278,9 @@ public enum Talent {
 			case ARIS: default:
 				Collections.addAll(tierTalents, ARIS_T1_1, ARIS_T1_2, ARIS_T1_3, ARIS_T1_4);
 				break;
+			case NONOMI:
+				Collections.addAll(tierTalents, NONOMI_T1_1, NONOMI_T1_2, NONOMI_T1_3, NONOMI_T1_4);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HEARTY_MEAL, VETERANS_INTUITION, PROVOKED_ANGER, IRON_WILL);
 				break;
@@ -1268,6 +1313,9 @@ public enum Talent {
 			case ARIS: default:
 				Collections.addAll(tierTalents, ARIS_T2_1, ARIS_T2_2, ARIS_T2_3, ARIS_T2_4, ARIS_T2_5);
 				break;
+			case NONOMI:
+				Collections.addAll(tierTalents, NONOMI_T2_1, NONOMI_T2_2, NONOMI_T2_3, NONOMI_T2_4, NONOMI_T2_5);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, IRON_STOMACH, LIQUID_WILLPOWER, RUNIC_TRANSFERENCE, LETHAL_MOMENTUM, IMPROVISED_PROJECTILES);
 				break;
@@ -1299,6 +1347,9 @@ public enum Talent {
 		switch (cls){
 			case ARIS: default:
 				Collections.addAll(tierTalents, ARIS_T3_1, ARIS_T3_2);
+				break;
+			case NONOMI:
+				Collections.addAll(tierTalents, NONOMI_T3_1, NONOMI_T3_2);
 				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HOLD_FAST, STRONGMAN);
@@ -1351,6 +1402,12 @@ public enum Talent {
 				break;
 			case BATTERY_CHARGE:
 				Collections.addAll(tierTalents, ARIS_EX2_1, ARIS_EX2_2, ARIS_EX2_3);
+				break;
+			case SHOOT_ALL:
+				Collections.addAll(tierTalents, NONOMI_EX1_1, NONOMI_EX1_2, NONOMI_EX1_3);
+				break;
+			case SPREAD_SHOT:
+				Collections.addAll(tierTalents, NONOMI_EX2_1, NONOMI_EX2_2, NONOMI_EX2_3);
 				break;
 			case BERSERKER:
 				Collections.addAll(tierTalents, ENDLESS_RAGE, DEATHLESS_FURY, ENRAGED_CATALYST);

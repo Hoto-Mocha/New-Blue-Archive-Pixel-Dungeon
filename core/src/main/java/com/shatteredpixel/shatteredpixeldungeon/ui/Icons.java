@@ -463,6 +463,8 @@ public enum Icons {
 		switch (cl) {
 			case ARIS:
 				return new ItemSprite(ItemSpriteSheet.SEAL);
+			case NONOMI:
+				return new ItemSprite(ItemSpriteSheet.GOLD);
 			case WARRIOR:
 				return new ItemSprite(ItemSpriteSheet.SEAL);
 			case MAGE:

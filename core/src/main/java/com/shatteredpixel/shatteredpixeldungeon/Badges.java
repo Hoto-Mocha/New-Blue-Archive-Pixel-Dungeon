@@ -63,6 +63,7 @@ public class Badges {
 
 	public enum Badge {
 		MASTERY_ARIS,
+		MASTERY_NONOMI,
 
 		MASTERY_WARRIOR,
 		MASTERY_MAGE,
@@ -124,6 +125,7 @@ public class Badges {
 		DEATH_FROM_FRIENDLY_MAGIC   ( 52 ),
 		DEATH_FROM_SACRIFICE        ( 53 ),
 		BOSS_SLAIN_1_ARIS,
+		BOSS_SLAIN_1_NONOMI,
 		BOSS_SLAIN_1_WARRIOR,
 		BOSS_SLAIN_1_MAGE,
 		BOSS_SLAIN_1_ROGUE,
@@ -177,6 +179,7 @@ public class Badges {
 		ALL_WANDS_IDENTIFIED        , //still exists internally for pre-2.5 saves
 		ALL_ITEMS_IDENTIFIED        , //still exists internally for pre-2.5 saves
 		VICTORY_ARIS,
+		VICTORY_NONOMI,
 		VICTORY_WARRIOR,
 		VICTORY_MAGE,
 		VICTORY_ROGUE,
@@ -187,6 +190,8 @@ public class Badges {
 		DEATH_FROM_ALL              ( 102, BadgeType.GLOBAL ),
 		BOSS_SLAIN_3_LIGHT_HERO,
 		BOSS_SLAIN_3_BATTERY_CHARGE,
+		BOSS_SLAIN_3_SHOOT_ALL,
+		BOSS_SLAIN_3_SPREAD_SHOT,
 		BOSS_SLAIN_3_GLADIATOR,
 		BOSS_SLAIN_3_BERSERKER,
 		BOSS_SLAIN_3_WARLOCK,
@@ -795,6 +800,7 @@ public class Badges {
 	private static LinkedHashMap<HeroClass, Badge> firstBossClassBadges = new LinkedHashMap<>();
 	static {
 		firstBossClassBadges.put(HeroClass.ARIS, Badge.BOSS_SLAIN_1_ARIS);
+		firstBossClassBadges.put(HeroClass.NONOMI, Badge.BOSS_SLAIN_1_NONOMI);
 //		firstBossClassBadges.put(HeroClass.WARRIOR, Badge.BOSS_SLAIN_1_WARRIOR);
 //		firstBossClassBadges.put(HeroClass.MAGE, Badge.BOSS_SLAIN_1_MAGE);
 //		firstBossClassBadges.put(HeroClass.ROGUE, Badge.BOSS_SLAIN_1_ROGUE);
@@ -806,6 +812,7 @@ public class Badges {
 	private static LinkedHashMap<HeroClass, Badge> victoryClassBadges = new LinkedHashMap<>();
 	static {
 		victoryClassBadges.put(HeroClass.ARIS, Badge.VICTORY_ARIS);
+		victoryClassBadges.put(HeroClass.NONOMI, Badge.VICTORY_NONOMI);
 //		victoryClassBadges.put(HeroClass.WARRIOR, Badge.VICTORY_WARRIOR);
 //		victoryClassBadges.put(HeroClass.MAGE, Badge.VICTORY_MAGE);
 //		victoryClassBadges.put(HeroClass.ROGUE, Badge.VICTORY_ROGUE);
@@ -818,6 +825,8 @@ public class Badges {
 	static {
 		thirdBossSubclassBadges.put(HeroSubClass.LIGHT_HERO, Badge.BOSS_SLAIN_3_LIGHT_HERO);
 		thirdBossSubclassBadges.put(HeroSubClass.BATTERY_CHARGE, Badge.BOSS_SLAIN_3_BATTERY_CHARGE);
+		thirdBossSubclassBadges.put(HeroSubClass.SHOOT_ALL, Badge.BOSS_SLAIN_3_SHOOT_ALL);
+		thirdBossSubclassBadges.put(HeroSubClass.SPREAD_SHOT, Badge.BOSS_SLAIN_3_SPREAD_SHOT);
 //		thirdBossSubclassBadges.put(HeroSubClass.BERSERKER, Badge.BOSS_SLAIN_3_BERSERKER);
 //		thirdBossSubclassBadges.put(HeroSubClass.GLADIATOR, Badge.BOSS_SLAIN_3_GLADIATOR);
 //		thirdBossSubclassBadges.put(HeroSubClass.BATTLEMAGE, Badge.BOSS_SLAIN_3_BATTLEMAGE);
@@ -936,6 +945,9 @@ public class Badges {
 		switch (Dungeon.hero.heroClass) {
 			case ARIS:
 				badge = Badge.MASTERY_ARIS;
+				break;
+			case NONOMI:
+				badge = Badge.MASTERY_NONOMI;
 				break;
 			case WARRIOR:
 				badge = Badge.MASTERY_WARRIOR;

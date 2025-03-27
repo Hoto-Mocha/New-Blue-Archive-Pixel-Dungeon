@@ -60,6 +60,10 @@ public class WndHeroInfo extends WndTabbed {
 		switch (cl){
 			case ARIS: default:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SEAL, null);
+				break;
+			case NONOMI:
+				tabIcon = new ItemSprite(ItemSpriteSheet.GOLD, null);
+				break;
 			case WARRIOR:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SEAL, null);
 				break;
@@ -179,6 +183,11 @@ public class WndHeroInfo extends WndTabbed {
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SEAL),
 							new ItemSprite(ItemSpriteSheet.WORN_SHORTSWORD),
 							new ItemSprite(ItemSpriteSheet.SUPER_NOVA),
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+					break;
+				case NONOMI:
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.GOLD),
+							new ItemSprite(ItemSpriteSheet.MG_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 				case WARRIOR:

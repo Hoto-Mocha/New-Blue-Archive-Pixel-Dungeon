@@ -116,11 +116,16 @@ public class HeroIcon extends Image {
 	//new subclasses
 	public static final int HERO_OF_LIGHT	= 128+0;
 	public static final int BATTERY_CHARGE	= 128+1;
+	public static final int SHOOT_ALL		= 128+2;
+	public static final int SPREAD_SHOT		= 128+3;
 
 	//new armor abilities
 	public static final int ARIS_1			= 128+40;
 	public static final int ARIS_2			= 128+41;
 	public static final int ARIS_3			= 128+42;
+	public static final int NONOMI_1		= 128+43;
+	public static final int NONOMI_2		= 128+44;
+	public static final int NONOMI_3		= 128+45;
 
 	//new action indicator visuals
   	public static final int CHARGE			= 128+72;
