@@ -63,6 +63,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
@@ -87,6 +88,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -927,6 +929,15 @@ public enum Talent {
 				Buff.prolong( hero, Recharging.class, 1 + (hero.pointsInTalent(ENLIGHTENING_MEAL)) );
 				ScrollOfRecharging.charge( hero );
 				SpellSprite.show(hero, SpellSprite.CHARGE);
+			}
+		}
+		if (hero.hasTalent(Talent.NONOMI_T2_1)) {
+			KindOfWeapon weapon = hero.belongings.weapon();
+			if (weapon instanceof Gun) {
+				((Gun) weapon).reload();
+				if (hero.pointsInTalent(Talent.NONOMI_T2_1) == 2) {
+					((Gun) weapon).manualReload(1, true);
+				}
 			}
 		}
 	}
