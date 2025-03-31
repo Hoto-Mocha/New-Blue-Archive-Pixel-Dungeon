@@ -1604,6 +1604,14 @@ public class Hero extends Char {
 
 		dmg = (int)Math.ceil(dmg * RingOfTenacity.damageMultiplier( this ));
 
+		if (hasTalent(Talent.NONOMI_T2_3)) {
+			int enemyNo = 0;
+			for (Char ch : Actor.chars()) {
+				if (ch.alignment == Alignment.ENEMY && Dungeon.level.heroFOV[ch.pos]) enemyNo++;
+			}
+			dmg = (int)Math.ceil(dmg*(float)Math.pow((0.925-0.025*pointsInTalent(Talent.NONOMI_T2_3)), enemyNo));
+		}
+
 		if (buff(Talent.WarriorFoodImmunity.class) != null){
 			if (pointsInTalent(Talent.IRON_STOMACH) == 1)       dmg = Math.round(dmg*0.25f);
 			else if (pointsInTalent(Talent.IRON_STOMACH) == 2)  dmg = Math.round(dmg*0.00f);
