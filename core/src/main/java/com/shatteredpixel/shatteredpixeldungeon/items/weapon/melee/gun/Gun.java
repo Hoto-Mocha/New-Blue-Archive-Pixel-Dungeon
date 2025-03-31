@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -309,7 +310,9 @@ public class Gun extends MeleeWeapon {
     }
 
     public void onReload() {	//재장전 시 작동하는 메서드. 특히 현재 장탄수가 바뀌기 전에 동작해야 한다
-
+        if (hero.hasTalent(Talent.NONOMI_T1_4)) {
+            Buff.affect(hero, Barrier.class).setShield((int)reloadTime(hero) + Math.max(0, hero.pointsInTalent(Talent.NONOMI_T1_4)-1)); //reload time + 0 or 1, depends on talent level
+        }
     }
 
     public void quickReload() {	//다른 것들을 작동시키지 않고 탄창만 완전히 재장전하는 메서드
