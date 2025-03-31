@@ -83,6 +83,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
@@ -1229,6 +1230,14 @@ public enum Talent {
 			dmg = hero.buff(Division.DivisionBuff.class).attackProc(hero, enemy, dmg);
 		}
 
+		if (hero.hasTalent(Talent.NONOMI_T2_5) && enemy.buff(PushingTracker.class) == null) {
+			Buff.affect(enemy, PushingTracker.class);
+			Elastic.pushEnemy(hero, enemy, hero.belongings.weapon(), 1 + hero.pointsInTalent(Talent.NONOMI_T2_5));
+			if (Random.Float() < 0.2f) {
+				hero.yellI(Messages.get(Hero.class, "nonomi_push"));
+			}
+		}
+
 		return dmg;
 	}
 
@@ -1297,6 +1306,8 @@ public enum Talent {
 			return false;
 		}
 	}
+
+	public static class PushingTracker extends Buff {};
 
 	//new buff here
 
