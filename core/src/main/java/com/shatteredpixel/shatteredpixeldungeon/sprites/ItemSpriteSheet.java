@@ -918,10 +918,10 @@ public class ItemSpriteSheet {
 	public static final int MG_TIER_4 	= MG+3;
 	public static final int MG_TIER_5 	= MG+4;
 	static{
-		assignItemRect(MG_TIER_1,	16, 16);	//needs to be redesigned
-		assignItemRect(MG_TIER_2,	16, 16);	//needs to be redesigned
-		assignItemRect(MG_TIER_3,	16, 16);	//needs to be redesigned
-		assignItemRect(MG_TIER_4,	16, 16);	//needs to be redesigned
+		assignItemRect(MG_TIER_1,	12, 16);
+		assignItemRect(MG_TIER_2,	16, 16);
+		assignItemRect(MG_TIER_3,	16, 15);
+		assignItemRect(MG_TIER_4,	13, 15);
 		assignItemRect(MG_TIER_5, 	16, 15);
 	}
 
