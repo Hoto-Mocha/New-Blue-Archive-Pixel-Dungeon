@@ -34,6 +34,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.TalentButton;
+import com.shatteredpixel.shatteredpixeldungeon.ui.TalentIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.TalentsPane;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
@@ -187,6 +188,7 @@ public class WndHeroInfo extends WndTabbed {
 					break;
 				case NONOMI:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.GOLD),
+							new TalentIcon(Talent.NONOMI_T1_2),
 							new ItemSprite(ItemSpriteSheet.MG_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
