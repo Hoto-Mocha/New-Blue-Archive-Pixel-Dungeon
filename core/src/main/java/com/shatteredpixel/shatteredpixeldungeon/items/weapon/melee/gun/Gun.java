@@ -11,6 +11,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
@@ -451,6 +452,15 @@ public class Gun extends MeleeWeapon {
         int damage = Random.NormalIntRange(bulletMin(), bulletMax());
 
         damage = augment.damageFactor(damage);  //증강에 따라 변화하는 효과
+
+        if (hero.hasTalent(Talent.NONOMI_T1_3)) {
+            if (hero.pointsInTalent(Talent.NONOMI_T1_3) == 2) {
+                damage += 1; //adds 1
+            } else {
+                damage += Random.Int(2); //adds 0~1
+            }
+        }
+
         return damage;
     }
 
