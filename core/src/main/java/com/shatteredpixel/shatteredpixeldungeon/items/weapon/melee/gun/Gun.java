@@ -627,7 +627,19 @@ public class Gun extends MeleeWeapon {
             }
             damage = Math.round(damage * multiplier);
 
+            damage += bulletDamageBonus(attacker, defender);
+
             return Gun.this.proc(attacker, defender, damage);
+        }
+
+        private int bulletDamageBonus(Char attacker, Char defender) { //탄환 피해의 순수 증가량. 탄환 피해 배율 적용 이후에 적용됨
+            int bonus = 0;
+
+            if (hero.hasTalent(Talent.NONOMI_T2_4) && defender instanceof Mob && ((Mob) defender).surprisedBy(attacker)) {
+                bonus += hero.pointsInTalent(Talent.NONOMI_T2_4);
+            }
+
+            return bonus;
         }
 
         @Override
