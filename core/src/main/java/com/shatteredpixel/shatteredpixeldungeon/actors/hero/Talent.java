@@ -87,6 +87,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -806,6 +807,18 @@ public enum Talent {
 				hero.belongings.weapon.identify();
 			}
 		}
+		if (talent == NONOMI_T1_2 && !ShardOfOblivion.passiveIDDisabled()) {
+			if (hero.pointsInTalent(NONOMI_T1_2) == 1) {
+				if (hero.belongings.weapon() instanceof MG)  {
+					hero.belongings.weapon.identify();
+				}
+			}
+			if (hero.pointsInTalent(NONOMI_T1_2) == 2) {
+				for (Item i : hero.belongings.getAllItems(MG.class)) {
+					i.identify();
+				}
+			}
+		}
 		if (talent == LIGHT_READING && hero.heroClass == HeroClass.CLERIC){
 			for (Item item : Dungeon.hero.belongings.backpack){
 				if (item instanceof HolyTome){
@@ -833,6 +846,13 @@ public enum Talent {
 				hero.HP = Math.min(hero.HP + healing, hero.HT);
 				hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(healing), FloatingText.HEALING);
 
+			}
+		}
+		if (hero.hasTalent(NONOMI_T1_1)){
+			//3/5 HP healed, when hero is below 30% health
+			if (hero.HP/(float)hero.HT <= 0.4f) {
+				int healing = 1 + 2 * hero.pointsInTalent(NONOMI_T1_1);
+				hero.heal(healing);
 			}
 		}
 		if (hero.hasTalent(IRON_STOMACH) || hero.hasTalent(Talent.ARIS_T2_1)){
@@ -1089,6 +1109,9 @@ public enum Talent {
 		if (hero.pointsInTalent(ARIS_T1_2) == 2 && (item instanceof Weapon || item instanceof Armor)){
 			identify = true;
 		}
+		if (hero.hasTalent(NONOMI_T1_2) && (item instanceof MG)){
+			identify = true;
+		}
 
 		if (identify && !ShardOfOblivion.passiveIDDisabled()){
 			item.identify();
@@ -1098,6 +1121,16 @@ public enum Talent {
 	public static void onItemCollected( Hero hero, Item item ){
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (item instanceof Ring) ((Ring) item).setKnown();
+		}
+
+		boolean identify = false;
+
+		if (hero.pointsInTalent(NONOMI_T1_2) == 2 && (item instanceof MG)){
+			identify = true;
+		}
+
+		if (identify && !ShardOfOblivion.passiveIDDisabled()){
+			item.identify();
 		}
 	}
 
