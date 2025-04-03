@@ -925,6 +925,10 @@ public class Hero extends Char {
 		if(hasTalent(Talent.BARKSKIN) && Dungeon.level.map[pos] == Terrain.FURROWED_GRASS){
 			Barkskin.conditionallyAppend(this, (lvl*pointsInTalent(Talent.BARKSKIN))/2, 1 );
 		}
+
+		if (hasTalent(Talent.NONOMI_T3_2) && belongings.weapon instanceof Gun) {
+			if (Random.Float() < 0.05f * pointsInTalent(Talent.NONOMI_T3_2)) ((Gun)belongings.weapon).manualReload();
+		}
 		
 		return actResult;
 	}
