@@ -91,6 +91,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_SP;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -835,6 +836,13 @@ public enum Talent {
 		//if we happen to have spirit form applied with a ring of might
 		if (talent == SPIRIT_FORM){
 			Dungeon.hero.updateHT(false);
+		}
+
+		if (talent == NONOMI_T3_1 && hero.pointsInTalent(NONOMI_T3_1) == 1) {
+			new MG_SP().identify().collect();
+		}
+		if (talent == NONOMI_T3_1) {
+			Item.updateQuickslot();
 		}
 	}
 
