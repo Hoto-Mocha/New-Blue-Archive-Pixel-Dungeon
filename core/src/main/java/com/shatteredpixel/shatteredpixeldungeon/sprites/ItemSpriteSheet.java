@@ -917,12 +917,14 @@ public class ItemSpriteSheet {
 	public static final int MG_TIER_3	= MG+2;
 	public static final int MG_TIER_4 	= MG+3;
 	public static final int MG_TIER_5 	= MG+4;
+	public static final int MG_SPECIAL 	= MG+5;
 	static{
 		assignItemRect(MG_TIER_1,	12, 16);
 		assignItemRect(MG_TIER_2,	16, 16);
 		assignItemRect(MG_TIER_3,	16, 15);
 		assignItemRect(MG_TIER_4,	13, 15);
 		assignItemRect(MG_TIER_5, 	16, 15);
+		assignItemRect(MG_SPECIAL, 	14, 16);
 	}
 
 	private static final int SG  =                                   xy(1, 40);  //8 slots
