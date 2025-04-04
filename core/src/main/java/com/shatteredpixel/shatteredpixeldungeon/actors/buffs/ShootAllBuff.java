@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -8,6 +9,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 
 public class ShootAllBuff extends Buff implements ActionIndicator.Action {
@@ -45,7 +47,11 @@ public class ShootAllBuff extends Buff implements ActionIndicator.Action {
 
     @Override
     public String actionName() {
-        return Messages.get(this, "action_name");
+        if (shootAll) {
+            return Messages.get(this, "action_name_off");
+        } else {
+            return Messages.get(this, "action_name_on");
+        }
     }
 
     @Override
@@ -55,7 +61,11 @@ public class ShootAllBuff extends Buff implements ActionIndicator.Action {
 
     @Override
     public int indicatorColor() {
-        return 0xCBB994;
+        if (shootAll) {
+            return 0xCBB994;
+        } else {
+            return 0x665D4A;
+        }
     }
 
     @Override
@@ -63,11 +73,9 @@ public class ShootAllBuff extends Buff implements ActionIndicator.Action {
         Hero hero = Dungeon.hero;
         shootAll = !shootAll;
         hero.sprite.operate(hero.pos);
-        if (shootAll) {
-            GLog.p(Messages.get(this, "on"));
-        } else {
-            GLog.i(Messages.get(this, "off"));
-        }
+        hero.spendAndNext(0);
+        Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
+        ActionIndicator.refresh();
     }
 
     public boolean shootAll() {

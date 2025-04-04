@@ -802,27 +802,6 @@ public enum Talent {
 				Dungeon.level.drop(toGive, hero.pos).sprite.drop();
 			}
 		}
-
-		if (talent == ARIS_T1_2 && hero.pointsInTalent(ARIS_T1_2) == 2){
-			if (hero.belongings.armor() != null && !ShardOfOblivion.passiveIDDisabled())  {
-				hero.belongings.armor.identify();
-			}
-			if (hero.belongings.weapon() != null && !ShardOfOblivion.passiveIDDisabled())  {
-				hero.belongings.weapon.identify();
-			}
-		}
-		if (talent == NONOMI_T1_2 && !ShardOfOblivion.passiveIDDisabled()) {
-			if (hero.pointsInTalent(NONOMI_T1_2) == 1) {
-				if (hero.belongings.weapon() instanceof MG)  {
-					hero.belongings.weapon.identify();
-				}
-			}
-			if (hero.pointsInTalent(NONOMI_T1_2) == 2) {
-				for (Item i : hero.belongings.getAllItems(MG.class)) {
-					i.identify();
-				}
-			}
-		}
 		if (talent == LIGHT_READING && hero.heroClass == HeroClass.CLERIC){
 			for (Item item : Dungeon.hero.belongings.backpack){
 				if (item instanceof HolyTome){
@@ -838,10 +817,36 @@ public enum Talent {
 			Dungeon.hero.updateHT(false);
 		}
 
+		if (talent == ARIS_T1_2 && hero.pointsInTalent(ARIS_T1_2) == 2){
+			if (hero.belongings.armor() != null && !ShardOfOblivion.passiveIDDisabled())  {
+				hero.belongings.armor.identify();
+			}
+			if (hero.belongings.weapon() != null && !ShardOfOblivion.passiveIDDisabled())  {
+				hero.belongings.weapon.identify();
+			}
+		}
+
+		if (talent == NONOMI_T1_2 && !ShardOfOblivion.passiveIDDisabled()) {
+			if (hero.pointsInTalent(NONOMI_T1_2) == 1) {
+				if (hero.belongings.weapon() instanceof MG)  {
+					hero.belongings.weapon.identify();
+				}
+			}
+			if (hero.pointsInTalent(NONOMI_T1_2) == 2) {
+				for (Item i : hero.belongings.getAllItems(MG.class)) {
+					i.identify();
+				}
+			}
+		}
+
 		if (talent == NONOMI_T3_1 && hero.pointsInTalent(NONOMI_T3_1) == 1) {
 			new MG_SP().identify().collect();
 		}
 		if (talent == NONOMI_T3_1) {
+			Item.updateQuickslot();
+		}
+
+		if (talent == NONOMI_EX1_1) {
 			Item.updateQuickslot();
 		}
 	}

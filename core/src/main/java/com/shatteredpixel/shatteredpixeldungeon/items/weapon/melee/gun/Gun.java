@@ -262,6 +262,7 @@ public class Gun extends MeleeWeapon {
 
         if (action.equals(AC_SHOOT)) {
             if (hero.buff(ShootAllBuff.OverHeat.class) != null) {
+                usesTargeting = false;
                 GLog.w(Messages.get(this, "overheat"));
                 return;
             }
@@ -313,13 +314,13 @@ public class Gun extends MeleeWeapon {
         hero.busy();
         hero.sprite.operate(hero.pos);
         Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
-        hero.spendAndNext(reloadTime(hero));
+        hero.spendAndNext(reloadTime());
         GLog.i(Messages.get(this, "reload"));
     }
 
     public void onReload() {	//재장전 시 작동하는 메서드. 특히 현재 장탄수가 바뀌기 전에 동작해야 한다
         if (hero.hasTalent(Talent.NONOMI_T1_4)) {
-            Buff.affect(hero, Barrier.class).setShield((int)reloadTime(hero) + Math.max(0, hero.pointsInTalent(Talent.NONOMI_T1_4)-1)); //reload time + 0 or 1, depends on talent level
+            Buff.affect(hero, Barrier.class).setShield((int)reloadTime() + Math.max(0, hero.pointsInTalent(Talent.NONOMI_T1_4)-1)); //reload time + 0 or 1, depends on talent level
         }
     }
 
@@ -360,6 +361,10 @@ public class Gun extends MeleeWeapon {
 
         amount = this.magazineMod.magazineFactor(amount);
 
+        if (hero != null && hero.hasTalent(Talent.NONOMI_EX1_1)) {
+            amount += hero.pointsInTalent(Talent.NONOMI_EX1_1);
+        }
+
         return amount;
     }
 
@@ -371,10 +376,14 @@ public class Gun extends MeleeWeapon {
         round--;
     }
 
-    public float reloadTime(Char user) { //재장전에 소모하는 턴
+    public float reloadTime() { //재장전에 소모하는 턴
         float amount = reload_time;
 
         amount = this.magazineMod.reloadTimeFactor(amount);
+
+        if (hero != null && hero.hasTalent(Talent.NONOMI_EX1_1)) {
+            amount += 1;
+        }
 
         amount = Math.max(0, amount);
         return amount;
@@ -498,10 +507,10 @@ public class Gun extends MeleeWeapon {
         //근접 무기의 설명을 모두 가져옴, 여기에서 할 것은 근접 무기의 설명에 추가로 생기는 문장을 더하는 것
         if (levelKnown) { //감정되어 있을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_desc",
-                    shotPerShoot(), augment.damageFactor(bulletMin(buffedLvl())), augment.damageFactor(bulletMax(buffedLvl())), round, maxRound(), new DecimalFormat("#.##").format(reloadTime(hero)));
+                    shotPerShoot(), augment.damageFactor(bulletMin(buffedLvl())), augment.damageFactor(bulletMax(buffedLvl())), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
         } else { //감정되어 있지 않을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_typical_desc",
-                    shotPerShoot(), augment.damageFactor(bulletMin(0)), augment.damageFactor(bulletMax(0)), round, maxRound(), new DecimalFormat("#.##").format(reloadTime(hero)));
+                    shotPerShoot(), augment.damageFactor(bulletMin(0)), augment.damageFactor(bulletMax(0)), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
         }
         //DecimalFormat("#.##")은 .format()에 들어가는 매개변수(실수)를 "#.##"형식으로 표시하는데 사용된다.
         //가령 5.55555가 .format()안에 들어가서 .format(5.55555)라면, new DecimalFormat("#.##").format(5.55555)는 5.55라는 String 타입의 값을 반환한다.
