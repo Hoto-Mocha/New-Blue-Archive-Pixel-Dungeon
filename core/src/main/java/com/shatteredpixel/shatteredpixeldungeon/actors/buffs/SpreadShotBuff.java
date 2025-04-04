@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ConeAOE;
@@ -16,6 +17,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -80,7 +82,11 @@ public class SpreadShotBuff extends Buff implements ActionIndicator.Action {
             CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
             Char ch = Actor.findChar(cell);
             if (ch != null) {
-                gun.knockBullet().shoot(cell, false);
+                Gun.Bullet bullet = gun.knockBullet();
+                bullet.shoot(cell, false);
+                if (Random.Float() < 0.1f * hero.pointsInTalent(Talent.NONOMI_EX2_2)) {
+                    Elastic.pushEnemy(hero, ch, bullet, 1);
+                }
             };
         }
         gun.useRound();
