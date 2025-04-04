@@ -43,6 +43,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ScrollEmpower;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SuperNovaCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -1243,11 +1244,17 @@ public enum Talent {
 			dmg = hero.buff(Division.DivisionBuff.class).attackProc(hero, enemy, dmg);
 		}
 
-		if (hero.hasTalent(Talent.NONOMI_T2_5) && enemy.buff(PushingTracker.class) == null) {
+		if (hero.hasTalent(Talent.NONOMI_T2_5) && enemy.buff(PushingTracker.class) == null && !(hero.belongings.attackingWeapon() instanceof MissileWeapon)) {
 			Buff.affect(enemy, PushingTracker.class);
 			Elastic.pushEnemy(hero, enemy, hero.belongings.weapon(), 1 + hero.pointsInTalent(Talent.NONOMI_T2_5));
 			if (Random.Float() < 0.2f) {
 				hero.yellI(Messages.get(Hero.class, "nonomi_push"));
+			}
+		}
+
+		if (hero.hasTalent(Talent.NONOMI_EX1_2) && !(hero.belongings.attackingWeapon() instanceof MissileWeapon) && hero.buff(ShootAllBuff.OverHeat.class) != null) {
+			if (Random.Float() < hero.pointsInTalent(Talent.NONOMI_EX1_2) / 3f) {
+				hero.buff(ShootAllBuff.OverHeat.class).hit();
 			}
 		}
 
