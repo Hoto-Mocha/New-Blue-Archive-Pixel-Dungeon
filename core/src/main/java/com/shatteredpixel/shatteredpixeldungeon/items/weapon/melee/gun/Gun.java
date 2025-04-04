@@ -374,6 +374,7 @@ public class Gun extends MeleeWeapon {
 
     public void useRound() {
         round--;
+        updateQuickslot();
     }
 
     public float reloadTime() { //재장전에 소모하는 턴
@@ -700,6 +701,11 @@ public class Gun extends MeleeWeapon {
 
         @Override
         protected void onThrow( int cell ) {
+            shoot(cell, true);
+        }
+
+        public void shoot( int cell, boolean useRound ) {
+            curUser = hero;
             boolean killedEnemy = false;
             boolean shootAll = hero.buff(ShootAllBuff.class) != null && hero.buff(ShootAllBuff.class).shootAll();
             do {
@@ -709,15 +715,12 @@ public class Gun extends MeleeWeapon {
                     killedEnemy = oneShot(cell);
                 }
 
-                onShoot(shootAll);
+                onShoot(shootAll, useRound);
             } while (shootAll && round() > 0);
         }
 
-        public void onShoot(boolean shootAll) {
-
-            boolean willUseRound = true; //탄환을 소모하지 않는 경우에 false
-
-            if (willUseRound) {
+        public void onShoot(boolean shootAll, boolean useRound) {
+            if (useRound) {
                 useRound();
             }
 
@@ -730,8 +733,6 @@ public class Gun extends MeleeWeapon {
             if (shootAll) {
                 Buff.affect(hero, ShootAllBuff.OverHeat.class).add(1);
             }
-
-            updateQuickslot();
         }
 
         private boolean oneShot(int cell) {

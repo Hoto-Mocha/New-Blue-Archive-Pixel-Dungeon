@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SpreadShotBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -108,6 +109,9 @@ public class TengusMask extends Item {
 		}
 		if (way == HeroSubClass.SHOOT_ALL) {
 			Buff.affect(curUser, ShootAllBuff.class);
+		}
+		if (way == HeroSubClass.SPREAD_SHOT) {
+			Buff.affect(curUser, SpreadShotBuff.class);
 		}
 		
 		curUser.sprite.operate( curUser.pos );

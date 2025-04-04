@@ -130,6 +130,7 @@ public class HeroIcon extends Image {
 	//new action indicator visuals
   	public static final int CHARGE			= 128+72;
   	public static final int SHOOT_ALL_ACTION= 128+73;
+  	public static final int SPREAD_SHOT_ACTION= 128+74;
 
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );
