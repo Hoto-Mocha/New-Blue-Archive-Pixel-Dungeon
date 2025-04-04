@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LightSmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
@@ -74,17 +75,29 @@ public class SpreadShotBuff extends Buff implements ActionIndicator.Action {
         int dist = Math.min(5, aim.dist);
         int degrees = Math.round((30+10*hero.pointsInTalent(Talent.NONOMI_EX2_1))*(6/(float)dist));
         degrees = Math.min(degrees, 180); //최대 180도
+        int ballisticaParams = Ballistica.STOP_SOLID | Ballistica.STOP_TARGET;
+        boolean specterBullet = false; //범위의 벽 관통 여부
+        if (Random.Float() < 0.2f * hero.pointsInTalent(Talent.NONOMI_EX2_2)) {
+            ballisticaParams = Ballistica.STOP_TARGET;
+            specterBullet = true;
+        }
+
         ConeAOE cone = new ConeAOE(aim,
                 dist,
                 degrees,
-                Ballistica.STOP_SOLID | Ballistica.STOP_TARGET);
+                ballisticaParams);
         for (int cell : cone.cells){
-            CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
+            if (Dungeon.level.solid[cell]) continue;
+            if (specterBullet) {
+                CellEmitter.get(cell).burst(LightSmokeParticle.FACTORY, 3);
+            } else {
+                CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 3);
+            }
             Char ch = Actor.findChar(cell);
             if (ch != null) {
                 Gun.Bullet bullet = gun.knockBullet();
                 bullet.shoot(cell, false);
-                if (Random.Float() < 0.1f * hero.pointsInTalent(Talent.NONOMI_EX2_2)) {
+                if (Random.Float() < 0.1f * hero.pointsInTalent(Talent.NONOMI_EX2_3)) {
                     Elastic.pushEnemy(hero, ch, bullet, 1);
                 }
             };
