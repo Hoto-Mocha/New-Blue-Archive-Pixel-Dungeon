@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.EnhancedRings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
@@ -1252,7 +1253,17 @@ public enum Talent {
 			}
 		}
 
-		if (hero.hasTalent(Talent.NONOMI_EX1_2) && !(hero.belongings.attackingWeapon() instanceof MissileWeapon) && hero.buff(ShootAllBuff.OverHeat.class) != null) {
+		if (hero.hasTalent(Talent.NONOMI_EX1_3)
+				&& !(hero.belongings.attackingWeapon() instanceof MissileWeapon)
+				&& hero.buff(ShootAllBuff.OverHeat.class) != null) {
+			if (Random.Float() < 0.1f * (hero.buff(ShootAllBuff.OverHeat.class).duration() + hero.pointsInTalent(Talent.NONOMI_EX1_3) - 1)) { //10*(OverHeat turns left + talent level - 1)
+				Buff.affect(enemy, Burning.class).reignite(enemy);
+			}
+		}
+
+		if (hero.hasTalent(Talent.NONOMI_EX1_2)
+				&& !(hero.belongings.attackingWeapon() instanceof MissileWeapon)
+				&& hero.buff(ShootAllBuff.OverHeat.class) != null) {
 			if (Random.Float() < hero.pointsInTalent(Talent.NONOMI_EX1_2) / 3f) {
 				hero.buff(ShootAllBuff.OverHeat.class).hit();
 			}

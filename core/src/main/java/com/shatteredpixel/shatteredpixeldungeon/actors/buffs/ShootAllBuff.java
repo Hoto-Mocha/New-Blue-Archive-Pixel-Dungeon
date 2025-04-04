@@ -108,6 +108,10 @@ public class ShootAllBuff extends Buff implements ActionIndicator.Action {
             }
         }
 
+        public int duration() {
+            return duration;
+        }
+
         @Override
         public boolean act() {
             duration--;
