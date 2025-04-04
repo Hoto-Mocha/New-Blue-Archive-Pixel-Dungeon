@@ -10,6 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -47,9 +48,6 @@ public class Gun extends MeleeWeapon {
     protected boolean explode = false; //탄환 폭발 여부
     protected boolean spread = false; //산탄 여부. 멀리 떨어지면 탄환 위력이 감소한다.
     public static final String TXT_STATUS = "%d/%d";
-
-    private boolean riot = false;
-    private boolean shootAll = false;
 
     public boolean isEmpowered = false;
 
@@ -209,8 +207,6 @@ public class Gun extends MeleeWeapon {
         bundle.put(SHOOTING_ACCURACY, shootingAccuracy);
         bundle.put(EXPLODE, explode);
         bundle.put(SPREAD, spread);
-        bundle.put(RIOT, riot);
-        bundle.put(SHOOTALL, shootAll);
         bundle.put(BARREL_MOD, barrelMod);
         bundle.put(MAGAZINE_MOD, magazineMod);
         bundle.put(BULLET_MOD, bulletMod);
@@ -231,8 +227,6 @@ public class Gun extends MeleeWeapon {
         shootingAccuracy = bundle.getFloat(SHOOTING_ACCURACY);
         explode = bundle.getBoolean(EXPLODE);
         spread = bundle.getBoolean(SPREAD);
-        riot = bundle.getBoolean(RIOT);
-        shootAll = bundle.getBoolean(SHOOTALL);
         barrelMod = bundle.getEnum(BARREL_MOD, BarrelMod.class);
         magazineMod = bundle.getEnum(MAGAZINE_MOD, MagazineMod.class);
         bulletMod = bundle.getEnum(BULLET_MOD, BulletMod.class);
@@ -249,6 +243,16 @@ public class Gun extends MeleeWeapon {
             actions.add(AC_SHOOT);
             actions.add(AC_RELOAD);
         }
+        if (hero.buff(ShootAllBuff.OverHeat.class) != null) {
+            actions.remove(AC_RELOAD);
+            actions.remove(AC_SHOOT);
+            actions.remove(AC_EQUIP);
+            if (isEquipped(hero)) {
+                actions.remove(AC_UNEQUIP);
+                actions.remove(AC_DROP);
+                actions.remove(AC_THROW);
+            }
+        }
         return actions;
     }
 
@@ -257,6 +261,10 @@ public class Gun extends MeleeWeapon {
         super.execute(hero, action);
 
         if (action.equals(AC_SHOOT)) {
+            if (hero.buff(ShootAllBuff.OverHeat.class) != null) {
+                GLog.w(Messages.get(this, "overheat"));
+                return;
+            }
             if (!isEquipped( hero )) {
                 usesTargeting = false;
                 GLog.w(Messages.get(this, "not_equipped"));
@@ -669,9 +677,6 @@ public class Gun extends MeleeWeapon {
         public float accuracyFactor(Char owner, Char target) {
             float ACC = super.accuracyFactor(owner, target);
             ACC *= shootingAccuracy;
-            if (shootAll) {
-                ACC *= 0.5f;
-            }
             if (Gun.this.attachMod == AttachMod.LASER_ATTACH) {
                 ACC *= 1.25f;
             }
@@ -687,72 +692,24 @@ public class Gun extends MeleeWeapon {
         @Override
         protected void onThrow( int cell ) {
             boolean killedEnemy = false;
-            if (explode) {
-                Char chInPos = Actor.findChar(cell);
-                ArrayList<Char> targets = new ArrayList<>();
-                int[] shootArea = PathFinder.NEIGHBOURS9;
-
-                for (int i : shootArea){
-                    int c = cell + i;
-                    if (c >= 0 && c < Dungeon.level.length()) {
-                        if (Dungeon.level.heroFOV[c]) {
-                            CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
-                            CellEmitter.center(cell).burst(BlastParticle.FACTORY, 4);
-                        }
-                        if (Dungeon.level.flamable[c]) {
-                            Dungeon.level.destroy(c);
-                            GameScene.updateMap(c);
-                        }
-                        Char ch = Actor.findChar(c);
-                        if (ch != null && !targets.contains(ch)) {
-                            targets.add(ch);
-                        }
-                    }
+            boolean shootAll = hero.buff(ShootAllBuff.class) != null && hero.buff(ShootAllBuff.class).shootAll();
+            do {
+                if (explode) {
+                    killedEnemy = explosiveShot(cell);
+                } else {
+                    killedEnemy = oneShot(cell);
                 }
 
-                for (Char target : targets){
-                    for (int i = 0; i < shotPerShoot(); i++) {
-                        curUser.shoot(target, this);
-                    }
-                    if (!target.isAlive()) {
-                        killedEnemy = true;
-                    }
-                    if (target == curUser && !target.isAlive()) {
-                        Dungeon.fail(getClass());
-                        Badges.validateDeathFromFriendlyMagic();
-                        GLog.n(Messages.get(Gun.class, "ondeath"));
-                    }
-                }
-
-                Sample.INSTANCE.play( Assets.Sounds.BLAST );
-            } else {
-                Char enemy = Actor.findChar( cell );
-                for (int i = 0; i < shotPerShoot(); i++) { //데미지 입히는 것과 발사 시 주변에서 나는 연기를 shotPerShoot만큼 반복
-                    if (enemy == null || enemy == curUser) {
-                        parent = null;
-                        CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
-                        CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
-                    } else {
-                        if (!curUser.shoot( enemy, this )) {
-                            CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
-                            CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
-                        }
-                    }
-                }
-                if (enemy != null && !enemy.isAlive()) {
-                    killedEnemy = true;
-                }
-            }
-
-            onShoot();
+                onShoot(shootAll);
+            } while (shootAll && round() > 0);
         }
 
-        public void onShoot() {
+        public void onShoot(boolean shootAll) {
 
             boolean willUseRound = true; //탄환을 소모하지 않는 경우에 false
 
             if (willUseRound) {
-                round --;
+                useRound();
             }
 
             boolean willAggroEnemy = true; //어그로를 끌지 않는 경우에 false
@@ -761,7 +718,75 @@ public class Gun extends MeleeWeapon {
                 aggro();
             }
 
+            if (shootAll) {
+                Buff.affect(hero, ShootAllBuff.OverHeat.class).add(1);
+            }
+
             updateQuickslot();
+        }
+
+        private boolean oneShot(int cell) {
+            boolean killedEnemy = false;
+            Char enemy = Actor.findChar( cell );
+            for (int i = 0; i < shotPerShoot(); i++) { //데미지 입히는 것과 발사 시 주변에서 나는 연기를 shotPerShoot만큼 반복
+                if (enemy == null || enemy == curUser) {
+                    parent = null;
+                    CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
+                    CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                } else {
+                    if (!curUser.shoot( enemy, this )) {
+                        CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
+                        CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                    }
+                }
+            }
+            if (enemy != null && !enemy.isAlive()) {
+                killedEnemy = true;
+            }
+            return killedEnemy;
+        }
+
+        private boolean explosiveShot(int cell) {
+            boolean killedEnemy = false;
+            Char chInPos = Actor.findChar(cell);
+            ArrayList<Char> targets = new ArrayList<>();
+            int[] shootArea = PathFinder.NEIGHBOURS9;
+
+            for (int i : shootArea){
+                int c = cell + i;
+                if (c >= 0 && c < Dungeon.level.length()) {
+                    if (Dungeon.level.heroFOV[c]) {
+                        CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
+                        CellEmitter.center(cell).burst(BlastParticle.FACTORY, 4);
+                    }
+                    if (Dungeon.level.flamable[c]) {
+                        Dungeon.level.destroy(c);
+                        GameScene.updateMap(c);
+                    }
+                    Char ch = Actor.findChar(c);
+                    if (ch != null && !targets.contains(ch)) {
+                        targets.add(ch);
+                    }
+                }
+            }
+
+            for (Char target : targets){
+                for (int i = 0; i < shotPerShoot(); i++) {
+                    curUser.shoot(target, this);
+                }
+                if (!target.isAlive()) {
+                    killedEnemy = true;
+                }
+                if (target == curUser && !target.isAlive()) {
+                    Dungeon.fail(getClass());
+                    Badges.validateDeathFromFriendlyMagic();
+                    GLog.n(Messages.get(Gun.class, "ondeath"));
+                }
+            }
+
+            Sample.INSTANCE.play( Assets.Sounds.BLAST );
+
+            return killedEnemy;
         }
 
         private void aggro() { //주변의 적들을 영웅의 위치로 모이게 하는 구문
