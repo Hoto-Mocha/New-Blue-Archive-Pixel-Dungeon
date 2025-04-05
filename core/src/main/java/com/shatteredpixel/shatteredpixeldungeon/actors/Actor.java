@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.watabou.noosa.Game;
@@ -393,10 +392,10 @@ public abstract class Actor implements Bundlable {
 
 	public static synchronized HashSet<Char> chars() { return new HashSet<>(chars); }
 
-	public static synchronized HashSet<Char> charsInHeroFOV(Level level) {
-		HashSet<Char> result = new HashSet<>();
+	public static synchronized HashSet<Mob> enemiesInHeroFOV(Level level) {
+		HashSet<Mob> result = new HashSet<>();
 		for (Char ch : chars()) {
-			if (level.heroFOV[ch.pos]) result.add(ch);
+			if (level.heroFOV[ch.pos] && ch instanceof Mob && ch.alignment == Char.Alignment.ENEMY) result.add((Mob) ch);
 		}
 		return result;
 	}
