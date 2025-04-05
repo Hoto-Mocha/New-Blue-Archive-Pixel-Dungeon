@@ -244,7 +244,6 @@ public class Gun extends MeleeWeapon {
             actions.add(AC_RELOAD);
         }
         if (hero.buff(ShootAllBuff.OverHeat.class) != null) {
-            actions.remove(AC_RELOAD);
             actions.remove(AC_SHOOT);
             actions.remove(AC_EQUIP);
             if (isEquipped(hero)) {
@@ -262,9 +261,13 @@ public class Gun extends MeleeWeapon {
 
         if (action.equals(AC_SHOOT)) {
             if (hero.buff(ShootAllBuff.OverHeat.class) != null) {
-                usesTargeting = false;
-                GLog.w(Messages.get(this, "overheat"));
-                return;
+                if (round <= 0) { //현재 탄창이 0이면 AC_RELOAD 버튼을 눌렀을 때처럼 작동
+                    execute(hero, AC_RELOAD);
+                } else {
+                    usesTargeting = false;
+                    GLog.w(Messages.get(this, "overheat"));
+                    return;
+                }
             }
             if (!isEquipped( hero )) {
                 usesTargeting = false;
