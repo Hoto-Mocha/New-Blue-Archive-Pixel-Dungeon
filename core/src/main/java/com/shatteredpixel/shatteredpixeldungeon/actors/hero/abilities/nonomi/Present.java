@@ -1,10 +1,16 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Affection;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
 public class Present extends ArmorAbility {
@@ -18,6 +24,13 @@ public class Present extends ArmorAbility {
         armor.updateQuickslot();
         Invisibility.dispel();
 
+        float duration = 6f;
+
+        for (Char ch : Actor.charsInHeroFOV(Dungeon.level)) {
+            Buff.affect(ch, Charm.class, duration).object = hero.id();
+        }
+
+        hero.spendAndNext(1f);
         hero.sprite.operate(hero.pos);
     }
 
