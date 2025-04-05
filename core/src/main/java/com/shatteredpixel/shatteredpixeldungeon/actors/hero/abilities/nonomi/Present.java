@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
@@ -28,6 +29,9 @@ public class Present extends ArmorAbility {
 
         for (Char ch : Actor.charsInHeroFOV(Dungeon.level)) {
             Buff.affect(ch, Charm.class, duration).object = hero.id();
+            if (hero.hasTalent(Talent.NONOMI_ARMOR1_2)) {
+                Buff.affect(ch, Blindness.class, hero.pointsInTalent(Talent.NONOMI_ARMOR1_2));
+            }
         }
 
         hero.spendAndNext(1f);
