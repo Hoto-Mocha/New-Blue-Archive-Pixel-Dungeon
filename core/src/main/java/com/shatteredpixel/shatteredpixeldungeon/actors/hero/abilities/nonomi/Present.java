@@ -24,7 +24,7 @@ public class Present extends ArmorAbility {
         armor.updateQuickslot();
         Invisibility.dispel();
 
-        float duration = 6f;
+        float duration = 6f + 2f * hero.pointsInTalent(Talent.NONOMI_ARMOR1_1);
 
         for (Char ch : Actor.charsInHeroFOV(Dungeon.level)) {
             Buff.affect(ch, Charm.class, duration).object = hero.id();
