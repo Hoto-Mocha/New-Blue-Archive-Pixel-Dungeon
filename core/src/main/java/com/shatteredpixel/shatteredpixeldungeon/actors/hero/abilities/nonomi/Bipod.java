@@ -4,12 +4,14 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.Image;
@@ -32,6 +34,15 @@ public class Bipod extends ArmorAbility {
         Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
         hero.sprite.operate(hero.pos);
         hero.spendAndNext(1f);
+    }
+
+    @Override
+    public float chargeUse(Hero hero) {
+        if (hero.buff(BipodTracker.class) != null){
+            return super.chargeUse(hero) * 0.5f;
+        } else {
+            return super.chargeUse(hero);
+        }
     }
 
     @Override
@@ -88,6 +99,14 @@ public class Bipod extends ArmorAbility {
             return true;
         }
 
+        @Override
+        public void detach() {
+            if (target instanceof Hero && Dungeon.hero.hasTalent(Talent.NONOMI_ARMOR3_3)) {
+                Buff.affect(target, BipodTracker.class, Dungeon.hero.pointsInTalent(Talent.NONOMI_ARMOR3_3));
+            }
+            super.detach();
+        }
+
         private static String POS = "pos";
 
         @Override
@@ -104,6 +123,29 @@ public class Bipod extends ArmorAbility {
 
         public static float bulletAccMultiplier() {
             return 1+0.2f*Dungeon.hero.pointsInTalent(Talent.NONOMI_ARMOR3_2);
+        }
+    }
+
+    public static class BipodTracker extends FlavourBuff {
+        {
+            type = buffType.POSITIVE;
+        }
+
+        public static final float DURATION = 4f;
+
+        @Override
+        public int icon() {
+            return BuffIndicator.TIME;
+        }
+
+        @Override
+        public void tintIcon(Image icon) {
+            icon.hardlight(1, 1, 0);
+        }
+
+        @Override
+        public float iconFadePercent() {
+            return Math.max(0, (DURATION - visualcooldown()) / DURATION);
         }
     }
 }
