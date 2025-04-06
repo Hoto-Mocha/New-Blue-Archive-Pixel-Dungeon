@@ -117,7 +117,7 @@ public class SpreadShotBuff extends Buff implements ActionIndicator.Action {
             if (target != null && hero.belongings.weapon() instanceof Gun) {
                 if (target == hero.pos) {
                     hero.belongings.weapon().usesTargeting = false;
-                    ((Gun) hero.belongings.weapon()).reload();
+                    hero.belongings.weapon().execute(hero, Gun.AC_RELOAD);
                 } else {
                     spreadShot(target, (Gun) hero.belongings.weapon());
                 }
