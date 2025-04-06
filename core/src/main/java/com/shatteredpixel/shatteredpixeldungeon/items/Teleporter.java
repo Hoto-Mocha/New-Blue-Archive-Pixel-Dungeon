@@ -62,6 +62,11 @@ public class Teleporter extends Item {
         Collections.addAll(itemClass, Generator.Category.WEP_T3.classes);
         Collections.addAll(itemClass, Generator.Category.WEP_T4.classes);
         Collections.addAll(itemClass, Generator.Category.WEP_T5.classes);
+        Collections.addAll(itemClass, Generator.Category.GUN_T1.classes);
+        Collections.addAll(itemClass, Generator.Category.GUN_T2.classes);
+        Collections.addAll(itemClass, Generator.Category.GUN_T3.classes);
+        Collections.addAll(itemClass, Generator.Category.GUN_T4.classes);
+        Collections.addAll(itemClass, Generator.Category.GUN_T5.classes);
         Collections.addAll(itemClass, Generator.Category.MIS_T1.classes);
         Collections.addAll(itemClass, Generator.Category.MIS_T2.classes);
         Collections.addAll(itemClass, Generator.Category.MIS_T3.classes);
