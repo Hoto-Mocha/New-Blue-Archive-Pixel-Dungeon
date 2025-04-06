@@ -101,5 +101,9 @@ public class Bipod extends ArmorAbility {
             super.restoreFromBundle(bundle);
             pos = bundle.getInt(POS);
         }
+
+        public static float bulletAccMultiplier() {
+            return 1+0.2f*Dungeon.hero.pointsInTalent(Talent.NONOMI_ARMOR3_2);
+        }
     }
 }

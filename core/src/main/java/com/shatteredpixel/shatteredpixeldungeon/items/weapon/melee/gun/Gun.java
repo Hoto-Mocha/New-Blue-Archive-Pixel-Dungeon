@@ -698,6 +698,9 @@ public class Gun extends MeleeWeapon {
             if (Gun.this.attachMod == AttachMod.LASER_ATTACH) {
                 ACC *= 1.25f;
             }
+            if (owner instanceof Hero && owner.buff(Bipod.BipodBuff.class) != null) {
+                ACC *= Bipod.BipodBuff.bulletAccMultiplier();
+            }
             ACC = Gun.this.barrelMod.bulletAccuracyFactor(ACC, Dungeon.level.adjacent(owner.pos, target.pos));
             return ACC;
         }
