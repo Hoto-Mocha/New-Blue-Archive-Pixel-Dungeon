@@ -26,6 +26,9 @@ public class BulletParticle extends PixelParticle.Shrinking {
         };
     }
 
+    private final int randomSpeedRange = 1;
+    private final float speedMulti = 3f + Random.Float(-randomSpeedRange, randomSpeedRange);
+
     public void reset( float x, float y, PointF destination ) {
         // 속도와 벡터의 특징을 생각해 보자.
         // 1. 속도는 크기와 방향을 가지고 있는 벡터이다.
@@ -44,9 +47,6 @@ public class BulletParticle extends PixelParticle.Shrinking {
         revive();
 
         int randomCellRange = 8;
-        int randomSpeedRange = 2;
-
-        float speedMulti = 5f + Random.Float(-randomSpeedRange, randomSpeedRange);
 
         color( 0xEE7722 );
 
@@ -55,12 +55,12 @@ public class BulletParticle extends PixelParticle.Shrinking {
 
         left = lifespan = 1/speedMulti;
 
-        size = Random.Float(1, 2);
+        size = Random.Float(1, 3);
 
         PointF randomDestination = new PointF(destination.x + Random.Float(-randomCellRange, randomCellRange), destination.y + Random.Float(-randomCellRange, randomCellRange));
 
-        float speedX = (randomDestination.x - this.x)*speedMulti*1.05f;
-        float speedY = (randomDestination.y - this.y)*speedMulti*1.05f;
+        float speedX = (randomDestination.x - this.x)*speedMulti*1.1f; //초기 속도 1.1배 보정
+        float speedY = (randomDestination.y - this.y)*speedMulti*1.1f; //초기 속도 1.1배 보정
 
         // 예시: 초기 속도와 최종 속도가 똑같은 공식
         // acc.set( 0, 0 );
@@ -77,6 +77,6 @@ public class BulletParticle extends PixelParticle.Shrinking {
     @Override
     public void update() {
         super.update();
-        size(size);
+        am = left/lifespan;
     }
 }

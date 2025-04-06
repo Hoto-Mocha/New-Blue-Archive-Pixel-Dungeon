@@ -20,6 +20,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 public class SpreadShotBuff extends Buff implements ActionIndicator.Action {
@@ -93,7 +94,7 @@ public class SpreadShotBuff extends Buff implements ActionIndicator.Action {
             } else {
                 CellEmitter.get(cell).burst(SmokeParticle.FACTORY, gun.shotPerShoot());
             }
-            CellEmitter.center(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(cell)), gun.shotPerShoot());
+            CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(cell)), gun.shotPerShoot());
             Char ch = Actor.findChar(cell);
             if (ch != null) {
                 Gun.Bullet bullet = gun.knockBullet();
