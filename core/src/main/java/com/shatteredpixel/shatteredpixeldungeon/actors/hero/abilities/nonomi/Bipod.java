@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
@@ -8,6 +9,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.Image;
@@ -60,6 +62,7 @@ public class Bipod extends ArmorAbility {
         }
 
         private int pos = -1;
+        private int count = 0;
 
         public void set(int pos) {
             this.pos = pos;
@@ -67,6 +70,17 @@ public class Bipod extends ArmorAbility {
 
         @Override
         public boolean act() {
+            if (Dungeon.hero.hasTalent(Talent.NONOMI_ARMOR3_1)) {
+                count++;
+                if (count >= 9-Dungeon.hero.pointsInTalent(Talent.NONOMI_ARMOR3_1)) { //8/7/6/5
+                    count = 0;
+                    if (Dungeon.hero.belongings.weapon() instanceof Gun) {
+                        ((Gun) Dungeon.hero.belongings.weapon()).manualReload();
+                    }
+                }
+            } else {
+                count = 0;
+            }
             if (this.pos == -1 || target.pos != this.pos) {
                 detach();
             }
