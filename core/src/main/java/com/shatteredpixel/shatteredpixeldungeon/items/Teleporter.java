@@ -330,54 +330,8 @@ public class Teleporter extends Item {
             }
         }
         if (action.equals(AC_TEST)) {
-            /*
-            //목걸이 레벨 확인
-            if (hero.necklaceRing != null)  {
-                GLog.i(hero.necklaceRing.toString());
-                GLog.i(""+hero.necklaceRing.level());
-            } else {
-                GLog.i("null");
-            }
-            *
-            /*
-            //현재 층 비밀방 개수 확인
-
-            if (Dungeon.depth < 32) {
-                for (int i= 0; i < 6; i++) {
-                    GLog.i(""+SuspiciousKey.additionalRoomsThisRun_0[i] + ", ");
-                }
-                GLog.newLine();
-                for (int i= 0; i < 6; i++) {
-                    GLog.i(""+SuspiciousKey.additionalRoomsThisRun_1[i] + ", ");
-                }
-                GLog.newLine();
-                for (int i= 0; i < 6; i++) {
-                    GLog.i(""+SuspiciousKey.additionalRoomsThisRun_2[i] + ", ");
-                }
-                GLog.newLine();
-                for (int i= 0; i < 6; i++) {
-                    GLog.i(""+SuspiciousKey.additionalRoomsThisRun_3[i] + ", ");
-                }
-                GLog.newLine();
-                GLog.i("현재 비밀방 개수: " + secretRooms[Dungeon.depth]);
-             }
-             */
-//            if (hero.buff(HorseRiding.RidingCooldown.class) != null) {
-//                hero.buff(HorseRiding.RidingCooldown.class).kill();
-//            }
-
-//            Buff.affect(hero, Command.class).kill(true);
-
-//            Buff b = hero.buff(MedicKit.MedicKitBuff.class);
-//            if (b != null) {
-//                GLog.i(b.toString());
-//            }
-
-            InterlevelScene.mode = InterlevelScene.Mode.RETURN;
-            InterlevelScene.returnDepth = 14;
-            InterlevelScene.returnBranch = 2;
-            InterlevelScene.returnPos = -2;
-            Game.switchScene( InterlevelScene.class );
+            Dungeon.gold += 3000;
+            Item.updateQuickslot();
         }
     }
 
