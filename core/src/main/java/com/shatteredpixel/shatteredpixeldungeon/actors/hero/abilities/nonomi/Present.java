@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -12,9 +13,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfSirensSong;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
 public class Present extends ArmorAbility {
@@ -42,8 +45,13 @@ public class Present extends ArmorAbility {
             if (hero.hasTalent(Talent.NONOMI_ARMOR1_2)) {
                 Buff.affect(mob, Blindness.class, hero.pointsInTalent(Talent.NONOMI_ARMOR1_2));
             }
+            mob.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 5 );
         }
 
+        hero.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 5 );
+
+        Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
+        Sample.INSTANCE.play(Assets.Sounds.CHARMS);
         hero.spendAndNext(1f);
         hero.sprite.operate(hero.pos);
     }
