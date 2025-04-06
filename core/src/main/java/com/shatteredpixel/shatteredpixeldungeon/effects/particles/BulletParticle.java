@@ -59,8 +59,8 @@ public class BulletParticle extends PixelParticle.Shrinking {
 
         PointF randomDestination = new PointF(destination.x + Random.Float(-randomCellRange, randomCellRange), destination.y + Random.Float(-randomCellRange, randomCellRange));
 
-        float speedX = (randomDestination.x - this.x)*speedMulti;
-        float speedY = (randomDestination.y - this.y)*speedMulti;
+        float speedX = (randomDestination.x - this.x)*speedMulti*1.05f;
+        float speedY = (randomDestination.y - this.y)*speedMulti*1.05f;
 
         // 예시: 초기 속도와 최종 속도가 똑같은 공식
         // acc.set( 0, 0 );

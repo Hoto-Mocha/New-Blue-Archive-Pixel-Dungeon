@@ -89,11 +89,11 @@ public class SpreadShotBuff extends Buff implements ActionIndicator.Action {
         for (int cell : cone.cells){
             if (Dungeon.level.solid[cell]) continue;
             if (specterBullet) {
-                CellEmitter.get(cell).burst(LightSmokeParticle.FACTORY, 3);
+                CellEmitter.get(cell).burst(LightSmokeParticle.FACTORY, gun.shotPerShoot());
             } else {
-                CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 3);
+                CellEmitter.get(cell).burst(SmokeParticle.FACTORY, gun.shotPerShoot());
             }
-            CellEmitter.center(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(cell)), 3+gun.shotPerShoot());
+            CellEmitter.center(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(cell)), gun.shotPerShoot());
             Char ch = Actor.findChar(cell);
             if (ch != null) {
                 Gun.Bullet bullet = gun.knockBullet();
