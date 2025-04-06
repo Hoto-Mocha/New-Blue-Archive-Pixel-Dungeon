@@ -2634,4 +2634,13 @@ public class Hero extends Char {
 			}
 		}
 	}
+
+	public void onEnemyKill(Mob mob) {
+		if (heroClass == HeroClass.NONOMI) {
+			int gain = (int)(Dungeon.gold*1.05f) - Dungeon.gold;
+			Dungeon.gold = (int)(Dungeon.gold*1.05f);
+			Item.updateQuickslot();
+			if (gain > 0) sprite.showStatusWithIcon( CharSprite.NEUTRAL, Integer.toString(gain), FloatingText.GOLD );
+		}
+	}
 }

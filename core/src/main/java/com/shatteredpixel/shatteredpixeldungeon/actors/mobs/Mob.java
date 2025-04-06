@@ -902,6 +902,10 @@ public abstract class Mob extends Char {
 			GLog.i( Messages.get(this, "died") );
 		}
 
+		if (cause == Dungeon.hero) {
+			Dungeon.hero.onEnemyKill(this);
+		}
+
 		boolean soulMarked = buff(SoulMark.class) != null;
 
 		super.die( cause );
