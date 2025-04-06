@@ -50,6 +50,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
@@ -1267,6 +1268,11 @@ public enum Talent {
 			if (Random.Float() < hero.pointsInTalent(Talent.NONOMI_EX1_2) / 3f) {
 				hero.buff(ShootAllBuff.OverHeat.class).hit();
 			}
+		}
+
+		if (hero.buff(Bipod.BipodBuff.class) != null
+				&& !(hero.belongings.attackingWeapon() instanceof Gun.Bullet)) {
+			hero.buff(Bipod.BipodBuff.class).detach();
 		}
 
 		return dmg;
