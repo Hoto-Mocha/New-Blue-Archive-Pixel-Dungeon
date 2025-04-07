@@ -1248,7 +1248,7 @@ public enum Talent {
 
 		if (hero.hasTalent(Talent.NONOMI_T2_5) && enemy.buff(PushingTracker.class) == null && !(hero.belongings.attackingWeapon() instanceof MissileWeapon)) {
 			Buff.affect(enemy, PushingTracker.class);
-			Elastic.pushEnemy(hero, enemy, hero.belongings.weapon(), 1 + hero.pointsInTalent(Talent.NONOMI_T2_5));
+			Elastic.pushEnemyWithoutPit(hero, enemy, hero.belongings.weapon(), 1 + hero.pointsInTalent(Talent.NONOMI_T2_5));
 			if (Random.Float() < 0.2f) {
 				hero.yellI(Messages.get(Hero.class, "nonomi_push"));
 			}
