@@ -58,7 +58,7 @@ public class CellEmitter {
 		return emitter;
 	}
 
-	public static Emitter heroCenter( int cell ) { //타일 중앙 기준이 아닌 영웅 스프라이트 중앙 기준
+	public static Emitter heroCenter( int cell ) { //타일 중앙 기준이 아닌 학생 스프라이트 중앙 기준
 
 		PointF p = DungeonTilemap.tileToWorld( cell );
 
