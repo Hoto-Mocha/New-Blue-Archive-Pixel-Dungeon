@@ -951,7 +951,7 @@ public enum Talent {
 		if (hero.hasTalent(Talent.NONOMI_T2_1)) {
 			KindOfWeapon weapon = hero.belongings.weapon();
 			if (weapon instanceof Gun) {
-				((Gun) weapon).reload();
+				((Gun) weapon).quickReload();
 				if (hero.pointsInTalent(Talent.NONOMI_T2_1) == 2) {
 					((Gun) weapon).manualReload(1, true);
 				}
