@@ -303,7 +303,7 @@ public class TitleScene extends PixelScene {
 			}
 
 			if (updateShown){
-				textColor(ColorMath.interpolate( 0xFFFFFF, Window.SHPX_COLOR, 0.5f + (float)Math.sin(Game.timeTotal*5)/2f));
+				textColor(ColorMath.interpolate( 0xFFFFFF, Window.BAPD_COLOR, 0.5f + (float)Math.sin(Game.timeTotal*5)/2f));
 			}
 		}
 
