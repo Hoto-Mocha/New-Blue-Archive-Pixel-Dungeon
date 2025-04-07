@@ -810,7 +810,7 @@ public class Gun extends MeleeWeapon {
             return killedEnemy;
         }
 
-        private void aggro() { //주변의 적들을 영웅의 위치로 모이게 하는 구문
+        private void aggro() { //주변의 적들을 학생의 위치로 모이게 하는 구문
             for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
                 if (mob.paralysed <= 0
                         && Dungeon.level.distance(curUser.pos, mob.pos) <= 4
