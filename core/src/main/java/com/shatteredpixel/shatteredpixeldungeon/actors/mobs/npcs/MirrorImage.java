@@ -72,11 +72,11 @@ public class MirrorImage extends NPC {
 				return true;
 			}
 		}
-		
-		if (hero.tier() != armTier){
-			armTier = hero.tier();
-			((MirrorSprite)sprite).updateArmor( armTier );
-		}
+
+//		if (hero.tier() != armTier){
+//			armTier = hero.tier();
+//			((MirrorSprite)sprite).updateArmor( armTier );
+//		}
 		
 		return super.act();
 	}
@@ -186,11 +186,7 @@ public class MirrorImage extends NPC {
 		CharSprite s = super.sprite();
 		
 		hero = (Hero)Actor.findById(heroID);
-		if (hero != null) {
-			armTier = hero.tier();
-		} else {
-			armTier = 1;
-		}
+		armTier = 0;
 		((MirrorSprite)s).updateArmor( armTier );
 		return s;
 	}

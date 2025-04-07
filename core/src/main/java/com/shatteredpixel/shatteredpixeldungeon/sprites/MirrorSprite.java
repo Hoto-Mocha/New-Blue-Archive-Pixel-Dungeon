@@ -31,12 +31,12 @@ import com.watabou.utils.PointF;
 public class MirrorSprite extends MobSprite {
 	
 	private static final int FRAME_WIDTH	= 12;
-	private static final int FRAME_HEIGHT	= 15;
+	private static final int FRAME_HEIGHT	= 17;
 	
 	public MirrorSprite() {
 		super();
 		
-		texture( Dungeon.hero != null ? Dungeon.hero.heroClass.spritesheet() : HeroClass.WARRIOR.spritesheet() );
+		texture( Dungeon.hero != null ? Dungeon.hero.heroClass.spritesheet() : HeroClass.ARIS.spritesheet() );
 		updateArmor( 0 );
 		idle();
 	}
