@@ -977,52 +977,52 @@ public class Badges {
 	}
 	
 	public static void validateMageUnlock(){
-		if (Statistics.upgradesUsed >= 1 && !isUnlocked(Badge.UNLOCK_MAGE)){
-			displayBadge( Badge.UNLOCK_MAGE );
-		}
+//		if (Statistics.upgradesUsed >= 1 && !isUnlocked(Badge.UNLOCK_MAGE)){
+//			displayBadge( Badge.UNLOCK_MAGE );
+//		}
 	}
 	
 	public static void validateRogueUnlock(){
-		if (Statistics.sneakAttacks >= 10 && !isUnlocked(Badge.UNLOCK_ROGUE)){
-			displayBadge( Badge.UNLOCK_ROGUE );
-		}
+//		if (Statistics.sneakAttacks >= 10 && !isUnlocked(Badge.UNLOCK_ROGUE)){
+//			displayBadge( Badge.UNLOCK_ROGUE );
+//		}
 	}
 	
 	public static void validateHuntressUnlock(){
-		if (Statistics.thrownAttacks >= 10 && !isUnlocked(Badge.UNLOCK_HUNTRESS)){
-			displayBadge( Badge.UNLOCK_HUNTRESS );
-		}
+//		if (Statistics.thrownAttacks >= 10 && !isUnlocked(Badge.UNLOCK_HUNTRESS)){
+//			displayBadge( Badge.UNLOCK_HUNTRESS );
+//		}
 	}
 
 	public static void validateDuelistUnlock(){
-		if (!isUnlocked(Badge.UNLOCK_DUELIST) && Dungeon.hero != null
-				&& Dungeon.hero.belongings.weapon instanceof MeleeWeapon
-				&& ((MeleeWeapon) Dungeon.hero.belongings.weapon).tier >= 2
-				&& ((MeleeWeapon) Dungeon.hero.belongings.weapon).STRReq() <= Dungeon.hero.STR()){
-
-			if (Dungeon.hero.belongings.weapon.isIdentified() &&
-					((MeleeWeapon) Dungeon.hero.belongings.weapon).STRReq() <= Dungeon.hero.STR()) {
-				displayBadge(Badge.UNLOCK_DUELIST);
-
-			} else if (!Dungeon.hero.belongings.weapon.isIdentified() &&
-					((MeleeWeapon) Dungeon.hero.belongings.weapon).STRReq(0) <= Dungeon.hero.STR()){
-				displayBadge(Badge.UNLOCK_DUELIST);
-			}
-		}
+//		if (!isUnlocked(Badge.UNLOCK_DUELIST) && Dungeon.hero != null
+//				&& Dungeon.hero.belongings.weapon instanceof MeleeWeapon
+//				&& ((MeleeWeapon) Dungeon.hero.belongings.weapon).tier >= 2
+//				&& ((MeleeWeapon) Dungeon.hero.belongings.weapon).STRReq() <= Dungeon.hero.STR()){
+//
+//			if (Dungeon.hero.belongings.weapon.isIdentified() &&
+//					((MeleeWeapon) Dungeon.hero.belongings.weapon).STRReq() <= Dungeon.hero.STR()) {
+//				displayBadge(Badge.UNLOCK_DUELIST);
+//
+//			} else if (!Dungeon.hero.belongings.weapon.isIdentified() &&
+//					((MeleeWeapon) Dungeon.hero.belongings.weapon).STRReq(0) <= Dungeon.hero.STR()){
+//				displayBadge(Badge.UNLOCK_DUELIST);
+//			}
+//		}
 	}
 
 	public static void validateClericUnlock(){
-		if (!isUnlocked(Badge.UNLOCK_CLERIC)){
-			displayBadge( Badge.UNLOCK_CLERIC );
-		}
+//		if (!isUnlocked(Badge.UNLOCK_CLERIC)){
+//			displayBadge( Badge.UNLOCK_CLERIC );
+//		}
 	}
 	
 	public static void validateMasteryCombo( int n ) {
-		if (!local.contains( Badge.MASTERY_COMBO ) && n == 10) {
-			Badge badge = Badge.MASTERY_COMBO;
-			local.add( badge );
-			displayBadge( badge );
-		}
+//		if (!local.contains( Badge.MASTERY_COMBO ) && n == 10) {
+//			Badge badge = Badge.MASTERY_COMBO;
+//			local.add( badge );
+//			displayBadge( badge );
+//		}
 	}
 	
 	public static void validateVictory() {
