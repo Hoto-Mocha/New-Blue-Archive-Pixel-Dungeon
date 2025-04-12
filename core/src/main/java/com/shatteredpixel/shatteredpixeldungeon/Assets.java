@@ -278,6 +278,7 @@ public class Assets {
 		public static final String CLERIC   = "sprites/cleric.png";
 		public static final String ARIS  	= "sprites/aris.png";
 		public static final String NONOMI  	= "sprites/nonomi.png";
+		public static final String MIYAKO  	= "sprites/miyako.png";
 		public static final String AVATARS  = "sprites/avatars.png";
 		public static final String PET      = "sprites/pet.png";
 		public static final String AMULET   = "sprites/amulet.png";
