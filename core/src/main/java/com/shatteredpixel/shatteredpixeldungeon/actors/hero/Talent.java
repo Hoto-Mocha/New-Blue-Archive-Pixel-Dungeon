@@ -1013,6 +1013,9 @@ public enum Talent {
 				}
 			}
 		}
+		if (hero.hasTalent(Talent.MIYAKO_T2_1)) {
+			Buff.affect(hero, Barrier.class).setShield((int)(hero.HT*(0.5f+0.5f*hero.pointsInTalent(Talent.MIYAKO_T2_1))));
+		}
 	}
 
 	public static class WarriorFoodImmunity extends FlavourBuff{

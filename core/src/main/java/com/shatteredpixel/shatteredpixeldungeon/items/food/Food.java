@@ -107,6 +107,7 @@ public class Food extends Item {
 			|| Dungeon.hero.hasTalent(Talent.ENLIGHTENING_MEAL)
 			|| Dungeon.hero.hasTalent(Talent.ARIS_T2_1)
 			|| Dungeon.hero.hasTalent(Talent.NONOMI_T2_1)
+			|| Dungeon.hero.hasTalent(Talent.MIYAKO_T2_1)
 		){
 			return TIME_TO_EAT - 2;
 		} else {
