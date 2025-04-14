@@ -1338,6 +1338,10 @@ public enum Talent {
 			hero.buff(Bipod.BipodBuff.class).detach();
 		}
 
+		if (hero.hasTalent(Talent.MIYAKO_T1_3) && hero.belongings.attackingWeapon() instanceof SMG) {
+			dmg += Random.IntRange(1, hero.pointsInTalent(Talent.MIYAKO_T1_3));
+		}
+
 		return dmg;
 	}
 
