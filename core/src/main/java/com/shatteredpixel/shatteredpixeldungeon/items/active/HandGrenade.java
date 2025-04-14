@@ -15,7 +15,7 @@ public class HandGrenade extends Grenade {
         return new HandGrenadeBoomer();
     }
 
-    public static class HandGrenadeBoomer extends Grenade.Boomer {
+    public class HandGrenadeBoomer extends Boomer {
 
         {
             image = ItemSpriteSheet.GRENADE;
@@ -24,7 +24,7 @@ public class HandGrenade extends Grenade {
         //needs to be overridden
         @Override
         protected void activate(int cell) {
-
+            explode(cell);
         }
     }
 }

@@ -93,6 +93,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Grenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
@@ -2650,6 +2652,11 @@ public class Hero extends Char {
 			Dungeon.gold = (int)(Dungeon.gold*1.01f);
 			Item.updateQuickslot();
 			if (gain > 0) sprite.showStatusWithIcon( CharSprite.NEUTRAL, Integer.toString(gain), FloatingText.GOLD );
+		}
+		if (!belongings.getAllItems(Grenade.class).isEmpty()) {
+			for (Grenade g : belongings.getAllItems(Grenade.class)) {
+				g.reloadByChance();
+			}
 		}
 	}
 }

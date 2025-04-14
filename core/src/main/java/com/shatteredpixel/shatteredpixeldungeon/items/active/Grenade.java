@@ -94,6 +94,12 @@ public class Grenade extends Item {
         return max;
     }
 
+    public void reloadByChance() {
+        if (Random.Float() < dropChance) {
+            reload();
+        }
+    }
+
     public void reload() {
         int oldAmt = amount;
         amount++;
@@ -139,7 +145,7 @@ public class Grenade extends Item {
         return new Boomer();
     }
 
-    public static class Boomer extends Item {
+    public class Boomer extends Item {
 
         @Override
         protected void onThrow(int cell) {
@@ -147,8 +153,7 @@ public class Grenade extends Item {
         }
 
         //needs to be overridden
-        protected void activate(int cell) {
-        }
+        protected void activate(int cell) {}
 
         @Override
         public void cast(final Hero user, final int dst) {

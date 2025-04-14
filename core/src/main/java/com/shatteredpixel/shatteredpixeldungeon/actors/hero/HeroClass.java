@@ -61,6 +61,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.KingsCrown;
 import com.shatteredpixel.shatteredpixeldungeon.items.Teleporter;
 import com.shatteredpixel.shatteredpixeldungeon.items.TengusMask;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
@@ -264,6 +266,12 @@ public enum HeroClass {
 		SMG_T1 smgT1 = new SMG_T1();
 		(hero.belongings.weapon = smgT1).identify();
 		Dungeon.quickslot.setSlot(0, smgT1);
+		Claymore claymore = new Claymore();
+		claymore.collect();
+		Dungeon.quickslot.setSlot(1, claymore);
+		HandGrenade handGrenade = new HandGrenade();
+		handGrenade.collect();
+		Dungeon.quickslot.setSlot(2, handGrenade);
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();

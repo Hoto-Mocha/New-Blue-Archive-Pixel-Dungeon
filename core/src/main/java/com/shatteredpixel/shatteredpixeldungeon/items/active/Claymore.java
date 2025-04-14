@@ -83,7 +83,7 @@ public class Claymore extends Grenade {
             ArrayList<Char> affected = new ArrayList<>();
             for (int c : cone.cells){
                 CellEmitter.get(c).burst(SmokeParticle.FACTORY, 2);
-                CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(cell)), 3);
+                CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(c)), 6);
                 Char ch = Actor.findChar(c);
                 if (ch != null && ch.alignment != hero.alignment){
                     affected.add(ch);
@@ -91,7 +91,9 @@ public class Claymore extends Grenade {
             }
 
             for (Char ch : affected) {
-                ch.damage(2*Random.NormalIntRange(5 + buffedLvl() + Dungeon.scalingDepth(), 10 + 2*buffedLvl() + Dungeon.scalingDepth()*2)*openUpMulti, curUser);
+                ch.damage(2*Random.NormalIntRange(5 + buffedLvl() + Dungeon.scalingDepth(), 10 + 2*buffedLvl() + Dungeon.scalingDepth()*2)*openUpMulti, this);
+                ch.sprite.flash();
+                Sample.INSTANCE.play(Assets.Sounds.HIT);
                 if (Random.Float() < 0.4f + 0.1f*buffedLvl()) {
                     Buff.affect(ch, Cripple.class, 5f);
                 }
@@ -100,6 +102,7 @@ public class Claymore extends Grenade {
             hero.spendAndNext(1f);
             updateQuickslot();
             Sample.INSTANCE.play( Assets.Sounds.BLAST, 1, 1f - 0.1f*openUpMulti );
+            Sample.INSTANCE.play( Assets.Sounds.HIT_CRUSH, 1, Random.Float(0.33f, 0.66f) );
         }
     }
 }
