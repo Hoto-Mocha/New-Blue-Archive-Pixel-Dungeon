@@ -12,6 +12,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -109,11 +110,7 @@ public class Grenade extends Item {
         Item.updateQuickslot();
         if (oldAmt != amount) {
             if (!special) {
-                Dungeon.hero.yellP(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_grenade_collect_" + (Random.Int(3)+1)));
-            } else {
-                if (this instanceof Claymore) {
-                    Dungeon.hero.yellP(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_claymore_collect_" + (Random.Int(3)+1)));
-                }
+                Dungeon.hero.sprite.showStatus(CharSprite.BLUE, Messages.get(this, "reload"), this.name());
             }
         }
     }
