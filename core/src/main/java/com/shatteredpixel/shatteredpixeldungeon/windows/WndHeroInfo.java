@@ -65,6 +65,9 @@ public class WndHeroInfo extends WndTabbed {
 			case NONOMI:
 				tabIcon = new ItemSprite(ItemSpriteSheet.GOLD, null);
 				break;
+			case MIYAKO:
+				tabIcon = new ItemSprite(ItemSpriteSheet.CLAYMORE, null);
+				break;
 			case WARRIOR:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SEAL, null);
 				break;
@@ -190,6 +193,12 @@ public class WndHeroInfo extends WndTabbed {
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.GOLD),
 							new TalentIcon(Talent.NONOMI_T1_2),
 							new ItemSprite(ItemSpriteSheet.MG_TIER_1),
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+					break;
+				case MIYAKO:
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.CLAYMORE),
+							new TalentIcon(Talent.MIYAKO_T1_2),
+							new ItemSprite(ItemSpriteSheet.SMG_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 				case WARRIOR:

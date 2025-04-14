@@ -64,6 +64,7 @@ public class Badges {
 	public enum Badge {
 		MASTERY_ARIS,
 		MASTERY_NONOMI,
+		MASTERY_MIYAKO,
 
 		MASTERY_WARRIOR,
 		MASTERY_MAGE,
@@ -126,6 +127,7 @@ public class Badges {
 		DEATH_FROM_SACRIFICE        ( 53 ),
 		BOSS_SLAIN_1_ARIS,
 		BOSS_SLAIN_1_NONOMI,
+		BOSS_SLAIN_1_MIYAKO,
 		BOSS_SLAIN_1_WARRIOR,
 		BOSS_SLAIN_1_MAGE,
 		BOSS_SLAIN_1_ROGUE,
@@ -180,6 +182,7 @@ public class Badges {
 		ALL_ITEMS_IDENTIFIED        , //still exists internally for pre-2.5 saves
 		VICTORY_ARIS,
 		VICTORY_NONOMI,
+		VICTORY_MIYAKO,
 		VICTORY_WARRIOR,
 		VICTORY_MAGE,
 		VICTORY_ROGUE,
@@ -801,6 +804,7 @@ public class Badges {
 	static {
 		firstBossClassBadges.put(HeroClass.ARIS, Badge.BOSS_SLAIN_1_ARIS);
 		firstBossClassBadges.put(HeroClass.NONOMI, Badge.BOSS_SLAIN_1_NONOMI);
+		firstBossClassBadges.put(HeroClass.MIYAKO, Badge.BOSS_SLAIN_1_MIYAKO);
 //		firstBossClassBadges.put(HeroClass.WARRIOR, Badge.BOSS_SLAIN_1_WARRIOR);
 //		firstBossClassBadges.put(HeroClass.MAGE, Badge.BOSS_SLAIN_1_MAGE);
 //		firstBossClassBadges.put(HeroClass.ROGUE, Badge.BOSS_SLAIN_1_ROGUE);
@@ -813,6 +817,7 @@ public class Badges {
 	static {
 		victoryClassBadges.put(HeroClass.ARIS, Badge.VICTORY_ARIS);
 		victoryClassBadges.put(HeroClass.NONOMI, Badge.VICTORY_NONOMI);
+		victoryClassBadges.put(HeroClass.MIYAKO, Badge.VICTORY_MIYAKO);
 //		victoryClassBadges.put(HeroClass.WARRIOR, Badge.VICTORY_WARRIOR);
 //		victoryClassBadges.put(HeroClass.MAGE, Badge.VICTORY_MAGE);
 //		victoryClassBadges.put(HeroClass.ROGUE, Badge.VICTORY_ROGUE);
@@ -948,6 +953,9 @@ public class Badges {
 				break;
 			case NONOMI:
 				badge = Badge.MASTERY_NONOMI;
+				break;
+			case MIYAKO:
+				badge = Badge.MASTERY_MIYAKO;
 				break;
 			case WARRIOR:
 				badge = Badge.MASTERY_WARRIOR;

@@ -118,6 +118,8 @@ public class HeroIcon extends Image {
 	public static final int BATTERY_CHARGE	= 128+1;
 	public static final int SHOOT_ALL		= 128+2;
 	public static final int SPREAD_SHOT		= 128+3;
+	public static final int RABBIT_SQUAD	= 128+4;
+	public static final int SUPPORT_DRONE	= 128+5;
 
 	//new armor abilities
 	public static final int ARIS_1			= 128+40;
@@ -126,6 +128,9 @@ public class HeroIcon extends Image {
 	public static final int NONOMI_1		= 128+43;
 	public static final int NONOMI_2		= 128+44;
 	public static final int NONOMI_3		= 128+45;
+	public static final int MIYAKO_1		= 128+46;
+	public static final int MIYAKO_2		= 128+47;
+	public static final int MIYAKO_3		= 128+48;
 
 	//new action indicator visuals
   	public static final int CHARGE			= 128+72;
