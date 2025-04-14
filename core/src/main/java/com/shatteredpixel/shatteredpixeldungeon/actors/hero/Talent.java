@@ -95,6 +95,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_SP;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -884,6 +885,19 @@ public enum Talent {
 			}
 		}
 
+		if (talent == MIYAKO_T1_2 && !ShardOfOblivion.passiveIDDisabled()) {
+			if (hero.pointsInTalent(MIYAKO_T1_2) == 1) {
+				if (hero.belongings.weapon() instanceof SMG)  {
+					hero.belongings.weapon.identify();
+				}
+			}
+			if (hero.pointsInTalent(MIYAKO_T1_2) == 2) {
+				for (Item i : hero.belongings.getAllItems(SMG.class)) {
+					i.identify();
+				}
+			}
+		}
+
 		if (talent == NONOMI_T3_1 && hero.pointsInTalent(NONOMI_T3_1) == 1) {
 			new MG_SP().identify().collect();
 		}
@@ -1182,6 +1196,9 @@ public enum Talent {
 		if (hero.hasTalent(NONOMI_T1_2) && (item instanceof MG)){
 			identify = true;
 		}
+		if (hero.hasTalent(MIYAKO_T1_2) && (item instanceof SMG)){
+			identify = true;
+		}
 
 		if (identify && !ShardOfOblivion.passiveIDDisabled()){
 			item.identify();
@@ -1196,6 +1213,10 @@ public enum Talent {
 		boolean identify = false;
 
 		if (hero.pointsInTalent(NONOMI_T1_2) == 2 && (item instanceof MG)){
+			identify = true;
+		}
+
+		if (hero.pointsInTalent(MIYAKO_T1_2) == 2 && (item instanceof SMG)){
 			identify = true;
 		}
 
