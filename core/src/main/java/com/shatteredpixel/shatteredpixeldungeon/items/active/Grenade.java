@@ -87,6 +87,13 @@ public class Grenade extends Item {
         return level();
     }
 
+    @Override
+    public String info() {
+        String info = super.info();
+        info += "\n\n" + Messages.get(this, "throw_desc", explodeMinDmg(), explodeMaxDmg(), amount, maxAmount(), Messages.decimalFormat("#.##", dropChance*100));
+        return info;
+    }
+
     public int maxAmount() { //최대 장탄수
         int max = max_amount;
 
