@@ -1342,6 +1342,13 @@ public enum Talent {
 			dmg += Random.IntRange(1, hero.pointsInTalent(Talent.MIYAKO_T1_3));
 		}
 
+		if (hero.hasTalent(Talent.MIYAKO_T1_4)
+				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)
+				&& enemy.buff(ConfusionTracker.class) == null){
+			dmg += Random.IntRange(hero.pointsInTalent(Talent.MIYAKO_T1_4) , 2);
+			Buff.affect(enemy, ConfusionTracker.class);
+		}
+
 		return dmg;
 	}
 
@@ -1412,6 +1419,7 @@ public enum Talent {
 	}
 
 	public static class PushingTracker extends Buff {};
+	public static class ConfusionTracker extends Buff{};
 
 	//new buff here
 
