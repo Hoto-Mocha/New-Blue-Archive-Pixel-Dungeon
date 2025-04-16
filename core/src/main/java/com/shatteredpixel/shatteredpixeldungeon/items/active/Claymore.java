@@ -36,7 +36,11 @@ public class Claymore extends Grenade {
 
     @Override
     public int maxAmount() { //최대 장탄수
-        return max_amount;
+        int max = max_amount;
+
+        if (Dungeon.hero.pointsInTalent(Talent.MIYAKO_T2_2) > 1) max++;
+
+        return max;
     }
 
     @Override
