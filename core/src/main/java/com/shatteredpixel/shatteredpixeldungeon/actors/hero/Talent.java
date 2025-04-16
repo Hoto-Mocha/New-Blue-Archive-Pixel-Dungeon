@@ -912,6 +912,10 @@ public enum Talent {
 		if (talent == MIYAKO_T2_2) {
 			Item.updateQuickslot();
 		}
+
+		if (talent == MIYAKO_T2_5) {
+			hero.updateHT(true);
+		}
 	}
 
 	public static class CachedRationsDropped extends CounterBuff{{revivePersists = true;}};
