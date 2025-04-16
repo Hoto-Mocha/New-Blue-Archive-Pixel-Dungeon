@@ -1,7 +1,10 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.active;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 
 public class HandGrenade extends Grenade {
     {
@@ -45,6 +48,24 @@ public class HandGrenade extends Grenade {
         @Override
         protected void activate(int cell) {
             explode(cell);
+        }
+
+        @Override
+        public int throwPos(Hero user, int dst) {
+            if (Dungeon.level.distance(user.pos, dst) < 4) {
+                switch (Dungeon.hero.pointsInTalent(Talent.MIYAKO_T3_1)) {
+                    case 1:
+                        return new Ballistica( user.pos, dst, Ballistica.STOP_TARGET | Ballistica.STOP_SOLID ).collisionPos;
+                    case 2:
+                        return new Ballistica( user.pos, dst, Ballistica.STOP_TARGET | Ballistica.STOP_SOLID | Ballistica.IGNORE_SOFT_SOLID ).collisionPos;
+                    case 3:
+                        return new Ballistica( user.pos, dst, Ballistica.STOP_TARGET ).collisionPos;
+                    case 0: default:
+                        return super.throwPos(user, dst);
+                }
+            } else {
+                return super.throwPos(user, dst);
+            }
         }
     }
 }
