@@ -1390,6 +1390,9 @@ public abstract class Level implements Bundlable {
 						mindVisRange = 1+2*((Hero) c).pointsInTalent(Talent.DIVINE_SENSE);
 					}
 				}
+				if (((Hero) c).hasTalent(Talent.MIYAKO_T2_3)){
+					mindVisRange = 1+((Hero) c).pointsInTalent(Talent.MIYAKO_T2_3);
+				}
 				mindVisRange = Math.max(mindVisRange, EyeOfNewt.mindVisionRange());
 
 				//power of many's life link spell allows allies to get divine sense
