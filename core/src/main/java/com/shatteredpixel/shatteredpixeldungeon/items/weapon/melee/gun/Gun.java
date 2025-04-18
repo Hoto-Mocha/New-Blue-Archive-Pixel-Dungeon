@@ -23,6 +23,48 @@ import com.shatteredpixel.shatteredpixeldungeon.items.GunSmithingTool;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
@@ -35,6 +77,9 @@ import com.watabou.utils.Random;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public class Gun extends MeleeWeapon {
     public static final String AC_SHOOT		= "SHOOT";
@@ -847,4 +892,47 @@ public class Gun extends MeleeWeapon {
             return Messages.get(SpiritBow.class, "prompt");
         }
     };
+
+    public interface Supplier<T> {
+        T get();
+    }
+
+    private static final int MAX_TIER = 5;
+
+    private static final Map<Class<? extends Gun>, Supplier<? extends Gun>[]> gunMap = new HashMap<>();
+
+    static {
+        gunMap.put(HG.class, new Supplier[]{
+                HG_T1::new, HG_T2::new, HG_T3::new, HG_T4::new, HG_T5::new
+        });
+        gunMap.put(SMG.class, new Supplier[]{
+                SMG_T1::new, SMG_T2::new, SMG_T3::new, SMG_T4::new, SMG_T5::new
+        });
+        gunMap.put(SG.class, new Supplier[]{
+                SG_T1::new, SG_T2::new, SG_T3::new, SG_T4::new, SG_T5::new
+        });
+        gunMap.put(MG.class, new Supplier[]{
+                MG_T1::new, MG_T2::new, MG_T3::new, MG_T4::new, MG_T5::new
+        });
+        gunMap.put(AR.class, new Supplier[]{
+                AR_T1::new, AR_T2::new, AR_T3::new, AR_T4::new, AR_T5::new
+        });
+        gunMap.put(GL.class, new Supplier[]{
+                GL_T1::new, GL_T2::new, GL_T3::new, GL_T4::new, GL_T5::new
+        });
+        gunMap.put(SR.class, new Supplier[]{
+                SR_T1::new, SR_T2::new, SR_T3::new, SR_T4::new, SR_T5::new
+        });
+    }
+
+    public static Gun getGun(Class<? extends Gun> gunClass, int tier, int lvl) {
+        Supplier<? extends Gun>[] suppliers = gunMap.get(gunClass);
+        if (suppliers != null) {
+            int index = Math.max(0, Math.min(tier - 1, MAX_TIER - 1));
+            Gun gun = suppliers[index].get();
+            gun.upgrade(lvl);
+            return gun;
+        }
+        return null;
+    }
 }
