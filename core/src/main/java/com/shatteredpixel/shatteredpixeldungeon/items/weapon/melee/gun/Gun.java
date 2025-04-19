@@ -79,7 +79,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class Gun extends MeleeWeapon {
     public static final String AC_SHOOT		= "SHOOT";
@@ -518,7 +517,7 @@ public class Gun extends MeleeWeapon {
         return bulletMax(this.buffedLvl());
     }
 
-    protected int bulletDamage() {
+    public int bulletDamage() {
         int damage = Random.NormalIntRange(bulletMin(), bulletMax());
 
         damage = augment.damageFactor(damage);  //증강에 따라 변화하는 효과

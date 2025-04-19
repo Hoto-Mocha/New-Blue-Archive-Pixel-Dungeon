@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitSquadBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
@@ -1358,6 +1359,10 @@ public enum Talent {
 				&& enemy.buff(ConfusionTracker.class) == null){
 			dmg += Random.IntRange(hero.pointsInTalent(Talent.MIYAKO_T1_4) , 2);
 			Buff.affect(enemy, ConfusionTracker.class);
+		}
+
+		if (hero.buff(RabbitSquadBuff.class) != null) {
+			hero.buff(RabbitSquadBuff.class).attack(enemy);
 		}
 
 		return dmg;
