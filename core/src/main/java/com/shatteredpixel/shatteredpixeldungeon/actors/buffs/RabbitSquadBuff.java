@@ -10,18 +10,24 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SnipeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MissileSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
@@ -36,10 +42,6 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
 
         revivePersists = true;
     }
-
-    protected final float SAKI_COOLDOWN_MAX = 500f;
-    protected final float MIYU_COOLDOWN_MAX = 50f;
-    protected final float MOE_COOLDOWN_MAX = 200f;
 
     private Saki saki = null;
     private int sakiID = 0;
@@ -93,12 +95,12 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
 
     @Override
     public int actionIcon() {
-        return ActionIndicator.Action.super.actionIcon();
+        return HeroIcon.RABBIT_SQUAD_ACTION;
     }
 
     @Override
     public int indicatorColor() {
-        return 0xFFFFFF;
+        return 0x85A2C4;
     }
 
     @Override
@@ -115,11 +117,28 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
 
     @Override
     public void doAction() {
-        if (saki == null && sakiID != 0) {
-            findSaki();
+        if (Dungeon.hero.buff(SakiCooldown.class) == null && saki == null) {
+            if (sakiID != 0) {
+                findSaki();
+            }
+            if (saki == null) {
+                summonSaki((Hero)target);
+                return;
+            }
         }
-        if (saki == null) {
-            summonSaki((Hero)target);
+        if (Dungeon.hero.buff(MiyuCooldown.class) == null) {
+            GameScene.selectCell(cellSelector);
+        } else if (Dungeon.hero.buff(MoeCooldown.class) == null) {
+
+        } else {
+            GLog.w(Messages.get(this, "no_action"));
+        }
+    }
+
+    public void snipe(int cell) {
+        Char ch = Actor.findChar(cell);
+        if (ch != null) {
+            CellEmitter.heroCenter(ch.pos).burst(SnipeParticle.factory(), 1);
         }
     }
 
@@ -164,6 +183,19 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
             GLog.w(Messages.get(this, "no_space"));
         }
     }
+
+    private CellSelector.Listener cellSelector = new CellSelector.Listener() {
+        @Override
+        public void onSelect( Integer target ) {
+            if (target != null) {
+                snipe(target);
+            }
+        }
+        @Override
+        public String prompt() {
+            return Messages.get(SpiritBow.class, "prompt");
+        }
+    };
 
     public static class Saki extends DirectableAlly {
         {
@@ -308,6 +340,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
             super.die(cause);
             buff.saki = null;
             buff.sakiID = 0;
+            Buff.affect(Dungeon.hero, SakiCooldown.class, SakiCooldown.DURATION);
         }
 
         @Override
@@ -464,6 +497,75 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
             } else {
                 super.onComplete( anim );
             }
+        }
+    }
+
+    public static class SakiCooldown extends FlavourBuff {
+        {
+            type = buffType.NEUTRAL;
+        }
+
+        public static final float DURATION	= 500f;
+
+        @Override
+        public int icon() {
+            return BuffIndicator.TIME;
+        }
+
+        @Override
+        public void tintIcon(Image icon) {
+            icon.hardlight(0x93869E);
+        }
+
+        @Override
+        public float iconFadePercent() {
+            return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+        }
+    }
+
+    public static class MiyuCooldown extends FlavourBuff {
+        {
+            type = buffType.NEUTRAL;
+        }
+
+        public static final float DURATION	= 50f;
+
+        @Override
+        public int icon() {
+            return BuffIndicator.TIME;
+        }
+
+        @Override
+        public void tintIcon(Image icon) {
+            icon.hardlight(0xEE6C93);
+        }
+
+        @Override
+        public float iconFadePercent() {
+            return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+        }
+    }
+
+    public static class MoeCooldown extends FlavourBuff {
+        {
+            type = buffType.NEUTRAL;
+        }
+
+        public static final float DURATION	= 200f;
+
+        @Override
+        public int icon() {
+            return BuffIndicator.TIME;
+        }
+
+        @Override
+        public void tintIcon(Image icon) {
+            icon.hardlight(0xF2D9B4);
+        }
+
+        @Override
+        public float iconFadePercent() {
+            return Math.max(0, (DURATION - visualcooldown()) / DURATION);
         }
     }
 }

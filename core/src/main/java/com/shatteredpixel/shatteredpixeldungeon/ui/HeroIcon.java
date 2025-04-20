@@ -136,6 +136,7 @@ public class HeroIcon extends Image {
   	public static final int CHARGE			= 128+72;
   	public static final int SHOOT_ALL_ACTION= 128+73;
   	public static final int SPREAD_SHOT_ACTION= 128+74;
+  	public static final int RABBIT_SQUAD_ACTION= 128+75;
 
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );
