@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
@@ -147,10 +148,15 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
             lvl = 0;
         }
         if (ch != null) {
+            Sample.INSTANCE.play(Assets.Sounds.BEACON);
+            Dungeon.hero.yellI(Messages.get(Hero.class, "miyako_attack_miyu"));
             Dungeon.hero.busy();
             Dungeon.hero.sprite.operate(Dungeon.hero.pos, new Callback() {
                 @Override
                 public void call() {
+                    GLog.newLine();
+                    GLog.i( "%s: \"%s\" ", Messages.titleCase(Messages.get(RabbitSquadBuff.class, "miyu")), Messages.get(RabbitSquadBuff.class, "miyu_react") );
+                    GLog.newLine();
                     Dungeon.hero.sprite.idle();
                     Callback callback = new Callback() {
                         @Override

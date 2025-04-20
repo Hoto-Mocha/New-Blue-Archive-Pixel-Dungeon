@@ -47,7 +47,7 @@ public class SnipeParticle extends PixelParticle {
         am = 0;
     }
 
-    protected final float SPEED_MULTI = 1.5f;
+    protected final float SPEED_MULTI = 2f;
 
     protected final float FIRST = 0.5f/ SPEED_MULTI; //처음 구간
     protected final float LAST = 0.5f/ SPEED_MULTI; //마지막 구간
