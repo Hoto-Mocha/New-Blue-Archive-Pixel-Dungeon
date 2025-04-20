@@ -137,8 +137,17 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
 
     public void snipe(int cell) {
         Char ch = Actor.findChar(cell);
+        KindOfWeapon heroWep = Dungeon.hero.belongings.weapon();
+        int tier, lvl;
+        if (heroWep instanceof MeleeWeapon) {
+            tier = ((MeleeWeapon)heroWep).tier();
+            lvl = heroWep.buffedLvl();
+        } else {
+            tier = 1;
+            lvl = 0;
+        }
         if (ch != null) {
-            CellEmitter.heroCenter(ch.pos).burst(SnipeParticle.factory(), 1);
+            CellEmitter.center(ch.pos).burst(SnipeParticle.factory(ch, tier, lvl), 1);
         }
     }
 

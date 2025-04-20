@@ -932,6 +932,7 @@ public class Gun extends MeleeWeapon {
             gun.upgrade(lvl);
             return gun;
         }
-        return null;
+
+        return new AR_T1(); //만약 아무것도 반환하지 않을 경우 기본적으로 1티어 AR을 반환함
     }
 }
