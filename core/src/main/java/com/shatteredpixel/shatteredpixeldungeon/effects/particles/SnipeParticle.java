@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.PixelParticle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 
 import java.util.ArrayList;
@@ -27,14 +28,15 @@ public class SnipeParticle extends PixelParticle {
         }
     }
 
-    public static Emitter.Factory factory(Char target, int tier, int lvl) {
+    public static Emitter.Factory factory(Char target, int tier, int lvl, Callback callback) {
         return new Emitter.Factory() {
             @Override
             public void emit(Emitter emitter, int index, float x, float y) {
                 for (PointF p : POINTS) {
                     ((SnipeParticle)emitter.recycle( SnipeParticle.class )).reset( x + p.x, y + p.y );
                 }
-                CellEmitter.center(target.pos).burst(ShootParticle.factory(target, tier, lvl), 1);
+                CellEmitter.center(target.pos).burst(ShootParticle.factory(target, tier, lvl, callback), 1);
+                CellEmitter.center(target.pos).burst(SnipeOuterParticle.factory(), 1);
             }
         };
     }

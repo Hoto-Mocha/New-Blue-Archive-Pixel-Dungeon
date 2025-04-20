@@ -147,7 +147,21 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
             lvl = 0;
         }
         if (ch != null) {
-            CellEmitter.center(ch.pos).burst(SnipeParticle.factory(ch, tier, lvl), 1);
+            Dungeon.hero.busy();
+            Dungeon.hero.sprite.operate(Dungeon.hero.pos, new Callback() {
+                @Override
+                public void call() {
+                    Dungeon.hero.sprite.idle();
+                    Callback callback = new Callback() {
+                        @Override
+                        public void call() {
+                            Dungeon.hero.spendAndNext(Actor.TICK);
+                        }
+                    };
+                    CellEmitter.center(ch.pos).burst(SnipeParticle.factory(ch, tier, lvl, callback), 1);
+                }
+            });
+
         }
     }
 
@@ -346,10 +360,10 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
 
         @Override
         public void die(Object cause) {
-            super.die(cause);
             buff.saki = null;
             buff.sakiID = 0;
             Buff.affect(Dungeon.hero, SakiCooldown.class, SakiCooldown.DURATION);
+            super.die(cause);
         }
 
         @Override
@@ -430,6 +444,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
             super.restoreFromBundle(bundle);
             round = bundle.getInt(ROUND);
             maxRound = bundle.getInt(MAX_ROUND);
+            updateBuff();
         }
 
         public String description() {

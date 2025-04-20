@@ -5,14 +5,15 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR;
 import com.watabou.noosa.particles.Emitter;
+import com.watabou.utils.Callback;
 
 public class ShootParticle extends SnipeParticle {
-    public static Emitter.Factory factory(Char target, int tier, int lvl) {
+    public static Emitter.Factory factory(Char target, int tier, int lvl, Callback callback) {
         return new Emitter.Factory() {
             @Override
             public void emit(Emitter emitter, int index, float x, float y) {
                 if (target == null) return; //타겟이 없으면 아무것도 하지 않음
-                ((ShootParticle)emitter.recycle( ShootParticle.class )).reset( x, y, target, tier, lvl );
+                ((ShootParticle)emitter.recycle( ShootParticle.class )).reset( x, y, target, tier, lvl, callback );
             }
         };
     }
@@ -27,9 +28,10 @@ public class ShootParticle extends SnipeParticle {
     Char target = null;
     int tier = 1;
     int lvl = 0;
+    Callback callback;
     //총 발사 후 쉬는 구간 이후 마지막 구간 사이는 아무것도 하지 않음
 
-    public void reset( float x, float y, Char target, int tier, int lvl ) {
+    public void reset( float x, float y, Char target, int tier, int lvl, Callback callback) {
         reset(x, y);
 
         size(2f);
@@ -39,6 +41,7 @@ public class ShootParticle extends SnipeParticle {
         this.target = target;
         this.tier = tier;
         this.lvl = lvl;
+        this.callback = callback;
     }
 
     @Override
@@ -52,6 +55,10 @@ public class ShootParticle extends SnipeParticle {
             bullet.shoot(this.target.pos, false);
             CellEmitter.center(this.target.pos).burst(BlastParticle.FACTORY, 4);
             shoot = true;
+        }
+
+        if (left <= 0) {
+            this.callback.call();
         }
     }
 }
