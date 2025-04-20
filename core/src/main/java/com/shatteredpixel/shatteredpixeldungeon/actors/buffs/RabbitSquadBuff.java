@@ -137,6 +137,10 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
     }
 
     public void snipe(int cell) {
+        if (!Dungeon.level.heroFOV[cell]) {
+            Dungeon.hero.yellW(Messages.get(Hero.class, "miyako_cannot_see"));
+            return;
+        }
         Char ch = Actor.findChar(cell);
         KindOfWeapon heroWep = Dungeon.hero.belongings.weapon();
         int tier, lvl;
@@ -147,7 +151,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
             tier = 1;
             lvl = 0;
         }
-        if (ch != null) {
+        if (ch != null && ch.alignment == Char.Alignment.ENEMY) {
             Sample.INSTANCE.play(Assets.Sounds.BEACON);
             Dungeon.hero.yellI(Messages.get(Hero.class, "miyako_attack_miyu"));
             Dungeon.hero.busy();
@@ -161,13 +165,15 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
                     Callback callback = new Callback() {
                         @Override
                         public void call() {
-                            Dungeon.hero.spendAndNext(Actor.TICK);
+                            Dungeon.hero.spendAndNext(0); //턴을 소모하지 않음
+                            Buff.affect(Dungeon.hero, MiyuCooldown.class, MiyuCooldown.DURATION);
                         }
                     };
                     CellEmitter.center(ch.pos).burst(SnipeParticle.factory(ch, tier, lvl, callback), 1);
                 }
             });
-
+        } else {
+            Dungeon.hero.yellW(Messages.get(Hero.class, "miyako_no_char"));
         }
     }
 
