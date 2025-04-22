@@ -9,6 +9,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.AirSupportParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SnipeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
@@ -36,6 +37,7 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
     {
@@ -130,7 +132,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         if (Dungeon.hero.buff(MiyuCooldown.class) == null) {
             GameScene.selectCell(cellSelector);
         } else if (Dungeon.hero.buff(MoeCooldown.class) == null) {
-
+            callAirSupport();
         } else {
             GLog.w(Messages.get(this, "no_action"));
         }
@@ -175,6 +177,22 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         } else {
             Dungeon.hero.yellW(Messages.get(Hero.class, "miyako_no_char"));
         }
+    }
+
+    public void callAirSupport() {
+        Sample.INSTANCE.play(Assets.Sounds.BEACON);
+        Dungeon.hero.yellI(Messages.get(Hero.class, "miyako_attack_moe"));
+        Dungeon.hero.sprite.operate(Dungeon.hero.pos, new Callback() {
+            @Override
+            public void call() {
+                Dungeon.hero.sprite.idle();
+                Dungeon.hero.spendAndNext(1f);
+                GLog.newLine();
+                GLog.i( "%s: \"%s\" ", Messages.titleCase(Messages.get(RabbitSquadBuff.class, "moe")), Messages.get(RabbitSquadBuff.class, "moe_react") );
+                GLog.newLine();
+                Buff.affect(Dungeon.hero, MoeBlastBuff.class).set(6);
+            }
+        });
     }
 
     public void attack(Char enemy) {
@@ -579,6 +597,91 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         @Override
         public float iconFadePercent() {
             return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+        }
+    }
+
+    public static class MoeBlastBuff extends Buff {
+        {
+            type = buffType.POSITIVE;
+        }
+
+        private int blastAmount = 0;
+        private int maxAmount = 0;
+
+        public void set(int amount) {
+            this.blastAmount = this.maxAmount = amount;
+        }
+
+        @Override
+        public boolean act() {
+
+            HashSet<Char> chars = Actor.chars();
+            ArrayList<Char> charsInHeroFov = new ArrayList<>();
+
+            for (Char c : chars) {
+                if (Dungeon.level.heroFOV[c.pos] && c.alignment == Char.Alignment.ENEMY && !Dungeon.level.adjacent(Dungeon.hero.pos, c.pos)) {
+                    charsInHeroFov.add(c);
+                }
+            }
+
+            if (!charsInHeroFov.isEmpty()) {
+                Char target = Random.element(charsInHeroFov);
+                if (target != null) {
+                    Dungeon.hero.busy();
+                    CellEmitter.heroCenter(target.pos).burst(AirSupportParticle.factory(target, new Callback() {
+                        @Override
+                        public void call() {
+                            Dungeon.hero.next();
+                            MoeBlastBuff.this.blastAmount--;
+
+                            if (blastAmount <= 0) {
+                                MoeBlastBuff.this.detach();
+                            }
+                        }
+                    }), 1);
+                }
+            }
+
+            spend(TICK);
+
+            return true;
+        }
+
+        @Override
+        public int icon() {
+            return BuffIndicator.INVERT_MARK;
+        }
+
+        @Override
+        public void tintIcon(Image icon) {
+            icon.hardlight(0xF2D9B4);
+        }
+
+        @Override
+        public float iconFadePercent() {
+            return Math.max(0, (maxAmount -blastAmount)/(float) maxAmount);
+        }
+
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc", blastAmount);
+        }
+
+        private static final String BLAST_AMOUNT = "blastAmount";
+        private static final String MAX_AMOUNT = "maxAmount";
+
+        @Override
+        public void storeInBundle(Bundle bundle) {
+            super.storeInBundle(bundle);
+            bundle.put(BLAST_AMOUNT, blastAmount);
+            bundle.put(MAX_AMOUNT, maxAmount);
+        }
+
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+            blastAmount = bundle.getInt(BLAST_AMOUNT);
+            maxAmount = bundle.getInt(MAX_AMOUNT);
         }
     }
 
