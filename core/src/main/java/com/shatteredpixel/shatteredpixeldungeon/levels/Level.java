@@ -45,6 +45,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PinCushion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Shadows;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SupportDrone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
@@ -1392,6 +1393,9 @@ public abstract class Level implements Bundlable {
 				}
 				if (((Hero) c).hasTalent(Talent.MIYAKO_T2_3)){
 					mindVisRange = 1+((Hero) c).pointsInTalent(Talent.MIYAKO_T2_3);
+				}
+				if (c.buff(SupportDrone.class) != null && ((Hero) c).hasTalent(Talent.MIYAKO_EX2_3)) {
+					mindVisRange += Math.min(c.buff(SupportDrone.class).getDrone(), ((Hero) c).pointsInTalent(Talent.MIYAKO_EX2_3));
 				}
 				mindVisRange = Math.max(mindVisRange, EyeOfNewt.mindVisionRange());
 

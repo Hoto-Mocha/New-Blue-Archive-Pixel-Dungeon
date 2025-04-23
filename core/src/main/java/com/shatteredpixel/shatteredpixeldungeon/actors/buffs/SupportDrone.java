@@ -21,11 +21,16 @@ public class SupportDrone extends Buff {
 
     private int drone = 0;
 
+    public int getDrone() {
+        return drone;
+    }
+
     //적 처치 시 작동하는 메서드
     public void kill() {
         int add = 1;
         if (Dungeon.hero.hasTalent(Talent.MIYAKO_EX2_1) && Random.Float() < 0.2f) add++;
         drone = Math.min(drone+add, MaxDrone());
+        Dungeon.observe();
     }
 
     public int MaxDrone() {
@@ -36,6 +41,7 @@ public class SupportDrone extends Buff {
     public int hit(Hero hero, int damage) {
         if (!(Dungeon.hero.pointsInTalent(Talent.MIYAKO_EX2_1) > 1 && Random.Float() < 0.2f)) {
             drone--;
+            Dungeon.observe();
         }
         CellEmitter.heroCenter(hero.pos).burst(BlastParticle.FACTORY, 1);
         if (drone <= 0) detach();
