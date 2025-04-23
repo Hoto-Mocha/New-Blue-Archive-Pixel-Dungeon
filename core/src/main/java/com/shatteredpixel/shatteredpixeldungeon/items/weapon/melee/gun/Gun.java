@@ -673,6 +673,12 @@ public class Gun extends MeleeWeapon {
             return Gun.this.enchantMod;
         }
 
+        private float accMulti = 1f;
+
+        public void setAccMulti(float multi) {
+            accMulti = multi;
+        }
+
         @Override
         public int proc(Char attacker, Char defender, int damage) {
             boolean isDebuffed = false;
@@ -738,7 +744,7 @@ public class Gun extends MeleeWeapon {
         @Override
         public float accuracyFactor(Char owner, Char target) {
             float ACC = super.accuracyFactor(owner, target);
-            ACC *= shootingAccuracy;
+            ACC *= shootingAccuracy * accMulti;
             if (Gun.this.attachMod == AttachMod.LASER_ATTACH) {
                 ACC *= 1.25f;
             }

@@ -1,6 +1,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.effects.particles;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR;
@@ -51,6 +53,10 @@ public class ShootParticle extends SnipeParticle {
         if (!shoot && left <= lifespan- FIRST - MIDDLE_REST) { //left가 총 발사 타이밍과 완벽하게 일치하지 않아서 범위로 지정
             Gun gun = Gun.getGun(SR.class, this.tier, this.lvl);
             Gun.Bullet bullet = gun.knockBullet();
+            if (Dungeon.hero.hasTalent(Talent.MIYAKO_EX1_2)) {
+                bullet.setAccMulti(1f+(2f*Dungeon.hero.pointsInTalent(Talent.MIYAKO_EX1_2)-1f));
+            }
+
             bullet.throwSound();
             bullet.shoot(this.target.pos, false);
             CellEmitter.center(this.target.pos).burst(BlastParticle.FACTORY, 4);
