@@ -47,7 +47,7 @@ public class SupportDrone extends Buff {
         enemy.sprite.centerEmitter().burst(SparkParticle.FACTORY, drone);
         Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
         for (int i = 0; i < drone; i++) {
-            enemy.damage(1+(Dungeon.scalingDepth()-1)/5, this); //1~(현재 계층)의 피해를 입힘. 보스 층에서 다음 계층 취급이 되는 것을 방지하기 위해 층수에서 1을 뺀다.
+            enemy.damage(1+(Dungeon.scalingDepth()-1)/5+Dungeon.hero.pointsInTalent(Talent.MIYAKO_EX2_2), this); //1~(현재 계층)의 피해를 입힘. 보스 층에서 다음 계층 취급이 되는 것을 방지하기 위해 층수에서 1을 뺀다.
         }
     }
 
