@@ -78,11 +78,6 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
     }
 
     @Override
-    public String desc() {
-        return Messages.get(this, "desc");
-    }
-
-    @Override
     public boolean act() {
         spend(TICK);
         if (saki == null && sakiID != 0) {
@@ -202,7 +197,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
 
                 //먼저, 반복문에 사용될 변수를 선언한다.
                 float delay = 0; //Tweener에 들어갈 시간 값. 루프가 한 바퀴 돌 때마다 0.1씩 추가된다.
-                int blastAmount = 6; //폭발 횟수
+                int blastAmount = 6+3*Dungeon.hero.pointsInTalent(Talent.MIYAKO_EX1_3); //폭발 횟수
                 
                 //blastAmount 횟수만큼 반복하는 반복문 작성
                 while (blastAmount > 0) {

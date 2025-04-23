@@ -62,6 +62,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipersMark;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SupportDrone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.TimeStasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -93,7 +94,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Grenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
@@ -1561,6 +1561,10 @@ public class Hero extends Char {
 			damage = rockArmor.absorb(damage);
 		}
 
+		if (buff(SupportDrone.class) != null) {
+			damage = buff(SupportDrone.class).hit(this, damage);
+		}
+
 		damage = Talent.onDefenseProc(this, enemy, damage);
 	
 		return super.defenseProc( enemy, damage );
@@ -2667,6 +2671,9 @@ public class Hero extends Char {
 			for (Grenade g : belongings.getAllItems(Grenade.class)) {
 				g.reloadByChance();
 			}
+		}
+		if (subClass == HeroSubClass.SUPPORT_DRONE) {
+			Buff.affect(this, SupportDrone.class).kill();
 		}
 	}
 }

@@ -136,6 +136,7 @@ public class BuffIndicator extends Component {
 
 	//new buffs
 	public static final int KEY        	= 100;
+	public static final int SUPPORT_DRONE	= 101;
 
 	public static final int SIZE_SMALL  = 7;
 	public static final int SIZE_LARGE  = 16;
