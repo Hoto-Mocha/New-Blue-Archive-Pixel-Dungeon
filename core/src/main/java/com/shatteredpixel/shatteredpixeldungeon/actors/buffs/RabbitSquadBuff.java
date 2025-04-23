@@ -1,12 +1,11 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
-import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
-
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -223,7 +222,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
                     final float finalDelay = delay;
                     
                     //지연 시간이 흐른 후에 작동하는 코드를 만들기 위해 Tweener를 생성해서 추가한다.
-                    hero.sprite.parent.add(new Tweener(hero.sprite.parent, finalDelay) {
+                    Dungeon.hero.sprite.parent.add(new Tweener(Dungeon.hero.sprite.parent, finalDelay) {
                         @Override
                         protected void updateValues(float progress) {} //인터페이스의 메서드를 구현하기 위해 넣은 코드. 시간이 지남에 따른 아무런 작동도 필요로 하지 않기 때문에 공백.
 
@@ -457,7 +456,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         public void die(Object cause) {
             buff.saki = null;
             buff.sakiID = 0;
-            Buff.affect(Dungeon.hero, SakiCooldown.class, SakiCooldown.DURATION);
+            Buff.affect(Dungeon.hero, SakiCooldown.class, SakiCooldown.DURATION - 50 * Dungeon.hero.pointsInTalent(Talent.MIYAKO_EX1_1));
             super.die(cause);
         }
 
@@ -624,7 +623,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
             type = buffType.NEUTRAL;
         }
 
-        public static final float DURATION	= 500f;
+        public static final float DURATION	= 250f;
 
         @Override
         public int icon() {
