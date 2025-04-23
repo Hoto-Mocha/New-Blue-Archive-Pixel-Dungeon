@@ -12,6 +12,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Random;
 
 public class SupportDrone extends Buff {
     {
@@ -22,7 +23,9 @@ public class SupportDrone extends Buff {
 
     //적 처치 시 작동하는 메서드
     public void kill() {
-        drone = Math.min(drone+1, MaxDrone());
+        int add = 1;
+        if (Dungeon.hero.hasTalent(Talent.MIYAKO_EX2_1) && Random.Float() < 0.2f) add++;
+        drone = Math.min(drone+add, MaxDrone());
     }
 
     public int MaxDrone() {
@@ -31,7 +34,9 @@ public class SupportDrone extends Buff {
 
     //물리 피격을 받았을 때 작동하는 메서드
     public int hit(Hero hero, int damage) {
-        drone--;
+        if (!(Dungeon.hero.pointsInTalent(Talent.MIYAKO_EX2_1) > 1 && Random.Float() < 0.2f)) {
+            drone--;
+        }
         CellEmitter.heroCenter(hero.pos).burst(BlastParticle.FACTORY, 1);
         if (drone <= 0) detach();
         return Math.round(damage*0.5f);
