@@ -1395,7 +1395,7 @@ public abstract class Level implements Bundlable {
 					mindVisRange = 1+((Hero) c).pointsInTalent(Talent.MIYAKO_T2_3);
 				}
 				if (c.buff(SupportDrone.class) != null && ((Hero) c).hasTalent(Talent.MIYAKO_EX2_3)) {
-					mindVisRange += Math.min(c.buff(SupportDrone.class).getDrone(), ((Hero) c).pointsInTalent(Talent.MIYAKO_EX2_3));
+					mindVisRange += 1+Math.min(c.buff(SupportDrone.class).getDrone(), ((Hero) c).pointsInTalent(Talent.MIYAKO_EX2_3));
 				}
 				mindVisRange = Math.max(mindVisRange, EyeOfNewt.mindVisionRange());
 
