@@ -5,8 +5,6 @@ import static com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMag
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -355,16 +353,13 @@ public class Teleporter extends Item {
         @Override
         public void onSelect( Integer target ) {
             if (target != null) {
-                Char a = Actor.findChar(target);
-                if (a != null) {
-                    Dungeon.hero.busy();
-                    CellEmitter.heroCenter(target).burst(AirSupportParticle.factory(a, new Callback() {
-                        @Override
-                        public void call() {
-                            Dungeon.hero.next();
-                        }
-                    }), 1);
-                }
+                Dungeon.hero.busy();
+                CellEmitter.heroCenter(target).burst(AirSupportParticle.factory(target, new Callback() {
+                    @Override
+                    public void call() {
+                        Dungeon.hero.next();
+                    }
+                }), 1);
             }
         }
         @Override

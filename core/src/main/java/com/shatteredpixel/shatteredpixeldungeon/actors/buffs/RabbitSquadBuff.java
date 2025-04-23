@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
@@ -10,7 +12,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.AirSupportParticle;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SnipeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
@@ -31,13 +32,13 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
     {
@@ -93,7 +94,15 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
 
     @Override
     public String actionName() {
-        return Messages.get(this, "action_name");
+        if (Dungeon.hero.buff(SakiCooldown.class) == null && saki == null) {
+            return Messages.get(this, "action_name_summon");
+        } else if (Dungeon.hero.buff(MiyuCooldown.class) == null) {
+            return Messages.get(this, "action_name_snipe");
+        } else if (Dungeon.hero.buff(MoeCooldown.class) == null) {
+            return Messages.get(this, "action_name_airsupport");
+        } else {
+            return Messages.get(this, "action_name");
+        }
     }
 
     @Override
@@ -130,9 +139,9 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
             }
         }
         if (Dungeon.hero.buff(MiyuCooldown.class) == null) {
-            GameScene.selectCell(cellSelector);
+            GameScene.selectCell(snipeCellSelector);
         } else if (Dungeon.hero.buff(MoeCooldown.class) == null) {
-            callAirSupport();
+            GameScene.selectCell(airSupportCellSelector);
         } else {
             GLog.w(Messages.get(this, "no_action"));
         }
@@ -168,7 +177,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
                         @Override
                         public void call() {
                             Dungeon.hero.spendAndNext(0); //턴을 소모하지 않음
-                            Buff.affect(Dungeon.hero, MiyuCooldown.class, MiyuCooldown.DURATION);
+                            Buff.affect(Dungeon.hero, MiyuCooldown.class, MiyuCooldown.DURATION-1); //턴을 소모하지 않기 때문에 1턴을 빼줌
                         }
                     };
                     CellEmitter.center(ch.pos).burst(SnipeParticle.factory(ch, tier, lvl, callback), 1);
@@ -179,18 +188,62 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         }
     }
 
-    public void callAirSupport() {
+    public void callAirSupport(int cell) {
         Sample.INSTANCE.play(Assets.Sounds.BEACON);
         Dungeon.hero.yellI(Messages.get(Hero.class, "miyako_attack_moe"));
+        Dungeon.hero.busy();
         Dungeon.hero.sprite.operate(Dungeon.hero.pos, new Callback() {
             @Override
             public void call() {
                 Dungeon.hero.sprite.idle();
-                Dungeon.hero.spendAndNext(1f);
+                //대사 출력
                 GLog.newLine();
                 GLog.i( "%s: \"%s\" ", Messages.titleCase(Messages.get(RabbitSquadBuff.class, "moe")), Messages.get(RabbitSquadBuff.class, "moe_react") );
                 GLog.newLine();
-                Buff.affect(Dungeon.hero, MoeBlastBuff.class).set(6);
+
+                //먼저, 반복문에 사용될 변수를 선언한다.
+                float delay = 0; //Tweener에 들어갈 시간 값. 루프가 한 바퀴 돌 때마다 0.1씩 추가된다.
+                int blastAmount = 6; //폭발 횟수
+                
+                //blastAmount 횟수만큼 반복하는 반복문 작성
+                while (blastAmount > 0) {
+                    //지정한 위치 주변 3x3 지역 중 하나의 좌표를 무작위로 선정. 최종 폭발 지점이 된다.
+                    int finalCell = cell + PathFinder.NEIGHBOURS9[Random.Int(9)];
+
+                    //폭발 횟수를 감소시킨다. 0이 되면 밑의 콜백에 있는 Dungeon.hero.next();를 실행하고 반복문을 종료한다.
+                    blastAmount--;
+
+                    //지연 시간에 처음부터 0.1을 더함으로써 Dungeon.hero.operate() 이후 0.1초가 흐른 시점부터 폭격이 떨어진다.
+                    delay += 0.1f;
+
+                    //Callback에 값을 넣기 위해 상수화
+                    final int finalBlastAmount = blastAmount;
+                    
+                    //마찬가지로 Tweener에 값을 넣기 위해 상수화
+                    final float finalDelay = delay;
+                    
+                    //지연 시간이 흐른 후에 작동하는 코드를 만들기 위해 Tweener를 생성해서 추가한다.
+                    hero.sprite.parent.add(new Tweener(hero.sprite.parent, finalDelay) {
+                        @Override
+                        protected void updateValues(float progress) {} //인터페이스의 메서드를 구현하기 위해 넣은 코드. 시간이 지남에 따른 아무런 작동도 필요로 하지 않기 때문에 공백.
+
+                        @Override
+                        protected void onComplete() { //finalDelay초가 흐른 후에 실행되는 함수
+                            super.onComplete();
+                            //폭격 파티클을 최종 위치에 생성한다.
+                            //콜백은 폭격 파티클이 목표 지점에 완전히 떨어지고 나서 작동하며, blastAmount가 0 이하가 되었을 때 Dungeon.hero.next();를 실행함으로써 마지막 폭발 이후부터 영웅이 행동할 수 있게 한다.
+                            CellEmitter.heroCenter(finalCell).burst(AirSupportParticle.factory(finalCell, new Callback() {
+                                @Override
+                                public void call() {
+                                    if (finalBlastAmount <= 0) { //마지막 폭격임을 체크
+                                        Dungeon.hero.spendAndNext(1f); //영웅이 대기 상태에서 벗어나게 함
+                                        Buff.affect(Dungeon.hero, MoeCooldown.class, MoeCooldown.DURATION);
+                                    }
+                                }
+                            }), 1);
+                        }
+                    });
+                }
             }
         });
     }
@@ -226,8 +279,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
             GameScene.add(saki, 1f);
             Dungeon.level.occupyCell(saki);
 
-            CellEmitter.get(saki.pos).start(ShaftParticle.FACTORY, 0.3f, 4);
-            CellEmitter.get(saki.pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
+            CellEmitter.get(saki.pos).start(Speck.factory(Speck.LIGHT), 0.2f, 50);
 
             hero.spend(1f);
             hero.busy();
@@ -237,11 +289,24 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         }
     }
 
-    private CellSelector.Listener cellSelector = new CellSelector.Listener() {
+    private CellSelector.Listener snipeCellSelector = new CellSelector.Listener() {
         @Override
         public void onSelect( Integer target ) {
             if (target != null) {
                 snipe(target);
+            }
+        }
+        @Override
+        public String prompt() {
+            return Messages.get(SpiritBow.class, "prompt");
+        }
+    };
+
+    private CellSelector.Listener airSupportCellSelector = new CellSelector.Listener() {
+        @Override
+        public void onSelect( Integer target ) {
+            if (target != null) {
+                callAirSupport(target);
             }
         }
         @Override
@@ -600,97 +665,12 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         }
     }
 
-    public static class MoeBlastBuff extends Buff {
-        {
-            type = buffType.POSITIVE;
-        }
-
-        private int blastAmount = 0;
-        private int maxAmount = 0;
-
-        public void set(int amount) {
-            this.blastAmount = this.maxAmount = amount;
-        }
-
-        @Override
-        public boolean act() {
-
-            HashSet<Char> chars = Actor.chars();
-            ArrayList<Char> charsInHeroFov = new ArrayList<>();
-
-            for (Char c : chars) {
-                if (Dungeon.level.heroFOV[c.pos] && c.alignment == Char.Alignment.ENEMY && !Dungeon.level.adjacent(Dungeon.hero.pos, c.pos)) {
-                    charsInHeroFov.add(c);
-                }
-            }
-
-            if (!charsInHeroFov.isEmpty()) {
-                Char target = Random.element(charsInHeroFov);
-                if (target != null) {
-                    Dungeon.hero.busy();
-                    CellEmitter.heroCenter(target.pos).burst(AirSupportParticle.factory(target, new Callback() {
-                        @Override
-                        public void call() {
-                            Dungeon.hero.next();
-                            MoeBlastBuff.this.blastAmount--;
-
-                            if (blastAmount <= 0) {
-                                MoeBlastBuff.this.detach();
-                            }
-                        }
-                    }), 1);
-                }
-            }
-
-            spend(TICK);
-
-            return true;
-        }
-
-        @Override
-        public int icon() {
-            return BuffIndicator.INVERT_MARK;
-        }
-
-        @Override
-        public void tintIcon(Image icon) {
-            icon.hardlight(0xF2D9B4);
-        }
-
-        @Override
-        public float iconFadePercent() {
-            return Math.max(0, (maxAmount -blastAmount)/(float) maxAmount);
-        }
-
-        @Override
-        public String desc() {
-            return Messages.get(this, "desc", blastAmount);
-        }
-
-        private static final String BLAST_AMOUNT = "blastAmount";
-        private static final String MAX_AMOUNT = "maxAmount";
-
-        @Override
-        public void storeInBundle(Bundle bundle) {
-            super.storeInBundle(bundle);
-            bundle.put(BLAST_AMOUNT, blastAmount);
-            bundle.put(MAX_AMOUNT, maxAmount);
-        }
-
-        @Override
-        public void restoreFromBundle(Bundle bundle) {
-            super.restoreFromBundle(bundle);
-            blastAmount = bundle.getInt(BLAST_AMOUNT);
-            maxAmount = bundle.getInt(MAX_AMOUNT);
-        }
-    }
-
     public static class MoeCooldown extends FlavourBuff {
         {
             type = buffType.NEUTRAL;
         }
 
-        public static final float DURATION	= 200f;
+        public static final float DURATION	= 100f;
 
         @Override
         public int icon() {

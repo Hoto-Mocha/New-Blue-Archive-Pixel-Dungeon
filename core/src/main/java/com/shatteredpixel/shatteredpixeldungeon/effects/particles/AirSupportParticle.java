@@ -1,7 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.effects.particles;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
@@ -12,7 +11,7 @@ import com.watabou.utils.GameMath;
 import com.watabou.utils.PointF;
 
 public class AirSupportParticle extends PixelParticle {
-    public static Emitter.Factory factory(Char target, Callback callback) {
+    public static Emitter.Factory factory(int target, Callback callback) {
         return new Emitter.Factory() {
             @Override
             public void emit(Emitter emitter, int index, float x, float y) {
@@ -38,10 +37,10 @@ public class AirSupportParticle extends PixelParticle {
     PointF delta;
 
     boolean shoot; //폭격 여부
-    Char target = null;
     Callback callback = null;
+    int target = -1;
 
-    public void reset(float x, float y, Char target, Callback callback) {
+    public void reset(float x, float y, int target, Callback callback) {
         revive();
 
         endPoint = new PointF(x, y);
@@ -51,8 +50,8 @@ public class AirSupportParticle extends PixelParticle {
         this.y = startPoint.y;
 
         this.shoot = false;
-        this.target = target;
         this.callback = callback;
+        this.target = target;
 
         left = lifespan = 1/ SPEED_MULTI;
 
@@ -87,8 +86,8 @@ public class AirSupportParticle extends PixelParticle {
             Gun gun = Gun.getGun(GL.class, (int)GameMath.gate(2, 1+(Dungeon.scalingDepth()-1)/5f, 5), Dungeon.hero.lvl/5+3);
             Gun.Bullet bullet = gun.knockBullet();
 
-            bullet.shoot(this.target.pos, false);
-            CellEmitter.center(this.target.pos).burst(BlastParticle.FACTORY, 4);
+            bullet.shoot(this.target, false);
+            CellEmitter.center(this.target).burst(BlastParticle.FACTORY, 4);
             shoot = true;
 
             this.callback.call();
