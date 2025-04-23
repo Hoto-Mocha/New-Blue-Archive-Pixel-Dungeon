@@ -137,7 +137,10 @@ public enum Icons {
 	//new icons
 	DISCORD,
 	GITHUB,
-	HIKARI;
+	HIKARI,
+	ACTION_SAKI,
+	ACTION_MIYU,
+	ACTION_MOE;
 
 	public Image get() {
 		return get( this );
@@ -441,6 +444,15 @@ public enum Icons {
 			case HIKARI:
 				icon.frame( icon.texture.uvRectBySize( 0, 144, 15, 19 ) );
 				icon.scale.set(PixelScene.align(0.85f));
+				break;
+			case ACTION_SAKI:
+				icon.frame( icon.texture.uvRectBySize( 16, 144, 9, 9 ) );
+				break;
+			case ACTION_MIYU:
+				icon.frame( icon.texture.uvRectBySize( 25, 144, 9, 9 ) );
+				break;
+			case ACTION_MOE:
+				icon.frame( icon.texture.uvRectBySize( 34, 144, 9, 9 ) );
 				break;
 		}
 		return icon;
