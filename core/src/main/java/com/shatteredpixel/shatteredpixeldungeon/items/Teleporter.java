@@ -7,9 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.AirSupportParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
@@ -36,7 +34,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndTextInput;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTitledMessage;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Callback;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
@@ -353,13 +350,8 @@ public class Teleporter extends Item {
         @Override
         public void onSelect( Integer target ) {
             if (target != null) {
-                Dungeon.hero.busy();
-                CellEmitter.heroCenter(target).burst(AirSupportParticle.factory(target, new Callback() {
-                    @Override
-                    public void call() {
-                        Dungeon.hero.next();
-                    }
-                }), 1);
+                System.out.println("---Debug cell check---");
+                System.out.println("target cell: "+target);
             }
         }
         @Override

@@ -675,9 +675,14 @@ public class Gun extends MeleeWeapon {
         }
 
         private float accMulti = 1f;
+        private boolean ignoreWall = false;
 
         public void setAccMulti(float multi) {
             accMulti = multi;
+        }
+
+        public void setIgnoreWall(boolean isIgnore) {
+            ignoreWall = isIgnore;
         }
 
         @Override
@@ -877,6 +882,15 @@ public class Gun extends MeleeWeapon {
                         && mob.state != mob.HUNTING) {
                     mob.beckon( curUser.pos );
                 }
+            }
+        }
+
+        @Override
+        public int throwPos(Hero user, int dst) {
+            if (ignoreWall) {
+                return dst;
+            } else {
+                return super.throwPos(user, dst);
             }
         }
 
