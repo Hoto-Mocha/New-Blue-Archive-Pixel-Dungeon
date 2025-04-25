@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.FetidRat;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollTrickster;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GreatCrab;
@@ -328,7 +329,11 @@ public class Ghost extends NPC {
 				}
 				//50%:tier2, 30%:tier3, 15%:tier4, 5%:tier5
 				int wepTier = Random.chances(new float[]{0, 0, 10, 6, 3, 1});
-				weapon = (Weapon) Generator.random(Generator.wepTiers[wepTier - 1]);
+				if (Dungeon.hero.heroClass == HeroClass.ARIS) {
+					weapon = (Weapon) Generator.random(Generator.wepTiers[wepTier - 1]);
+				} else {
+					weapon = (Weapon) Generator.random(Generator.gunTiers[wepTier - 1]);
+				}
 
 				//clear weapon's starting properties
 				weapon.level(0);

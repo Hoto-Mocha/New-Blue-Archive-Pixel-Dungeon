@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
@@ -225,25 +226,41 @@ public class ShopRoom extends SpecialRoom {
 		MeleeWeapon w;
 		switch (Dungeon.depth) {
 		case 6: default:
-			w = (MeleeWeapon) Generator.random(Generator.wepTiers[1]);
+			if (Dungeon.hero.heroClass == HeroClass.ARIS) {
+				w = (MeleeWeapon) Generator.random(Generator.wepTiers[1]);
+			} else {
+				w = (MeleeWeapon) Generator.random(Generator.gunTiers[1]);
+			}
 			itemsToSpawn.add( Generator.random(Generator.misTiers[1]).quantity(2).identify(false) );
 			itemsToSpawn.add( new LeatherArmor().identify(false) );
 			break;
 			
 		case 11:
-			w = (MeleeWeapon) Generator.random(Generator.wepTiers[2]);
+			if (Dungeon.hero.heroClass == HeroClass.ARIS) {
+				w = (MeleeWeapon) Generator.random(Generator.wepTiers[2]);
+			} else {
+				w = (MeleeWeapon) Generator.random(Generator.gunTiers[2]);
+			}
 			itemsToSpawn.add( Generator.random(Generator.misTiers[2]).quantity(2).identify(false) );
 			itemsToSpawn.add( new MailArmor().identify(false) );
 			break;
 			
 		case 16:
-			w = (MeleeWeapon) Generator.random(Generator.wepTiers[3]);
+			if (Dungeon.hero.heroClass == HeroClass.ARIS) {
+				w = (MeleeWeapon) Generator.random(Generator.wepTiers[3]);
+			} else {
+				w = (MeleeWeapon) Generator.random(Generator.gunTiers[3]);
+			}
 			itemsToSpawn.add( Generator.random(Generator.misTiers[3]).quantity(2).identify(false) );
 			itemsToSpawn.add( new ScaleArmor().identify(false) );
 			break;
 
 		case 20: case 21:
-			w = (MeleeWeapon) Generator.random(Generator.wepTiers[4]);
+			if (Dungeon.hero.heroClass == HeroClass.ARIS) {
+				w = (MeleeWeapon) Generator.random(Generator.wepTiers[4]);
+			} else {
+				w = (MeleeWeapon) Generator.random(Generator.gunTiers[4]);
+			}
 			itemsToSpawn.add( Generator.random(Generator.misTiers[4]).quantity(2).identify(false) );
 			itemsToSpawn.add( new PlateArmor().identify(false) );
 			itemsToSpawn.add( new Torch() );
