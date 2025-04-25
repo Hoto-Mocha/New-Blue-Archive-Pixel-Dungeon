@@ -64,7 +64,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class Bomb extends Item {
-	
+
 	{
 		image = ItemSpriteSheet.BOMB;
 
@@ -72,9 +72,13 @@ public class Bomb extends Item {
 		usesTargeting = true;
 
 		stackable = true;
+		minDamage = 4 + Dungeon.scalingDepth();
+		maxDamage = 12 + 3*Dungeon.scalingDepth();
 	}
 
 	public Fuse fuse;
+	public int minDamage;
+	public int maxDamage;
 
 	//FIXME using a static variable for this is kinda gross, should be a better way
 	private static boolean lightingFuse = false;
@@ -85,7 +89,7 @@ public class Bomb extends Item {
 	public boolean isSimilar(Item item) {
 		return super.isSimilar(item) && this.fuse == ((Bomb) item).fuse;
 	}
-	
+
 	public boolean explodesDestructively(){
 		return true;
 	}
@@ -144,11 +148,11 @@ public class Bomb extends Item {
 
 			ArrayList<Integer> affectedCells = new ArrayList<>();
 			ArrayList<Char> affectedChars = new ArrayList<>();
-			
+
 			if (Dungeon.level.heroFOV[cell]) {
 				CellEmitter.center(cell).burst(BlastParticle.FACTORY, 30);
 			}
-			
+
 			boolean terrainAffected = false;
 			boolean[] explodable = new boolean[Dungeon.level.length()];
 			BArray.not( Dungeon.level.solid, explodable);
@@ -181,7 +185,7 @@ public class Bomb extends Item {
 					heap.explode();
 				}
 			}
-			
+
 			for (Char ch : affectedChars){
 
 				//if they have already been killed by another bomb
@@ -189,13 +193,13 @@ public class Bomb extends Item {
 					continue;
 				}
 
-				int dmg = Random.NormalIntRange(4 + Dungeon.scalingDepth(), 12 + 3*Dungeon.scalingDepth());
+				int dmg = Random.NormalIntRange(minDamage, maxDamage);
 				dmg -= ch.drRoll();
 
 				if (dmg > 0) {
 					ch.damage(dmg, this);
 				}
-				
+
 				if (ch == Dungeon.hero && !ch.isAlive()) {
 					if (this instanceof ConjuredBomb){
 						Badges.validateDeathFromFriendlyMagic();
@@ -204,23 +208,23 @@ public class Bomb extends Item {
 					Dungeon.fail(this);
 				}
 			}
-			
+
 			if (terrainAffected) {
 				Dungeon.observe();
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isIdentified() {
 		return true;
 	}
-	
+
 	@Override
 	public Item random() {
 		switch(Random.Int( 4 )){
@@ -240,7 +244,7 @@ public class Bomb extends Item {
 	public int value() {
 		return 15 * quantity;
 	}
-	
+
 	@Override
 	public String desc() {
 		int depth = Dungeon.hero == null ? 1 : Dungeon.scalingDepth();
@@ -342,50 +346,50 @@ public class Bomb extends Item {
 			return false;
 		}
 	}
-	
+
 	public static class EnhanceBomb extends Recipe {
-		
+
 		public static final LinkedHashMap<Class<?extends Item>, Class<?extends Bomb>> validIngredients = new LinkedHashMap<>();
 		static {
 			validIngredients.put(PotionOfFrost.class,           FrostBomb.class);
 			validIngredients.put(ScrollOfMirrorImage.class,     WoollyBomb.class);
-			
+
 			validIngredients.put(PotionOfLiquidFlame.class,     Firebomb.class);
 			validIngredients.put(ScrollOfRage.class,            Noisemaker.class);
-			
+
 			validIngredients.put(PotionOfInvisibility.class,    SmokeBomb.class);
 			validIngredients.put(ScrollOfRecharging.class,      FlashBangBomb.class);
-			
+
 			validIngredients.put(PotionOfHealing.class,         RegrowthBomb.class);
 			validIngredients.put(ScrollOfRemoveCurse.class,     HolyBomb.class);
-			
+
 			validIngredients.put(GooBlob.class,                 ArcaneBomb.class);
 			validIngredients.put(MetalShard.class,              ShrapnelBomb.class);
 		}
-		
+
 		private static final HashMap<Class<?extends Bomb>, Integer> bombCosts = new HashMap<>();
 		static {
 			bombCosts.put(FrostBomb.class,      0);
 			bombCosts.put(WoollyBomb.class,     0);
-			
+
 			bombCosts.put(Firebomb.class,       1);
 			bombCosts.put(Noisemaker.class,     1);
-			
+
 			bombCosts.put(SmokeBomb.class,      2);
 			bombCosts.put(FlashBangBomb.class,      2);
 
 			bombCosts.put(RegrowthBomb.class,   3);
 			bombCosts.put(HolyBomb.class,       3);
-			
+
 			bombCosts.put(ArcaneBomb.class,     6);
 			bombCosts.put(ShrapnelBomb.class,   6);
 		}
-		
+
 		@Override
 		public boolean testIngredients(ArrayList<Item> ingredients) {
 			boolean bomb = false;
 			boolean ingredient = false;
-			
+
 			for (Item i : ingredients){
 				if (!i.isIdentified()) return false;
 				if (i.getClass().equals(Bomb.class)){
@@ -394,10 +398,10 @@ public class Bomb extends Item {
 					ingredient = true;
 				}
 			}
-			
+
 			return bomb && ingredient;
 		}
-		
+
 		@Override
 		public int cost(ArrayList<Item> ingredients) {
 			for (Item i : ingredients){
@@ -407,11 +411,11 @@ public class Bomb extends Item {
 			}
 			return 0;
 		}
-		
+
 		@Override
 		public Item brew(ArrayList<Item> ingredients) {
 			Item result = null;
-			
+
 			for (Item i : ingredients){
 				i.quantity(i.quantity()-1);
 				if (validIngredients.containsKey(i.getClass())){
@@ -427,7 +431,7 @@ public class Bomb extends Item {
 
 			return result;
 		}
-		
+
 		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			for (Item i : ingredients){

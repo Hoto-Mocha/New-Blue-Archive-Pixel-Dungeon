@@ -11,10 +11,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.AirSupportParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SnipeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -36,6 +38,7 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
+import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -243,9 +246,16 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
                             super.onComplete();
                             //폭격 파티클을 최종 위치에 생성한다.
                             //콜백은 폭격 파티클이 목표 지점에 완전히 떨어지고 나서 작동하며, blastAmount가 0 이하가 되었을 때 Dungeon.hero.next();를 실행함으로써 마지막 폭발 이후부터 영웅이 행동할 수 있게 한다.
-                            CellEmitter.heroCenter(finalCell).burst(AirSupportParticle.factory(finalCell, new Callback() {
+                            CellEmitter.heroCenter(finalCell).burst(AirSupportParticle.factory(new Callback() {
                                 @Override
                                 public void call() {
+                                    //2~(현재 계층)~5의 티어를 가지고, 보스 층에서 다음 티어를 가지는 것을 방지하기 위해 1을 뺌. 강화 수치는 영웅 레벨을 5로 나누어 소수점을 버린 값에 3을 더한 값을 취함.
+                                    Gun gun = Gun.getGun(GL.class, (int) GameMath.gate(2, 1+(Dungeon.scalingDepth()-1)/5f, 5), Dungeon.hero.lvl/5+3);
+                                    Gun.Bullet bullet = gun.knockBullet();
+
+                                    bullet.shoot(finalCell, false);
+                                    CellEmitter.center(finalCell).burst(BlastParticle.FACTORY, 4);
+
                                     if (finalBlastAmount <= 0) { //마지막 폭격임을 체크
                                         Dungeon.hero.spendAndNext(1f); //영웅이 대기 상태에서 벗어나게 함
                                         Buff.affect(Dungeon.hero, MoeCooldown.class, MoeCooldown.DURATION);

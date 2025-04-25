@@ -1,4 +1,5 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.active;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
@@ -10,7 +11,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -32,6 +32,7 @@ public class Grenade extends Item {
     protected int amount;
     protected int max_amount;
     public static final String TXT_STATUS = "%d/%d";
+    public static final String TXT_ADD = "+%d %s";
     public boolean special = false;         //일반적인 수류탄이 아닌 클래스에서 활성화. 습득 시 다른 문장을 출력하도록 만듦
 
     {
@@ -109,20 +110,20 @@ public class Grenade extends Item {
 
     public void reloadByChance() {
         if (Random.Float() < dropChance) {
-            reload();
+            reload(1);
         }
     }
 
-    public void reload() {
+    public void reload(int reloadAmount) {
         int oldAmt = amount;
-        amount++;
+        amount += reloadAmount;
         if (amount > maxAmount()) {
             amount = maxAmount();
         }
         Item.updateQuickslot();
         if (oldAmt != amount) {
             if (!special) {
-                Dungeon.hero.sprite.showStatus(CharSprite.BLUE, Messages.get(this, "reload"), this.name());
+                Dungeon.hero.sprite.showStatus(CharSprite.BLUE, TXT_ADD, amount-oldAmt, this.name());
             }
         }
     }
