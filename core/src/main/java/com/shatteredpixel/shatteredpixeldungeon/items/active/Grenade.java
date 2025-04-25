@@ -18,7 +18,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -181,9 +180,7 @@ public class Grenade extends Item {
         public void onSelect( Integer target ) {
             if (target != null) {
                 knockItem().cast(curUser, target);
-                if (!DeviceCompat.isDebug()) {
-                    Grenade.this.amount--;
-                }
+                Grenade.this.amount--;
             }
         }
         @Override
