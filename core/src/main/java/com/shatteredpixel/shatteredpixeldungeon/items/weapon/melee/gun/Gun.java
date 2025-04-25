@@ -14,6 +14,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.WireHook;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -752,6 +753,15 @@ public class Gun extends MeleeWeapon {
                 ACC *= Bipod.BipodBuff.bulletAccMultiplier();
             }
             ACC = Gun.this.barrelMod.bulletAccuracyFactor(ACC, Dungeon.level.adjacent(owner.pos, target.pos));
+            return ACC;
+        }
+
+        @Override
+        protected float adjacentAccFactor(Char owner, Char target) {
+            float ACC = super.adjacentAccFactor(owner, target);
+            if (owner instanceof Hero && owner.buff(WireHook.PointBlankShot.class) != null) {
+                ACC *= 3f;
+            }
             return ACC;
         }
 
