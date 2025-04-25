@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -14,7 +15,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbili
 import com.shatteredpixel.shatteredpixeldungeon.effects.Chains;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Effects;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.levels.MiningLevel;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -24,6 +24,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.BArray;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
@@ -54,24 +55,7 @@ public class WireHook extends ArmorAbility {
                     armor.updateQuickslot();
                     Invisibility.dispel();
 
-                    hero.spendAndNext(1f);
                     hero.sprite.zap(target);
-
-                    Buff.affect(ch, Cripple.class, 5f);
-
-                    if (hero.hasTalent(Talent.MIYAKO_ARMOR1_1)) {
-                        Buff.affect(ch, Roots.class, hero.pointsInTalent(Talent.MIYAKO_ARMOR1_1));
-                    }
-                    if (hero.hasTalent(Talent.MIYAKO_ARMOR1_2)) {
-                        if (hero.buff(ContinuousChainTracker.class) == null) {
-                            Buff.affect(hero, ContinuousChainTracker.class, ContinuousChainTracker.DURATION);
-                        } else {
-                            hero.buff(ContinuousChainTracker.class).detach();
-                        }
-                    }
-                    if (hero.hasTalent(Talent.MIYAKO_ARMOR1_3)) {
-                        Buff.affect(hero, PointBlankShot.class, 4f*hero.pointsInTalent(Talent.MIYAKO_ARMOR1_3));
-                    }
                 } else {
                     GLog.w( Messages.get(this, "failed") );
                 }
@@ -129,10 +113,14 @@ public class WireHook extends ArmorAbility {
             return false;
         }
 
+        Sample.INSTANCE.play(Assets.Sounds.CHAINS);
+
+        hero.busy();
+        Sample.INSTANCE.play(Assets.Sounds.MISS);
         final int pulledPos = bestPos;
         hero.sprite.parent.add(new Chains(hero.sprite.center(),
-            enemy.sprite.center(),
-            Effects.Type.CHAIN,
+                enemy.sprite.center(),
+                Effects.Type.CHAIN,
             new Callback() {
                 public void call() {
                     Actor.add(new Pushing(enemy, enemy.pos, pulledPos, new Callback() {
@@ -141,10 +129,26 @@ public class WireHook extends ArmorAbility {
                             Dungeon.level.occupyCell(enemy);
                             Dungeon.observe();
                             GameScene.updateFog();
+                            hero.spendAndNext(1f);
 
-                            Item.updateQuickslot();
+                            Buff.affect(enemy, Cripple.class, 5f);
+
+                            if (hero.hasTalent(Talent.MIYAKO_ARMOR1_1)) {
+                                Buff.affect(enemy, Roots.class, hero.pointsInTalent(Talent.MIYAKO_ARMOR1_1));
+                            }
+                            if (hero.hasTalent(Talent.MIYAKO_ARMOR1_2)) {
+                                if (hero.buff(ContinuousChainTracker.class) == null) {
+                                    Buff.affect(hero, ContinuousChainTracker.class, ContinuousChainTracker.DURATION);
+                                } else {
+                                    hero.buff(ContinuousChainTracker.class).detach();
+                                }
+                            }
+                            if (hero.hasTalent(Talent.MIYAKO_ARMOR1_3)) {
+                                Buff.affect(hero, PointBlankShot.class, 4f*hero.pointsInTalent(Talent.MIYAKO_ARMOR1_3));
+                            }
                         }
                     }));
+                    hero.next();
                 }
             })
         );
