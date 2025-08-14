@@ -1410,7 +1410,7 @@ public enum Talent {
 				@Override
 				public void call() {
 					AttackIndicator.target(enemy);
-					if (hero.attack(enemy, 1f, 0, 1)) {
+					if (target.attack(enemy, 1f, 0, 1)) {
 						Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
 					}
 
