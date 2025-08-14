@@ -258,7 +258,7 @@ public class Armor extends EquipableItem {
 			Talent.onItemEquipped(hero, this);
 			hero.spend( timeToEquip( hero ) );
 
-			if (Dungeon.hero.heroClass == HeroClass.WARRIOR && checkSeal() == null){
+			if (Dungeon.hero.heroClass == HeroClass.ARIS && checkSeal() == null){
 				BrokenSeal seal = oldArmor != null ? oldArmor.checkSeal() : null;
 				if (seal != null && (!cursed || (seal.getGlyph() != null && seal.getGlyph().curse()))){
 
