@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
@@ -52,7 +53,7 @@ public class GnollTrickster extends Gnoll {
 		WANDERING = new Wandering();
 		state = WANDERING;
 
-		//at half quantity, see createLoot()
+		//at quantity of 1 and no upgrades
 		loot = Generator.Category.MISSILE;
 		lootChance = 1f;
 
@@ -75,6 +76,12 @@ public class GnollTrickster extends Gnoll {
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
+
+		if (combo >= 1){
+			//score loss is on-hit instead of on-attack as it's tied to combo
+			Statistics.questScores[0] -= 50;
+		}
+
 		//The gnoll's attacks get more severe the more the player lets it hit them
 		combo++;
 		int effect = Random.Int(4)+combo;
@@ -83,12 +90,14 @@ public class GnollTrickster extends Gnoll {
 
 			if (effect >=6 && enemy.buff(Burning.class) == null){
 
-				if (Dungeon.level.flamable[enemy.pos])
+				if (Dungeon.level.flamable[enemy.pos]) {
 					GameScene.add(Blob.seed(enemy.pos, 4, Fire.class));
+				}
 				Buff.affect(enemy, Burning.class).reignite( enemy );
 
-			} else
-				Buff.affect( enemy, Poison.class).set((effect-2) );
+			} else {
+				Buff.affect(enemy, Poison.class).set((effect - 2));
+			}
 
 		}
 		return damage;
@@ -117,6 +126,12 @@ public class GnollTrickster extends Gnoll {
 	@Override
 	public Item createLoot() {
 		MissileWeapon drop = (MissileWeapon)super.createLoot();
+		drop.level(0);
+		if (drop.hasCurseEnchant()){
+			drop.enchant(null);
+		}
+		drop.cursed = false;
+		drop.identify(false);
 		//half quantity, rounded up
 		drop.quantity((drop.quantity()+1)/2);
 		return drop;

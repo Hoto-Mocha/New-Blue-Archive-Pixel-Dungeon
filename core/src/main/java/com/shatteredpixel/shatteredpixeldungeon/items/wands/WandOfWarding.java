@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,6 +66,13 @@ public class WandOfWarding extends Wand {
 		if (cursed)                                 return super.collisionProperties(target);
 		else if (!Dungeon.level.heroFOV[target])    return Ballistica.PROJECTILE;
 		else                                        return Ballistica.STOP_TARGET;
+	}
+
+	@Override
+	public void execute(Hero hero, String action) {
+		//cursed warding does use targeting as it's just doing regular cursed zaps
+		usesTargeting = cursed && cursedKnown;
+		super.execute(hero, action);
 	}
 
 	private boolean wardAvailable = true;
@@ -300,18 +307,28 @@ public class WandOfWarding extends Wand {
 			switch(tier){
 				default:
 					return;
+				case 2:
+					heal = Math.round(1 * healFactor);
+					break;
+				case 3:
+					heal = Math.round(Random.IntRange(1, 2) * healFactor);
+					break;
 				case 4:
-					heal = Math.round(9 * healFactor);
+					heal = Math.round(9 * healFactor); //9/5 1.8
 					break;
 				case 5:
-					heal = Math.round(12 * healFactor);
+					heal = Math.round(12 * healFactor); //12/6, 2
 					break;
 				case 6:
-					heal = Math.round(16 * healFactor);
+					heal = Math.round(16 * healFactor); //16/7, 2.28
 					break;
 			}
 
-			HP = Math.min(HT, HP+heal);
+			if (tier <= 3){
+				totalZaps = (Math.max(0, totalZaps-heal));
+			} else {
+				HP = Math.min(HT, HP + heal);
+			}
 			if (sprite != null) sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(heal), FloatingText.HEALING);
 
 		}

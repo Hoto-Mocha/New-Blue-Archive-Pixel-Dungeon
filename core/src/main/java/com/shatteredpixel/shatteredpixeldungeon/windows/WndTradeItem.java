@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
@@ -32,12 +33,17 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.ui.CurrencyIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
+import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 
 public class WndTradeItem extends WndInfoItem {
 
@@ -69,7 +75,16 @@ public class WndTradeItem extends WndInfoItem {
 		}
 		final Shopkeeper finalShop = shop;
 
-		if (item.quantity() == 1) {
+		if (item.quantity() == 1 || (item instanceof MissileWeapon && item.isUpgradable())) {
+
+			if (item instanceof MissileWeapon && ((MissileWeapon) item).extraThrownLeft){
+				RenderedTextBlock warn = PixelScene.renderTextBlock(Messages.get(WndUpgrade.class, "thrown_dust"), 6);
+				warn.hardlight(CharSprite.WARNING);
+				warn.maxWidth(this.width);
+				warn.setPos(0, pos + GAP);
+				add(warn);
+				pos = warn.bottom();
+			}
 
 			RedButton btnSell = new RedButton( Messages.get(this, "sell", item.value()) ) {
 				@Override
@@ -121,6 +136,7 @@ public class WndTradeItem extends WndInfoItem {
 		super(heap);
 
 		selling = false;
+		CurrencyIndicator.showGold = true;
 
 		Item item = heap.peek();
 
@@ -207,6 +223,7 @@ public class WndTradeItem extends WndInfoItem {
 	public void hide() {
 		
 		super.hide();
+		CurrencyIndicator.showGold = false;
 		
 		if (owner != null) {
 			owner.hide();
@@ -226,6 +243,10 @@ public class WndTradeItem extends WndInfoItem {
 			return;
 		}
 		item.detachAll( hero.belongings.backpack );
+
+		if (item instanceof MissileWeapon && item.isUpgradable()){
+			Buff.affect(hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) item).setID, Integer.MAX_VALUE);
+		}
 
 		//selling items in the sell interface doesn't spend time
 		hero.spend(-hero.cooldown());

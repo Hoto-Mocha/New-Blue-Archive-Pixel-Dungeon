@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.TargetedCell;
@@ -105,17 +106,19 @@ public class ChaoticCenser extends Trinket {
 
 			if (left <= 0) {
 
-				Char enemy = null;
+				if (TargetHealthIndicator.instance != null && TargetHealthIndicator.instance.isVisible()){
+					Char target = TargetHealthIndicator.instance.target();
 
-				if (TargetHealthIndicator.instance != null && TargetHealthIndicator.instance.isVisible()
-						&& TargetHealthIndicator.instance.target() != null
-						&& TargetHealthIndicator.instance.target().alignment == Char.Alignment.ENEMY
-						&& TargetHealthIndicator.instance.target().isAlive()) {
+					if (target != null
+							&& target.isActive()
+							&& target.alignment == Char.Alignment.ENEMY
+							&& (!(target instanceof Mob) || ((Mob) target).state != ((Mob) target).PASSIVE)){
 
-					if (produceGas(TargetHealthIndicator.instance.target())){
-						Sample.INSTANCE.play(Assets.Sounds.GAS, 0.5f);
-						Dungeon.hero.interrupt();
-						left += Random.IntRange((int) (avgTurns * 0.9f), (int) (avgTurns * 1.1f));
+						if (produceGas(target)){
+							Sample.INSTANCE.play(Assets.Sounds.GAS, 0.5f);
+							Dungeon.hero.interrupt();
+							left += Random.IntRange((int) (avgTurns * 0.9f), (int) (avgTurns * 1.1f));
+						}
 					}
 				}
 

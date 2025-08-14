@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,12 +36,13 @@ public class ShatteredPixelDungeon extends Game {
 	//rankings from v1.2.3 and older use a different score formula, so this reference is kept
 	public static final int v1_2_3 = 628;
 
-	//savegames from versions older than v2.3.2 are no longer supported, and data from them is ignored
-	public static final int v2_3_2 = 768;
+	//savegames from versions older than v2.4.2 are no longer supported, and data from them is ignored
 	public static final int v2_4_2 = 782;
 	public static final int v2_5_4 = 802;
 
-	public static final int v3_0_0 = 831;
+	public static final int v3_0_2 = 833;
+	public static final int v3_1_1 = 850;
+	public static final int v3_2_0 = 859;
 	
 	public ShatteredPixelDungeon( PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
@@ -66,30 +67,6 @@ public class ShatteredPixelDungeon extends Game {
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invulnerability.class,
 				"com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AnkhInvulnerability" );
-
-		//pre-v2.4.0
-		com.watabou.utils.Bundle.addAlias(
-				com.shatteredpixel.shatteredpixeldungeon.items.potions.brews.UnstableBrew.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.potions.AlchemicalCatalyst" );
-		com.watabou.utils.Bundle.addAlias(
-				com.shatteredpixel.shatteredpixeldungeon.items.spells.UnstableSpell.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.spells.ArcaneCatalyst" );
-		com.watabou.utils.Bundle.addAlias(
-				com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfFeatherFall.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.spells.FeatherFall" );
-		com.watabou.utils.Bundle.addAlias(
-				com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfFeatherFall.FeatherBuff.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.spells.FeatherFall$FeatherBuff" );
-		com.watabou.utils.Bundle.addAlias(
-				com.shatteredpixel.shatteredpixeldungeon.items.potions.brews.AquaBrew.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.spells.AquaBlast" );
-
-		com.watabou.utils.Bundle.addAlias(
-				com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.entrance.EntranceRoom.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.EntranceRoom" );
-		com.watabou.utils.Bundle.addAlias(
-				com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.exit.ExitRoom.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.ExitRoom" );
 	}
 	
 	@Override

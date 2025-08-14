@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,13 +111,11 @@ public class MnemonicPrayer extends TargetedClericSpell {
 		}
 
 		if (ch == hero){
-			hero.busy();
 			hero.sprite.operate(ch.pos);
-			hero.spend( 1f );
 			BuffIndicator.refreshHero();
 		} else {
 			hero.sprite.zap(ch.pos);
-			hero.spendAndNext( 1f );
+			hero.next();
 		}
 
 		onSpellCast(tome, hero);
@@ -168,12 +166,9 @@ public class MnemonicPrayer extends TargetedClericSpell {
 			Sample.INSTANCE.play(Assets.Sounds.DEBUFF);
 			ch.sprite.emitter().start(Speck.factory(Speck.DOWN), 0.15f, 4);
 
-			for (Buff b : ch.buffs()){
-				if (b instanceof GuidingLight.WasIlluminatedTracker){
-					Buff.affect(ch, GuidingLight.Illuminated.class);
-					continue;
-				}
+			Buff.affect(ch, GuidingLight.Illuminated.class);
 
+			for (Buff b : ch.buffs()){
 				if (b.type != Buff.buffType.NEGATIVE || b.mnemonicExtended){
 					continue;
 				}

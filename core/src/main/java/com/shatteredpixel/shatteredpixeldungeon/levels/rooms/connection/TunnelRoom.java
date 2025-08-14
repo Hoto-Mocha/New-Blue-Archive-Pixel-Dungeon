@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ public class TunnelRoom extends ConnectionRoom {
 
 		//fill in an extra diagonal tile at center randomly if we're a larger room with many connections
 		//this makes the shape a bit more varied in these cases
-		if (width() >= 7 && height() >= 7 && connected.size() > 4 && c.square() == 0){
+		if (width() >= 7 && height() >= 7 && connected.size() >= 4 && c.square() == 0){
 			Point p = new Point(c.left, c.top);
 			p.x += Random.Int(2) == 0 ? 1 : -1;
 			p.y += Random.Int(2) == 0 ? 1 : -1;

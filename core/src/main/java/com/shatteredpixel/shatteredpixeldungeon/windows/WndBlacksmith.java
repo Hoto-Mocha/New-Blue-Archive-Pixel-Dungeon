@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Blacksmith;
@@ -36,7 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -76,7 +76,7 @@ public class WndBlacksmith extends Window {
 
 		ArrayList<RedButton> buttons = new ArrayList<>();
 
-		int pickaxeCost = Statistics.questScores[2] >= 2500 ? 0 : 250;
+		int pickaxeCost = Blacksmith.Quest.freePickaxe ? 0 : 250;
 		RedButton pickaxe = new RedButton(Messages.get(this, "pickaxe", pickaxeCost), 6){
 			@Override
 			protected void onClick() {
@@ -204,8 +204,7 @@ public class WndBlacksmith extends Window {
 
 	}
 
-	//public so that it can be directly called for pre-v2.2.0 quest completions
-	public static class WndReforge extends Window {
+	protected static class WndReforge extends Window {
 
 		private static final int WIDTH		= 120;
 
@@ -273,13 +272,16 @@ public class WndBlacksmith extends Window {
 					if (second.isEquipped( Dungeon.hero )) {
 						((EquipableItem)second).doUnequip( Dungeon.hero, false );
 					}
-					second.detach( Dungeon.hero.belongings.backpack );
+					second.detachAll( Dungeon.hero.belongings.backpack );
 
 					if (second instanceof Armor){
 						BrokenSeal seal = ((Armor) second).checkSeal();
 						if (seal != null){
 							Dungeon.level.drop( seal, Dungeon.hero.pos );
 						}
+					} else if (second instanceof MissileWeapon){
+						Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class)
+								.levelThresholds.put(((MissileWeapon) second).setID, Integer.MAX_VALUE);
 					}
 
 					//preserves enchant/glyphs if present
@@ -347,8 +349,8 @@ public class WndBlacksmith extends Window {
 					} else if (item1.getClass() != item2.getClass()) {
 						btnReforge.enable(false);
 
-					//and not the literal same item (unless quantity is >1)
-					} else if (item1 == item2 && item1.quantity() == 1) {
+					//and not the literal same item
+					} else if (item1 == item2) {
 						btnReforge.enable(false);
 
 					} else {
@@ -376,7 +378,7 @@ public class WndBlacksmith extends Window {
 		public boolean itemSelectable(Item item) {
 			return item.isUpgradable()
 					&& item.isIdentified() && !item.cursed
-					&& ((item instanceof MeleeWeapon && !((Weapon) item).enchantHardened)
+					&& ((item instanceof Weapon && !((Weapon) item).enchantHardened)
 					|| (item instanceof Armor && !((Armor) item).glyphHardened));
 		}
 
@@ -451,9 +453,9 @@ public class WndBlacksmith extends Window {
 
 	public static class WndSmith extends Window {
 
-		private static final int WIDTH      = 120;
-		private static final int BTN_SIZE	= 32;
-		private static final int BTN_GAP	= 5;
+		private static final int WIDTH      = 128;
+		private static final int BTN_SIZE	= 28;
+		private static final int BTN_GAP	= 4;
 		private static final int GAP		= 2;
 
 		public WndSmith( Blacksmith troll, Hero hero ){
@@ -486,7 +488,9 @@ public class WndBlacksmith extends Window {
 					}
 				};
 				btnReward.item( i );
-				btnReward.setRect( count*(WIDTH - BTN_GAP) / 3 - BTN_SIZE, message.top() + message.height() + BTN_GAP, BTN_SIZE, BTN_SIZE );
+				btnReward.setRect( count*(WIDTH - BTN_GAP) / Blacksmith.Quest.smithRewards.size() - BTN_SIZE,
+						message.top() + message.height() + BTN_GAP,
+						BTN_SIZE, BTN_SIZE );
 				add( btnReward );
 
 			}

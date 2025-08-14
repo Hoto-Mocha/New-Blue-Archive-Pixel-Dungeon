@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -588,6 +588,16 @@ public class DriedRose extends Artifact {
 			HT = 20 + 8*rose.level();
 		}
 
+		public Weapon weapon(){
+			if (rose != null)   return rose.weapon;
+			else                return null;
+		}
+
+		public Armor armor(){
+			if (rose != null)   return rose.armor;
+			else                return null;
+		}
+
 		@Override
 		protected boolean act() {
 			updateRose();
@@ -611,8 +621,8 @@ public class DriedRose extends Artifact {
 			//same accuracy as the hero.
 			int acc = Dungeon.hero.lvl + 9;
 			
-			if (rose != null && rose.weapon != null){
-				acc *= rose.weapon.accuracyFactor( this, target );
+			if (weapon() != null){
+				acc *= weapon().accuracyFactor( this, target );
 			}
 			
 			return acc;
@@ -621,22 +631,22 @@ public class DriedRose extends Artifact {
 		@Override
 		public float attackDelay() {
 			float delay = super.attackDelay();
-			if (rose != null && rose.weapon != null){
-				delay *= rose.weapon.delayFactor(this);
+			if (weapon() != null){
+				delay *= weapon().delayFactor(this);
 			}
 			return delay;
 		}
 		
 		@Override
 		protected boolean canAttack(Char enemy) {
-			return super.canAttack(enemy) || (rose != null && rose.weapon != null && rose.weapon.canReach(this, enemy.pos));
+			return super.canAttack(enemy) || (weapon() != null && weapon().canReach(this, enemy.pos));
 		}
 		
 		@Override
 		public int damageRoll() {
 			int dmg = 0;
-			if (rose != null && rose.weapon != null){
-				dmg += rose.weapon.damageRoll(this);
+			if (weapon() != null){
+				dmg += weapon().damageRoll(this);
 			} else {
 				dmg += Random.NormalIntRange(0, 5);
 			}
@@ -647,13 +657,12 @@ public class DriedRose extends Artifact {
 		@Override
 		public int attackProc(Char enemy, int damage) {
 			damage = super.attackProc(enemy, damage);
-			if (rose != null) {
-				if (rose.weapon != null) {
-					damage = rose.weapon.proc(this, enemy, damage);
-					if (!enemy.isAlive() && enemy == Dungeon.hero) {
-						Dungeon.fail(this);
-						GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name())));
-					}
+
+			if (weapon() != null) {
+				damage = weapon().proc(this, enemy, damage);
+				if (!enemy.isAlive() && enemy == Dungeon.hero) {
+					Dungeon.fail(this);
+					GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name())));
 				}
 			}
 
@@ -662,8 +671,8 @@ public class DriedRose extends Artifact {
 		
 		@Override
 		public int defenseProc(Char enemy, int damage) {
-			if (rose != null && rose.armor != null) {
-				damage = rose.armor.proc( enemy, this, damage );
+			if (armor() != null) {
+				damage = armor().proc( enemy, this, damage );
 			}
 			return super.defenseProc(enemy, damage);
 		}
@@ -694,8 +703,8 @@ public class DriedRose extends Artifact {
 		public int defenseSkill(Char enemy) {
 			int defense = super.defenseSkill(enemy);
 
-			if (defense != 0 && rose != null && rose.armor != null ){
-				defense = Math.round(rose.armor.evasionFactor( this, defense ));
+			if (defense != 0 && armor() != null ){
+				defense = Math.round(armor().evasionFactor( this, defense ));
 			}
 			
 			return defense;
@@ -704,19 +713,19 @@ public class DriedRose extends Artifact {
 		@Override
 		public int drRoll() {
 			int dr = super.drRoll();
-			if (rose != null && rose.armor != null){
-				dr += Random.NormalIntRange( rose.armor.DRMin(), rose.armor.DRMax());
+			if (armor() != null){
+				dr += Random.NormalIntRange( armor().DRMin(), armor().DRMax());
 			}
-			if (rose != null && rose.weapon != null){
-				dr += Random.NormalIntRange( 0, rose.weapon.defenseFactor( this ));
+			if (weapon() != null){
+				dr += Random.NormalIntRange( 0, weapon().defenseFactor( this ));
 			}
 			return dr;
 		}
 
 		@Override
 		public int glyphLevel(Class<? extends Armor.Glyph> cls) {
-			if (rose != null && rose.armor != null && rose.armor.hasGlyph(cls, this)){
-				return Math.max(super.glyphLevel(cls), rose.armor.buffedLvl());
+			if (armor() != null && armor().hasGlyph(cls, this)){
+				return Math.max(super.glyphLevel(cls), armor().buffedLvl());
 			} else {
 				return super.glyphLevel(cls);
 			}
@@ -904,11 +913,11 @@ public class DriedRose extends Artifact {
 								} else if (item.unique) {
 									GLog.w( Messages.get(WndGhostHero.class, "cant_unique"));
 									hide();
-								} else if (!item.isIdentified()) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_unidentified"));
+								} else if (item.cursed || !item.cursedKnown) {
+									GLog.w(Messages.get(WndGhostHero.class, "cant_cursed"));
 									hide();
-								} else if (item.cursed) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_cursed"));
+								}  else if (!item.levelKnown && ((MeleeWeapon)item).STRReq(0) > rose.ghostStrength()){
+									GLog.w( Messages.get(WndGhostHero.class, "cant_strength_unknown"));
 									hide();
 								} else if (((MeleeWeapon)item).STRReq() > rose.ghostStrength()) {
 									GLog.w( Messages.get(WndGhostHero.class, "cant_strength"));
@@ -979,11 +988,11 @@ public class DriedRose extends Artifact {
 								} else if (item.unique || ((Armor) item).checkSeal() != null) {
 									GLog.w( Messages.get(WndGhostHero.class, "cant_unique"));
 									hide();
-								} else if (!item.isIdentified()) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_unidentified"));
+								} else if (item.cursed || !item.cursedKnown) {
+									GLog.w(Messages.get(WndGhostHero.class, "cant_cursed"));
 									hide();
-								} else if (item.cursed) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_cursed"));
+								}  else if (!item.levelKnown && ((Armor)item).STRReq(0) > rose.ghostStrength()){
+									GLog.w( Messages.get(WndGhostHero.class, "cant_strength_unknown"));
 									hide();
 								} else if (((Armor)item).STRReq() > rose.ghostStrength()) {
 									GLog.w( Messages.get(WndGhostHero.class, "cant_strength"));

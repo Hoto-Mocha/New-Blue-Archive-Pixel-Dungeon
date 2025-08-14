@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -57,6 +58,24 @@ public class HoldFast extends Buff {
 		}
 	}
 
+	public static float buffDecayFactor(Char target){
+		HoldFast buff = target.buff(HoldFast.class);
+		if (buff != null && target.pos == buff.pos && target instanceof Hero){
+			switch (((Hero) target).pointsInTalent(Talent.HOLD_FAST)){
+				case 1:
+					return 0.5f;
+				case 2:
+					return 0.25f;
+				case 3:
+					return 0;
+			}
+
+		} else if (buff != null) {
+			buff.detach();
+		}
+		return 1;
+	}
+
 	@Override
 	public int icon() {
 		return BuffIndicator.ARMOR;
@@ -69,7 +88,10 @@ public class HoldFast extends Buff {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", Dungeon.hero.pointsInTalent(Talent.HOLD_FAST), 2*Dungeon.hero.pointsInTalent(Talent.HOLD_FAST));
+		return Messages.get(this, "desc",
+				Dungeon.hero.pointsInTalent(Talent.HOLD_FAST),
+				2*Dungeon.hero.pointsInTalent(Talent.HOLD_FAST),
+				25 + 25*Dungeon.hero.pointsInTalent(Talent.HOLD_FAST));
 	}
 
 	private static final String POS = "pos";

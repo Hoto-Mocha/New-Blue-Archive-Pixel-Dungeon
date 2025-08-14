@@ -57,9 +57,6 @@ public class BannerSprites {
 			case GAME_OVER:
 				icon.frame( icon.texture.uvRect( 0, 192+64, 128, 227+64 ) );
 				break;
-			case SELECT_YOUR_HERO:
-				icon.frame( icon.texture.uvRect( 0, 227+64, 128, 248+64 ) );
-				break;
 		}
 		return icon;
 	}

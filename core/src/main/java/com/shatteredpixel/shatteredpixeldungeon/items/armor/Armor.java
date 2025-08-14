@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,10 +33,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.ShadowClone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.AuraOfProtection;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWard;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.LifeLinkSpell;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.PrismaticImage;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
@@ -68,10 +70,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ParchmentScrap;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -184,20 +188,7 @@ public class Armor extends EquipableItem {
 		super.execute(hero, action);
 
 		if (action.equals(AC_DETACH) && seal != null){
-			BrokenSeal.WarriorShield sealBuff = hero.buff(BrokenSeal.WarriorShield.class);
-			if (sealBuff != null) sealBuff.setArmor(null);
-
-			BrokenSeal detaching = seal;
-			seal = null;
-
-			if (detaching.level() > 0){
-				degrade();
-			}
-			if (detaching.canTransferGlyph()){
-				inscribe(null);
-			} else {
-				detaching.setGlyph(null);
-			}
+			BrokenSeal detaching = detachSeal();
 			GLog.i( Messages.get(Armor.class, "detach_seal") );
 			hero.sprite.operate(hero.pos);
 			if (!detaching.collect()){
@@ -239,8 +230,6 @@ public class Armor extends EquipableItem {
 
 	@Override
 	public boolean doEquip( Hero hero ) {
-		
-		detach(hero.belongings.backpack);
 
 		// 15/25% chance
 		if (hero.heroClass != HeroClass.CLERIC && hero.hasTalent(Talent.HOLY_INTUITION)
@@ -251,6 +240,9 @@ public class Armor extends EquipableItem {
 			return false;
 		}
 
+		detach(hero.belongings.backpack);
+
+		Armor oldArmor = hero.belongings.armor;
 		if (hero.belongings.armor == null || hero.belongings.armor.doUnequip( hero, true, false )) {
 			
 			hero.belongings.armor = this;
@@ -264,7 +256,38 @@ public class Armor extends EquipableItem {
 			((HeroSprite)hero.sprite).updateArmor();
 			activate(hero);
 			Talent.onItemEquipped(hero, this);
-			hero.spendAndNext( timeToEquip( hero ) );
+			hero.spend( timeToEquip( hero ) );
+
+			if (Dungeon.hero.heroClass == HeroClass.WARRIOR && checkSeal() == null){
+				BrokenSeal seal = oldArmor != null ? oldArmor.checkSeal() : null;
+				if (seal != null && (!cursed || (seal.getGlyph() != null && seal.getGlyph().curse()))){
+
+					GameScene.show(new WndOptions(new ItemSprite(ItemSpriteSheet.SEAL),
+							Messages.titleCase(seal.title()),
+							Messages.get(Armor.class, "seal_transfer"),
+							Messages.get(Armor.class, "seal_transfer_yes"),
+							Messages.get(Armor.class, "seal_transfer_no")){
+						@Override
+						protected void onSelect(int index) {
+							super.onSelect(index);
+							if (index == 0){
+								seal.affixToArmor(Armor.this, oldArmor);
+								updateQuickslot();
+							}
+							super.hide();
+						}
+
+						@Override
+						public void hide() {
+							//do nothing, must press button
+						}
+					});
+				} else {
+					hero.next();
+				}
+			} else {
+				hero.next();
+			}
 			return true;
 			
 		} else {
@@ -293,6 +316,31 @@ public class Armor extends EquipableItem {
 		}
 		if (isEquipped(Dungeon.hero)){
 			Buff.affect(Dungeon.hero, BrokenSeal.WarriorShield.class).setArmor(this);
+		}
+	}
+
+	public BrokenSeal detachSeal(){
+		if (seal != null){
+
+			if (isEquipped(Dungeon.hero)) {
+				BrokenSeal.WarriorShield sealBuff = Dungeon.hero.buff(BrokenSeal.WarriorShield.class);
+				if (sealBuff != null) sealBuff.setArmor(null);
+			}
+
+			BrokenSeal detaching = seal;
+			seal = null;
+
+			if (detaching.level() > 0){
+				degrade();
+			}
+			if (detaching.canTransferGlyph()){
+				inscribe(null);
+			} else {
+				detaching.setGlyph(null);
+			}
+			return detaching;
+		} else {
+			return null;
 		}
 	}
 
@@ -357,8 +405,13 @@ public class Armor extends EquipableItem {
 			return lvl;
 		}
 	}
+
+	//This exists so we can test what a char's base evasion would be without armor affecting it
+	//more ugly static vars yaaay~
+	public static boolean testingNoArmDefSkill = false;
 	
 	public float evasionFactor( Char owner, float evasion ){
+		if (testingNoArmDefSkill) return evasion;
 		
 		if (hasGlyph(Stone.class, owner) && !Stone.testingEvasion()){
 			return 0;
@@ -449,7 +502,9 @@ public class Armor extends EquipableItem {
 
 		if (defender.buff(MagicImmune.class) == null) {
 			Glyph trinityGlyph = null;
-			if (Dungeon.hero.buff(BodyForm.BodyFormBuff.class) != null){
+			//only when it's the hero or a char that uses the hero's armor
+			if (Dungeon.hero.buff(BodyForm.BodyFormBuff.class) != null
+					&& (defender == Dungeon.hero || defender instanceof PrismaticImage || defender instanceof ShadowClone.ShadowAlly)){
 				trinityGlyph = Dungeon.hero.buff(BodyForm.BodyFormBuff.class).glyph();
 				if (glyph != null && trinityGlyph != null && trinityGlyph.getClass() == glyph.getClass()){
 					trinityGlyph = null;
@@ -696,11 +751,10 @@ public class Armor extends EquipableItem {
 	}
 
 	public boolean hasGlyph(Class<?extends Glyph> type, Char owner) {
-		if (glyph == null){
+		if (owner.buff(MagicImmune.class) != null) {
 			return false;
-		} else if (owner.buff(MagicImmune.class) != null) {
-			return false;
-		} else if (!glyph.curse()
+		} else if (glyph != null
+				&& !glyph.curse()
 				&& owner instanceof Hero
 				&& isEquipped((Hero) owner)
 				&& owner.buff(HolyWard.HolyArmBuff.class) != null
@@ -710,8 +764,10 @@ public class Armor extends EquipableItem {
 				&& owner.buff(BodyForm.BodyFormBuff.class).glyph() != null
 				&& owner.buff(BodyForm.BodyFormBuff.class).glyph().getClass().equals(type)){
 			return true;
-		} else {
+		} else if (glyph != null) {
 			return glyph.getClass() == type;
+		} else {
+			return false;
 		}
 	}
 

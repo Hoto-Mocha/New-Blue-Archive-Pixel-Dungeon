@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,19 +58,17 @@ public class DivineSense extends ClericSpell {
 
 	@Override
 	public void onCast(HolyTome tome, Hero hero) {
-		Buff.prolong(hero, DivineSenseTracker.class, 30f);
+		Buff.prolong(hero, DivineSenseTracker.class, DivineSenseTracker.DURATION);
 		Dungeon.observe();
 
 		Sample.INSTANCE.play(Assets.Sounds.READ);
 
-		hero.spend( 1f );
-		hero.busy();
 		SpellSprite.show(hero, SpellSprite.VISION);
 		hero.sprite.operate(hero.pos);
 
 		Char ally = PowerOfMany.getPoweredAlly();
 		if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
-			Buff.prolong(ally, DivineSenseTracker.class, 30f);
+			Buff.prolong(ally, DivineSenseTracker.class, DivineSenseTracker.DURATION);
 			SpellSprite.show(ally, SpellSprite.VISION);
 		}
 
@@ -83,7 +81,7 @@ public class DivineSense extends ClericSpell {
 
 	public static class DivineSenseTracker extends FlavourBuff {
 
-		public static final float DURATION = 30f;
+		public static final float DURATION = 50f;
 
 		{
 			type = buffType.POSITIVE;

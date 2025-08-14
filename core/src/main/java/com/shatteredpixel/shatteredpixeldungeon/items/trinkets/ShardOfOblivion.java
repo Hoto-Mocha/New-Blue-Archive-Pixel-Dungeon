@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,6 +98,10 @@ public class ShardOfOblivion extends Trinket {
 
 		@Override
 		public void onSelect(Item item) {
+			if (item == null){
+				return;
+			}
+
 			boolean ready = false;
 			if (item instanceof Weapon){
 				ready = ((Weapon) item).readyToIdentify();
@@ -160,6 +164,31 @@ public class ShardOfOblivion extends Trinket {
 
 	}
 
+	public static class ThrownUseTracker extends FlavourBuff{
+
+		{
+			type = buffType.POSITIVE;
+		}
+
+		public static float DURATION = 50f;
+
+		@Override
+		public int icon() {
+			return BuffIndicator.THROWN_WEP;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(0, 0.6f, 1);
+		}
+
+		@Override
+		public float iconFadePercent() {
+			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+		}
+
+	}
+
 	public static float lootChanceMultiplier(){
 		return lootChanceMultiplier(trinketLevel(ShardOfOblivion.class));
 	}
@@ -181,6 +210,9 @@ public class ShardOfOblivion extends Trinket {
 			wornUnIDed++;
 		}
 		if (Dungeon.hero.buff(WandUseTracker.class) != null){
+			wornUnIDed++;
+		}
+		if (Dungeon.hero.buff(ThrownUseTracker.class) != null){
 			wornUnIDed++;
 		}
 

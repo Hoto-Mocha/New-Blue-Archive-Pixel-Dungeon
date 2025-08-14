@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,11 +67,12 @@ public class Flail extends MeleeWeapon {
 	@Override
 	public float accuracyFactor(Char owner, Char target) {
 		SpinAbilityTracker spin = owner.buff(SpinAbilityTracker.class);
-		if (spin != null) {
+		if (spin != null && spinBoost == 0) {
 			Actor.add(new Actor() {
 				{ actPriority = VFX_PRIO; }
 				@Override
 				protected boolean act() {
+					spinBoost = 0;
 					if (owner instanceof Hero && !target.isAlive()){
 						onAbilityKill((Hero)owner, target);
 					}
@@ -85,8 +86,9 @@ public class Flail extends MeleeWeapon {
 			// so +120% base dmg, +135% scaling at 3 spins
 			spinBoost = spin.spins * augment.damageFactor(8 + 2*buffedLvl());
 			return Float.POSITIVE_INFINITY;
+		} else if (spinBoost != 0) {
+			return Float.POSITIVE_INFINITY;
 		} else {
-			spinBoost = 0;
 			return super.accuracyFactor(owner, target);
 		}
 	}
