@@ -37,7 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.services.updates.Updates;
 import com.watabou.noosa.Game;
 import com.watabou.utils.FileUtils;
 
-import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.foundation.NSBundle;
 import org.robovm.apple.foundation.NSException;
@@ -45,6 +44,7 @@ import org.robovm.apple.foundation.NSMutableDictionary;
 import org.robovm.apple.foundation.NSObject;
 import org.robovm.apple.foundation.NSString;
 import org.robovm.apple.uikit.UIApplication;
+import org.robovm.apple.uikit.UIInterfaceOrientation;
 
 import java.io.File;
 
@@ -98,17 +98,8 @@ public class IOSLauncher extends IOSApplication.Delegate {
 		config.depthFormat = MGLDrawableDepthFormat.None;
 		config.hdpiMode = HdpiMode.Pixels;
 
-		config.hideHomeIndicator = SPDSettings.fullscreen();
+		config.hideHomeIndicator = true;
 		config.overrideRingerSwitch = SPDSettings.ignoreSilentMode();
-
-		CGRect statusBarFrame = UIApplication.getSharedApplication().getStatusBarFrame();
-		double statusBarHeight = Math.min(statusBarFrame.getWidth(), statusBarFrame.getHeight());
-
-		//if the application has a short status bar (no notch), then hide it
-		//TODO we do this check elsewhere now, can this be removed?
-		if (statusBarHeight <= 24) {
-			UIApplication.getSharedApplication().setStatusBarHidden(true);
-		}
 
 		config.useHaptics = true;
 		config.useAccelerometer = false;
@@ -165,6 +156,12 @@ public class IOSLauncher extends IOSApplication.Delegate {
 		config.addIosDevice("IPAD_PRO_12.9_6G",             "iPad14,6", 264);
 
 		return new IOSApplication(new ShatteredPixelDungeon(new IOSPlatformSupport()), config);
+	}
+
+	@Override
+	public void didChangStatusBarOrientation(UIApplication application, UIInterfaceOrientation oldStatusBarOrientation) {
+		super.didChangStatusBarOrientation(application, oldStatusBarOrientation);
+		ShatteredPixelDungeon.seamlessResetScene();
 	}
 
 	public static void main(String[] argv) {

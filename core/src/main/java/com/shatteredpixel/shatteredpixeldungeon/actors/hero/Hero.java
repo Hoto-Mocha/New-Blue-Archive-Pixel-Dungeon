@@ -98,6 +98,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.Grenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Stone;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CapeOfThorns;
@@ -607,6 +608,11 @@ public class Hero extends Char {
 
 		if (belongings.armor() != null) {
 			evasion = belongings.armor().evasionFactor(this, evasion);
+
+			//stone specifically overrides to 0 always, guaranteed hit
+			if (belongings.armor().hasGlyph(Stone.class, this) && !Stone.testingEvasion()){
+				return 0;
+			}
 		}
 
 		return Math.max(1, Math.round(evasion));

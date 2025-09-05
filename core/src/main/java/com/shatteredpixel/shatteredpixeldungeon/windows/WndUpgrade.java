@@ -362,6 +362,11 @@ public class WndUpgrade extends Window {
 					lossChance = Math.min(100, 10 * (int) Math.pow(2, levelFrom - 6));
 				} else {
 					lossChance = Math.min(100, 10 * (int) Math.pow(2, levelFrom - 4));
+					if (Dungeon.hero != null && Dungeon.hero.heroClass != HeroClass.WARRIOR && Dungeon.hero.hasTalent(Talent.RUNIC_TRANSFERENCE)){
+						if (levelFrom < 5+Dungeon.hero.pointsInTalent(Talent.RUNIC_TRANSFERENCE)){
+							lossChance = 0;
+						}
+					}
 				}
 				if (Dungeon.hero.pointsInTalent(Talent.ARIS_T2_3) == 2) {
 					lossChance = 0;
