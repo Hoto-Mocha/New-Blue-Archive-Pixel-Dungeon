@@ -36,6 +36,7 @@ import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.ui.Component;
+import com.watabou.utils.RectF;
 
 public class AboutScene extends PixelScene {
 
@@ -48,6 +49,8 @@ public class AboutScene extends PixelScene {
 
 		int w = Camera.main.width;
 		int h = Camera.main.height;
+
+		RectF insets = getCommonInsets();
 
 		Archs archs = new Archs();
 		archs.setSize( w, h );
@@ -68,7 +71,11 @@ public class AboutScene extends PixelScene {
 				"Developed by: _Cocoa_\nBased on Shattered Pixel Dungeon's open source",
 				"github repository",
 				"https://github.com/Hoto-Mocha/New-Blue-Archive-Pixel-Dungeon");
-		arranged.setRect((w - fullWidth)/2f, 6, colWidth, 0);
+		if (landscape()){
+			arranged.setRect((w - fullWidth)/2f - 6, insets.top + 10, 120, 0);
+		} else {
+			arranged.setRect((w - fullWidth)/2f, insets.top + 6, 120, 0);
+		}
 		content.add(arranged);
 
 		addLine(arranged.bottom() + 4, content);
@@ -82,9 +89,9 @@ public class AboutScene extends PixelScene {
 				"ShatteredPixel.com",
 				"https://ShatteredPixel.com");
 		if (landscape()){
-			shpx.setRect(arranged.left(), arranged.bottom()+12, colWidth, 0);
+			shpx.setRect((w - fullWidth)/2f - 6, arranged.bottom() + 10, 120, 0);
 		} else {
-			shpx.setRect((w - fullWidth)/2f, arranged.bottom()+8, colWidth, 0);
+			shpx.setRect((w - fullWidth)/2f, arranged.bottom() + 6, 120, 0);
 		}
 		content.add(shpx);
 
@@ -243,13 +250,14 @@ public class AboutScene extends PixelScene {
 		freesound.setRect(transifex.left()-10, transifex.bottom() + 8, colWidth+20, 0);
 		content.add(freesound);
 
-		content.setSize( fullWidth, freesound.bottom()+10 );
+		content.setSize( fullWidth, freesound.bottom()+10 + insets.bottom );
 
 		list.setRect( 0, 0, w, h );
 		list.scrollTo(0, 0);
 
 		ExitButton btnExit = new ExitButton();
-		btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
+		int ofs = PixelScene.landscape() ? 0 : 4;
+		btnExit.setPos( Camera.main.width - btnExit.width() - ofs, ofs );
 		add( btnExit );
 
 		//fadeIn();

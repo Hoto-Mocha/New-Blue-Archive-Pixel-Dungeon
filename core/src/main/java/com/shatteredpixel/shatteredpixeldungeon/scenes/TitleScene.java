@@ -52,14 +52,15 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Music;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.DeviceCompat;
+import com.watabou.utils.RectF;
 
 import java.util.Date;
 
 public class TitleScene extends PixelScene {
-
+	
 	@Override
 	public void create() {
-
+		
 		super.create();
 
 		Music.INSTANCE.playTracks(
@@ -68,21 +69,26 @@ public class TitleScene extends PixelScene {
 				false);
 
 		uiCamera.visible = false;
-
+		
 		int w = Camera.main.width;
 		int h = Camera.main.height;
+
+		RectF insets = getCommonInsets();
 
 		Archs archs = new Archs();
 		archs.setSize( w, h );
 		add( archs );
+
+		w -= insets.left + insets.right;
+		h -= insets.top + insets.bottom;
 
 		Image title = BannerSprites.get( landscape() ? BannerSprites.Type.TITLE_LAND : BannerSprites.Type.TITLE_PORT);
 		add( title );
 
 		float topRegion = Math.max(title.height - 6, h*0.45f);
 
-		title.x = (w - title.width()) / 2f;
-		title.y = 2 + (topRegion - title.height()) / 2f;
+		title.x = insets.left + (w - title.width()) / 2f;
+		title.y = insets.top + 2 + (topRegion - title.height()) / 2f;
 
 		align(title);
 
@@ -114,7 +120,7 @@ public class TitleScene extends PixelScene {
 		add( signs );
 
 		final Chrome.Type GREY_TR = Chrome.Type.GREY_BUTTON_TR;
-
+		
 		StyledButton btnPlay = new StyledButton(GREY_TR, Messages.get(this, "enter")){
 			@Override
 			protected void onClick() {
@@ -126,7 +132,7 @@ public class TitleScene extends PixelScene {
 					ShatteredPixelDungeon.switchNoFade( StartScene.class );
 				}
 			}
-
+			
 			@Override
 			protected boolean onLongClick() {
 				//making it easier to start runs quickly while debugging
@@ -183,16 +189,16 @@ public class TitleScene extends PixelScene {
 		};
 		btnAbout.icon(Icons.get(Icons.HIKARI));
 		add(btnAbout);
-
+		
 		final int BTN_HEIGHT = 20;
 		int GAP = (int)(h - topRegion - (landscape() ? 3 : 4)*BTN_HEIGHT)/3;
 		GAP /= landscape() ? 3 : 5;
 		GAP = Math.max(GAP, 2);
 
 		float buttonAreaWidth = landscape() ? PixelScene.MIN_WIDTH_L-6 : PixelScene.MIN_WIDTH_P-2;
-		float btnAreaLeft = (Camera.main.width - buttonAreaWidth) / 2f;
+		float btnAreaLeft = insets.left + (w - buttonAreaWidth) / 2f;
 		if (landscape()) {
-			btnPlay.setRect(btnAreaLeft, topRegion+GAP, (buttonAreaWidth/2)-1, BTN_HEIGHT);
+			btnPlay.setRect(btnAreaLeft, insets.top + topRegion+GAP, (buttonAreaWidth/2)-1, BTN_HEIGHT);
 			align(btnPlay);
 			btnSupport.setRect(btnPlay.right()+2, btnPlay.top(), btnPlay.width(), BTN_HEIGHT);
 			btnRankings.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, (float) (Math.floor(buttonAreaWidth/3f)-1), BTN_HEIGHT);
@@ -202,7 +208,7 @@ public class TitleScene extends PixelScene {
 			btnChanges.setRect(btnSettings.right()+2, btnSettings.top(), btnRankings.width(), BTN_HEIGHT);
 			btnAbout.setRect(btnChanges.right()+2, btnSettings.top(), btnRankings.width(), BTN_HEIGHT);
 		} else {
-			btnPlay.setRect(btnAreaLeft, topRegion+GAP, buttonAreaWidth, BTN_HEIGHT);
+			btnPlay.setRect(btnAreaLeft, insets.top + topRegion+GAP, buttonAreaWidth, BTN_HEIGHT);
 			align(btnPlay);
 			btnSupport.setRect(btnPlay.left(), btnPlay.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
 			btnRankings.setRect(btnPlay.left(), btnSupport.bottom()+ GAP, (btnPlay.width()/2)-1, BTN_HEIGHT);
@@ -216,8 +222,9 @@ public class TitleScene extends PixelScene {
 		BitmapText version = new BitmapText( "v" + Game.version, pixelFont);
 		version.measure();
 		version.hardlight( 0x888888 );
-		version.x = w - version.width() - 4;
-		version.y = h - version.height() - 2;
+		//TODO perhaps extra check for Android top-right / top-left notches?
+		version.x = insets.left + w - version.width() - 8;
+		version.y = insets.top + h - version.height() - 4;
 		add( version );
 
 		if (DeviceCompat.isDesktop()) {
@@ -317,7 +324,6 @@ public class TitleScene extends PixelScene {
 						update.versionName == null ? Messages.get(this,"title") : Messages.get(this,"versioned_title", update.versionName),
 						update.desc == null ? Messages.get(this,"desc") : update.desc,	//업데이트 문장이 없다면 내장 문장 출력, 받아온 문장이 있다면 받아온 문장을 출력
 						Messages.get(this,"update"),
-//						Messages.get(this,"playstore"),
 						Messages.get(this,"changes")
 				) {
 					@Override

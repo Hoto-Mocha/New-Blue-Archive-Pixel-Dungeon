@@ -121,6 +121,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndKeyBindings;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndMessage;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndResurrect;
+import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.Blending;
 import com.watabou.input.ControllerHandler;
 import com.watabou.input.KeyBindings;
@@ -138,8 +139,8 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Callback;
-import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.GameMath;
+import com.watabou.utils.PlatformSupport;
 import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
@@ -230,6 +231,8 @@ public class GameScene extends PixelScene {
 			case 2:             Camera.main.setFollowDeadzone(0.5f);   break;
 			case 1:             Camera.main.setFollowDeadzone(0.9f);   break;
 		}
+
+		RectF insets = getCommonInsets();
 
 		scene = this;
 
@@ -361,19 +364,27 @@ public class GameScene extends PixelScene {
 
 		int uiSize = SPDSettings.interfaceSize();
 
+		//TODO this is a good start but just emulating black bars is boring. There must be more to do here.
+
 		menu = new MenuPane();
 		menu.camera = uiCamera;
-		menu.setPos( uiCamera.width-MenuPane.WIDTH, uiSize > 0 ? 0 : 1);
+		menu.setPos( uiCamera.width-MenuPane.WIDTH-insets.right, insets.top + (uiSize > 0 ? 0 : 1));
 		add(menu);
 
 		status = new StatusPane( SPDSettings.interfaceSize() > 0 );
 		status.camera = uiCamera;
-		status.setRect(0, uiSize > 0 ? uiCamera.height-39 : 0, uiCamera.width, 0 );
+		status.setRect(insets.left, uiSize > 0 ? uiCamera.height-39-insets.bottom : insets.top, uiCamera.width - insets.left - insets.right, 0 );
 		add(status);
+
+		if (uiSize < 2 && insets.top > 0) {
+			SkinnedBlock bar = new SkinnedBlock(uiCamera.width, insets.top, TextureCache.createSolid(0xFF1C1E18));
+			bar.camera = uiCamera;
+			add(bar);
+		}
 
 		boss = new BossHealthBar();
 		boss.camera = uiCamera;
-		boss.setPos( 6 + (uiCamera.width - boss.width())/2, 20);
+		boss.setPos( insets.left + 6 + (uiCamera.width - insets.left - insets.right - boss.width())/2, insets.top + 20);
 		add(boss);
 
 		resume = new ResumeIndicator();
@@ -408,12 +419,19 @@ public class GameScene extends PixelScene {
 		if (uiSize == 2) {
 			inventory = new InventoryPane();
 			inventory.camera = uiCamera;
-			inventory.setPos(uiCamera.width - inventory.width(), uiCamera.height - inventory.height());
+			inventory.setPos(uiCamera.width - inventory.width() - insets.right, uiCamera.height - inventory.height() - insets.bottom);
 			add(inventory);
 
-			toolbar.setRect( 0, uiCamera.height - toolbar.height() - inventory.height(), uiCamera.width, toolbar.height() );
+			toolbar.setRect( insets.left, uiCamera.height - toolbar.height() - inventory.height() - insets.bottom, uiCamera.width - insets.right, toolbar.height() );
 		} else {
-			toolbar.setRect( 0, uiCamera.height - toolbar.height(), uiCamera.width, toolbar.height() );
+			toolbar.setRect( insets.left, uiCamera.height - toolbar.height() - insets.bottom, uiCamera.width - insets.right, toolbar.height() );
+		}
+
+		if (insets.bottom > 0){
+			SkinnedBlock bar = new SkinnedBlock(uiCamera.width, insets.bottom, TextureCache.createSolid(0x88000000));
+			bar.camera = uiCamera;
+			bar.y = uiCamera.height - insets.bottom;
+			add(bar);
 		}
 
 		layoutTags();
@@ -838,9 +856,9 @@ public class GameScene extends PixelScene {
 		}
 		//Camera.main.panTo(Dungeon.hero.sprite.center(), 5f);
 
-		//primarily for phones displays with notches
-		//TODO Android never draws into notch atm, perhaps allow it for center notches?
-		RectF insets = DeviceCompat.getSafeInsets();
+		//adjust spacing for elements based on display cutouts
+		// We use ALL here as some elements can be a fair but up the side of the screen
+		RectF insets = Game.platform.getSafeInsets( PlatformSupport.INSET_ALL );
 		insets = insets.scale(1f / uiCamera.zoom);
 
 		boolean tagsOnLeft = SPDSettings.flipTags();
