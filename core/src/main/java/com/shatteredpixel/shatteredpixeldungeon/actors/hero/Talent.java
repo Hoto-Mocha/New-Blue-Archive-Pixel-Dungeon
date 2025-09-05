@@ -453,6 +453,48 @@ public enum Talent {
 	MIYAKO_ARMOR3_2(24, 2, 4),
 	MIYAKO_ARMOR3_3(25, 2, 4),
 
+	//Hoshino T1
+	HOSHINO_T1_1(0, 3, 2),
+	HOSHINO_T1_2(1, 3, 2),
+	HOSHINO_T1_3(2, 3, 2),
+	HOSHINO_T1_4(3, 3, 2),
+
+	//Hoshino T2
+	HOSHINO_T2_1(4, 3, 2),
+	HOSHINO_T2_2(5, 3, 2),
+	HOSHINO_T2_3(6, 3, 2),
+	HOSHINO_T2_4(7, 3, 2),
+	HOSHINO_T2_5(8, 3, 2),
+
+	//Hoshino T3
+	HOSHINO_T3_1(9, 3, 3),
+	HOSHINO_T3_2(10, 3, 3),
+
+	//Shield Bash T3
+	HOSHINO_EX1_1(11, 3, 3),
+	HOSHINO_EX1_2(12, 3, 3),
+	HOSHINO_EX1_3(13, 3, 3),
+
+	//Defense Posture T3
+	HOSHINO_EX2_1(14, 3, 3),
+	HOSHINO_EX2_2(15, 3, 3),
+	HOSHINO_EX2_3(16, 3, 3),
+
+	//Armor Ability 1 T4
+	HOSHINO_ARMOR1_1(17, 3, 4),
+	HOSHINO_ARMOR1_2(18, 3, 4),
+	HOSHINO_ARMOR1_3(19, 3, 4),
+
+	//Armor Ability 2 T4
+	HOSHINO_ARMOR2_1(20, 3, 4),
+	HOSHINO_ARMOR2_2(21, 3, 4),
+	HOSHINO_ARMOR2_3(22, 3, 4),
+
+	//Armor Ability 3 T4
+	HOSHINO_ARMOR3_1(23, 3, 4),
+	HOSHINO_ARMOR3_2(24, 3, 4),
+	HOSHINO_ARMOR3_3(25, 3, 4),
+
 	//universal T4
 	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one
 	//Ratmogrify T4
@@ -717,9 +759,9 @@ public enum Talent {
 				case MIYAKO:
 					y = 2;
 					break;
-//				case HOSHINO:
-//					y = 3;
-//					break;
+				case HOSHINO:
+					y = 3;
+					break;
 //				case SHIROKO:
 //					y = 4;
 //					break;
@@ -1470,6 +1512,9 @@ public enum Talent {
 			case MIYAKO:
 				Collections.addAll(tierTalents, MIYAKO_T1_1, MIYAKO_T1_2, MIYAKO_T1_3, MIYAKO_T1_4);
 				break;
+			case HOSHINO:
+				Collections.addAll(tierTalents, HOSHINO_T1_1, HOSHINO_T1_2, HOSHINO_T1_3, HOSHINO_T1_4);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HEARTY_MEAL, VETERANS_INTUITION, PROVOKED_ANGER, IRON_WILL);
 				break;
@@ -1508,6 +1553,9 @@ public enum Talent {
 			case MIYAKO:
 				Collections.addAll(tierTalents, MIYAKO_T2_1, MIYAKO_T2_2, MIYAKO_T2_3, MIYAKO_T2_4, MIYAKO_T2_5);
 				break;
+			case HOSHINO:
+				Collections.addAll(tierTalents, HOSHINO_T2_1, HOSHINO_T2_2, HOSHINO_T2_3, HOSHINO_T2_4, HOSHINO_T2_5);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, IRON_STOMACH, LIQUID_WILLPOWER, RUNIC_TRANSFERENCE, LETHAL_MOMENTUM, IMPROVISED_PROJECTILES);
 				break;
@@ -1545,6 +1593,9 @@ public enum Talent {
 				break;
 			case MIYAKO:
 				Collections.addAll(tierTalents, MIYAKO_T3_1, MIYAKO_T3_2);
+				break;
+			case HOSHINO:
+				Collections.addAll(tierTalents, HOSHINO_T3_1, HOSHINO_T3_2);
 				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HOLD_FAST, STRONGMAN);
@@ -1609,6 +1660,12 @@ public enum Talent {
 				break;
 			case SUPPORT_DRONE:
 				Collections.addAll(tierTalents, MIYAKO_EX2_1, MIYAKO_EX2_2, MIYAKO_EX2_3);
+				break;
+			case SHIELD_BASH:
+				Collections.addAll(tierTalents, HOSHINO_EX1_1, HOSHINO_EX1_2, HOSHINO_EX1_3);
+				break;
+			case DEFENSE_POSTURE:
+				Collections.addAll(tierTalents, HOSHINO_EX2_1, HOSHINO_EX2_2, HOSHINO_EX2_3);
 				break;
 			case BERSERKER:
 				Collections.addAll(tierTalents, ENDLESS_RAGE, DEATHLESS_FURY, ENRAGED_CATALYST);

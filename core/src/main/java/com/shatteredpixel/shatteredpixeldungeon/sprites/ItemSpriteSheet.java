@@ -807,10 +807,12 @@ public class ItemSpriteSheet {
 	public static final int SUPER_NOVA 		= UNIQUE_ITEM+0;
 	public static final int CLAYMORE 		= UNIQUE_ITEM+1;
 	public static final int GRENADE 		= UNIQUE_ITEM+2;
+	public static final int IRON_HORUS 		= UNIQUE_ITEM+3;
 	static {
 		assignItemRect(SUPER_NOVA, 	16, 16);
 		assignItemRect(CLAYMORE, 	13, 13);
 		assignItemRect(GRENADE, 	11, 11);
+		assignItemRect(IRON_HORUS, 	14, 14);
 	}
 
 	private static final int NEW_ARMOR 	= 								xy(1, 34);

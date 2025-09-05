@@ -1,6 +1,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
@@ -10,6 +12,15 @@ public class SG extends Gun {
         round = max_round;
         shotPerShoot = 5;
         spread = true;
+    }
+
+    @Override
+    public int STRReq(int lvl) {
+        int req = super.STRReq(lvl);
+        if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.HOSHINO){
+            req -= 1;
+        }
+        return req;
     }
 
     @Override

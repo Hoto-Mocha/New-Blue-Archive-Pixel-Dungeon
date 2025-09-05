@@ -479,6 +479,8 @@ public enum Icons {
 				return new ItemSprite(ItemSpriteSheet.GOLD);
 			case MIYAKO:
 				return new ItemSprite(ItemSpriteSheet.CLAYMORE);
+			case HOSHINO:
+				return new ItemSprite(ItemSpriteSheet.IRON_HORUS);
 			case WARRIOR:
 				return new ItemSprite(ItemSpriteSheet.SEAL);
 			case MAGE:

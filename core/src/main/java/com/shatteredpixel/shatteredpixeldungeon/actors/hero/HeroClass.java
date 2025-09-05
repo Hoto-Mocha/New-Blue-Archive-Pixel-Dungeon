@@ -37,6 +37,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.Tri
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Feint;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.LightWall;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.ShieldParry;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.SpikeShield;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpectralBlades;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
@@ -99,6 +102,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
@@ -112,6 +116,7 @@ public enum HeroClass {
 	ARIS(HeroSubClass.LIGHT_HERO, HeroSubClass.BATTERY_CHARGE),
 	NONOMI(HeroSubClass.SHOOT_ALL, HeroSubClass.SPREAD_SHOT),
 	MIYAKO(HeroSubClass.RABBIT_SQUAD, HeroSubClass.SUPPORT_DRONE),
+	HOSHINO(HeroSubClass.SHIELD_BASH, HeroSubClass.DEFENSE_POSTURE),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
@@ -172,6 +177,12 @@ public enum HeroClass {
 				initMiyako( hero );
 				break;
 
+			case HOSHINO:
+				initHoshino( hero );
+				break;
+
+
+
 			case WARRIOR:
 				initWarrior( hero );
 				break;
@@ -208,23 +219,23 @@ public enum HeroClass {
 
 	}
 
-	public Badges.Badge masteryBadge() {
-		switch (this) {
-			case WARRIOR:
-				return Badges.Badge.MASTERY_WARRIOR;
-			case MAGE:
-				return Badges.Badge.MASTERY_MAGE;
-			case ROGUE:
-				return Badges.Badge.MASTERY_ROGUE;
-			case HUNTRESS:
-				return Badges.Badge.MASTERY_HUNTRESS;
-			case DUELIST:
-				return Badges.Badge.MASTERY_DUELIST;
-			case CLERIC:
-				return Badges.Badge.MASTERY_CLERIC;
-		}
-		return null;
-	}
+//	public Badges.Badge masteryBadge() {
+//		switch (this) {
+//			case WARRIOR:
+//				return Badges.Badge.MASTERY_WARRIOR;
+//			case MAGE:
+//				return Badges.Badge.MASTERY_MAGE;
+//			case ROGUE:
+//				return Badges.Badge.MASTERY_ROGUE;
+//			case HUNTRESS:
+//				return Badges.Badge.MASTERY_HUNTRESS;
+//			case DUELIST:
+//				return Badges.Badge.MASTERY_DUELIST;
+//			case CLERIC:
+//				return Badges.Badge.MASTERY_CLERIC;
+//		}
+//		return null;
+//	}
 
 	private static void initAris(Hero hero) {
 		(hero.belongings.weapon = new WornShortsword()).identify();
@@ -264,6 +275,16 @@ public enum HeroClass {
 		HandGrenade handGrenade = new HandGrenade();
 		handGrenade.collect();
 		Dungeon.quickslot.setSlot(2, handGrenade);
+
+		new PotionOfHealing().identify();
+		new ScrollOfRage().identify();
+	}
+
+	private static void initHoshino(Hero hero) {
+		SG_T1 sgT1 = new SG_T1();
+		(hero.belongings.weapon = sgT1).identify();
+		Dungeon.quickslot.setSlot(0, sgT1);
+		Claymore claymore = new Claymore();
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
@@ -382,6 +403,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new Present(), new BlackCard(), new Bipod()};
 			case MIYAKO:
 				return new ArmorAbility[]{new WireHook(), new Helicopter(), new CloseAirSupport()};
+			case HOSHINO:
+				return new ArmorAbility[]{new LightWall(), new SpikeShield(), new ShieldParry()};
 			case WARRIOR:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
 			case MAGE:
@@ -405,6 +428,8 @@ public enum HeroClass {
 				return Assets.Sprites.NONOMI;
 			case MIYAKO:
 				return Assets.Sprites.MIYAKO;
+			case HOSHINO:
+				return Assets.Sprites.HOSHINO;
 			case WARRIOR:
 				return Assets.Sprites.WARRIOR;
 			case MAGE:
@@ -428,6 +453,8 @@ public enum HeroClass {
 				return Assets.Splashes.NONOMI;
 			case MIYAKO:
 				return Assets.Splashes.MIYAKO;
+			case HOSHINO:
+				return Assets.Splashes.HOSHINO;
 			case WARRIOR:
 				return Assets.Splashes.WARRIOR;
 			case MAGE:

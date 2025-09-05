@@ -68,13 +68,14 @@ public class Badges {
 		MASTERY_ARIS,
 		MASTERY_NONOMI,
 		MASTERY_MIYAKO,
+		MASTERY_HOSHINO,
 
-		MASTERY_WARRIOR,
-		MASTERY_MAGE,
-		MASTERY_ROGUE,
-		MASTERY_HUNTRESS,
-		MASTERY_DUELIST,
-		MASTERY_CLERIC,
+//		MASTERY_WARRIOR,
+//		MASTERY_MAGE,
+//		MASTERY_ROGUE,
+//		MASTERY_HUNTRESS,
+//		MASTERY_DUELIST,
+//		MASTERY_CLERIC,
 		FOUND_RATMOGRIFY,
 
 		//bronze
@@ -131,12 +132,13 @@ public class Badges {
 		BOSS_SLAIN_1_ARIS,
 		BOSS_SLAIN_1_NONOMI,
 		BOSS_SLAIN_1_MIYAKO,
-		BOSS_SLAIN_1_WARRIOR,
-		BOSS_SLAIN_1_MAGE,
-		BOSS_SLAIN_1_ROGUE,
-		BOSS_SLAIN_1_HUNTRESS,
-		BOSS_SLAIN_1_DUELIST,
-		BOSS_SLAIN_1_CLERIC,
+		BOSS_SLAIN_1_HOSHINO,
+//		BOSS_SLAIN_1_WARRIOR,
+//		BOSS_SLAIN_1_MAGE,
+//		BOSS_SLAIN_1_ROGUE,
+//		BOSS_SLAIN_1_HUNTRESS,
+//		BOSS_SLAIN_1_DUELIST,
+//		BOSS_SLAIN_1_CLERIC,
 		BOSS_SLAIN_1_ALL_CLASSES    ( 54, BadgeType.GLOBAL ),
 		RESEARCHER_2                ( 55, BadgeType.JOURNAL ),
 		GAMES_PLAYED_2              ( 56, BadgeType.GLOBAL ),
@@ -188,30 +190,35 @@ public class Badges {
 		VICTORY_ARIS,
 		VICTORY_NONOMI,
 		VICTORY_MIYAKO,
-		VICTORY_WARRIOR,
-		VICTORY_MAGE,
-		VICTORY_ROGUE,
-		VICTORY_HUNTRESS,
-		VICTORY_DUELIST,
-		VICTORY_CLERIC,
+		VICTORY_HOSHINO,
+//		VICTORY_WARRIOR,
+//		VICTORY_MAGE,
+//		VICTORY_ROGUE,
+//		VICTORY_HUNTRESS,
+//		VICTORY_DUELIST,
+//		VICTORY_CLERIC,
 		VICTORY_ALL_CLASSES         ( 102, BadgeType.GLOBAL ),
 		DEATH_FROM_ALL              ( 103, BadgeType.GLOBAL ),
 		BOSS_SLAIN_3_LIGHT_HERO,
 		BOSS_SLAIN_3_BATTERY_CHARGE,
 		BOSS_SLAIN_3_SHOOT_ALL,
 		BOSS_SLAIN_3_SPREAD_SHOT,
-		BOSS_SLAIN_3_GLADIATOR,
-		BOSS_SLAIN_3_BERSERKER,
-		BOSS_SLAIN_3_WARLOCK,
-		BOSS_SLAIN_3_BATTLEMAGE,
-		BOSS_SLAIN_3_FREERUNNER,
-		BOSS_SLAIN_3_ASSASSIN,
-		BOSS_SLAIN_3_SNIPER,
-		BOSS_SLAIN_3_WARDEN,
-		BOSS_SLAIN_3_CHAMPION,
-		BOSS_SLAIN_3_MONK,
-		BOSS_SLAIN_3_PRIEST,
-		BOSS_SLAIN_3_PALADIN,
+		BOSS_SLAIN_3_RABBIT_SQUAD,
+		BOSS_SLAIN_3_SUPPORT_DRONE,
+		BOSS_SLAIN_3_SHIELD_BASH,
+		BOSS_SLAIN_3_DEFENSE_POSTURE,
+//		BOSS_SLAIN_3_GLADIATOR,
+//		BOSS_SLAIN_3_BERSERKER,
+//		BOSS_SLAIN_3_WARLOCK,
+//		BOSS_SLAIN_3_BATTLEMAGE,
+//		BOSS_SLAIN_3_FREERUNNER,
+//		BOSS_SLAIN_3_ASSASSIN,
+//		BOSS_SLAIN_3_SNIPER,
+//		BOSS_SLAIN_3_WARDEN,
+//		BOSS_SLAIN_3_CHAMPION,
+//		BOSS_SLAIN_3_MONK,
+//		BOSS_SLAIN_3_PRIEST,
+//		BOSS_SLAIN_3_PALADIN,
 		BOSS_SLAIN_3_ALL_SUBCLASSES ( 104, BadgeType.GLOBAL ),
 		BOSS_CHALLENGE_3            ( 105 ),
 		BOSS_CHALLENGE_4            ( 106 ),
@@ -819,6 +826,7 @@ public class Badges {
 		firstBossClassBadges.put(HeroClass.ARIS, Badge.BOSS_SLAIN_1_ARIS);
 		firstBossClassBadges.put(HeroClass.NONOMI, Badge.BOSS_SLAIN_1_NONOMI);
 		firstBossClassBadges.put(HeroClass.MIYAKO, Badge.BOSS_SLAIN_1_MIYAKO);
+		firstBossClassBadges.put(HeroClass.HOSHINO, Badge.BOSS_SLAIN_1_HOSHINO);
 //		firstBossClassBadges.put(HeroClass.WARRIOR, Badge.BOSS_SLAIN_1_WARRIOR);
 //		firstBossClassBadges.put(HeroClass.MAGE, Badge.BOSS_SLAIN_1_MAGE);
 //		firstBossClassBadges.put(HeroClass.ROGUE, Badge.BOSS_SLAIN_1_ROGUE);
@@ -832,6 +840,7 @@ public class Badges {
 		victoryClassBadges.put(HeroClass.ARIS, Badge.VICTORY_ARIS);
 		victoryClassBadges.put(HeroClass.NONOMI, Badge.VICTORY_NONOMI);
 		victoryClassBadges.put(HeroClass.MIYAKO, Badge.VICTORY_MIYAKO);
+		victoryClassBadges.put(HeroClass.HOSHINO, Badge.VICTORY_HOSHINO);
 //		victoryClassBadges.put(HeroClass.WARRIOR, Badge.VICTORY_WARRIOR);
 //		victoryClassBadges.put(HeroClass.MAGE, Badge.VICTORY_MAGE);
 //		victoryClassBadges.put(HeroClass.ROGUE, Badge.VICTORY_ROGUE);
@@ -846,6 +855,10 @@ public class Badges {
 		thirdBossSubclassBadges.put(HeroSubClass.BATTERY_CHARGE, Badge.BOSS_SLAIN_3_BATTERY_CHARGE);
 		thirdBossSubclassBadges.put(HeroSubClass.SHOOT_ALL, Badge.BOSS_SLAIN_3_SHOOT_ALL);
 		thirdBossSubclassBadges.put(HeroSubClass.SPREAD_SHOT, Badge.BOSS_SLAIN_3_SPREAD_SHOT);
+		thirdBossSubclassBadges.put(HeroSubClass.RABBIT_SQUAD, Badge.BOSS_SLAIN_3_RABBIT_SQUAD);
+		thirdBossSubclassBadges.put(HeroSubClass.SUPPORT_DRONE, Badge.BOSS_SLAIN_3_SUPPORT_DRONE);
+		thirdBossSubclassBadges.put(HeroSubClass.SHIELD_BASH, Badge.BOSS_SLAIN_3_SHIELD_BASH);
+		thirdBossSubclassBadges.put(HeroSubClass.DEFENSE_POSTURE, Badge.BOSS_SLAIN_3_DEFENSE_POSTURE);
 //		thirdBossSubclassBadges.put(HeroSubClass.BERSERKER, Badge.BOSS_SLAIN_3_BERSERKER);
 //		thirdBossSubclassBadges.put(HeroSubClass.GLADIATOR, Badge.BOSS_SLAIN_3_GLADIATOR);
 //		thirdBossSubclassBadges.put(HeroSubClass.BATTLEMAGE, Badge.BOSS_SLAIN_3_BATTLEMAGE);
@@ -971,24 +984,27 @@ public class Badges {
 			case MIYAKO:
 				badge = Badge.MASTERY_MIYAKO;
 				break;
-			case WARRIOR:
-				badge = Badge.MASTERY_WARRIOR;
+			case HOSHINO:
+				badge = Badge.MASTERY_HOSHINO;
 				break;
-			case MAGE:
-				badge = Badge.MASTERY_MAGE;
-				break;
-			case ROGUE:
-				badge = Badge.MASTERY_ROGUE;
-				break;
-			case HUNTRESS:
-				badge = Badge.MASTERY_HUNTRESS;
-				break;
-			case DUELIST:
-				badge = Badge.MASTERY_DUELIST;
-				break;
-			case CLERIC:
-				badge = Badge.MASTERY_CLERIC;
-				break;
+//			case WARRIOR:
+//				badge = Badge.MASTERY_WARRIOR;
+//				break;
+//			case MAGE:
+//				badge = Badge.MASTERY_MAGE;
+//				break;
+//			case ROGUE:
+//				badge = Badge.MASTERY_ROGUE;
+//				break;
+//			case HUNTRESS:
+//				badge = Badge.MASTERY_HUNTRESS;
+//				break;
+//			case DUELIST:
+//				badge = Badge.MASTERY_DUELIST;
+//				break;
+//			case CLERIC:
+//				badge = Badge.MASTERY_CLERIC;
+//				break;
 		}
 		
 		unlock(badge);
