@@ -21,6 +21,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.GunSmithingTool;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
@@ -316,8 +317,14 @@ public class Gun extends MeleeWeapon {
                 }
             }
             if (!isEquipped( hero )) {
-                usesTargeting = false;
-                GLog.w(Messages.get(this, "not_equipped"));
+                if (hero.heroClass == HeroClass.HOSHINO) {
+                    doEquip(hero);
+                    hero.sprite.operate(hero.pos);
+                    GLog.i(Messages.get(this, "switched", this.name()));
+                } else {
+                    usesTargeting = false;
+                    GLog.w(Messages.get(this, "not_equipped"));
+                }
             } else {
                 if (round <= 0) { //현재 탄창이 0이면 AC_RELOAD 버튼을 눌렀을 때처럼 작동
                     execute(hero, AC_RELOAD);
@@ -371,6 +378,8 @@ public class Gun extends MeleeWeapon {
         if (hero.hasTalent(Talent.NONOMI_T1_4)) {
             Buff.affect(hero, Barrier.class).setShield((int)reloadTime() + Math.max(0, hero.pointsInTalent(Talent.NONOMI_T1_4)-1)); //reload time + 0 or 1, depends on talent level
         }
+
+        IronHorus.detachBuff(hero);
     }
 
     public void quickReload() {	//다른 것들을 작동시키지 않고 탄창만 완전히 재장전하는 메서드
