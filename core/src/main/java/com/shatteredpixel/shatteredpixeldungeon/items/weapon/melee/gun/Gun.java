@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun;
 
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
+import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -21,6 +22,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.GunSmithingTool;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
@@ -71,6 +73,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWea
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -665,12 +668,14 @@ public class Gun extends MeleeWeapon {
 
     //needs to be overridden
     public Bullet knockBullet(){
+        Gdx.app.log("DEBUG", "instance created");
         return new Bullet();
     }
 
     public class Bullet extends MissileWeapon {
 
         {
+            image = ItemSpriteSheet.SINGLE_BULLET;
             hitSound = Assets.Sounds.PUFF;
             tier = Gun.this.tier();
         }
@@ -717,6 +722,16 @@ public class Gun extends MeleeWeapon {
             damage += bulletDamageBonus(attacker, defender);
 
             return Gun.this.proc(attacker, defender, damage);
+        }
+
+        @Override
+        public Item split(int amount) {
+            return this;
+        }
+
+        @Override
+        public Item merge(Item other) {
+            return this;
         }
 
         private int bulletDamageBonus(Char attacker, Char defender) { //탄환 피해의 순수 증가량. 탄환 피해 배율 적용 이후에 적용됨
