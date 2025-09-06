@@ -95,6 +95,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Grenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
@@ -678,6 +679,10 @@ public class Hero extends Char {
 
 		if (hasTalent(Talent.ARIS_EX1_2) && buff(SuperNova.SuperNovaCooldown.class) != null) {
 			dr += Random.NormalIntRange(pointsInTalent(Talent.ARIS_EX1_2), 4*pointsInTalent(Talent.ARIS_EX1_2));
+		}
+
+		if (IronHorus.hasBuff(this)) {
+			dr += IronHorus.drRoll(this);
 		}
 
 		return dr;

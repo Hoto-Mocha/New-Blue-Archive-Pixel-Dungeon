@@ -141,6 +141,7 @@ public class BuffIndicator extends Component {
 	public static final int KEY        	= 100;
 	public static final int SUPPORT_DRONE	= 101;
 	public static final int IRON_HORUS	= 102;
+	public static final int LIGHT_IRON_HORUS = 103;
 
 	public static final int SIZE_SMALL  = 7;
 	public static final int SIZE_LARGE  = 16;

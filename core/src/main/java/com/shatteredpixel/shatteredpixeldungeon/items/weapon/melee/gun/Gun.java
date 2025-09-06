@@ -320,14 +320,8 @@ public class Gun extends MeleeWeapon {
                 }
             }
             if (!isEquipped( hero )) {
-                if (hero.heroClass == HeroClass.HOSHINO) {
-                    doEquip(hero);
-                    hero.sprite.operate(hero.pos);
-                    GLog.i(Messages.get(this, "switched", this.name()));
-                } else {
-                    usesTargeting = false;
-                    GLog.w(Messages.get(this, "not_equipped"));
-                }
+                usesTargeting = false;
+                GLog.w(Messages.get(this, "not_equipped"));
             } else {
                 if (round <= 0) { //현재 탄창이 0이면 AC_RELOAD 버튼을 눌렀을 때처럼 작동
                     execute(hero, AC_RELOAD);
@@ -350,6 +344,12 @@ public class Gun extends MeleeWeapon {
                 reload();
             }
         }
+    }
+
+    @Override
+    public boolean doEquip(Hero hero) {
+        IronHorus.detachBuff(hero);
+        return super.doEquip(hero);
     }
 
     public boolean isAllLoaded() {

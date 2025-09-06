@@ -153,7 +153,7 @@ public class IronHorus extends Item {
         public boolean act() {
             if (target instanceof Hero) {
                 ironHorus = ((Hero)target).belongings.getItem(IronHorus.class);
-                if (gun != ((Hero)target).belongings.weapon()) {
+                if (gun == null || !gun.isSimilar(((Hero)target).belongings.weapon())) {
                     detach();
                 }
             }
@@ -241,7 +241,7 @@ public class IronHorus extends Item {
         public boolean act() {
             if (target instanceof Hero) {
                 ironHorus = ((Hero)target).belongings.getItem(IronHorus.class);
-                if (gun != ((Hero)target).belongings.weapon()) {
+                if (gun == null || !gun.isSimilar(((Hero)target).belongings.weapon())) {
                     detach();
                 }
             }
@@ -253,19 +253,6 @@ public class IronHorus extends Item {
             return true;
         }
 
-        public boolean attachTo(Char target ) {
-            if (super.attachTo(target)) {
-                ironHorus = Dungeon.hero.belongings.getItem(IronHorus.class);
-                if (ironHorus == null) {
-                    detach();
-                    return false;
-                }
-                return true;
-            } else {
-                return false;
-            }
-        }
-
         public void set(IronHorus ironHorus, HG hg) {
             this.ironHorus = ironHorus;
             this.gun = hg;
@@ -273,7 +260,7 @@ public class IronHorus extends Item {
 
         @Override
         public int icon() {
-            return BuffIndicator.IRON_HORUS;
+            return BuffIndicator.LIGHT_IRON_HORUS;
         }
 
         @Override
