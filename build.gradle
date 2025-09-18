@@ -14,8 +14,8 @@ allprojects {
         appName = 'Re Blue Archive Pixel Dungeon'
         appPackageName = 'com.shatteredpixel.rebluearchivepixeldungeon'
 
-        appVersionCode = 868
-        appVersionName = '3.2.3'
+        appVersionCode = 875
+        appVersionName = '3.2.4'
 
         appVersionCode += 107
         appVersionName += '_based_1.0.7'
