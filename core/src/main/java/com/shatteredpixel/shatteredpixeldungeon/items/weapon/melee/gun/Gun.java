@@ -335,8 +335,14 @@ public class Gun extends MeleeWeapon {
         }
         if (action.equals(AC_RELOAD)) {
             if (isAllLoaded()){
-                if (hero.heroClass == HeroClass.DUELIST) {
-                    execute(hero, AC_ABILITY);
+                if (hero.heroClass == HeroClass.HOSHINO && round == maxRound()) {
+                    onReload();
+                    manualReload(1, true);
+
+                    hero.busy();
+                    hero.sprite.operate(hero.pos);
+                    Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
+                    hero.spendAndNext(reloadTime());
                 } else {
                     GLog.w(Messages.get(this, "already_loaded"));
                 }
