@@ -812,6 +812,9 @@ public class Gun extends MeleeWeapon {
             if (owner instanceof Hero && owner.buff(WireHook.PointBlankShot.class) != null) {
                 ACC *= 3f;
             }
+            if (owner instanceof Hero && ((Hero)owner).hasTalent(Talent.HOSHINO_T3_2)) {
+                ACC *= 1+0.2f*((Hero)owner).pointsInTalent(Talent.HOSHINO_T3_2);
+            }
             return ACC;
         }
 
