@@ -738,6 +738,9 @@ public class Gun extends MeleeWeapon {
                 }
             }
 
+            if (attacker instanceof Hero && ((Hero)attacker).hasTalent(Talent.HOSHINO_T3_1)) {
+                Buff.affect(defender, Talent.TacticalSuppressTracker.class);
+            }
 
             return Gun.this.proc(attacker, defender, damage);
         }

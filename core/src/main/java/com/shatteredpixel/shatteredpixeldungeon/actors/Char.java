@@ -564,6 +564,29 @@ public abstract class Char extends Actor {
 				combinedLethality.detach();
 			}
 
+			Talent.TacticalSuppressTracker tacticalSuppress = enemy.buff(Talent.TacticalSuppressTracker.class);
+			if (tacticalSuppress != null && this instanceof Hero && ((Hero) this).belongings.attackingWeapon() instanceof MeleeWeapon) {
+				if ( enemy.isAlive() && enemy.alignment != alignment && !Char.hasProp(enemy, Property.BOSS)
+						&& !Char.hasProp(enemy, Property.MINIBOSS) &&
+						(enemy.HP/(float)enemy.HT) <= 0.4f*((Hero)this).pointsInTalent(Talent.HOSHINO_T3_1)/3f) {
+					enemy.HP = 0;
+					if (enemy.buff(Brute.BruteRage.class) != null){
+						enemy.buff(Brute.BruteRage.class).detach();
+					}
+					if (!enemy.isAlive()) {
+						enemy.die(this);
+					} else {
+						//helps with triggering any on-damage effects that need to activate
+						enemy.damage(-1, this);
+						DeathMark.processFearTheReaper(enemy);
+					}
+					if (enemy.sprite != null) {
+						enemy.sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Talent.CombinedLethalityAbilityTracker.class, "executed"));
+					}
+				}
+				tacticalSuppress.detach();
+			}
+
 			if (enemy.sprite != null) {
 				enemy.sprite.bloodBurstA(sprite.center(), effectiveDamage);
 				enemy.sprite.flash();
