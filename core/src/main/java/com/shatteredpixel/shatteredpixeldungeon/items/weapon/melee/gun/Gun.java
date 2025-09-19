@@ -453,6 +453,10 @@ public class Gun extends MeleeWeapon {
             amount += 1;
         }
 
+        if (hero != null && hero.hasTalent(Talent.HOSHINO_T1_4)) {
+            amount -= hero.pointsInTalent(Talent.HOSHINO_T1_4);
+        }
+
         amount = Math.max(0, amount);
         return amount;
     }
@@ -726,6 +730,14 @@ public class Gun extends MeleeWeapon {
             damage = Math.round(damage * multiplier);
 
             damage += bulletDamageBonus(attacker, defender);
+
+            if (attacker instanceof Hero && ((Hero)attacker).hasTalent(Talent.HOSHINO_T2_5) && attacker.buff(Barrier.class) == null) {
+                int shield = 2+3*((Hero)attacker).pointsInTalent(Talent.HOSHINO_T2_5)-distance;
+                if (shield > 0) {
+                    Buff.affect(attacker, Barrier.class).setShield(shield);
+                }
+            }
+
 
             return Gun.this.proc(attacker, defender, damage);
         }

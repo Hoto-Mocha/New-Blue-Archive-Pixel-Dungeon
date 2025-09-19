@@ -58,6 +58,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.journal.Guidebook;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.DimensionalSundial;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.TrinketCatalyst;
@@ -605,6 +606,47 @@ public class GameScene extends PixelScene {
 					if (reqSecrets <= 0 && Random.Int(4) < 2+Dungeon.hero.pointsInTalent(Talent.ROGUES_FORESIGHT)){
 						GLog.p(Messages.get(this, "secret_hint"));
 					}
+				Random.popGenerator();
+			}
+
+			if (Dungeon.hero.hasTalent(Talent.HOSHINO_T2_2)
+					&& Dungeon.level instanceof RegularLevel && Dungeon.branch == 0){
+
+				Random.pushGenerator(Dungeon.seedCurDepth()+1);
+				if (Random.Float() < 0.2f*Dungeon.hero.pointsInTalent(Talent.HOSHINO_T2_2)){
+					int length = Dungeon.level.length();
+					int[] map = Dungeon.level.map;
+					boolean[] mapped = Dungeon.level.mapped;
+					boolean[] discoverable = Dungeon.level.discoverable;
+
+					boolean noticed = false;
+
+					for (int i=0; i < length; i++) {
+
+						int terr = map[i];
+
+						if (discoverable[i]) {
+
+							mapped[i] = true;
+							if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
+
+								Dungeon.level.discover( i );
+
+								if (Dungeon.level.heroFOV[i]) {
+									GameScene.discoverTile( i, terr );
+									ScrollOfMagicMapping.discover( i );
+
+									noticed = true;
+								}
+							}
+						}
+					}
+					GameScene.updateFog();
+
+					if (noticed) {
+						Sample.INSTANCE.play( Assets.Sounds.SECRET );
+					}
+				}
 				Random.popGenerator();
 			}
 

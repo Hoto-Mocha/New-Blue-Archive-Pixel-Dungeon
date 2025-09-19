@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.EnhancedRings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
@@ -86,6 +87,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_SP;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -860,7 +862,7 @@ public enum Talent {
 			}
 		}
 
-		if (talent == HEIGHTENED_SENSES || talent == FARSIGHT || talent == DIVINE_SENSE || talent == MIYAKO_T2_3 || talent == MIYAKO_EX2_3){
+		if (talent == HEIGHTENED_SENSES || talent == FARSIGHT || talent == DIVINE_SENSE || talent == MIYAKO_T2_3 || talent == MIYAKO_EX2_3 || talent == HOSHINO_T2_3){
 			Dungeon.observe();
 		}
 
@@ -925,6 +927,19 @@ public enum Talent {
 			}
 			if (hero.pointsInTalent(MIYAKO_T1_2) == 2) {
 				for (Item i : hero.belongings.getAllItems(SMG.class)) {
+					i.identify();
+				}
+			}
+		}
+
+		if (talent == HOSHINO_T1_2 && !ShardOfOblivion.passiveIDDisabled()) {
+			if (hero.pointsInTalent(HOSHINO_T1_2) == 1) {
+				if (hero.belongings.weapon() instanceof SG)  {
+					hero.belongings.weapon.identify();
+				}
+			}
+			if (hero.pointsInTalent(HOSHINO_T1_2) == 2) {
+				for (Item i : hero.belongings.getAllItems(SG.class)) {
 					i.identify();
 				}
 			}
@@ -1061,6 +1076,9 @@ public enum Talent {
 		}
 		if (hero.hasTalent(Talent.MIYAKO_T2_1)) {
 			Buff.affect(hero, Barrier.class).setShield((int)(hero.HT*(0.5f+0.5f*hero.pointsInTalent(Talent.MIYAKO_T2_1))));
+		}
+		if (hero.hasTalent(Talent.HOSHINO_T2_1) && hero.buff(Drowsy.class) == null) {
+			Buff.affect(hero, Drowsy.class, 350-100*hero.pointsInTalent(Talent.HOSHINO_T2_1));
 		}
 	}
 
@@ -1415,7 +1433,18 @@ public enum Talent {
 
 	public static int onDefenseProc(Hero hero, Char enemy, int damage) {
 
+		if (hero.buff(FirstAidCooldown.class) == null && hero.HP <= hero.HT/4) {
+			hero.heal(2+2*hero.pointsInTalent(Talent.HOSHINO_T1_1));
+			Buff.affect(hero, FirstAidCooldown.class, 50f);
+		}
+
 		return damage;
+	}
+
+	public static class FirstAidCooldown extends FlavourBuff {
+		public int icon() { return BuffIndicator.TIME; }
+		public void tintIcon(Image icon) { icon.hardlight(0.15f, 0.2f, 0.5f); }
+		public float iconFadePercent() { return Math.max(0, visualcooldown() / 50); }
 	}
 
 	public static class ProvokedAngerTracker extends FlavourBuff{

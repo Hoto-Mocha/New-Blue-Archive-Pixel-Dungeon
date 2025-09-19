@@ -449,7 +449,16 @@ public class Armor extends EquipableItem {
 		if (curseInfusionBonus) level += 1 + level/6;
 		return level;
 	}
-	
+
+	@Override
+	public int buffedLvl() {
+		int level = super.buffedLvl();
+		if (Dungeon.hero != null && Dungeon.hero.pointsInTalent(Talent.HOSHINO_T1_3)+1 >= tier) {
+			level += 1;
+		}
+		return level;
+	}
+
 	@Override
 	public Item upgrade() {
 		return upgrade( false );

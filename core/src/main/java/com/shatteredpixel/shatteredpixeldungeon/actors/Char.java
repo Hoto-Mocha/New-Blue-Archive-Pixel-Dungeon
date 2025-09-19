@@ -103,6 +103,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Bulk;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
@@ -929,6 +930,15 @@ public abstract class Char extends Actor {
 			if (buff(ArcaneArmor.class) != null) {
 				dmg -= Random.NormalIntRange(0, buff(ArcaneArmor.class).level());
 			}
+			if (Dungeon.hero.hasTalent(Talent.HOSHINO_T2_4)) {
+				if (buff(IronHorus.LightTacticalShieldBuff.class) != null) {
+					dmg -= Math.round(buff(IronHorus.LightTacticalShieldBuff.class).drRoll()*0.25f*(Dungeon.hero.pointsInTalent(Talent.HOSHINO_T2_4)+1));
+				}
+				if (buff(IronHorus.TacticalShieldBuff.class) != null) {
+					dmg -= Math.round(buff(IronHorus.TacticalShieldBuff.class).drRoll()*0.25f*(Dungeon.hero.pointsInTalent(Talent.HOSHINO_T2_4)+1));
+				}
+			}
+
 			if (dmg < 0) dmg = 0;
 		}
 		
