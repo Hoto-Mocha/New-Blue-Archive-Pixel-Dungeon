@@ -7,13 +7,16 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -169,6 +172,9 @@ public class IronHorus extends Item {
         }
 
         public boolean attachTo(Char target ) {
+            if (target instanceof Hero && ((Hero)target).subClass == HeroSubClass.SHIELD_BASH) {
+                Buff.affect(target, ShieldBashBuff.class);
+            }
             if (super.attachTo(target)) {
                 pos = target.pos;
                 return true;
@@ -264,6 +270,14 @@ public class IronHorus extends Item {
         }
 
         @Override
+        public boolean attachTo(Char target) {
+            if (target instanceof Hero && ((Hero)target).subClass == HeroSubClass.SHIELD_BASH) {
+                Buff.affect(target, ShieldBashBuff.class);
+            }
+            return super.attachTo(target);
+        }
+
+        @Override
         public void detach() {
             super.detach();
             Buff.affect(target, TacticalShieldCooldown.class, TacticalShieldCooldown.DURATION);
@@ -328,6 +342,48 @@ public class IronHorus extends Item {
         @Override
         public String toString() {
             return Messages.get(this, "name");
+        }
+    }
+
+    public static class ShieldBashBuff extends Buff implements ActionIndicator.Action {
+
+        @Override
+        public String actionName() {
+            return Messages.get(this, "action_name");
+        }
+
+        @Override
+        public int actionIcon() {
+            return HeroIcon.SHIELD_BASH;
+        }
+
+        @Override
+        public int indicatorColor() {
+            return 0xFFFFFF;
+        }
+
+        @Override
+        public void doAction() {
+
+        }
+
+        @Override
+        public boolean attachTo(Char target) {
+            ActionIndicator.setAction(this);
+            return super.attachTo(target);
+        }
+
+        @Override
+        public void detach() {
+            ActionIndicator.clearAction();
+            super.detach();
+        }
+
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+
+            ActionIndicator.setAction(this);
         }
     }
 }
