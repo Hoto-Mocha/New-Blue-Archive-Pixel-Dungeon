@@ -6,23 +6,39 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
+import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
+import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
+import com.shatteredpixel.shatteredpixeldungeon.levels.features.HighGrass;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class IronHorus extends Item {
 
@@ -364,7 +380,7 @@ public class IronHorus extends Item {
 
         @Override
         public void doAction() {
-
+            GameScene.selectCell(selector);
         }
 
         @Override
@@ -385,5 +401,80 @@ public class IronHorus extends Item {
 
             ActionIndicator.setAction(this);
         }
+
+        private CellSelector.Listener selector = new CellSelector.Listener() {
+            @Override
+            public void onSelect( Integer target ) {
+                if (Dungeon.hero.buff(TacticalShieldBuff.class) == null && Dungeon.hero.buff(LightTacticalShieldBuff.class) == null) {
+                    detach();
+                    return;
+                }
+                int distance;
+                if (Dungeon.hero.buff(TacticalShieldBuff.class) != null) {
+                    distance = 1;
+                } else {
+                    distance = 3;
+                }
+                if (target != null) {
+                    if (Dungeon.level.distance(Dungeon.hero.pos, target) > distance) {
+                        GLog.w(Messages.get(ShieldBashBuff.class, "cannot_reach"));
+                        return;
+                    }
+
+                    if (!Dungeon.level.passable[target]) {
+                        GLog.w(Messages.get(ShieldBashBuff.class, "cannot_move"));
+                        return;
+                    }
+
+                    Ballistica path = new Ballistica(Dungeon.hero.pos, target, Ballistica.PROJECTILE | Ballistica.IGNORE_SOFT_SOLID);
+                    if (!Objects.equals(path.collisionPos, target)) {
+                        GLog.w(Messages.get(ShieldBashBuff.class, "cannot_move"));
+                        return;
+                    }
+
+                    for (int pathCell : path.subPath(0, path.dist)) {
+                        if (Dungeon.level.map[pathCell] == Terrain.DOOR) {
+                            Door.enter(pathCell);
+                        }
+                        if (Dungeon.level.map[pathCell] == Terrain.HIGH_GRASS || Dungeon.level.map[pathCell] == Terrain.FURROWED_GRASS) {
+                            HighGrass.trample(Dungeon.level, pathCell);
+                        }
+                    }
+
+                    Dungeon.hero.busy();
+                    Sample.INSTANCE.play(Assets.Sounds.MISS);
+                    Dungeon.hero.sprite.emitter().start(Speck.factory(Speck.JET), 0.01f, Math.round(4 + 2*Dungeon.level.trueDistance(Dungeon.hero.pos, target)));
+                    Dungeon.hero.sprite.jump(Dungeon.hero.pos, target, 0, 0.1f, new Callback() {
+                        @Override
+                        public void call() {
+                            Char ch = Actor.findChar(target);
+                            if (ch != null) {
+                                Ballistica trajectory = new Ballistica(ch.pos, path.path.get(path.dist + 1), Ballistica.MAGIC_BOLT);
+                                WandOfBlastWave.throwChar(ch, trajectory, 2, false, true, Dungeon.hero);
+                                Sample.INSTANCE.play(Assets.Sounds.BLAST, 0.6f, 1.2f);
+                                Sample.INSTANCE.play(Assets.Sounds.ROCKS, 0.1f, 1.8f);
+                                WandOfBlastWave.BlastWave.blast(target);
+                                CellEmitter.center( target ).burst( Speck.factory( Speck.STAR ), 7 );
+                                CellEmitter.get( target ).burst( Speck.factory( Speck.FORGE ), 5 );
+                                PixelScene.shake(0.5f, 0.5f);
+                            }
+
+                            if (Dungeon.level.map[Dungeon.hero.pos] == Terrain.OPEN_DOOR) {
+                                Door.leave( Dungeon.hero.pos );
+                            }
+                            Dungeon.hero.pos = target;
+                            Dungeon.level.occupyCell(Dungeon.hero);
+                            Dungeon.hero.next();
+                            Dungeon.observe();
+                            GameScene.updateFog();
+                        }
+                    });
+                }
+            }
+            @Override
+            public String prompt() {
+                return Messages.get(SpiritBow.class, "prompt");
+            }
+        };
     }
 }
