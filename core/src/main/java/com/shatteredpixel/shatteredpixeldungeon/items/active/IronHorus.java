@@ -10,6 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
@@ -34,6 +35,7 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -410,10 +412,13 @@ public class IronHorus extends Item {
                     return;
                 }
                 int distance;
+                int dr;
                 if (Dungeon.hero.buff(TacticalShieldBuff.class) != null) {
                     distance = 1;
+                    dr = Dungeon.hero.buff(TacticalShieldBuff.class).drRoll();
                 } else {
                     distance = 3;
+                    dr = Dungeon.hero.buff(LightTacticalShieldBuff.class).drRoll();
                 }
                 if (target != null) {
                     if (Dungeon.level.distance(Dungeon.hero.pos, target) > distance) {
@@ -443,20 +448,27 @@ public class IronHorus extends Item {
 
                     Dungeon.hero.busy();
                     Sample.INSTANCE.play(Assets.Sounds.MISS);
-                    Dungeon.hero.sprite.emitter().start(Speck.factory(Speck.JET), 0.01f, Math.round(4 + 2*Dungeon.level.trueDistance(Dungeon.hero.pos, target)));
-                    Dungeon.hero.sprite.jump(Dungeon.hero.pos, target, 0, 0.1f, new Callback() {
+                    Dungeon.hero.sprite.jump(Dungeon.hero.pos, target, 0, 0.05f, new Callback() {
                         @Override
                         public void call() {
                             Char ch = Actor.findChar(target);
                             if (ch != null) {
+                                int prevPos = ch.pos;
                                 Ballistica trajectory = new Ballistica(ch.pos, path.path.get(path.dist + 1), Ballistica.MAGIC_BOLT);
-                                WandOfBlastWave.throwChar(ch, trajectory, 2, false, true, Dungeon.hero);
-                                Sample.INSTANCE.play(Assets.Sounds.BLAST, 0.6f, 1.2f);
-                                Sample.INSTANCE.play(Assets.Sounds.ROCKS, 0.1f, 1.8f);
-                                WandOfBlastWave.BlastWave.blast(target);
-                                CellEmitter.center( target ).burst( Speck.factory( Speck.STAR ), 7 );
-                                CellEmitter.get( target ).burst( Speck.factory( Speck.FORGE ), 5 );
-                                PixelScene.shake(0.5f, 0.5f);
+                                if ((trajectory.dist == 1 && Actor.findChar(trajectory.collisionPos) != null) || trajectory.collisionPos == prevPos) {
+                                    ArrayList<Integer> candidates = new ArrayList<>();
+                                    for (int n : PathFinder.NEIGHBOURS8) {
+                                        if (Dungeon.level.passable[prevPos+n] && Actor.findChar( prevPos+n ) == null) {
+                                            candidates.add( prevPos+n );
+                                        }
+                                    }
+                                    trajectory = new Ballistica(ch.pos, Random.element( candidates ), Ballistica.MAGIC_BOLT);
+                                }
+                                WandOfBlastWave.throwChar(ch, trajectory, 5-distance, false, true, Dungeon.hero);
+                                ch.damage(dr, Dungeon.hero);
+                                if (ch.sprite != null) {
+                                    ch.sprite.flash();
+                                }
                             }
 
                             if (Dungeon.level.map[Dungeon.hero.pos] == Terrain.OPEN_DOOR) {
@@ -467,6 +479,20 @@ public class IronHorus extends Item {
                             Dungeon.hero.next();
                             Dungeon.observe();
                             GameScene.updateFog();
+
+                            Sample.INSTANCE.play(Assets.Sounds.BLAST, 0.6f, 1.2f);
+                            Sample.INSTANCE.play(Assets.Sounds.ROCKS, 0.1f, 1.8f);
+                            WandOfBlastWave.BlastWave.blast(target);
+                            CellEmitter.center( target ).burst( Speck.factory( Speck.STAR ), 7 );
+                            CellEmitter.get( target ).burst( Speck.factory( Speck.FORGE ), 5 );
+                            PixelScene.shake(0.5f, 0.5f);
+
+                            if (Dungeon.hero.buff(TacticalShieldBuff.class) != null) {
+                                Dungeon.hero.buff(TacticalShieldBuff.class).detach();
+                            } else {
+                                Dungeon.hero.buff(LightTacticalShieldBuff.class).detach();
+                            }
+                            detach();
                         }
                     });
                 }
