@@ -473,7 +473,15 @@ public class IronHorus extends Item {
                                     trajectory = new Ballistica(ch.pos, Random.element( candidates ), Ballistica.MAGIC_BOLT);
                                 }
                                 WandOfBlastWave.throwChar(ch, trajectory, 5-distance, false, true, Dungeon.hero);
-                                ch.damage(dr, Dungeon.hero);
+                                int damage = dr;
+                                if (Dungeon.hero.hasTalent(Talent.HOSHINO_EX1_2)) {
+                                    damage = Math.round(damage*(1+0.5f*Dungeon.hero.pointsInTalent(Talent.HOSHINO_EX1_2)));
+
+                                    int selfDamage = Random.NormalIntRange(4*Dungeon.hero.pointsInTalent(Talent.HOSHINO_EX1_2), 10*Dungeon.hero.pointsInTalent(Talent.HOSHINO_EX1_2));
+                                    selfDamage -= Dungeon.hero.drRoll();
+                                    Dungeon.hero.damage(selfDamage, IronHorus.class);
+                                }
+                                ch.damage(damage, Dungeon.hero);
 
                                 if (Dungeon.hero.hasTalent(Talent.HOSHINO_EX1_1)) {
                                     Buff.affect(ch, Vertigo.class, 2f*Dungeon.hero.pointsInTalent(Talent.HOSHINO_EX1_1));
