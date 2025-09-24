@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -411,6 +412,10 @@ public class IronHorus extends Item {
                     detach();
                     return;
                 }
+                if (Dungeon.hero.buff(Roots.class) != null) {
+                    GLog.w(Messages.get(ShieldBashBuff.class, "cannot_move"));
+                    return;
+                }
                 int distance;
                 int dr;
                 if (Dungeon.hero.buff(TacticalShieldBuff.class) != null) {
@@ -427,13 +432,13 @@ public class IronHorus extends Item {
                     }
 
                     if (!Dungeon.level.passable[target]) {
-                        GLog.w(Messages.get(ShieldBashBuff.class, "cannot_move"));
+                        GLog.w(Messages.get(ShieldBashBuff.class, "cannot_reach"));
                         return;
                     }
 
                     Ballistica path = new Ballistica(Dungeon.hero.pos, target, Ballistica.PROJECTILE | Ballistica.IGNORE_SOFT_SOLID);
                     if (!Objects.equals(path.collisionPos, target)) {
-                        GLog.w(Messages.get(ShieldBashBuff.class, "cannot_move"));
+                        GLog.w(Messages.get(ShieldBashBuff.class, "cannot_reach"));
                         return;
                     }
 
