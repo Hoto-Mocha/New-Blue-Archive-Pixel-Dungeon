@@ -328,6 +328,10 @@ public class FloatingText extends RenderedTextBlock {
 			return HIT_PRES;
 		}
 		if (accRoll == Char.INFINITE_ACCURACY
+				&& attacker.buff(Talent.InstantFocusingTracker.class) != null){
+			return HIT_PRES;
+		}
+		if (accRoll == Char.INFINITE_ACCURACY
 				&& attacker.buff(Talent.LiquidAgilACCTracker.class) != null){
 			return HIT_LIQ;
 		}
@@ -373,6 +377,8 @@ public class FloatingText extends RenderedTextBlock {
 				hitReasons.put(HIT_PRES, Dungeon.hero.pointsInTalent(Talent.PRECISE_ASSAULT) == 2 ? 5f : 2f);
 			} else if (attacker.buff(Talent.LiquidAgilACCTracker.class) != null) {
 				hitReasons.put(HIT_LIQ, 3f);
+			} else if (attacker.buff(Talent.InstantFocusingTracker.class) != null) {
+				hitReasons.put(HIT_PRES, Dungeon.hero.pointsInTalent(Talent.HOSHINO_EX1_3) == 2 ? 5f : 2f);
 			}
 		} else {
 			if (attacker.buff(Momentum.class) != null

@@ -488,6 +488,10 @@ public class IronHorus extends Item {
                                     Buff.affect(ch, ArmorBreak.class).set(Dungeon.hero.pointsInTalent(Talent.HOSHINO_EX1_1));
                                 }
 
+                                if (Dungeon.hero.hasTalent(Talent.HOSHINO_EX1_3)) {
+                                    Buff.prolong(Dungeon.hero, Talent.InstantFocusingTracker.class, Dungeon.hero.cooldown()+4f);
+                                }
+
                                 if (ch.sprite != null) {
                                     ch.sprite.flash();
                                 }

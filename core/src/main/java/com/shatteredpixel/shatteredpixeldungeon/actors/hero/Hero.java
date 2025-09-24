@@ -504,6 +504,8 @@ public class Hero extends Char {
 			} else if (buff(Talent.LiquidAgilACCTracker.class) != null
 						&& buff(Talent.LiquidAgilACCTracker.class).uses <= 0){
 				buff(Talent.LiquidAgilACCTracker.class).detach();
+			} else if (buff(Talent.InstantFocusingTracker.class) != null) {
+				buff(Talent.InstantFocusingTracker.class).detach();
 			}
 		}
 		return result;
@@ -535,6 +537,16 @@ public class Hero extends Char {
 				} else if (buff(Talent.PreciseAssaultTracker.class) != null) {
 					// 2x/5x/inf. ACC for duelist if she just used a weapon ability
 					switch (pointsInTalent(Talent.PRECISE_ASSAULT)){
+						default: case 1:
+							accuracy *= 2; break;
+						case 2:
+							accuracy *= 5; break;
+						case 3:
+							accuracy *= Float.POSITIVE_INFINITY; break;
+					}
+				} else if (buff(Talent.InstantFocusingTracker.class) != null) {
+					// 2x/5x/inf. ACC for duelist if she just used a weapon ability
+					switch (pointsInTalent(Talent.HOSHINO_EX1_3)){
 						default: case 1:
 							accuracy *= 2; break;
 						case 2:

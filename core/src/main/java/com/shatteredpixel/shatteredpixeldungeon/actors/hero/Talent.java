@@ -675,6 +675,12 @@ public enum Talent {
 		public void tintIcon(Image icon) { icon.hardlight(1f, 1f, 0.0f); }
 		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 5)); }
 	};
+	public static class InstantFocusingTracker extends FlavourBuff{
+		{ type = buffType.POSITIVE; }
+		public int icon() { return BuffIndicator.INVERT_MARK; }
+		public void tintIcon(Image icon) { icon.hardlight(1f, 1f, 0.0f); }
+		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 5)); }
+	};
 	public static class VariedChargeTracker extends Buff{
 		public Class weapon;
 
