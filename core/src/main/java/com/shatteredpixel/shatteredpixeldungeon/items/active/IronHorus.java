@@ -4,12 +4,15 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArmorBreak;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -471,6 +474,12 @@ public class IronHorus extends Item {
                                 }
                                 WandOfBlastWave.throwChar(ch, trajectory, 5-distance, false, true, Dungeon.hero);
                                 ch.damage(dr, Dungeon.hero);
+
+                                if (Dungeon.hero.hasTalent(Talent.HOSHINO_EX1_1)) {
+                                    Buff.affect(ch, Vertigo.class, 2f*Dungeon.hero.pointsInTalent(Talent.HOSHINO_EX1_1));
+                                    Buff.affect(ch, ArmorBreak.class).set(Dungeon.hero.pointsInTalent(Talent.HOSHINO_EX1_1));
+                                }
+
                                 if (ch.sprite != null) {
                                     ch.sprite.flash();
                                 }
