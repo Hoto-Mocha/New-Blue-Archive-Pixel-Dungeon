@@ -35,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.quest.Pickaxe;
 import com.shatteredpixel.shatteredpixeldungeon.items.remains.RemainsItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Explosive;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
@@ -206,7 +205,7 @@ public class Badges {
 		BOSS_SLAIN_3_RABBIT_SQUAD,
 		BOSS_SLAIN_3_SUPPORT_DRONE,
 		BOSS_SLAIN_3_SHIELD_BASH,
-		BOSS_SLAIN_3_DEFENSE_POSTURE,
+		BOSS_SLAIN_3_SWIFT_MOVEMENT,
 //		BOSS_SLAIN_3_GLADIATOR,
 //		BOSS_SLAIN_3_BERSERKER,
 //		BOSS_SLAIN_3_WARLOCK,
@@ -858,7 +857,7 @@ public class Badges {
 		thirdBossSubclassBadges.put(HeroSubClass.RABBIT_SQUAD, Badge.BOSS_SLAIN_3_RABBIT_SQUAD);
 		thirdBossSubclassBadges.put(HeroSubClass.SUPPORT_DRONE, Badge.BOSS_SLAIN_3_SUPPORT_DRONE);
 		thirdBossSubclassBadges.put(HeroSubClass.SHIELD_BASH, Badge.BOSS_SLAIN_3_SHIELD_BASH);
-		thirdBossSubclassBadges.put(HeroSubClass.DEFENSE_POSTURE, Badge.BOSS_SLAIN_3_DEFENSE_POSTURE);
+		thirdBossSubclassBadges.put(HeroSubClass.SWIFT_MOVEMENT, Badge.BOSS_SLAIN_3_SWIFT_MOVEMENT);
 //		thirdBossSubclassBadges.put(HeroSubClass.BERSERKER, Badge.BOSS_SLAIN_3_BERSERKER);
 //		thirdBossSubclassBadges.put(HeroSubClass.GLADIATOR, Badge.BOSS_SLAIN_3_GLADIATOR);
 //		thirdBossSubclassBadges.put(HeroSubClass.BATTLEMAGE, Badge.BOSS_SLAIN_3_BATTLEMAGE);

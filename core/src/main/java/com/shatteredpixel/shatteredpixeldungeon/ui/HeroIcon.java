@@ -121,7 +121,7 @@ public class HeroIcon extends Image {
 	public static final int RABBIT_SQUAD	= 128+4;
 	public static final int SUPPORT_DRONE	= 128+5;
 	public static final int SHIELD_BASH		= 128+6;
-	public static final int DEFENSE_POSTURE	= 128+7;
+	public static final int SWIFT_MOVEMENT	= 128+7;
 
 	//new armor abilities
 	public static final int ARIS_1			= 128+40;

@@ -117,7 +117,7 @@ public enum HeroClass {
 	ARIS(HeroSubClass.LIGHT_HERO, HeroSubClass.BATTERY_CHARGE),
 	NONOMI(HeroSubClass.SHOOT_ALL, HeroSubClass.SPREAD_SHOT),
 	MIYAKO(HeroSubClass.RABBIT_SQUAD, HeroSubClass.SUPPORT_DRONE),
-	HOSHINO(HeroSubClass.SHIELD_BASH, HeroSubClass.DEFENSE_POSTURE),
+	HOSHINO(HeroSubClass.SHIELD_BASH, HeroSubClass.SWIFT_MOVEMENT),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),

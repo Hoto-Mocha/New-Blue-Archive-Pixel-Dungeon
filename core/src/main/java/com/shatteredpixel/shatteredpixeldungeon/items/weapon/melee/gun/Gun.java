@@ -12,8 +12,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SwiftMovement;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.WireHook;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
@@ -389,6 +391,10 @@ public class Gun extends MeleeWeapon {
         }
 
         IronHorus.detachBuff(hero);
+
+        if (hero.subClass == HeroSubClass.SWIFT_MOVEMENT) {
+            Buff.affect(hero, SwiftMovement.class);
+        }
     }
 
     public void quickReload() {	//다른 것들을 작동시키지 않고 탄창만 완전히 재장전하는 메서드

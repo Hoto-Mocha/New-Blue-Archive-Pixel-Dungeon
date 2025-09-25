@@ -1700,7 +1700,7 @@ public enum Talent {
 			case SHIELD_BASH:
 				Collections.addAll(tierTalents, HOSHINO_EX1_1, HOSHINO_EX1_2, HOSHINO_EX1_3);
 				break;
-			case DEFENSE_POSTURE:
+			case SWIFT_MOVEMENT:
 				Collections.addAll(tierTalents, HOSHINO_EX2_1, HOSHINO_EX2_2, HOSHINO_EX2_3);
 				break;
 			case BERSERKER:
