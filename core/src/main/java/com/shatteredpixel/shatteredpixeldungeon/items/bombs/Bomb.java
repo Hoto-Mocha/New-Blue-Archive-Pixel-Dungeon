@@ -138,6 +138,10 @@ public class Bomb extends Item {
 		return super.doPickUp(hero, pos);
 	}
 
+	public boolean canDamage(Char ch) {
+		return true;
+	}
+
 	public void explode(int cell){
 		//We're blowing up, so no need for a fuse anymore.
 		this.fuse = null;
@@ -162,7 +166,7 @@ public class Bomb extends Item {
 				if (PathFinder.distance[i] != Integer.MAX_VALUE) {
 					affectedCells.add(i);
 					Char ch = Actor.findChar(i);
-					if (ch != null) {
+					if (ch != null && canDamage(ch)) {
 						affectedChars.add(ch);
 					}
 				}
