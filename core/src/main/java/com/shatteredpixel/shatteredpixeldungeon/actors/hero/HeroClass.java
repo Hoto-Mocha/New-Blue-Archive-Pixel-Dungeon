@@ -37,7 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.Tri
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Feint;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.LightWall;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Chase;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.ShieldParry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.SpikeShield;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
@@ -407,7 +407,7 @@ public enum HeroClass {
 			case MIYAKO:
 				return new ArmorAbility[]{new WireHook(), new Helicopter(), new CloseAirSupport()};
 			case HOSHINO:
-				return new ArmorAbility[]{new LightWall(), new SpikeShield(), new ShieldParry()};
+				return new ArmorAbility[]{new Chase(), new SpikeShield(), new ShieldParry()};
 			case WARRIOR:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
 			case MAGE:
