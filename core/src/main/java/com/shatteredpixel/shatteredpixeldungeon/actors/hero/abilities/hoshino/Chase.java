@@ -17,6 +17,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
@@ -31,17 +32,41 @@ public class Chase extends ArmorAbility {
     }
 
     @Override
+    public int icon() {
+        return HeroIcon.HOSHINO_1;
+    }
+
+    public boolean useTargeting(){
+        return true;
+    }
+
+    @Override
+    public String targetingPrompt() {
+        return Messages.get(this, "prompt");
+    }
+
+    @Override
+    public int targetedPos(Char user, int dst) {
+        return dst;
+    }
+
+    @Override
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
         if (target == null){
             return;
         }
 
-        if (Actor.findChar(target) == null) {
-            GLog.w(Messages.get(this, "no_target"));
+        if (target == hero.pos) {
+            GLog.w(Messages.get(ArmorAbility.class, "self_target"));
             return;
         }
 
-        int distance = 2;
+        if (Actor.findChar(target) == null) {
+            GLog.w(Messages.get(ArmorAbility.class, "no_target"));
+            return;
+        }
+
+        int distance = 2+hero.pointsInTalent(Talent.HOSHINO_ARMOR1_1);
         if (Dungeon.level.distance(hero.pos, target) > distance) {
             GLog.w(Messages.get(this, "too_far"));
             return;
@@ -57,8 +82,9 @@ public class Chase extends ArmorAbility {
                 if (Dungeon.level.map[hero.pos] == Terrain.OPEN_DOOR) {
                     Door.leave( hero.pos );
                 }
+                hero.sprite.zap(target);
                 if (enemy != null) {
-                    if (enemy.HP <= enemy.HT/4) {
+                    if (enemy.HP <= enemy.HT/4 + 5*hero.pointsInTalent(Talent.HOSHINO_ARMOR1_1)) {
                         enemy.HP = 0;
                         if (enemy.buff(Brute.BruteRage.class) != null){
                             enemy.buff(Brute.BruteRage.class).detach();
@@ -74,6 +100,8 @@ public class Chase extends ArmorAbility {
                             enemy.sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Talent.CombinedLethalityAbilityTracker.class, "executed"));
                         }
                     } else {
+                        Sample.INSTANCE.play(Assets.Sounds.HIT);
+                        enemy.sprite.flash();
                         enemy.damage(20, hero);
                     }
 
@@ -98,6 +126,6 @@ public class Chase extends ArmorAbility {
 
     @Override
     public Talent[] talents() {
-        return new Talent[0];
+        return new Talent[]{Talent.HOSHINO_ARMOR1_1, Talent.HOSHINO_ARMOR1_2, Talent.HOSHINO_ARMOR1_3, Talent.HEROIC_ENERGY};
     }
 }
