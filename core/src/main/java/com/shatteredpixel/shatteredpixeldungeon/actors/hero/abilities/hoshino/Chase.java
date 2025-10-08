@@ -4,6 +4,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -12,6 +14,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.Deat
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Brute;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -112,7 +115,20 @@ public class Chase extends ArmorAbility {
                                 candidates.add(target+n);
                             }
                         }
-                        Actor.add(new Pushing(hero, target, Random.element(candidates)));
+                        Actor.add(new Pushing(enemy, target, Random.element(candidates)));
+
+                        if (hero.hasTalent(Talent.HOSHINO_ARMOR1_2)) {
+                            Ballistica aim = new Ballistica(hero.pos, target, Ballistica.MAGIC_BOLT);
+
+                            //do not push chars that are dieing over a pit, or that move due to the damage
+                            if ((enemy.flying || !Dungeon.level.pit[enemy.pos])
+                                    && aim.path.size() > aim.dist+1 && enemy.pos == aim.collisionPos) {
+                                Ballistica trajectory = new Ballistica(enemy.pos, aim.path.get(aim.dist + 1), Ballistica.MAGIC_BOLT);
+                                int strength = hero.pointsInTalent(Talent.HOSHINO_ARMOR1_2)*2;
+                                WandOfBlastWave.throwChar(enemy, trajectory, strength, false, true, this);
+                                Buff.affect(hero, Barrier.class).setShield(5*hero.pointsInTalent(Talent.HOSHINO_ARMOR1_2));
+                            }
+                        }
                     }
                 }
                 hero.pos = target;
