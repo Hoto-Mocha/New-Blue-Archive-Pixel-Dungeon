@@ -180,8 +180,9 @@ public class Badges {
 		ITEM_LEVEL_5                ( 97 ),
 		LEVEL_REACHED_5             ( 98 ),
 		HAPPY_END                   ( 99 ),
-		HAPPY_END_REMAINS           ( 100 ),
-		RODNEY                      ( 101, BadgeType.JOURNAL ),
+		VICTORY_RANDOM              ( 100 ),
+		HAPPY_END_REMAINS           ( 101 ),
+		RODNEY                      ( 102, BadgeType.JOURNAL ),
 		ALL_WEAPONS_IDENTIFIED      , //still exists internally for pre-2.5 saves
 		ALL_ARMOR_IDENTIFIED        , //still exists internally for pre-2.5 saves
 		ALL_WANDS_IDENTIFIED        , //still exists internally for pre-2.5 saves
@@ -1067,6 +1068,15 @@ public class Badges {
 		Badge badge = Badge.VICTORY;
 		local.add( badge );
 		displayBadge( badge );
+
+		//technically player can also not spend talent points if they want for some reason
+		if (Statistics.qualifiedForRandomVictoryBadge
+				&& Dungeon.hero.subClass != null
+				&& Dungeon.hero.armorAbility != null){
+			badge = Badge.VICTORY_RANDOM;
+			local.add( badge );
+			displayBadge( badge );
+		}
 
 		badge = victoryClassBadges.get(Dungeon.hero.heroClass);
 		if (badge == null) return;
