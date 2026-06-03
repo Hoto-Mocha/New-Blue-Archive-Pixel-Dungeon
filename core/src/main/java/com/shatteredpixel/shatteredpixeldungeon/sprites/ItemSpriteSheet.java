@@ -172,7 +172,7 @@ public class ItemSpriteSheet {
 		assignItemRect(GOLDEN_KEY,      8,  14);
 		assignItemRect(CRYSTAL_KEY,     8,  14);
 		assignItemRect(WORN_KEY,        8,  14);
-		assignItemRect(MASK,            11,  9);
+		assignItemRect(MASK,            16, 14);
 		assignItemRect(CROWN,           13,  7);
 		assignItemRect(AMULET,          16, 16);
 		assignItemRect(MASTERY,         13, 16);
@@ -982,7 +982,7 @@ public class ItemSpriteSheet {
 		assignItemRect(SR_TIER_2,	13, 16);
 		assignItemRect(SR_TIER_3,	15, 16);
 		assignItemRect(SR_TIER_4,	15, 16);
-		assignItemRect(SR_TIER_5, 	14, 15);
+		assignItemRect(SR_TIER_5, 	15, 16);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite
