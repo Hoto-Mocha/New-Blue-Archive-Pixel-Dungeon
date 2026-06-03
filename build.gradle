@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.13.1'
+        classpath 'com.android.tools.build:gradle:8.13.2'
     }
 }
 
@@ -14,8 +14,8 @@ allprojects {
         appName = 'Re Blue Archive Pixel Dungeon'
         appPackageName = 'com.shatteredpixel.rebluearchivepixeldungeon'
 
-        appVersionCode = 884
-        appVersionName = '3.3.1'
+        appVersionCode = 886
+        appVersionName = '3.3.2'
 
         appVersionCode += 107
         appVersionName += '_based_1.0.7'
