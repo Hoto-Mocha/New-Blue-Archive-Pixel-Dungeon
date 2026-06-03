@@ -112,6 +112,7 @@ public abstract class Mob extends Char {
 
 	public AiState SLEEPING     = new Sleeping();
 	public AiState HUNTING		= new Hunting();
+	public AiState INVESTIGATING= new Investigating();
 	public AiState WANDERING	= new Wandering();
 	public AiState FLEEING		= new Fleeing();
 	public AiState PASSIVE		= new Passive();
@@ -160,6 +161,8 @@ public abstract class Mob extends Char {
 			bundle.put( STATE, Sleeping.TAG );
 		} else if (state == WANDERING) {
 			bundle.put( STATE, Wandering.TAG );
+		} else if (state == INVESTIGATING) {
+			bundle.put( STATE, Investigating.TAG );
 		} else if (state == HUNTING) {
 			bundle.put( STATE, Hunting.TAG );
 		} else if (state == FLEEING) {
@@ -186,6 +189,8 @@ public abstract class Mob extends Char {
 			this.state = SLEEPING;
 		} else if (state.equals( Wandering.TAG )) {
 			this.state = WANDERING;
+		} else if (state.equals( Investigating.TAG )) {
+			this.state = INVESTIGATING;
 		} else if (state.equals( Hunting.TAG )) {
 			this.state = HUNTING;
 		} else if (state.equals( Fleeing.TAG )) {
@@ -230,6 +235,7 @@ public abstract class Mob extends Char {
 		} else {
 			sprite.hideAlert();
 			sprite.hideLost();
+			sprite.hideInvestigate();
 		}
 		
 		if (paralysed > 0) {
@@ -1096,29 +1102,31 @@ public abstract class Mob extends Char {
 			//can be awoken by the least stealthy hostile present, not necessarily just our target
 			if (enemyInFOV || (enemy != null && enemy.invisible > 0)) {
 
-				float closestHostileDist = Float.POSITIVE_INFINITY;
+				float highestChance = Float.POSITIVE_INFINITY;
+				Char closestHostile = null;
 
 				for (Char ch : Actor.chars()){
 					if (fieldOfView[ch.pos] && ch.invisible == 0 && ch.alignment != alignment && ch.alignment != Alignment.NEUTRAL){
-						float chDist = ch.stealth() + distance(ch);
+						float bestChance = detectionChance(ch);
 						//silent steps rogue talent, which also applies to rogue's shadow clone
 						if ((ch instanceof Hero || ch instanceof ShadowClone.ShadowAlly)
 								&& Dungeon.hero.hasTalent(Talent.SILENT_STEPS)){
 							if (distance(ch) >= 4 - Dungeon.hero.pointsInTalent(Talent.SILENT_STEPS)) {
-								chDist = Float.POSITIVE_INFINITY;
+								bestChance = Float.POSITIVE_INFINITY;
 							}
 						}
 						//flying characters are naturally stealthy
 						if (ch.flying && distance(ch) >= 2){
-							chDist = Float.POSITIVE_INFINITY;
+							bestChance = Float.POSITIVE_INFINITY;
 						}
-						if (chDist < closestHostileDist){
-							closestHostileDist = chDist;
+						if (bestChance < highestChance){
+							highestChance = bestChance;
+							closestHostile = ch;
 						}
 					}
 				}
 
-				if (Random.Float( closestHostileDist ) < 1) {
+				if (closestHostile != null && Random.Float() < detectionChance(closestHostile)) {
 					awaken(enemyInFOV);
 					if (state == SLEEPING){
 						spend(TICK); //wait if we can't wake up for some reason
@@ -1132,6 +1140,11 @@ public abstract class Mob extends Char {
 			spend( TICK );
 
 			return true;
+		}
+
+		//chance is 1 in (distance + stealth)
+		protected float detectionChance( Char enemy ){
+			return 1 / (distance( enemy ) + enemy.stealth());
 		}
 
 		protected void awaken( boolean enemyInFOV ){
@@ -1165,7 +1178,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && (justAlerted || Random.Float( distance( enemy ) / 2f + enemy.stealth() ) < 1)) {
+			if (enemyInFOV && (justAlerted || Random.Float() < detectionChance(enemy))) {
 
 				return noticeEnemy();
 
@@ -1175,7 +1188,12 @@ public abstract class Mob extends Char {
 
 			}
 		}
-		
+
+		//chance is 1 in (distance/2 + stealth)
+		protected float detectionChance( Char enemy ){
+			return 1 / (distance( enemy ) / 2f + enemy.stealth());
+		}
+
 		protected boolean noticeEnemy(){
 			enemySeen = true;
 			
@@ -1308,6 +1326,33 @@ public abstract class Mob extends Char {
 			}
 			return true;
 		}
+	}
+
+	//essentially a more aggressive version of wandering, where target pos is updated like hunting
+	//not currently used directly by mobs outside of the vault, which also add more behaviour here
+	protected class Investigating extends Wandering {
+
+		public static final String TAG	= "INVESTIGATING";
+
+		@Override
+		public boolean act(boolean enemyInFOV, boolean justAlerted) {
+			if (enemyInFOV){
+				target = enemy.pos;
+			} else {
+				//we lose our target BEFORE reaching their last known position
+				if (Dungeon.level.distance(pos, target) <= 1){
+					sprite.showLost();
+					state = WANDERING;
+					target = ((Mob.Wandering)WANDERING).randomDestination();
+					spend( TICK );
+					return true;
+				}
+			}
+			return super.act(enemyInFOV, justAlerted);
+		}
+
+		//same detection chance as wandering
+
 	}
 
 	protected class Fleeing implements AiState {

@@ -7,9 +7,8 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.StandardRoom;
 import com.watabou.utils.Point;
-import com.watabou.utils.Random;
 
-public class VaultRingRoom extends StandardRoom {
+public class VaultEnemyCenterRoom extends StandardRoom {
 
 	@Override
 	public float[] sizeCatProbs() {
@@ -21,7 +20,14 @@ public class VaultRingRoom extends StandardRoom {
 		Painter.fill( level, this, Terrain.WALL );
 		Painter.fill( level, this, 1 , Terrain.EMPTY );
 
-		Painter.fill(level, this, 4, Terrain.WALL);
+		Painter.fill( level, this, 2 , Terrain.WALL );
+		Painter.fill( level, this, 3 , Terrain.EMPTY );
+		Painter.drawLine( level, new Point(left+1, top+3), new Point(right-1, top+3), Terrain.EMPTY);
+		Painter.drawLine( level, new Point(left+1, bottom-3), new Point(right-1, bottom-3), Terrain.EMPTY);
+		Painter.drawLine( level, new Point(left+3, top+1), new Point(left+3, bottom-1), Terrain.EMPTY);
+		Painter.drawLine( level, new Point(right-3, top+1), new Point(right-3, bottom-1), Terrain.EMPTY);
+		//TODO maybe better without corner pillars? they sorta just bait you...
+		// Need to think a little more about layout here
 
 		for (Door door : connected.values()) {
 			door.set( Door.Type.REGULAR );
@@ -29,27 +35,11 @@ public class VaultRingRoom extends StandardRoom {
 
 		VaultRat rat = new VaultRat();
 		do {
-			rat.pos = level.pointToCell(random(1));
+			rat.pos = level.pointToCell(center());
 		} while (level.solid[rat.pos]);
-
-		if (Random.Int(2) == 0) {
-			rat.wanderPositions = new int[]{
-					level.pointToCell(new Point(left+2, top+2)),
-					level.pointToCell(new Point(right-2, top+2)),
-					level.pointToCell(new Point(right-2, bottom-2)),
-					level.pointToCell(new Point(left+2, bottom-2))
-			};
-		} else {
-			rat.wanderPositions = new int[]{
-					level.pointToCell(new Point(left+2, bottom-2)),
-					level.pointToCell(new Point(right-2, bottom-2)),
-					level.pointToCell(new Point(right-2, top+2)),
-					level.pointToCell(new Point(left+2, top+2))
-			};
-		}
-		rat.wanderPosIdx = Random.Int(4);
 		rat.state = rat.WANDERING;
 		level.mobs.add(rat);
+
 	}
 
 	@Override

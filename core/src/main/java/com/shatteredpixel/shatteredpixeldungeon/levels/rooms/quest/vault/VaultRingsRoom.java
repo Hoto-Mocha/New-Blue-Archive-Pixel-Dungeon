@@ -9,7 +9,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.StandardRo
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 
-public class VaultRingRoom extends StandardRoom {
+public class VaultRingsRoom extends StandardRoom {
 
 	@Override
 	public float[] sizeCatProbs() {
@@ -21,7 +21,10 @@ public class VaultRingRoom extends StandardRoom {
 		Painter.fill( level, this, Terrain.WALL );
 		Painter.fill( level, this, 1 , Terrain.EMPTY );
 
-		Painter.fill(level, this, 4, Terrain.WALL);
+		Painter.fill(level, left+2, top+2, 3, 3, Terrain.WALL);
+		Painter.fill(level, right-4, top+2, 3, 3, Terrain.WALL);
+		Painter.fill(level, left+2, bottom-4, 3, 3, Terrain.WALL);
+		Painter.fill(level, right-4, bottom-4, 3, 3, Terrain.WALL);
 
 		for (Door door : connected.values()) {
 			door.set( Door.Type.REGULAR );
@@ -31,29 +34,27 @@ public class VaultRingRoom extends StandardRoom {
 		do {
 			rat.pos = level.pointToCell(random(1));
 		} while (level.solid[rat.pos]);
-
-		if (Random.Int(2) == 0) {
-			rat.wanderPositions = new int[]{
-					level.pointToCell(new Point(left+2, top+2)),
-					level.pointToCell(new Point(right-2, top+2)),
-					level.pointToCell(new Point(right-2, bottom-2)),
-					level.pointToCell(new Point(left+2, bottom-2))
-			};
-		} else {
-			rat.wanderPositions = new int[]{
-					level.pointToCell(new Point(left+2, bottom-2)),
-					level.pointToCell(new Point(right-2, bottom-2)),
-					level.pointToCell(new Point(right-2, top+2)),
-					level.pointToCell(new Point(left+2, top+2))
-			};
-		}
-		rat.wanderPosIdx = Random.Int(4);
 		rat.state = rat.WANDERING;
 		level.mobs.add(rat);
+
+		rat.wanderPositions = new int[]{
+				level.pointToCell(new Point(left+1, top+1)),
+				level.pointToCell(new Point(left+1, top+5)),
+				level.pointToCell(new Point(left+1, top+9)),
+				level.pointToCell(new Point(left+5, top+1)),
+				level.pointToCell(new Point(left+5, top+5)),
+				level.pointToCell(new Point(left+5, top+9)),
+				level.pointToCell(new Point(left+9, top+1)),
+				level.pointToCell(new Point(left+9, top+5)),
+				level.pointToCell(new Point(left+9, top+9))
+		};
+		Random.shuffle(rat.wanderPositions);
+
 	}
 
 	@Override
 	public boolean canMerge(Level l, Room other, Point p, int mergeTerrain) {
 		return false;
 	}
+
 }
