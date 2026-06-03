@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.ExitButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.StyledButton;
+import com.shatteredpixel.shatteredpixeldungeon.ui.TitleBackground;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.watabou.noosa.Camera;
@@ -49,11 +50,10 @@ public class ChangesScene extends PixelScene {
 		int w = Camera.main.width;
 		int h = Camera.main.height;
 
-		int elementWidth = PixelScene.landscape() ? 250 : 120;
+		TitleBackground BG = new TitleBackground( w, h );
+		add( BG );
 
-		Archs archs = new Archs();
-		archs.setSize(w, h);
-		add(archs);
+		int elementWidth = PixelScene.landscape() ? 250 : 120;
 
 		ExitButton btnExit = new ExitButton();
 		btnExit.setPos(w - btnExit.width(), 0);
