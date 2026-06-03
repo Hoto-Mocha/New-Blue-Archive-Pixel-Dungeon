@@ -286,7 +286,7 @@ public enum Catalog {
 
 	public static ArrayList<Catalog> equipmentCatalogs = new ArrayList<>();
 	static {
-//		equipmentCatalogs.add(MELEE_WEAPONS);
+		equipmentCatalogs.add(MELEE_WEAPONS);
 		equipmentCatalogs.add(GUNS);
 		equipmentCatalogs.add(ARMOR);
 		equipmentCatalogs.add(ENCHANTMENTS);
