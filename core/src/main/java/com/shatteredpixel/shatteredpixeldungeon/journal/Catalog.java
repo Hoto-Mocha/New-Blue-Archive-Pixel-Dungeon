@@ -129,6 +129,7 @@ public enum Catalog {
 
 	//EQUIPMENT
 	MELEE_WEAPONS,
+	GUNS,
 	ARMOR,
 	ENCHANTMENTS,
 	GLYPHS,
@@ -193,6 +194,12 @@ public enum Catalog {
 		MELEE_WEAPONS.addItems(Generator.Category.WEP_T3.classes);
 		MELEE_WEAPONS.addItems(Generator.Category.WEP_T4.classes);
 		MELEE_WEAPONS.addItems(Generator.Category.WEP_T5.classes);
+
+		GUNS.addItems(Generator.Category.GUN_T1.classes);
+		GUNS.addItems(Generator.Category.GUN_T2.classes);
+		GUNS.addItems(Generator.Category.GUN_T3.classes);
+		GUNS.addItems(Generator.Category.GUN_T4.classes);
+		GUNS.addItems(Generator.Category.GUN_T5.classes);
 
 		ARMOR.addItems(Generator.Category.ARMOR.classes);
 
@@ -280,6 +287,7 @@ public enum Catalog {
 	public static ArrayList<Catalog> equipmentCatalogs = new ArrayList<>();
 	static {
 		equipmentCatalogs.add(MELEE_WEAPONS);
+		equipmentCatalogs.add(GUNS);
 		equipmentCatalogs.add(ARMOR);
 		equipmentCatalogs.add(ENCHANTMENTS);
 		equipmentCatalogs.add(GLYPHS);
