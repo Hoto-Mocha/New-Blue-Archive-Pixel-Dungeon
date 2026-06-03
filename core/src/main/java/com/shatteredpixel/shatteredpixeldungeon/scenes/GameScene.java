@@ -141,7 +141,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Callback;
-import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PlatformSupport;
 import com.watabou.utils.Point;
@@ -370,21 +369,26 @@ public class GameScene extends PixelScene {
 		int uiSize = SPDSettings.interfaceSize();
 
 		//display cutouts can obstruct various UI elements, so we need to adjust for that sometimes
+		float heroPaneExtraWidth = insets.left;
 		float menuBarMaxLeft = uiCamera.width-insets.right-MenuPane.WIDTH;
 		int hpBarMaxWidth = 50; //default max width
-		float buffBarTopRowMaxWidth = 50; //default max width
-		if (largeInsetTop != insets.top){
-			//iOS's Dynamic island badly obstructs the first buff bar row
-			if (DeviceCompat.isiOS()){
-				//TODO bad to hardcode and approximate this atm
-				// need to change this so iOS platformsupport returns cutout dimensions
-				float cutoutLeft = (Game.width*0.3f)/defaultZoom;
-				buffBarTopRowMaxWidth = Math.min(50, cutoutLeft - 32);
-			} else if (DeviceCompat.isAndroid()) {
-				//Android hole punches are of varying size and may obstruct the menu, HP bar, or buff bar
+		float[] buffBarRowLimits = new float[9];
+		float[] buffBarRowAdjusts = new float[9];
+
+		if (largeInsetTop == 0 && insets.top > 0){
+				//smaller non-notch cutouts are of varying size and may obstruct various UI elements
+				// some are small hole punches, some are huge dynamic islands
 				RectF cutout = Game.platform.getDisplayCutout().scale(1f / defaultZoom);
+				//if the cutout is positioned to obstruct the hero portrait in the status pane
+				if (cutout.top < 30
+						&& cutout.left < 20
+						&& cutout.right > 12) {
+					heroPaneExtraWidth = Math.max(heroPaneExtraWidth, cutout.right-12);
+					//make sure we have space to actually move it though
+					heroPaneExtraWidth = Math.min(heroPaneExtraWidth, uiCamera.width - PixelScene.MIN_WIDTH_P);
+				}
 				//if the cutout is positioned to obstruct the menu bar
-				if (cutout.top < 20
+				else if (cutout.top < 20
 						&& cutout.left < menuBarMaxLeft + MenuPane.WIDTH
 						&& cutout.right > menuBarMaxLeft) {
 					menuBarMaxLeft = Math.min(menuBarMaxLeft, cutout.left - MenuPane.WIDTH);
@@ -392,7 +396,7 @@ public class GameScene extends PixelScene {
 					menuBarMaxLeft = Math.max(menuBarMaxLeft, PixelScene.MIN_WIDTH_P-MenuPane.WIDTH);
 				}
 				//if the cutout is positioned to obstruct the HP bar
-				if (cutout.left < 78
+				else if (cutout.left < 78
 						&& cutout.top < 4
 						&& cutout.right > 32) {
 					//subtract starting position, but add a bit back due to end of bar
@@ -400,13 +404,26 @@ public class GameScene extends PixelScene {
 					hpBarMaxWidth = Math.max(hpBarMaxWidth, 21); //cannot go below 21 (30 effective)
 				}
 				//if the cutout is positioned to obstruct the buff bar
-				if (cutout.left < 80
+				if (cutout.left < 84
 						&& cutout.top < 10
 						&& cutout.right > 32
 						&& cutout.bottom > 11) {
-					buffBarTopRowMaxWidth = cutout.left - 32; //subtract starting position
+					int i = 1;
+					int rowTop = 11;
+					//in most cases this just obstructs one row, but dynamic island can block more =S
+					while (cutout.bottom > rowTop){
+						if (i == 1 || cutout.bottom > rowTop+2 ) { //always shorten first row
+							//subtract starting position, add a bit back to allow slight overlap
+							buffBarRowLimits[i] = cutout.left - 32 + 3;
+						} else {
+							//if row is only slightly cut off, lower it instead of limiting width
+							buffBarRowAdjusts[i] = cutout.bottom - rowTop + 1;
+							rowTop += buffBarRowAdjusts[i];
+						}
+						i++;
+						rowTop += 8;
+					}
 				}
-			}
 		}
 
 		float screentop = largeInsetTop;
@@ -433,8 +450,10 @@ public class GameScene extends PixelScene {
 
 		status = new StatusPane( SPDSettings.interfaceSize() > 0 );
 		status.camera = uiCamera;
+		StatusPane.heroPaneExtraWidth = heroPaneExtraWidth;
 		StatusPane.hpBarMaxWidth = hpBarMaxWidth;
-		StatusPane.buffBarTopRowMaxWidth = buffBarTopRowMaxWidth;
+		StatusPane.buffBarRowMaxWidths = buffBarRowLimits;
+		StatusPane.buffBarRowAdjusts = buffBarRowAdjusts;
 		status.setRect(insets.left, uiSize > 0 ? uiCamera.height-39-insets.bottom : screentop, uiCamera.width - insets.left - insets.right, 0 );
 		add(status);
 
@@ -450,7 +469,14 @@ public class GameScene extends PixelScene {
 
 		boss = new BossHealthBar();
 		boss.camera = uiCamera;
-		boss.setPos( (uiCamera.width - boss.width())/2, screentop + 26);
+		boss.setPos( (uiCamera.width - boss.width())/2, screentop + (landscape() ? 7 : 26));
+		if (buffBarRowLimits[2] != 0){
+			//if we potentially have a 3rd buff bar row, lower by 7px
+			boss.setPos(boss.left(), boss.top() + 7);
+		} else if (buffBarRowAdjusts[2] != 0){
+			//
+			boss.setPos(boss.left(), boss.top() + buffBarRowAdjusts[2]);
+		}
 		add(boss);
 
 		resume = new ResumeIndicator();
@@ -514,7 +540,17 @@ public class GameScene extends PixelScene {
 				new Flare( 5, 16 ).color( 0xFFFF00, true ).show( hero, 4f ) ;
 				break;
 			case RETURN:
-				ScrollOfTeleportation.appearVFX( Dungeon.hero );
+				if (Dungeon.level.pit[Dungeon.hero.pos] && !Dungeon.hero.flying){
+					//delay this so falling into the chasm processes properly
+					ShatteredPixelDungeon.runOnRenderThread(new Callback() {
+						@Override
+						public void call() {
+							ScrollOfTeleportation.appearVFX(Dungeon.hero);
+						}
+					});
+				} else {
+					ScrollOfTeleportation.appearVFX(Dungeon.hero);
+				}
 				break;
 			case DESCEND:
 			case FALL:
@@ -1035,29 +1071,21 @@ public class GameScene extends PixelScene {
 		customWalls.add( visual.create() );
 	}
 	
-	private void addHeapSprite( Heap heap ) {
+	private synchronized void addHeapSprite( Heap heap ) {
 		ItemSprite sprite = heap.sprite = (ItemSprite)heaps.recycle( ItemSprite.class );
 		sprite.revive();
 		sprite.link( heap );
 		heaps.add( sprite );
 	}
 	
-	private void addDiscardedSprite( Heap heap ) {
+	private synchronized void addDiscardedSprite( Heap heap ) {
 		heap.sprite = (DiscardedItemSprite)heaps.recycle( DiscardedItemSprite.class );
 		heap.sprite.revive();
 		heap.sprite.link( heap );
 		heaps.add( heap.sprite );
 	}
 	
-	private void addPlantSprite( Plant plant ) {
-
-	}
-
-	private void addTrapSprite( Trap trap ) {
-
-	}
-	
-	private void addBlobSprite( final Blob gas ) {
+	private synchronized void addBlobSprite( final Blob gas ) {
 		if (gas.emitter == null) {
 			gases.add( new BlobEmitter( gas ) );
 		}
@@ -1132,18 +1160,6 @@ public class GameScene extends PixelScene {
 	}
 	
 	// -------------------------------------------------------
-
-	public static void add( Plant plant ) {
-		if (scene != null) {
-			scene.addPlantSprite( plant );
-		}
-	}
-
-	public static void add( Trap trap ) {
-		if (scene != null) {
-			scene.addTrapSprite( trap );
-		}
-	}
 	
 	public static void add( Blob gas ) {
 		Actor.add( gas );
@@ -1490,10 +1506,12 @@ public class GameScene extends PixelScene {
 				@Override
 				public void call() {
 					//greater than 0 to account for negative values (which have the first bit set to 1)
-					if (color > 0 && color < 0x01000000) {
-						scene.fadeIn(0xFF000000 | color, lightmode);
-					} else {
-						scene.fadeIn(color, lightmode);
+					if (scene != null) {
+						if (color > 0 && color < 0x01000000) {
+							scene.fadeIn(0xFF000000 | color, lightmode);
+						} else {
+							scene.fadeIn(color, lightmode);
+						}
 					}
 				}
 			});
