@@ -571,7 +571,7 @@ public abstract class Char extends Actor {
 			if (tacticalSuppress != null && this instanceof Hero && ((Hero) this).belongings.attackingWeapon() instanceof MeleeWeapon) {
 				if ( enemy.isAlive() && enemy.alignment != alignment && !Char.hasProp(enemy, Property.BOSS)
 						&& !Char.hasProp(enemy, Property.MINIBOSS) &&
-						(enemy.HP/(float)enemy.HT) <= 0.4f*((Hero)this).pointsInTalent(Talent.HOSHINO_T3_1)/3f) {
+						(enemy.HP/(float)enemy.HT) <= 0.2f*((Hero)this).pointsInTalent(Talent.HOSHINO_T3_1)/3f) {
 					enemy.HP = 0;
 					if (enemy.buff(Brute.BruteRage.class) != null){
 						enemy.buff(Brute.BruteRage.class).detach();
