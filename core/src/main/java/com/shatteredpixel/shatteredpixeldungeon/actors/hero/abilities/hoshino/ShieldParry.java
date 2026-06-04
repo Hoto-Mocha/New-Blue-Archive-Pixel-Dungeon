@@ -15,6 +15,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
@@ -22,6 +23,11 @@ import com.watabou.utils.Random;
 public class ShieldParry extends ArmorAbility {
     {
         baseChargeUse = 50f;
+    }
+
+    @Override
+    public int icon() {
+        return HeroIcon.HOSHINO_3;
     }
 
     @Override

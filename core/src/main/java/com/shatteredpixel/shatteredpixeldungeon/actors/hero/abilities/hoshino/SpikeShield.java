@@ -14,6 +14,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
@@ -21,6 +22,11 @@ import com.watabou.utils.Random;
 public class SpikeShield extends ArmorAbility {
     {
         baseChargeUse = 25f;
+    }
+
+    @Override
+    public int icon() {
+        return HeroIcon.HOSHINO_2;
     }
 
     @Override
