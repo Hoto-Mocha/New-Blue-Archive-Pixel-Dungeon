@@ -395,6 +395,10 @@ public class Gun extends MeleeWeapon {
         if (hero.subClass == HeroSubClass.SWIFT_MOVEMENT) {
             Buff.affect(hero, SwiftMovement.class);
         }
+
+        if (round == 0 && hero.hasTalent(Talent.HOSHINO_T1_4)) {
+            Buff.affect(hero, Barrier.class).setShield(1+2*hero.pointsInTalent(Talent.HOSHINO_T1_4));
+        }
     }
 
     public void quickReload() {	//다른 것들을 작동시키지 않고 탄창만 완전히 재장전하는 메서드
@@ -457,10 +461,6 @@ public class Gun extends MeleeWeapon {
 
         if (hero != null && hero.hasTalent(Talent.NONOMI_EX1_1)) {
             amount += 1;
-        }
-
-        if (hero != null && hero.hasTalent(Talent.HOSHINO_T1_4)) {
-            amount -= hero.pointsInTalent(Talent.HOSHINO_T1_4);
         }
 
         amount = Math.max(0, amount);
