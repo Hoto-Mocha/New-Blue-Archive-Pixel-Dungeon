@@ -831,7 +831,7 @@ public class Gun extends MeleeWeapon {
                 ACC *= 3f;
             }
             if (owner instanceof Hero && ((Hero)owner).hasTalent(Talent.HOSHINO_T3_2)) {
-                ACC *= 1+0.2f*((Hero)owner).pointsInTalent(Talent.HOSHINO_T3_2);
+                ACC *= 1+0.5f*((Hero)owner).pointsInTalent(Talent.HOSHINO_T3_2);
             }
             return ACC;
         }
