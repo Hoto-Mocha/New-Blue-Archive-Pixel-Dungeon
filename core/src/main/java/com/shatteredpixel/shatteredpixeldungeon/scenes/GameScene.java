@@ -647,47 +647,6 @@ public class GameScene extends PixelScene {
 				Random.popGenerator();
 			}
 
-			if (Dungeon.hero.hasTalent(Talent.HOSHINO_T2_2)
-					&& Dungeon.level instanceof RegularLevel && Dungeon.branch == 0){
-
-				Random.pushGenerator(Dungeon.seedCurDepth()+1);
-				if (Random.Float() < 0.2f*Dungeon.hero.pointsInTalent(Talent.HOSHINO_T2_2)){
-					int length = Dungeon.level.length();
-					int[] map = Dungeon.level.map;
-					boolean[] mapped = Dungeon.level.mapped;
-					boolean[] discoverable = Dungeon.level.discoverable;
-
-					boolean noticed = false;
-
-					for (int i=0; i < length; i++) {
-
-						int terr = map[i];
-
-						if (discoverable[i]) {
-
-							mapped[i] = true;
-							if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
-
-								Dungeon.level.discover( i );
-
-								if (Dungeon.level.heroFOV[i]) {
-									GameScene.discoverTile( i, terr );
-									ScrollOfMagicMapping.discover( i );
-
-									noticed = true;
-								}
-							}
-						}
-					}
-					GameScene.updateFog();
-
-					if (noticed) {
-						Sample.INSTANCE.play( Assets.Sounds.SECRET );
-					}
-				}
-				Random.popGenerator();
-			}
-
 			boolean unspentTalents = false;
 			for (int i = 1; i <= Dungeon.hero.talents.size(); i++){
 				if (Dungeon.hero.talentPointsAvailable(i) > 0){

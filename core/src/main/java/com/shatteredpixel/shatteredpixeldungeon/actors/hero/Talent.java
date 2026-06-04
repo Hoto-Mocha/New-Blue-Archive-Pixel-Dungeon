@@ -78,6 +78,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMappi
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfClairvoyance;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
@@ -970,10 +971,6 @@ public enum Talent {
 			Item.updateQuickslot();
 		}
 
-		if (talent == HOSHINO_T1_3) {
-			Item.updateQuickslot();
-		}
-
 		if (talent == MIYAKO_T2_5) {
 			hero.updateHT(true);
 		}
@@ -1201,6 +1198,11 @@ public enum Talent {
 					GLog.p(Messages.get(Talent.class, RECALL_INSCRIPTION.name() + ".refunded"));
 				}
 			}
+		}
+		if (hero.hasTalent(Talent.HOSHINO_T2_2)) {
+			int distance = 4+2*hero.pointsInTalent(Talent.HOSHINO_T2_2);
+
+			StoneOfClairvoyance.mapping(pos, (int)Math.ceil(distance*factor));
 		}
 	}
 
