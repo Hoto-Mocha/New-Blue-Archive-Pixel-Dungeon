@@ -53,6 +53,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.SpikeShield;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.DivineSense;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.RecallInscription;
@@ -65,6 +66,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
@@ -1448,6 +1450,10 @@ public enum Talent {
 		if (hero.buff(FirstAidCooldown.class) == null && hero.HP <= hero.HT/4) {
 			hero.heal(2+2*hero.pointsInTalent(Talent.HOSHINO_T1_1));
 			Buff.affect(hero, FirstAidCooldown.class, 50f);
+		}
+
+		if (hero.buff(SpikeShield.SpikeShieldBuff.class) != null && (hero.buff(IronHorus.TacticalShieldBuff.class) != null || hero.buff(IronHorus.LightTacticalShieldBuff.class) != null)) {
+			hero.buff(SpikeShield.SpikeShieldBuff.class).onHit(hero, enemy);
 		}
 
 		return damage;

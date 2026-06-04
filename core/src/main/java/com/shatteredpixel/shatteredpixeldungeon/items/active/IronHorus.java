@@ -13,6 +13,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.SpikeShield;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -107,7 +108,14 @@ public class IronHorus extends Item {
     }
 
     public int drMin() {
-        return drMin(buffedLvl());
+        int drMin = drMin(buffedLvl());
+
+        Hero hero = Dungeon.hero;
+        if (hero != null && hero.buff(SpikeShield.SpikeShieldBuff.class) != null) {
+            drMin += hero.buff(SpikeShield.SpikeShieldBuff.class).drBonus(hero);
+        }
+
+        return drMin;
     }
 
     public int drMax(int lvl) {
@@ -115,7 +123,14 @@ public class IronHorus extends Item {
     }
 
     public int drMax() {
-        return drMax(buffedLvl());
+        int drMax = drMax(buffedLvl());
+
+        Hero hero = Dungeon.hero;
+        if (hero != null && hero.buff(SpikeShield.SpikeShieldBuff.class) != null) {
+            drMax += hero.buff(SpikeShield.SpikeShieldBuff.class).drBonus(hero);
+        }
+
+        return drMax;
     }
 
     @Override
