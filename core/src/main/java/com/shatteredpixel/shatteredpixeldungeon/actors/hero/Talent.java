@@ -1531,6 +1531,68 @@ public enum Talent {
 	public static class PushingTracker extends Buff {};
 	public static class ConfusionTracker extends Buff{};
 
+	public static class IntimidateBonusDamageBuff extends Buff {
+		public int left;
+		public int dmgBonus = 0;
+
+		@Override
+		public int icon() {
+			return BuffIndicator.UPGRADE;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(Math.min(2f, 1+0.1f*dmgBonus), 0.5f, 0);
+		}
+
+		@Override
+		public String iconTextDisplay() {
+			return Integer.toString(left);
+		}
+
+		@Override
+		public float iconFadePercent() {
+			return 1-left/(float)(1+Dungeon.hero.pointsInTalent(Talent.HOSHINO_T2_5));
+		}
+
+		@Override
+		public String desc() {
+			return Messages.get(this, "desc", dmgBonus, left);
+		}
+
+		public void set() {
+			left = 1+Dungeon.hero.pointsInTalent(Talent.HOSHINO_T2_5);
+			dmgBonus += 1;
+			dmgBonus = Math.min(10, dmgBonus);
+		}
+
+		public void use() {
+			left--;
+			if (left <= 0) detach();
+		}
+
+		public int dmgBonus() {
+			return dmgBonus;
+		}
+
+		private static final String LEFT	    = "left";
+		private static final String DMG_BONUS    = "dmgBonus";
+
+		@Override
+		public void storeInBundle( Bundle bundle ) {
+			super.storeInBundle( bundle );
+			bundle.put( LEFT, left );
+			bundle.put( DMG_BONUS, dmgBonus );
+		}
+
+		@Override
+		public void restoreFromBundle( Bundle bundle ) {
+			super.restoreFromBundle( bundle );
+			left = bundle.getInt( LEFT );
+			dmgBonus = bundle.getInt( DMG_BONUS );
+		}
+	}
+
 	//new buff here
 
 	public static final int MAX_TALENT_TIERS = 4;

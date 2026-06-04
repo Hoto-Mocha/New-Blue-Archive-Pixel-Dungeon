@@ -79,6 +79,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Lucky;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
@@ -917,6 +918,10 @@ public abstract class Mob extends Char {
 
 		if (cause == Dungeon.hero || cause instanceof SupportDrone) {
 			Dungeon.hero.onEnemyKill(this);
+		}
+
+		if (cause == Dungeon.hero && Dungeon.hero.hasTalent(Talent.HOSHINO_T2_5)) {
+			Buff.affect(Dungeon.hero, Talent.IntimidateBonusDamageBuff.class).set();
 		}
 
 		boolean soulMarked = buff(SoulMark.class) != null;
