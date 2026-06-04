@@ -382,6 +382,11 @@ public class Armor extends EquipableItem {
 		}
 
 		int max = tier * (2 + lvl) + augment.defenseFactor(lvl);
+
+		if (tier <= 3 && Dungeon.hero != null && Dungeon.hero.hasTalent(Talent.HOSHINO_T1_3)) {
+			max += 1+Dungeon.hero.pointsInTalent(Talent.HOSHINO_T1_3);
+		}
+
 		if (lvl > max){
 			return ((lvl - max)+1)/2;
 		} else {
@@ -452,11 +457,7 @@ public class Armor extends EquipableItem {
 
 	@Override
 	public int buffedLvl() {
-		int level = super.buffedLvl();
-		if (Dungeon.hero != null && Dungeon.hero.hasTalent(Talent.HOSHINO_T1_3) && Dungeon.hero.pointsInTalent(Talent.HOSHINO_T1_3)+1 >= tier) {
-			level += 1;
-		}
-		return level;
+        return super.buffedLvl();
 	}
 
 	@Override
