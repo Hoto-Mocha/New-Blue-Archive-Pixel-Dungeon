@@ -1,15 +1,21 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
@@ -20,6 +26,13 @@ public class ShieldParry extends ArmorAbility {
 
     @Override
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
+        if (hero.buff(IronHorus.LightTacticalShieldBuff.class) == null && hero.buff(IronHorus.TacticalShieldBuff.class) == null) {
+            GLog.w(Messages.get(this, "no_shield"));
+            return;
+        }
+
+        Buff.affect(hero, ParryBuff.class, Actor.TICK);
+
         hero.sprite.operate(hero.pos);
         Sample.INSTANCE.play(Assets.Sounds.MISS);
         armor.charge -= chargeUse( hero );
@@ -28,17 +41,10 @@ public class ShieldParry extends ArmorAbility {
         hero.spendAndNext(1f);
     }
 
-    public static class ParryBuff extends Buff {
+    public static class ParryBuff extends FlavourBuff {
 
         {
             actPriority = HERO_PRIO+1;
-            type = buffType.POSITIVE;
-        }
-
-        @Override
-        public boolean act() {
-            detach();
-            return super.act();
         }
 
         public void onParry(Hero hero, Char attacker) {
@@ -47,6 +53,8 @@ public class ShieldParry extends ArmorAbility {
             }
             if (hero.hasTalent(Talent.HOSHINO_ARMOR3_2)) {
                 if (Random.Float() < 0.25f*hero.pointsInTalent(Talent.HOSHINO_ARMOR3_2)) {
+                    Sample.INSTANCE.play(Assets.Sounds.BLAST);
+                    WandOfBlastWave.BlastWave.blast(hero.pos);
                     Buff.affect(attacker, Paralysis.class, 3f);
                 }
             }

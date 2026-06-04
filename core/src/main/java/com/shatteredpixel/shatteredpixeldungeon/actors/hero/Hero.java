@@ -673,7 +673,7 @@ public class Hero extends Char {
 
 		if (buff(ShieldParry.ParryBuff.class) != null) {
 			Sample.INSTANCE.play(Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
-			return Messages.get(RoundShield.GuardTracker.class, "guarded");
+			return Messages.get(Monk.class, "parried");
 		}
 
 		return super.defenseVerb();
