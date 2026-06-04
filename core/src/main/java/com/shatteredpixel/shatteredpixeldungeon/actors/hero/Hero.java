@@ -70,6 +70,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Divis
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.AscendedForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.ShieldParry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
@@ -601,6 +602,11 @@ public class Hero extends Char {
 			return INFINITE_EVASION;
 		}
 
+		if (buff(ShieldParry.ParryBuff.class) != null) {
+			buff(ShieldParry.ParryBuff.class).onParry(this, enemy);
+			return INFINITE_EVASION;
+		}
+
 		float evasion = defenseSkill;
 		
 		evasion *= RingOfEvasion.evasionMultiplier( this );
@@ -663,6 +669,11 @@ public class Hero extends Char {
 			if (belongings.weapon() instanceof Gun && Random.Float() < 0.25f * pointsInTalent(Talent.MIYAKO_T2_4)) {
 				((Gun)belongings.weapon()).manualReload();
 			}
+		}
+
+		if (buff(ShieldParry.ParryBuff.class) != null) {
+			Sample.INSTANCE.play(Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
+			return Messages.get(RoundShield.GuardTracker.class, "guarded");
 		}
 
 		return super.defenseVerb();
