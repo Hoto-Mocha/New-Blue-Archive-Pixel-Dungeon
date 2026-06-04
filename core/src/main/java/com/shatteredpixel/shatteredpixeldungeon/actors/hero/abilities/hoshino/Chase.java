@@ -6,10 +6,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.DeathMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Brute;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
@@ -20,6 +22,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
@@ -54,6 +57,16 @@ public class Chase extends ArmorAbility {
     }
 
     @Override
+    public float chargeUse( Hero hero ) {
+        float chargeUse = super.chargeUse(hero);
+        if (hero.buff(ChaseKillTracker.class) != null){
+            //reduced charge use by 16%/30%/41%/50%
+            chargeUse *= Math.pow(0.84, hero.pointsInTalent(Talent.HOSHINO_ARMOR1_3));
+        }
+        return chargeUse;
+    }
+
+    @Override
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
         if (target == null){
             return;
@@ -79,13 +92,13 @@ public class Chase extends ArmorAbility {
         Sample.INSTANCE.play(Assets.Sounds.MISS);
         Ballistica path = new Ballistica(hero.pos, target, Ballistica.PROJECTILE);
         Char enemy = Actor.findChar(target);
-        hero.sprite.jump(hero.pos, target, 5, 0.3f, new Callback() {
+        hero.sprite.jump(hero.pos, target, 3, 0.1f, new Callback() {
             @Override
             public void call() {
                 if (Dungeon.level.map[hero.pos] == Terrain.OPEN_DOOR) {
                     Door.leave( hero.pos );
                 }
-                hero.sprite.zap(target);
+
                 if (enemy != null) {
                     if (enemy.HP <= enemy.HT/4 + 5*hero.pointsInTalent(Talent.HOSHINO_ARMOR1_1)) {
                         enemy.HP = 0;
@@ -103,7 +116,6 @@ public class Chase extends ArmorAbility {
                             enemy.sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Talent.CombinedLethalityAbilityTracker.class, "executed"));
                         }
                     } else {
-                        Sample.INSTANCE.play(Assets.Sounds.HIT);
                         enemy.sprite.flash();
                         enemy.damage(20, hero);
                     }
@@ -130,18 +142,31 @@ public class Chase extends ArmorAbility {
                             }
                         }
                     }
+
+                    if (!enemy.isAlive()) {
+                        Buff.affect(hero, ChaseKillTracker.class, 3);
+                    }
                 }
+                Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
+                Sample.INSTANCE.play(Assets.Sounds.HIT_SLASH);
                 hero.pos = target;
                 Dungeon.level.occupyCell(hero);
+                armor.charge -= chargeUse( hero );
+                armor.updateQuickslot();
                 Invisibility.dispel();
                 hero.spendAndNext(1f);
             }
         });
 
+        if (hero.buff(ChaseKillTracker.class) != null) {
+            hero.buff(ChaseKillTracker.class).detach();
+        }
     }
 
     @Override
     public Talent[] talents() {
         return new Talent[]{Talent.HOSHINO_ARMOR1_1, Talent.HOSHINO_ARMOR1_2, Talent.HOSHINO_ARMOR1_3, Talent.HEROIC_ENERGY};
     }
+
+    public static class ChaseKillTracker extends FlavourBuff {}
 }
