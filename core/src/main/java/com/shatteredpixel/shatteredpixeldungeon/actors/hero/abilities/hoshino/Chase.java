@@ -144,7 +144,7 @@ public class Chase extends ArmorAbility {
                     }
 
                     if (!enemy.isAlive()) {
-                        Buff.affect(hero, ChaseKillTracker.class, 3);
+                        Buff.affect(hero, ChaseKillTracker.class);
                     }
                 }
                 Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
@@ -169,5 +169,5 @@ public class Chase extends ArmorAbility {
         return new Talent[]{Talent.HOSHINO_ARMOR1_1, Talent.HOSHINO_ARMOR1_2, Talent.HOSHINO_ARMOR1_3, Talent.HEROIC_ENERGY};
     }
 
-    public static class ChaseKillTracker extends FlavourBuff {}
+    public static class ChaseKillTracker extends Buff {}
 }
