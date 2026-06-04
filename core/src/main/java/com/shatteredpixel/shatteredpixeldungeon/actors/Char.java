@@ -83,6 +83,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Chase;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.DeathMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.AuraOfProtection;
@@ -1061,6 +1062,11 @@ public abstract class Char extends Actor {
 			//special case for monk using unarmed abilities
 			if (src == Dungeon.hero
 					&& Dungeon.hero.buff(MonkEnergy.MonkAbility.UnarmedAbilityTracker.class) != null){
+				icon = FloatingText.PHYS_DMG_NO_BLOCK;
+			}
+
+			//special case for hoshino armor ability
+			if (src instanceof Chase){
 				icon = FloatingText.PHYS_DMG_NO_BLOCK;
 			}
 

@@ -106,10 +106,10 @@ public class Chase extends ArmorAbility {
                             enemy.buff(Brute.BruteRage.class).detach();
                         }
                         if (!enemy.isAlive()) {
-                            enemy.die(this);
+                            enemy.die(Chase.this);
                         } else {
                             //helps with triggering any on-damage effects that need to activate
-                            enemy.damage(-1, this);
+                            enemy.damage(-1, Chase.this);
                             DeathMark.processFearTheReaper(enemy);
                         }
                         if (enemy.sprite != null) {
@@ -117,7 +117,7 @@ public class Chase extends ArmorAbility {
                         }
                     } else {
                         enemy.sprite.flash();
-                        enemy.damage(20, hero);
+                        enemy.damage(20, Chase.this);
                     }
 
                     if (enemy.isAlive()) {
@@ -150,6 +150,7 @@ public class Chase extends ArmorAbility {
                 Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
                 Sample.INSTANCE.play(Assets.Sounds.HIT_SLASH);
                 hero.pos = target;
+                hero.sprite.zap(target);
                 Dungeon.level.occupyCell(hero);
                 armor.charge -= chargeUse( hero );
                 armor.updateQuickslot();
