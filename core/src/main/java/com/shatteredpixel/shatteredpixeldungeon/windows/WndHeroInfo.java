@@ -207,6 +207,7 @@ public class WndHeroInfo extends WndTabbed {
 				case HOSHINO:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.IRON_HORUS),
 							new TalentIcon(Talent.HOSHINO_T1_2),
+							new ItemSprite(ItemSpriteSheet.SG_TIER_2),
 							new ItemSprite(ItemSpriteSheet.SG_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
