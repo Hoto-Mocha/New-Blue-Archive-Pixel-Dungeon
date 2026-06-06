@@ -362,7 +362,7 @@ public class Hero extends Char {
 		info.shld = bundle.getInt( Char.TAG_SHLD );
 		info.heroClass = bundle.getEnum( CLASS, HeroClass.class );
 		info.subClass = bundle.getEnum( SUBCLASS, HeroSubClass.class );
-		Belongings.preview( info, bundle );
+//		Belongings.preview( info, bundle );
 	}
 
 	public boolean hasTalent( Talent talent ){
@@ -463,14 +463,19 @@ public class Hero extends Char {
 	}
 	
 	public int tier() {
-		Armor armor = belongings.armor();
-		if (armor instanceof ClassArmor){
-			return 6;
-		} else if (armor != null){
-			return armor.tier;
-		} else {
-			return 0;
-		}
+		return alternativeSprite();
+//		Armor armor = belongings.armor();
+//		if (armor instanceof ClassArmor){
+//			return 6;
+//		} else if (armor != null){
+//			return armor.tier;
+//		} else {
+//			return 0;
+//		}
+	}
+
+	public int alternativeSprite() {
+		return 0;
 	}
 	
 	public boolean shoot( Char enemy, MissileWeapon wep ) {

@@ -223,8 +223,7 @@ public class StartScene extends PixelScene {
 				name.text(Messages.titleCase(info.heroClass.title()));
 
 				if (hero == null){
-//					hero = new Image(info.heroClass.spritesheet(), 0, 15*info.armorTier, 12, 15);
-					hero = new Image(info.heroClass.spritesheet(), 0, 0, 12, 17); //항상 맨 위에 있는 스프라이트만 사용함
+					hero = new Image(info.heroClass.spritesheet(), 0, 17*info.armorTier, 12, 17);
 					add(hero);
 					
 					steps = new Image(Icons.get(Icons.STAIRS));
