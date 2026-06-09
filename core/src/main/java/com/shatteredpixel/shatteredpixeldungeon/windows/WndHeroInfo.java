@@ -217,6 +217,7 @@ public class WndHeroInfo extends WndTabbed {
 				case SHIROKO:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.BICYCLE),
 							new TalentIcon(Talent.SHIROKO_T1_2),
+							new TalentIcon(Talent.SHIROKO_T1_3),
 							new ItemSprite(ItemSpriteSheet.AR_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
