@@ -68,6 +68,7 @@ public class Badges {
 		MASTERY_NONOMI,
 		MASTERY_MIYAKO,
 		MASTERY_HOSHINO,
+		MASTERY_SHIROKO,
 
 //		MASTERY_WARRIOR,
 //		MASTERY_MAGE,
@@ -132,6 +133,7 @@ public class Badges {
 		BOSS_SLAIN_1_NONOMI,
 		BOSS_SLAIN_1_MIYAKO,
 		BOSS_SLAIN_1_HOSHINO,
+		BOSS_SLAIN_1_SHIROKO,
 //		BOSS_SLAIN_1_WARRIOR,
 //		BOSS_SLAIN_1_MAGE,
 //		BOSS_SLAIN_1_ROGUE,
@@ -191,6 +193,7 @@ public class Badges {
 		VICTORY_NONOMI,
 		VICTORY_MIYAKO,
 		VICTORY_HOSHINO,
+		VICTORY_SHIROKO,
 //		VICTORY_WARRIOR,
 //		VICTORY_MAGE,
 //		VICTORY_ROGUE,
@@ -207,6 +210,8 @@ public class Badges {
 		BOSS_SLAIN_3_SUPPORT_DRONE,
 		BOSS_SLAIN_3_SHIELD_BASH,
 		BOSS_SLAIN_3_SWIFT_MOVEMENT,
+		BOSS_SLAIN_3_PROFESSIONAL_RIDING,
+		BOSS_SLAIN_3_BANK_ROBBER,
 //		BOSS_SLAIN_3_GLADIATOR,
 //		BOSS_SLAIN_3_BERSERKER,
 //		BOSS_SLAIN_3_WARLOCK,
@@ -827,6 +832,7 @@ public class Badges {
 		firstBossClassBadges.put(HeroClass.NONOMI, Badge.BOSS_SLAIN_1_NONOMI);
 		firstBossClassBadges.put(HeroClass.MIYAKO, Badge.BOSS_SLAIN_1_MIYAKO);
 		firstBossClassBadges.put(HeroClass.HOSHINO, Badge.BOSS_SLAIN_1_HOSHINO);
+		firstBossClassBadges.put(HeroClass.SHIROKO, Badge.BOSS_SLAIN_1_SHIROKO);
 //		firstBossClassBadges.put(HeroClass.WARRIOR, Badge.BOSS_SLAIN_1_WARRIOR);
 //		firstBossClassBadges.put(HeroClass.MAGE, Badge.BOSS_SLAIN_1_MAGE);
 //		firstBossClassBadges.put(HeroClass.ROGUE, Badge.BOSS_SLAIN_1_ROGUE);
@@ -841,6 +847,7 @@ public class Badges {
 		victoryClassBadges.put(HeroClass.NONOMI, Badge.VICTORY_NONOMI);
 		victoryClassBadges.put(HeroClass.MIYAKO, Badge.VICTORY_MIYAKO);
 		victoryClassBadges.put(HeroClass.HOSHINO, Badge.VICTORY_HOSHINO);
+		victoryClassBadges.put(HeroClass.SHIROKO, Badge.VICTORY_SHIROKO);
 //		victoryClassBadges.put(HeroClass.WARRIOR, Badge.VICTORY_WARRIOR);
 //		victoryClassBadges.put(HeroClass.MAGE, Badge.VICTORY_MAGE);
 //		victoryClassBadges.put(HeroClass.ROGUE, Badge.VICTORY_ROGUE);
@@ -859,6 +866,8 @@ public class Badges {
 		thirdBossSubclassBadges.put(HeroSubClass.SUPPORT_DRONE, Badge.BOSS_SLAIN_3_SUPPORT_DRONE);
 		thirdBossSubclassBadges.put(HeroSubClass.SHIELD_BASH, Badge.BOSS_SLAIN_3_SHIELD_BASH);
 		thirdBossSubclassBadges.put(HeroSubClass.SWIFT_MOVEMENT, Badge.BOSS_SLAIN_3_SWIFT_MOVEMENT);
+		thirdBossSubclassBadges.put(HeroSubClass.PROFESSIONAL_RIDING, Badge.BOSS_SLAIN_3_PROFESSIONAL_RIDING);
+		thirdBossSubclassBadges.put(HeroSubClass.BANK_ROBBER, Badge.BOSS_SLAIN_3_BANK_ROBBER);
 //		thirdBossSubclassBadges.put(HeroSubClass.BERSERKER, Badge.BOSS_SLAIN_3_BERSERKER);
 //		thirdBossSubclassBadges.put(HeroSubClass.GLADIATOR, Badge.BOSS_SLAIN_3_GLADIATOR);
 //		thirdBossSubclassBadges.put(HeroSubClass.BATTLEMAGE, Badge.BOSS_SLAIN_3_BATTLEMAGE);
@@ -986,6 +995,9 @@ public class Badges {
 				break;
 			case HOSHINO:
 				badge = Badge.MASTERY_HOSHINO;
+				break;
+			case SHIROKO:
+				badge = Badge.MASTERY_SHIROKO;
 				break;
 //			case WARRIOR:
 //				badge = Badge.MASTERY_WARRIOR;

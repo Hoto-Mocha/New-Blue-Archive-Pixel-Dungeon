@@ -112,6 +112,9 @@ abstract public class ClassArmor extends Armor {
 			case HOSHINO:
 				classArmor = new HoshinoArmor();
 				break;
+			case SHIROKO:
+				classArmor = new ShirokoArmor();
+				break;
 			case WARRIOR:
 				classArmor = new WarriorArmor();
 				break;

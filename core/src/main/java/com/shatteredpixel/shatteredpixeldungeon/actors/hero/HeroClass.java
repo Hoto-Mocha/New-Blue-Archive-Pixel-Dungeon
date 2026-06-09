@@ -55,6 +55,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Pre
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.DeathMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.ShadowClone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.SmokeBomb;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.GPSRoute;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.PenetrationShot;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.RidingGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.HeroicLeap;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Shockwave;
@@ -64,6 +67,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.KingsCrown;
 import com.shatteredpixel.shatteredpixeldungeon.items.Teleporter;
 import com.shatteredpixel.shatteredpixeldungeon.items.TengusMask;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
@@ -102,6 +106,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T1;
@@ -118,6 +123,7 @@ public enum HeroClass {
 	NONOMI(HeroSubClass.SHOOT_ALL, HeroSubClass.SPREAD_SHOT),
 	MIYAKO(HeroSubClass.RABBIT_SQUAD, HeroSubClass.SUPPORT_DRONE),
 	HOSHINO(HeroSubClass.SHIELD_BASH, HeroSubClass.SWIFT_MOVEMENT),
+	SHIROKO(HeroSubClass.PROFESSIONAL_RIDING, HeroSubClass.BANK_ROBBER),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
@@ -180,6 +186,10 @@ public enum HeroClass {
 
 			case HOSHINO:
 				initHoshino( hero );
+				break;
+
+			case SHIROKO:
+				initShiroko( hero );
 				break;
 
 
@@ -288,6 +298,19 @@ public enum HeroClass {
 		IronHorus ironHorus = new IronHorus();
 		ironHorus.collect();
 		Dungeon.quickslot.setSlot(1, ironHorus);
+
+		new PotionOfHealing().identify();
+		new ScrollOfRage().identify();
+	}
+
+	private static void initShiroko(Hero hero) {
+		AR_T1 arT1 = new AR_T1();
+		(hero.belongings.weapon = arT1).identify();
+		Dungeon.quickslot.setSlot(0, arT1);
+
+		Bicycle bicycle = new Bicycle();
+		bicycle.collect();
+		Dungeon.quickslot.setSlot(1, bicycle);
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
@@ -408,6 +431,9 @@ public enum HeroClass {
 				return new ArmorAbility[]{new WireHook(), new Helicopter(), new CloseAirSupport()};
 			case HOSHINO:
 				return new ArmorAbility[]{new Chase(), new SpikeShield(), new ShieldParry()};
+			case SHIROKO:
+				return new ArmorAbility[]{new PenetrationShot(), new RidingGrenade(), new GPSRoute()};
+
 			case WARRIOR:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
 			case MAGE:
@@ -433,6 +459,8 @@ public enum HeroClass {
 				return Assets.Sprites.MIYAKO;
 			case HOSHINO:
 				return Assets.Sprites.HOSHINO;
+			case SHIROKO:
+				return Assets.Sprites.SHIROKO;
 			case WARRIOR:
 				return Assets.Sprites.WARRIOR;
 			case MAGE:
@@ -458,6 +486,8 @@ public enum HeroClass {
 				return Assets.Splashes.MIYAKO;
 			case HOSHINO:
 				return Assets.Splashes.HOSHINO;
+			case SHIROKO:
+				return Assets.Splashes.SHIROKO;
 			case WARRIOR:
 				return Assets.Splashes.WARRIOR;
 			case MAGE:

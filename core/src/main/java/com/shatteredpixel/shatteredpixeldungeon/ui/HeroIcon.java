@@ -122,6 +122,8 @@ public class HeroIcon extends Image {
 	public static final int SUPPORT_DRONE	= 128+5;
 	public static final int SHIELD_BASH		= 128+6;
 	public static final int SWIFT_MOVEMENT	= 128+7;
+	public static final int PROFESSIONAL_RIDING	= 128+8;
+	public static final int BANK_ROBBER		= 128+9;
 
 	//new armor abilities
 	public static final int ARIS_1			= 128+40;
@@ -136,6 +138,9 @@ public class HeroIcon extends Image {
 	public static final int HOSHINO_1		= 128+49;
 	public static final int HOSHINO_2		= 128+50;
 	public static final int HOSHINO_3		= 128+51;
+	public static final int SHIROKO_1		= 128+49;
+	public static final int SHIROKO_2		= 128+50;
+	public static final int SHIROKO_3		= 128+51;
 
 	//new action indicator visuals
   	public static final int CHARGE			= 128+72;
