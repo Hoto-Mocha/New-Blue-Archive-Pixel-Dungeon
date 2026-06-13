@@ -165,6 +165,9 @@ public class Bicycle extends Item {
 		}
 		charge += amount;
 		charge = Math.min(charge, maxCharge());
+		if (charge == maxCharge()) {
+			hero.yellP(Messages.get(Hero.class, hero.heroClass.name() + "_bicycle_charged"));
+		}
 		updateQuickslot();
 	}
 
@@ -182,7 +185,7 @@ public class Bicycle extends Item {
 		if (charge < 1) {
 			Buff buff = Dungeon.hero.buff(BicycleBuff.class);
 			if (buff != null) buff.detach();
-			Dungeon.hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_no_charge"));	//"충전량이 부족해."
+			Dungeon.hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_no_charge"));	//"지금은 자전거를 탈 수 없어."
 		}
 		updateQuickslot();
 	}
