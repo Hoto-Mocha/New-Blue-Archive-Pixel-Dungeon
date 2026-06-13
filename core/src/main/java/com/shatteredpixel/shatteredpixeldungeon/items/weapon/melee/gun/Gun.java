@@ -760,6 +760,12 @@ public class Gun extends MeleeWeapon {
                 Buff.affect(defender, Talent.TacticalSuppressTracker.class);
             }
 
+            if (attacker instanceof Hero && ((Hero)attacker).heroClass == HeroClass.SHIROKO) {
+                if (Random.Float() < 1/(float)shotPerShoot()) {
+                    damage += (int)Math.ceil(Dungeon.scalingDepth()/5f);
+                }
+            }
+
             return Gun.this.proc(attacker, defender, damage);
         }
 
