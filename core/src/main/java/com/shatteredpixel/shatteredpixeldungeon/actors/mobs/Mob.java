@@ -66,6 +66,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Wound;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
@@ -922,6 +923,10 @@ public abstract class Mob extends Char {
 
 		if (cause == Dungeon.hero && Dungeon.hero.hasTalent(Talent.HOSHINO_T2_5)) {
 			Buff.affect(Dungeon.hero, Talent.IntimidateBonusDamageBuff.class).set();
+		}
+
+		if (cause == Dungeon.hero && Dungeon.hero.buff(Bicycle.DriftCooldown.class) != null) {
+			Dungeon.hero.buff(Bicycle.DriftCooldown.class).kill();
 		}
 
 		boolean soulMarked = buff(SoulMark.class) != null;
