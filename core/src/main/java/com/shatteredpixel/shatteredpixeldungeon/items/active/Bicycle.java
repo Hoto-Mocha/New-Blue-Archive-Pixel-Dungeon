@@ -160,6 +160,8 @@ public class Bicycle extends Item {
 	}
 
 	public void chargeUp(float amount) {
+		if (charge == maxCharge()) return;
+
 		if (hero.buff(DriftBuff.class) != null) {
 			amount *= 3;
 		}
@@ -423,9 +425,6 @@ public class Bicycle extends Item {
 		{
 			type = buffType.NEUTRAL;
 			announced = false;
-			if (hero.subClass == HeroSubClass.PROFESSIONAL_RIDING) {
-				isProfessional = true;
-			}
 		}
 
 		private static final String ISPROFESSIONAL = "isProfessional";
@@ -447,6 +446,9 @@ public class Bicycle extends Item {
 
 		@Override
 		public boolean act() {
+			if (hero.subClass == HeroSubClass.PROFESSIONAL_RIDING) {
+				isProfessional = true;
+			}
 			if (hero.subClass == HeroSubClass.PROFESSIONAL_RIDING) {
 				ActionIndicator.setAction(BicycleBuff.this);
 			}

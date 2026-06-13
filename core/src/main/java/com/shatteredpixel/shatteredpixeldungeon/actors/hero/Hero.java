@@ -1942,6 +1942,11 @@ public class Hero extends Char {
 				delay = 0;
 			}
 
+			if (buff(Bicycle.AccelerationBuff.class) != null) {
+				delay = 0;
+				buff(Bicycle.AccelerationBuff.class).detach();
+			}
+
 			if (Dungeon.level.pit[step] && !Dungeon.level.solid[step]
 					&& (!flying || buff(Levitation.class) != null && buff(Levitation.class).detachesWithinDelay(delay / speed()))){
 				if (!Chasm.jumpConfirmed){

@@ -306,7 +306,7 @@ public abstract class Char extends Actor {
 		c.pos = newPos;
 		c.sprite.move( newPos, oldPos );
 		c.move( oldPos );
-		
+
 		c.spend( 1 / c.speed() );
 
 		if (c == Dungeon.hero){
@@ -325,9 +325,14 @@ public abstract class Char extends Actor {
 				}
 			}
 
+			if (buff(Bicycle.AccelerationBuff.class) != null) {
+				c.spend( -1 / c.speed() );
+				buff(Bicycle.AccelerationBuff.class).detach();
+			}
+
 			Dungeon.hero.busy();
 		}
-		
+
 		return true;
 	}
 	
