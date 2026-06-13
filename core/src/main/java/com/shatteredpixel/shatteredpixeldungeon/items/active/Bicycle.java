@@ -458,12 +458,7 @@ public class Bicycle extends Item {
 
 		@Override
 		public int icon() {
-			return BuffIndicator.HASTE;
-		}
-
-		@Override
-		public void tintIcon(Image icon) {
-			icon.hardlight(0xC7C4C9);
+			return BuffIndicator.BICYCLE;
 		}
 
 		@Override

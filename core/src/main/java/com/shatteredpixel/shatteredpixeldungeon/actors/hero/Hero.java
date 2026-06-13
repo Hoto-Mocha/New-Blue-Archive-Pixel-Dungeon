@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Bones;
@@ -95,6 +97,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Grenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -172,6 +175,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
+import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
@@ -578,6 +582,10 @@ public class Hero extends Char {
 		if (buff(Scimitar.SwordDance.class) != null){
 			accuracy *= 1.50f;
 		}
+
+		if (buff(Bicycle.BicycleBuff.class) != null) {
+			accuracy *= 0.5f+0.25f*pointsInTalent(Talent.SHIROKO_T3_1);
+		}
 		
 		if (!RingOfForce.fightingUnarmed(this)) {
 			return Math.max(1, Math.round(attackSkill * accuracy * wep.accuracyFactor( this, target )));
@@ -639,6 +647,10 @@ public class Hero extends Char {
 			if (belongings.armor().hasGlyph(Stone.class, this) && !Stone.testingEvasion()){
 				return 0;
 			}
+		}
+
+		if (hero.hasTalent(Talent.SHIROKO_EX1_2) && hero.buff(Bicycle.BicycleBuff.class) != null) {
+			evasion *= 1 + hero.speed()*hero.pointsInTalent(Talent.SHIROKO_EX1_2)/6f;
 		}
 
 		return Math.max(1, Math.round(evasion));
@@ -789,6 +801,11 @@ public class Hero extends Char {
 
 		if (hasTalent(Talent.ARIS_T3_1)) {
 			speed *= 1 + 0.05f*pointsInTalent(Talent.ARIS_T3_1);
+		}
+
+		Bicycle.BicycleBuff bicycleBuff = buff(Bicycle.BicycleBuff.class);
+		if (bicycleBuff != null) {
+			speed *= 2f;
 		}
 
 		speed = AscensionChallenge.modifyHeroSpeed(speed);
@@ -1945,6 +1962,17 @@ public class Hero extends Char {
 
 			if (subClass == HeroSubClass.FREERUNNER){
 				Buff.affect(this, Momentum.class).gainStack();
+			}
+
+			Bicycle bicycle = belongings.getItem(Bicycle.class);
+			if (bicycle != null) {
+				Bicycle.BicycleBuff bicycleBuff = buff(Bicycle.BicycleBuff.class);
+				if (bicycleBuff != null) {
+					bicycle.use();
+					ActionIndicator.refresh();
+				} else {
+					bicycle.chargeUp();
+				}
 			}
 			
 			sprite.move(pos, step);
