@@ -27,13 +27,16 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibility;
@@ -45,6 +48,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -217,6 +222,10 @@ public class Bomb extends Item {
 				}
 			}
 
+			if (Dungeon.hero.hasTalent(Talent.SHIROKO_T2_4)) {
+				terrainAffected = destroyLock(cell);
+			}
+
 			if (terrainAffected) {
 				Dungeon.observe();
 			}
@@ -277,6 +286,26 @@ public class Bomb extends Item {
 		super.restoreFromBundle(bundle);
 		if (bundle.contains( FUSE ))
 			Actor.add( fuse = ((Fuse)bundle.get(FUSE)).ignite(this) );
+	}
+
+	public boolean destroyLock(int cell) {
+		boolean terrainAffected = false;
+		boolean[] explodable = new boolean[Dungeon.level.length()];
+		BArray.or( Dungeon.level.solid, explodable, explodable );
+		PathFinder.buildDistanceMap( cell, explodable, explosionRange() );
+		for (int i = 0; i < PathFinder.distance.length; i++) {
+			if (PathFinder.distance[i] != Integer.MAX_VALUE) {
+				int terr = Dungeon.level.map[i];
+				if (terr == Terrain.LOCKED_DOOR || terr == Terrain.HERO_LKD_DR) {
+					Buff.affect(Dungeon.hero, SkeletonKey.KeyReplacementTracker.class).processIronLockOpened();
+					Level.set(i, Terrain.DOOR);
+
+					terrainAffected = true;
+					GameScene.updateMap();
+				}
+			}
+		}
+		return terrainAffected;
 	}
 
 	//used to track the death from friendly magic badge, if an explosion was conjured by magic
