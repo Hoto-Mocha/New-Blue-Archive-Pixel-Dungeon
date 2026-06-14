@@ -180,7 +180,7 @@ public class Bicycle extends Item {
 	public void onRide() {
 		use(1);
 		if (curUser.hasTalent(Talent.SHIROKO_T2_5)) {
-			curUser.belongings.charge( 0.025f+0.025f* curUser.pointsInTalent(Talent.SHIROKO_T2_5) );
+			curUser.belongings.charge( 0.02f+0.03f* curUser.pointsInTalent(Talent.SHIROKO_T2_5) );
 		}
 	}
 
