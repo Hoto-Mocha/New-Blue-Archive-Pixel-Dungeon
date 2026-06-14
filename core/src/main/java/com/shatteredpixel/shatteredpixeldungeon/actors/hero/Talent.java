@@ -48,7 +48,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ScrollEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SuperNovaCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SupportDrone;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SwiftMovement;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
@@ -102,7 +101,6 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
-import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -2035,7 +2033,7 @@ public enum Talent {
 		}
 	}
 
-	public static void onSwitchLevel() {
+	public static void arisCompass() {
 		if (Dungeon.branch == 0 && !compassed[Dungeon.depth]) { //브랜치 층에서는 작동하지 않음
 			if (Random.Float() < compassChance()) {
 				int len = Dungeon.level.length();
@@ -2077,5 +2075,35 @@ public enum Talent {
 
 			compassed[Dungeon.depth] = true;
 		}
+	}
+
+	public static void shirokoCompass() {
+		int[] map = Dungeon.level.map;
+		boolean[] mapped = Dungeon.level.mapped;
+		boolean[] discoverable = Dungeon.level.discoverable;
+
+		for (int i = 0; i < Dungeon.level.length(); i++){
+			if (Dungeon.level.map[i] == Terrain.LOCKED_DOOR){
+				for(int j: PathFinder.NEIGHBOURS9) {
+					int c = i + j;
+					if (discoverable[c]) {
+						int terr = map[c];
+
+						mapped[c] = true;
+						if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
+
+							Dungeon.level.discover( c );
+
+							if (Dungeon.level.heroFOV[c]) {
+								GameScene.discoverTile( c, terr );
+								ScrollOfMagicMapping.discover( c );
+							}
+						}
+					}
+				}
+			}
+		}
+
+		GameScene.updateFog();
 	}
 }
