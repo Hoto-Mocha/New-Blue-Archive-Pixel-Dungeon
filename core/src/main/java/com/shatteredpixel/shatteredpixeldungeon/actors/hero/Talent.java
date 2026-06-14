@@ -1128,7 +1128,7 @@ public enum Talent {
 			}
 		}
 		if (hero.hasTalent(Talent.MIYAKO_T2_1)) {
-			Buff.affect(hero, Barrier.class).setShield((int)(hero.HT*(0.5f+0.5f*hero.pointsInTalent(Talent.MIYAKO_T2_1))));
+			Buff.affect(hero, Barrier.class).setShield((int)(hero.HT*(0.05f+0.05f*hero.pointsInTalent(Talent.MIYAKO_T2_1))));
 		}
 		if (hero.hasTalent(Talent.HOSHINO_T2_1) && hero.buff(Drowsy.class) == null) {
 			Buff.affect(hero, Drowsy.class, 350-100*hero.pointsInTalent(Talent.HOSHINO_T2_1));
