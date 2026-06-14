@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.GunSmithingTool;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
@@ -768,6 +769,11 @@ public class Gun extends MeleeWeapon {
                         damage += ((Hero)attacker).pointsInTalent(Talent.SHIROKO_T1_3);
                     }
                 }
+            }
+
+            if (attacker instanceof Hero && ((Hero)attacker).hasTalent(Talent.SHIROKO_T3_2)) {
+                int dur = 10*Dungeon.hero.pointsInTalent(Talent.SHIROKO_T3_2);
+                Buff.append(Dungeon.hero, TalismanOfForesight.CharAwareness.class, dur).charID = defender.id();
             }
 
             return Gun.this.proc(attacker, defender, damage);
