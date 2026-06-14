@@ -50,6 +50,7 @@ public class Berry extends Food {
 				|| Dungeon.hero.hasTalent(Talent.ARIS_T2_1)
 				|| Dungeon.hero.hasTalent(Talent.NONOMI_T2_1)
 				|| Dungeon.hero.hasTalent(Talent.MIYAKO_T2_1)
+				|| Dungeon.hero.hasTalent(Talent.HOSHINO_T2_1)
 				|| Dungeon.hero.hasTalent(Talent.SHIROKO_T2_1)
 		){
 			return 0;
