@@ -1335,6 +1335,9 @@ public enum Talent {
 		if (hero.hasTalent(MIYAKO_T1_2) && (item instanceof SMG)){
 			identify = true;
 		}
+		if (hero.hasTalent(HOSHINO_T1_2) && (item instanceof SG)){
+			identify = true;
+		}
 		if (hero.hasTalent(SHIROKO_T1_2) && (item instanceof AR)){
 			identify = true;
 		}
@@ -1366,6 +1369,10 @@ public enum Talent {
 		}
 
 		if (hero.pointsInTalent(MIYAKO_T1_2) == 2 && (item instanceof SMG)){
+			identify = true;
+		}
+
+		if (hero.pointsInTalent(HOSHINO_T1_2) == 2 && (item instanceof SG)){
 			identify = true;
 		}
 
