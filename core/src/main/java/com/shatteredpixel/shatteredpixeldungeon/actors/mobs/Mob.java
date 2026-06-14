@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
@@ -927,6 +928,10 @@ public abstract class Mob extends Char {
 
 		if (cause == Dungeon.hero && Dungeon.hero.buff(Bicycle.DriftCooldown.class) != null) {
 			Dungeon.hero.buff(Bicycle.DriftCooldown.class).kill();
+		}
+
+		if (cause == Dungeon.hero && Dungeon.hero.hasTalent(Talent.SHIROKO_T1_4)) {
+			Buff.affect(Dungeon.hero, Barrier.class).setShield(2+3*Dungeon.hero.pointsInTalent(Talent.SHIROKO_T1_4));
 		}
 
 		boolean soulMarked = buff(SoulMark.class) != null;
