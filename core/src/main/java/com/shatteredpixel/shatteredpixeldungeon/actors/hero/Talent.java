@@ -919,7 +919,7 @@ public enum Talent {
 			}
 		}
 
-		if (talent == HEIGHTENED_SENSES || talent == FARSIGHT || talent == DIVINE_SENSE || talent == MIYAKO_T2_3 || talent == MIYAKO_EX2_3 || talent == HOSHINO_T2_3){
+		if (talent == HEIGHTENED_SENSES || talent == FARSIGHT || talent == DIVINE_SENSE || talent == MIYAKO_T2_3 || talent == MIYAKO_EX2_3 || talent == HOSHINO_T2_3 || talent == SHIROKO_T2_3){
 			Dungeon.observe();
 		}
 
