@@ -62,10 +62,12 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.EnergyParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
@@ -100,6 +102,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -1236,6 +1239,14 @@ public enum Talent {
 			Buff.prolong(hero, LiquidAgilEVATracker.class, hero.cooldown() + Math.max(0, factor-1));
 			if (factor >= 0.5f){
 				Buff.prolong(hero, LiquidAgilACCTracker.class, 5f).uses = Math.round(factor);
+			}
+		}
+		if (hero.hasTalent(Talent.SHIROKO_T2_2)) {
+			Bicycle bicycle = hero.belongings.getItem(Bicycle.class);
+			if (bicycle != null) {
+				bicycle.chargeUp((10+10*hero.pointsInTalent(Talent.SHIROKO_T2_2))*factor);
+				hero.sprite.centerEmitter().burst(EnergyParticle.FACTORY, 10);
+				Item.updateQuickslot();
 			}
 		}
 	}
