@@ -21,8 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors;
 
-import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
-
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -34,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArcaneArmor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArmorBreak;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Berserk;
@@ -68,7 +65,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Slow;
@@ -318,7 +314,7 @@ public abstract class Char extends Actor {
 			if (bicycle != null) {
 				Bicycle.BicycleBuff bicycleBuff = c.buff(Bicycle.BicycleBuff.class);
 				if (bicycleBuff != null) {
-					bicycle.use();
+					bicycle.onRide();
 					ActionIndicator.refresh();
 				} else {
 					bicycle.chargeUp();

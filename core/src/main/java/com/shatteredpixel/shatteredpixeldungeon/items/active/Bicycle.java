@@ -177,8 +177,11 @@ public class Bicycle extends Item {
 		chargeUp(0.5f*(1+hero.pointsInTalent(Talent.SHIROKO_EX1_1)/6f));
 	}
 
-	public void use() {
+	public void onRide() {
 		use(1);
+		if (curUser.hasTalent(Talent.SHIROKO_T2_5)) {
+			curUser.belongings.charge( 0.025f+0.025f* curUser.pointsInTalent(Talent.SHIROKO_T2_5) );
+		}
 	}
 
 	public void use(float amount) {

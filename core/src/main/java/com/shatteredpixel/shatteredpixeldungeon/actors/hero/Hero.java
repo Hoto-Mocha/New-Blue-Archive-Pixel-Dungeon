@@ -101,7 +101,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Grenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Stone;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
@@ -1973,7 +1972,7 @@ public class Hero extends Char {
 			if (bicycle != null) {
 				Bicycle.BicycleBuff bicycleBuff = buff(Bicycle.BicycleBuff.class);
 				if (bicycleBuff != null) {
-					bicycle.use();
+					bicycle.onRide();
 					ActionIndicator.refresh();
 				} else {
 					bicycle.chargeUp();
