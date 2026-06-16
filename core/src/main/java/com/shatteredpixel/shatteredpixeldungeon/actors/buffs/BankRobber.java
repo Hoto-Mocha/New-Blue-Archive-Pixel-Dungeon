@@ -12,6 +12,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BulletParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
@@ -104,6 +105,8 @@ public class BankRobber extends Buff implements ActionIndicator.Action {
                     bullet.throwSound(); //발사음 재생
                     //탄환 파티클을 위쪽 방향으로 생성. 기본 3개, 발사 개수가 증가하면 발사 수당 3개
                     CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(new PointF(DungeonTilemap.tileCenterToWorld(hero.pos).x, DungeonTilemap.tileCenterToWorld(hero.pos).y-40)), 3*gun.shotPerShoot());
+                    //연기 파티클 생성
+                    CellEmitter.get(hero.pos).burst(SmokeParticle.FACTORY, gun.shotPerShoot());
                     if (gun.round() == 0) { //마지막 발사일 때 능력 효과 발동
                         onAction(hero, amount);
                     }
