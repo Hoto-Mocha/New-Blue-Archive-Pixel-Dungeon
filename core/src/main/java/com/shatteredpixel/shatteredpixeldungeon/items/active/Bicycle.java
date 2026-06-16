@@ -79,7 +79,7 @@ public class Bicycle extends Item {
 		super.execute( hero, action );
 		if (action.equals(AC_USE)) {
 			if (hero.buff(BicycleCooldown.class) != null) {
-				hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_ride_cooldown"));
+				hero.yellW("ride_cooldown");
 				return;
 			}
 			if (charge > 1) {
@@ -95,7 +95,7 @@ public class Bicycle extends Item {
 					buff.detach();
 				}
 			} else {
-				hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_cannot_ride"));
+				hero.yellW("cannot_ride");
 			}
 		}
 	}
@@ -168,7 +168,7 @@ public class Bicycle extends Item {
 		charge += amount;
 		charge = Math.min(charge, maxCharge());
 		if (charge == maxCharge()) {
-			hero.yellP(Messages.get(Hero.class, hero.heroClass.name() + "_bicycle_charged"));
+			hero.yellP("bicycle_charged");
 		}
 		updateQuickslot();
 	}
@@ -190,7 +190,7 @@ public class Bicycle extends Item {
 		if (charge < 1) {
 			Buff buff = Dungeon.hero.buff(BicycleBuff.class);
 			if (buff != null) buff.detach();
-			Dungeon.hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_no_charge"));	//"지금은 자전거를 탈 수 없어."
+			Dungeon.hero.yellW("no_charge");	//"지금은 자전거를 탈 수 없어."
 		}
 		updateQuickslot();
 	}
@@ -292,19 +292,19 @@ public class Bicycle extends Item {
 			//chains cannot be used to go where it is impossible to walk to
 			PathFinder.buildDistanceMap(target, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
 			if (PathFinder.distance[hero.pos] == Integer.MAX_VALUE){
-				Dungeon.hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_dash_bad_position"));
+				Dungeon.hero.yellW("dash_bad_position");
 				return;
 			}
 
 			if (hero.rooted){
-				Dungeon.hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_rooted"));
+				Dungeon.hero.yellW("rooted");
 				return;
 			}
 
 			int range = 3;
 
 			if (Dungeon.level.distance(hero.pos, target) > range){
-				Dungeon.hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + hero.heroClass.name() + "_dash_bad_position"));	//"그 쪽으로는 할 수 없어."
+				Dungeon.hero.yellW("dash_bad_position");	//"그 쪽으로는 할 수 없어."
 				return;
 			}
 
@@ -314,7 +314,7 @@ public class Bicycle extends Item {
 					|| Actor.findChar(target) != null
 					|| (Dungeon.level.solid[target] && !Dungeon.level.passable[target])
 					|| Dungeon.level.map[target] == Terrain.CHASM){
-				Dungeon.hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_dash_bad_position"));	//"그 쪽으로는 할 수 없어."
+				Dungeon.hero.yellW("dash_bad_position");	//"그 쪽으로는 할 수 없어."
 				return;
 			}
 
@@ -361,7 +361,7 @@ public class Bicycle extends Item {
 
 			Char ch = Actor.findChar(target);
 			if (ch == null || ch == hero || !Dungeon.level.adjacent(hero.pos, ch.pos)) {
-				hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_"));	//"그렇게는 할 수 없어."
+				hero.yellW("cannon_slam");	//"그렇게는 할 수 없어."
 				return;
 			}
 

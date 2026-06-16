@@ -1485,7 +1485,7 @@ public enum Talent {
 			Buff.affect(enemy, PushingTracker.class);
 			Elastic.pushEnemyWithoutPit(hero, enemy, hero.belongings.weapon(), 1 + hero.pointsInTalent(Talent.NONOMI_T2_5));
 			if (Random.Float() < 0.2f) {
-				hero.yellI(Messages.get(Hero.class, "nonomi_push"));
+				hero.yellI("nonomi_push");
 			}
 		}
 
@@ -2047,7 +2047,7 @@ public enum Talent {
 
 				PathFinder.Path path = Dungeon.findPath(Dungeon.hero, Dungeon.level.exit(), passable, passable, false);
 				if (PathFinder.distance[Dungeon.level.exit()] == Integer.MAX_VALUE || path == null){
-					Dungeon.hero.yellN(Messages.get(Hero.class, "aris_cant_find_path"));
+					Dungeon.hero.yellN("cant_find_path");
 				} else {
 					int[] map = Dungeon.level.map;
 					boolean[] mapped = Dungeon.level.mapped;
@@ -2069,7 +2069,7 @@ public enum Talent {
 						}
 					}
 					GameScene.updateFog();
-					Dungeon.hero.yellP(Messages.get(Hero.class, "aris_found_path"));
+					Dungeon.hero.yellP("found_path");
 				}
 			}
 

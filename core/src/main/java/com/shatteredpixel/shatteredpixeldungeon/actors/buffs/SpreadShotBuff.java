@@ -59,7 +59,7 @@ public class SpreadShotBuff extends Buff implements ActionIndicator.Action {
     public void doAction() {
         Hero hero = (Hero) target;
         if (!(hero.belongings.weapon() instanceof Gun)) {
-            hero.yellW(Messages.get(Hero.class, "nonomi_spread_no_gun"));
+            hero.yellW("spread_no_gun");
             return;
         }
         if (((Gun)hero.belongings.weapon()).round() <= 0) {

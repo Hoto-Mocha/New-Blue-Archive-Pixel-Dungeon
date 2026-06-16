@@ -1760,12 +1760,12 @@ public class Hero extends Char {
 				if (flashIntensity >= 1/6f) {
 					Sample.INSTANCE.play(Assets.Sounds.HEALTH_CRITICAL, 1/3f + flashIntensity * 2f);
 					if (Random.Int(2) == 0) {
-						Dungeon.hero.yellN(Messages.get(this, Dungeon.hero.heroClass.name() + "_health_critical_" + (Random.Int(3) + 1)));
+						Dungeon.hero.yellN("health_critical_" + (Random.Int(3) + 1));
 					}
 				} else {
 					Sample.INSTANCE.play(Assets.Sounds.HEALTH_WARN, 1/3f + flashIntensity * 4f);
 					if (Random.Int(2) == 0) {
-						Dungeon.hero.yellN(Messages.get(this, Dungeon.hero.heroClass.name() + "_health_warn_" + (Random.Int(3) + 1)));
+						Dungeon.hero.yellN("health_warn_" + (Random.Int(3) + 1));
 					}
 				}
 				//hero gets interrupted on taking serious damage, regardless of any other factor
@@ -2180,9 +2180,9 @@ public class Hero extends Char {
 				}
 			}
 			if (Random.Int(100) == 0) {
-				Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.name() + "_levelup_rare"));
+				Dungeon.hero.yellP("levelup_rare");
 			} else {
-				Dungeon.hero.yellP(Messages.get(Hero.class, heroClass.name() + "_levelup_" + (1 + Random.Int(5))));
+				Dungeon.hero.yellP("levelup_" + (1 + Random.Int(5)));
 			}
 
 			Item.updateQuickslot();
@@ -2349,7 +2349,7 @@ public class Hero extends Char {
 				
 		Dungeon.hero.belongings.identify();
 
-		Dungeon.hero.yellN(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_die"));
+		Dungeon.hero.yellN("die");
 
 		int pos = Dungeon.hero.pos;
 
@@ -2773,31 +2773,36 @@ public class Hero extends Char {
 	public void yellI( String str ) { //흰색
 		if (noYell()) str = "...";
 		GLog.newLine();
-		GLog.i( "%s: \"%s\" ", Messages.titleCase(name()), str );
+		String finalStr = Messages.get(this, heroClass.name() + "_" + str);
+		GLog.i( "%s: \"%s\" ", Messages.titleCase(name()), finalStr );
 	}
 
 	public void yellP( String str ) { //초록색
 		if (noYell()) str = "...";
 		GLog.newLine();
-		GLog.p( "%s: \"%s\" ", Messages.titleCase(name()), str );
+		String finalStr = Messages.get(this, heroClass.name() + "_" + str);
+		GLog.p( "%s: \"%s\" ", Messages.titleCase(name()), finalStr );
 	}
 
 	public void yellN( String str ) { //빨간색
 		if (noYell()) str = "...";
 		GLog.newLine();
-		GLog.n( "%s: \"%s\" ", Messages.titleCase(name()), str );
+		String finalStr = Messages.get(this, heroClass.name() + "_" + str);
+		GLog.n( "%s: \"%s\" ", Messages.titleCase(name()), finalStr );
 	}
 
 	public void yellW( String str ) { //주황색
 		if (noYell()) str = "...";
 		GLog.newLine();
-		GLog.w( "%s: \"%s\" ", Messages.titleCase(name()), str );
+		String finalStr = Messages.get(this, heroClass.name() + "_" + str);
+		GLog.w( "%s: \"%s\" ", Messages.titleCase(name()), finalStr );
 	}
 
 	public void yellH( String str ) { //노란색
 		if (noYell()) str = "...";
 		GLog.newLine();
-		GLog.h( "%s: \"%s\" ", Messages.titleCase(name()), str );
+		String finalStr = Messages.get(this, heroClass.name() + "_" + str);
+		GLog.h( "%s: \"%s\" ", Messages.titleCase(name()), finalStr );
 	}
 
 	public void resetTalent() {

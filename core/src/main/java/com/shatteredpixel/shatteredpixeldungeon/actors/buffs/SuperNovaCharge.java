@@ -94,7 +94,7 @@ public class SuperNovaCharge extends CounterBuff implements ActionIndicator.Acti
         Hero hero = Dungeon.hero;
 
         if (hero.buff(SuperNova.SuperNovaCooldown.class) == null) {
-            hero.yellW(Messages.get(Hero.class, "aris_no_cooldown"));
+            hero.yellW("no_cooldown");
         } else {
             float duration = hero.buff(SuperNova.SuperNovaCooldown.class).duration();
             countDown((int)duration);

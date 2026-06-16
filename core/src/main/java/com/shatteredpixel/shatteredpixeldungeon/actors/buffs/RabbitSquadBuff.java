@@ -163,7 +163,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
 
     public void snipe(int cell) {
         if (!Dungeon.level.heroFOV[cell]) {
-            Dungeon.hero.yellW(Messages.get(Hero.class, "miyako_cannot_see"));
+            Dungeon.hero.yellW("cannot_see");
             return;
         }
         Char ch = Actor.findChar(cell);
@@ -178,7 +178,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         }
         if (ch != null && ch.alignment == Char.Alignment.ENEMY) {
             Sample.INSTANCE.play(Assets.Sounds.BEACON);
-            Dungeon.hero.yellI(Messages.get(Hero.class, "miyako_attack_miyu"));
+            Dungeon.hero.yellI("attack_miyu");
             Dungeon.hero.busy();
             Dungeon.hero.sprite.operate(Dungeon.hero.pos, new Callback() {
                 @Override
@@ -198,13 +198,13 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
                 }
             });
         } else {
-            Dungeon.hero.yellW(Messages.get(Hero.class, "miyako_no_char"));
+            Dungeon.hero.yellW("no_char");
         }
     }
 
     public void callAirSupport(int cell) {
         Sample.INSTANCE.play(Assets.Sounds.BEACON);
-        Dungeon.hero.yellI(Messages.get(Hero.class, "miyako_attack_moe"));
+        Dungeon.hero.yellI("attack_moe");
         Dungeon.hero.busy();
         Dungeon.hero.sprite.operate(Dungeon.hero.pos, new Callback() {
             @Override
@@ -276,7 +276,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         if (saki != null) { //미야코가 적을 공격할 경우 사키는 해당 적을 우선으로 공격함
             saki.targetChar(enemy);
             if (Random.Float() < 0.1f) { //10% 확률로 대사를 함
-                Dungeon.hero.yellI(Messages.get(Hero.class, "miyako_attack_saki"));
+                Dungeon.hero.yellI("attack_saki");
                 GLog.newLine();
                 GLog.i( "%s: \"%s\" ", Messages.titleCase(saki.name()), Messages.get(this, "saki_react") );
                 GLog.newLine();
@@ -302,7 +302,7 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
 
             hero.spend(1f);
             hero.busy();
-            hero.yellI(Messages.get(Hero.class, "miyako_summon_saki"));
+            hero.yellI("summon_saki");
             Sample.INSTANCE.play(Assets.Sounds.BEACON);
             Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
             CellEmitter.get(saki.pos).burst(Speck.factory(Speck.LIGHT), 4);

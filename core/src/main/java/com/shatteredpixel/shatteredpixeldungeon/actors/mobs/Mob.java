@@ -908,7 +908,7 @@ public abstract class Mob extends Char {
 
 			if (cause == Dungeon.hero && Dungeon.level.heroFOV[pos]) {
 				if (Random.Int(4) == 0) { //25% chance
-					Dungeon.hero.yellI(Messages.get(Hero.class, Dungeon.hero.heroClass.name() + "_enemy_defeated_" + (1 + Random.Int(5)))); //1~5 variable
+					Dungeon.hero.yellI("enemy_defeated_" + (1 + Random.Int(5))); //1~5 variable
 					GLog.newLine();
 				}
 			}

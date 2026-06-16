@@ -73,19 +73,19 @@ public class BankRobber extends Buff implements ActionIndicator.Action {
         KindOfWeapon weapon = hero.belongings.weapon(); //현재 장착한 무기를 가져옴
         Gun gun; //장착한 무기가 총이라면 이곳에 저장
         if (!(weapon instanceof Gun)) {
-            hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_need_gun")); //무기가 없거나 총이 아닐 경우 대사 출력
+            hero.yellW("need_gun"); //무기가 없거나 총이 아닐 경우 대사 출력
             return;
         } else {
             gun = (Gun) weapon; //장착한 총기 인스턴스 저장
         }
 
         if (hero.STR() < gun.STRReq()) {
-            hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_low_str"));
+            hero.yellW("low_str");
             return;
         }
 
         if (gun.round() <= 0) {
-            hero.yellW(Messages.get(Hero.class, hero.heroClass.name() + "_no_ammo"));
+            hero.yellW("no_ammo");
             return;
         }
 

@@ -79,7 +79,7 @@ public class IronHorus extends Item {
                 Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
                 curUser.spendAndNext(Actor.TICK);
             } else {
-                Dungeon.hero.yellN(Messages.get(Hero.class, hero.heroClass.name() + "_shield_cooldown"));
+                Dungeon.hero.yellN("shield_cooldown");
             }
         }
     }

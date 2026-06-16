@@ -42,10 +42,10 @@ public class BatteryChange extends ArmorAbility {
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
 		if (hero.buff(SuperNova.SuperNovaCooldown.class) == null) {
-			hero.yellW(Messages.get(Hero.class, "aris_no_cooldown"));
+			hero.yellW("no_cooldown");
 			return;
 		}
-		hero.yellP(Messages.get(Hero.class, "aris_battery_change"));
+		hero.yellP("battery_change");
 		hero.buff(SuperNova.SuperNovaCooldown.class).detach();
 
 		armor.charge -= chargeUse(hero);

@@ -87,7 +87,7 @@ public class SuperNova extends MeleeWeapon {
         if (action.equals(AC_SHOOT)) {
             if (hero.buff(SuperNovaCooldown.class) != null) {
                 usesTargeting = false;
-                hero.yellW(Messages.get(Hero.class, "aris_supernova_cooldown"));
+                hero.yellW("supernova_cooldown");
             } else {
                 usesTargeting = true;
                 curUser = hero;
@@ -262,7 +262,7 @@ public class SuperNova extends MeleeWeapon {
         public void onSelect( Integer cell ) {
             if (cell != null) {
                 if (cell == curUser.pos) {
-                    hero.yellW(Messages.get(Hero.class, "aris_cannot_self"));
+                    hero.yellW("cannot_self");
                 } else {
                     int dialogNumber = Random.Int(3)+1;
                     GLog.i( "%s: \"%s ", Messages.titleCase(hero.name()), Messages.get(Hero.class, "aris_supernova_" + dialogNumber) );
@@ -439,7 +439,7 @@ public class SuperNova extends MeleeWeapon {
 
         @Override
         public void detach() {
-            hero.yellP(Messages.get(Hero.class, hero.heroClass.name() + "_supernova_ready_" + (Random.Int(3)+1)));
+            hero.yellP("supernova_ready_" + (Random.Int(3)+1));
             updateQuickslot();
             super.detach();
         }

@@ -57,7 +57,7 @@ public class Division extends ArmorAbility {
 		armor.updateQuickslot();
 		Invisibility.dispel();
 		hero.spendAndNext(Actor.TICK);
-		hero.yellN(Messages.get(Hero.class, "aris_division_activate"));
+		hero.yellN("division_activate");
 		Buff.prolong(hero, DivisionBuff.class, 20f);
 		if (hero.hasTalent(Talent.ARIS_ARMOR2_1)) {
 			Buff.affect(hero, Barrier.class).setShield(hero.pointsInTalent(Talent.ARIS_ARMOR2_1) * 2);
@@ -122,7 +122,7 @@ public class Division extends ArmorAbility {
 		@Override
 		public void detach() {
 			super.detach();
-			Dungeon.hero.yellI(Messages.get(Hero.class, "aris_division_detach"));
+			Dungeon.hero.yellI("division_detach");
 		}
 	}
 }
