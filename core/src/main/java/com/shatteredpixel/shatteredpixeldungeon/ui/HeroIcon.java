@@ -143,10 +143,14 @@ public class HeroIcon extends Image {
 	public static final int SHIROKO_3		= 128+51;
 
 	//new action indicator visuals
-  	public static final int CHARGE			= 128+72;
-  	public static final int SHOOT_ALL_ACTION= 128+73;
-  	public static final int SPREAD_SHOT_ACTION= 128+74;
-  	public static final int RABBIT_SQUAD_ACTION= 128+75;
+  	public static final int CHARGE				= 128+72;
+  	public static final int SHOOT_ALL_ACTION	= 128+73;
+  	public static final int SPREAD_SHOT_ACTION	= 128+74;
+  	public static final int RABBIT_SQUAD_ACTION	= 128+75;
+  	public static final int SHIELD_BASH_ACTION	= 128+76;
+  	public static final int SWIFT_MOVEMENT_ACTION= 128+77;
+  	public static final int PROFESSIONAL_RIDING_ACTION= 128+78;
+  	public static final int BANK_ROBBER_ACTION= 128+78;
 
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );

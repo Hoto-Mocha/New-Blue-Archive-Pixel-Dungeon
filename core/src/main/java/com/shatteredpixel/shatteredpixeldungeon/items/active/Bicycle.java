@@ -515,7 +515,7 @@ public class Bicycle extends Item {
 
 		@Override
 		public int actionIcon() {
-			return HeroIcon.PROFESSIONAL_RIDING;
+			return HeroIcon.PROFESSIONAL_RIDING_ACTION;
 		}
 
 		@Override

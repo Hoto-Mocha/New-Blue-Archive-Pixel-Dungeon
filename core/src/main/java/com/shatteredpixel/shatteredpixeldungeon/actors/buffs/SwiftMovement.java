@@ -54,7 +54,7 @@ public class SwiftMovement extends Buff implements ActionIndicator.Action {
 
     @Override
     public int actionIcon() {
-        return HeroIcon.SWIFT_MOVEMENT;
+        return HeroIcon.SWIFT_MOVEMENT_ACTION;
     }
 
     @Override

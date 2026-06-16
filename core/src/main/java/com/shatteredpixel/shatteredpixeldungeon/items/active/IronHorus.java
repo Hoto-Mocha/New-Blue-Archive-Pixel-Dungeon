@@ -391,7 +391,7 @@ public class IronHorus extends Item {
 
         @Override
         public int actionIcon() {
-            return HeroIcon.SHIELD_BASH;
+            return HeroIcon.SHIELD_BASH_ACTION;
         }
 
         @Override
