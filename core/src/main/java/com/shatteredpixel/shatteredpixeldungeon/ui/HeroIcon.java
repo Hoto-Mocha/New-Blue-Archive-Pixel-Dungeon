@@ -150,7 +150,7 @@ public class HeroIcon extends Image {
   	public static final int SHIELD_BASH_ACTION	= 128+76;
   	public static final int SWIFT_MOVEMENT_ACTION= 128+77;
   	public static final int PROFESSIONAL_RIDING_ACTION= 128+78;
-  	public static final int BANK_ROBBER_ACTION= 128+78;
+  	public static final int BANK_ROBBER_ACTION= 128+79;
 
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );

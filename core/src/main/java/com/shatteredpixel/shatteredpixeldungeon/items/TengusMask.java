@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BankRobber;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitSquadBuff;
@@ -121,6 +122,9 @@ public class TengusMask extends Item {
 		}
 		if (way == HeroSubClass.SWIFT_MOVEMENT) {
 			Buff.affect(curUser, SwiftMovement.class);
+		}
+		if (way == HeroSubClass.BANK_ROBBER) {
+			Buff.affect(curUser, BankRobber.class);
 		}
 
 		((HeroSprite)curUser.sprite).updateArmor();
