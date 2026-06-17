@@ -17,6 +17,7 @@ public class Niko extends Mob {
 	public int level;
 
 	{
+		state = HUNTING;
 		spriteClass = NikoSprite.class; //니코 스프라이트 사용
 
 		viewDistance = Light.DISTANCE; //영웅 시야와 동일

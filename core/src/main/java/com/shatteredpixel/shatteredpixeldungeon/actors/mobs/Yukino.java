@@ -18,6 +18,7 @@ public class Yukino extends Mob {
 	public int level;
 
 	{
+		state = HUNTING;
 		spriteClass = YukinoSprite.class; //유키노 스프라이트 사용
 
 		viewDistance = Light.DISTANCE; //영웅 시야와 동일

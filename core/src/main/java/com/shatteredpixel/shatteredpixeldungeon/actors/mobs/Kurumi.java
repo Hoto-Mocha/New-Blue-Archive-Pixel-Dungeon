@@ -17,6 +17,7 @@ public class Kurumi extends Mob {
 	public int level;
 
 	{
+		state = HUNTING;
 		spriteClass = KurumiSprite.class; //쿠루미 스프라이트 사용
 
 		viewDistance = Light.DISTANCE; //영웅 시야와 동일

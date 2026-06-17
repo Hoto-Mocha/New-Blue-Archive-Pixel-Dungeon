@@ -18,6 +18,7 @@ public class Otogi extends Mob {
 	public int level;
 
 	{
+		state = HUNTING;
 		spriteClass = OtogiSprite.class; //오토기 스프라이트 사용
 
 		viewDistance = Light.DISTANCE; //영웅 시야와 동일
