@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
@@ -30,15 +31,25 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Kurumi;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Niko;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Otogi;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Yukino;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.ConeAOE;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -52,11 +63,13 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndTitledMessage;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTradeItem;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.BArray;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -159,6 +172,112 @@ public class Shopkeeper extends NPC {
 		//This is mainly to prevent stacked effects from causing an instant flee
 		} else if (turnsSinceHarmed >= 1) {
 			flee();
+		}
+	}
+
+	public void run(boolean warning) {
+		super.destroy();
+		for (Heap heap: Dungeon.level.heaps.valueList()) {
+			if (heap.type == Heap.Type.FOR_SALE) {
+				heap.type = Heap.Type.HEAP;
+			}
+		}
+
+		Notes.remove( landmark() );
+		yell(Messages.get(this, "yell"));
+		GLog.newLine();
+		if (warning) {
+			GLog.n(Messages.get(this, "flee_warning"));
+			Sample.INSTANCE.play(Assets.Sounds.ALERT);
+			CellEmitter.center( pos ).start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
+
+			//방 안에 있는 아군, NPC를 제외한 몹을 제거
+			Ballistica aim;
+
+			int x = pos % Dungeon.level.width();
+			int y = pos / Dungeon.level.width();
+
+			if (Math.max(x, Dungeon.level.width()-x) >= Math.max(y, Dungeon.level.height()-y)){
+				if (x > Dungeon.level.width()/2){
+					aim = new Ballistica(pos, pos - 1, Ballistica.WONT_STOP);
+				} else {
+					aim = new Ballistica(pos, pos + 1, Ballistica.WONT_STOP);
+				}
+			} else {
+				if (y > Dungeon.level.height()/2){
+					aim = new Ballistica(pos, pos - Dungeon.level.width(), Ballistica.WONT_STOP);
+				} else {
+					aim = new Ballistica(pos, pos + Dungeon.level.width(), Ballistica.WONT_STOP);
+				}
+			}
+
+			ConeAOE aoe = new ConeAOE(aim, 8, 360, Ballistica.STOP_SOLID);
+
+			for (int cell : aoe.cells) {
+				Char ch = Actor.findChar(cell);
+				if (!(ch instanceof Mob) || (ch instanceof NPC && !(ch instanceof Sheep)) || ch.alignment == Alignment.ALLY) continue;
+				ch.destroy();
+				if (ch.sprite != null) {
+					ch.sprite.killAndErase();
+					CellEmitter.get(cell).burst(Speck.factory(Speck.WOOL), 4);
+				}
+			}
+
+			//FOX 소대 생성 준비
+			//상점주인을 중심으로 8타일 위치를 저장
+			ArrayList<Integer> candidates = new ArrayList<>();
+			for (int i : PathFinder.NEIGHBOURS8) {
+				candidates.add(pos+i);
+			}
+
+			Random.shuffle(candidates); //저장한 위치를 무작위 순서로 나열
+
+			for (int i = 0; i < 4; i++) { //4번 소환 후 나머지 생성 위치 후보는 버림
+				int spawnPos = candidates.get(i);
+				Mob toSpawn;
+				if (i == 0) { //첫번째는 유키노 소환
+					toSpawn = Yukino.spawnAt(spawnPos);
+				} else if (i == 1) { //두번째는 니코 소환
+					toSpawn = Niko.spawnAt(spawnPos);
+				} else if (i == 2) { //세번째는 쿠루미 소환
+					toSpawn = Kurumi.spawnAt(spawnPos);
+				} else { //네번째는 오토기 소환
+					toSpawn = Otogi.spawnAt(spawnPos);
+				}
+
+				int pos = candidates.get(i); //생성 위치 후보에 저장된 위치를 가져옴
+				Char c = Actor.findChar(pos); //그 위치에 있는 캐릭터를 찾음
+				if (c != null) { //캐릭터가 있으면 밀어냄
+					Char toPush = Char.hasProp(c, Char.Property.IMMOVABLE) ? toSpawn : c; //밀어낼 대상이 움직일 수 없으면 대신 소환될 캐릭터를 밀어냄
+
+					ArrayList<Integer> pushCandidates = new ArrayList<>(); //밀어낼 위치 후보
+					for (int n : PathFinder.NEIGHBOURS8) {
+						int cell = spawnPos + n;
+						if (!Dungeon.level.solid[cell] && Actor.findChar( cell ) == null
+								&& (!Char.hasProp(toPush, Char.Property.LARGE) || Dungeon.level.openSpace[cell])) {
+							pushCandidates.add( cell );
+						}
+					}
+					Random.shuffle(pushCandidates);
+
+					if (!pushCandidates.isEmpty()){
+						Actor.add( new Pushing( toPush, toPush.pos, pushCandidates.get(0) ));
+
+						toPush.pos = pushCandidates.get(0);
+						Dungeon.level.occupyCell(toPush);
+					}
+				}
+				CellEmitter.get(spawnPos).burst(Speck.factory(Speck.WOOL), 4);
+				GameScene.add(toSpawn, 0f);
+			}
+
+		} else {
+			GLog.i(Messages.get(this, "flee"));
+		}
+
+		if (sprite != null) {
+			sprite.killAndErase();
+			CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6);
 		}
 	}
 	

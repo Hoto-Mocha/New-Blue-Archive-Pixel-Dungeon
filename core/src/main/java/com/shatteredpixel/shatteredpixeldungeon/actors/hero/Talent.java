@@ -2078,6 +2078,7 @@ public enum Talent {
 	}
 
 	public static void shirokoCompass() {
+		if (Dungeon.hero.pointsInTalent(Talent.SHIROKO_T2_4) != 2) return;
 		int[] map = Dungeon.level.map;
 		boolean[] mapped = Dungeon.level.mapped;
 		boolean[] discoverable = Dungeon.level.discoverable;

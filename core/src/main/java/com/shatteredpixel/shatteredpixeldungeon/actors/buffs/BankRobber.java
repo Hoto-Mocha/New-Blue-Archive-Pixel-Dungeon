@@ -9,7 +9,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.ImpShopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BulletParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
@@ -143,6 +145,10 @@ public class BankRobber extends Buff implements ActionIndicator.Action {
                 createRoot(hero, mob);
             }
         }
+
+        if (hero.hasTalent(Talent.SHIROKO_EX2_3)) {
+            robbingShop(hero);
+        }
     }
 
     private void createRoot(Hero hero, Mob mob) {
@@ -164,5 +170,19 @@ public class BankRobber extends Buff implements ActionIndicator.Action {
                 Buff.affect(mob, MasterThievesArmband.StolenTracker.class).setItemStolen(true);
             }
         }
+    }
+
+    private void robbingShop(Hero hero) {
+        Mob shopkeeper = null;
+        for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+            if (Dungeon.level.heroFOV[mob.pos] && mob instanceof Shopkeeper) {
+                shopkeeper = mob;
+            }
+        }
+
+        if (shopkeeper == null) return;
+
+        float chance = 1.2f-0.2f*hero.pointsInTalent(Talent.SHIROKO_EX2_3);
+        ((Shopkeeper)shopkeeper).run(Random.Float() < chance);
     }
 }

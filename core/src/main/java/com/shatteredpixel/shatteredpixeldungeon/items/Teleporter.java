@@ -5,6 +5,8 @@ import static com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMag
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Kurumi;
@@ -13,6 +15,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Niko;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Otogi;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Yukino;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Sheep;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
+import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
@@ -359,23 +366,39 @@ public class Teleporter extends Item {
         @Override
         public void onSelect( Integer target ) {
             if (target != null) {
-                Mob mob;
-                switch (Random.Int(4)) {
-                    case 0:
-                        mob = Yukino.spawnAt(target);
-                        break;
-                    case 1:
-                        mob = Niko.spawnAt(target);
-                        break;
-                    case 2:
-                        mob = Kurumi.spawnAt(target);
-                        break;
-                    case 3: default:
-                        mob = Otogi.spawnAt(target);
-                        break;
+//                Char ch = Actor.findChar(target);
+//                if (ch != null) {
+//                    ch.destroy();
+//                    if (ch.sprite != null) {
+//                        CellEmitter.get(target).burst(Speck.factory(Speck.WOOL), 4);
+//                        Sample.INSTANCE.play(Assets.Sounds.PUFF);
+//                        ch.sprite.killAndErase();
+//                    }
+//                }
+
+                Char ch = Actor.findChar(target);
+                if (ch instanceof Shopkeeper) {
+                    ((Shopkeeper)ch).run(true);
+                    curUser.next();
                 }
-                GameScene.add(mob, 2f);
-                curUser.next();
+
+//                Mob mob;
+//                switch (Random.Int(4)) {
+//                    case 0:
+//                        mob = Yukino.spawnAt(target);
+//                        break;
+//                    case 1:
+//                        mob = Niko.spawnAt(target);
+//                        break;
+//                    case 2:
+//                        mob = Kurumi.spawnAt(target);
+//                        break;
+//                    case 3: default:
+//                        mob = Otogi.spawnAt(target);
+//                        break;
+//                }
+//                GameScene.add(mob, 2f);
+//                curUser.next();
             }
         }
         @Override
