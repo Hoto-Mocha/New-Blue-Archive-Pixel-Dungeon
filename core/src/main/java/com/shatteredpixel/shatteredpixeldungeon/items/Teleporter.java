@@ -7,6 +7,12 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Kurumi;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Niko;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Otogi;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Yukino;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
@@ -28,12 +34,15 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTextInput;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTitledMessage;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Point;
+import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
@@ -350,8 +359,23 @@ public class Teleporter extends Item {
         @Override
         public void onSelect( Integer target ) {
             if (target != null) {
-                System.out.println("---Debug cell check---");
-                System.out.println("target cell: "+target);
+                Mob mob;
+                switch (Random.Int(4)) {
+                    case 0:
+                        mob = Yukino.spawnAt(target);
+                        break;
+                    case 1:
+                        mob = Niko.spawnAt(target);
+                        break;
+                    case 2:
+                        mob = Kurumi.spawnAt(target);
+                        break;
+                    case 3: default:
+                        mob = Otogi.spawnAt(target);
+                        break;
+                }
+                GameScene.add(mob, 2f);
+                curUser.next();
             }
         }
         @Override

@@ -363,5 +363,9 @@ public class Assets {
 		public static final String SAKI     = "sprites/saki.png";
 
 		public static final String CHERINO  = "sprites/cherino.png";
+		public static final String YUKINO  = "sprites/yukino.png";
+		public static final String NIKO  = "sprites/niko.png";
+		public static final String KURUMI  = "sprites/kurumi.png";
+		public static final String OTOGI  = "sprites/otogi.png";
 	}
 }
