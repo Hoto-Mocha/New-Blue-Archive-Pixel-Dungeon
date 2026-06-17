@@ -22,6 +22,8 @@ public class Yukino extends Mob {
 
 		viewDistance = Light.DISTANCE; //영웅 시야와 동일
 
+		properties.add(Property.LARGE);
+
 		immunities.add(Terror.class); 	//공포 면역
 		immunities.add(Dread.class); 	//두려움 면역
 		immunities.add(Amok.class); 	//광란 면역
