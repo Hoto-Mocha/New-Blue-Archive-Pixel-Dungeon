@@ -2,7 +2,12 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.KurumiSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -15,6 +20,12 @@ public class Kurumi extends Mob {
 		spriteClass = KurumiSprite.class; //쿠루미 스프라이트 사용
 
 		viewDistance = Light.DISTANCE; //영웅 시야와 동일
+
+		immunities.add(Terror.class); 	//공포 면역
+		immunities.add(Dread.class); 	//두려움 면역
+		immunities.add(Amok.class); 	//광란 면역
+		immunities.add(Drowsy.class); 	//졸림 면역
+		immunities.add(AllyBuff.class); //아군으로 만들 수 없음
 	}
 
 	@Override
