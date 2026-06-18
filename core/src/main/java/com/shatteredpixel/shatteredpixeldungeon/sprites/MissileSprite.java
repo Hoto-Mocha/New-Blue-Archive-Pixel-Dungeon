@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.PenetrationShot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyLance;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGeomancer;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -179,7 +180,8 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		if (item instanceof Gun.Bullet
 		 || item instanceof YukinoSprite.YukinoShot
 		 || item instanceof NikoSprite.NikoShot
-		 || item instanceof OtogiSprite.OtogiShot) {
+		 || item instanceof OtogiSprite.OtogiShot
+		 || item instanceof PenetrationShot.InvisibleShot) {
 			speed *= 3f;
 		}
 		
