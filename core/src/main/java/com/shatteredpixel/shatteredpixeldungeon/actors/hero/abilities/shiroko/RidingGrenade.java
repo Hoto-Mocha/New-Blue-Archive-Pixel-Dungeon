@@ -10,7 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
 public class RidingGrenade extends ArmorAbility {
     {
-        baseChargeUse = 35f;
+        baseChargeUse = 25f;
     }
 
     @Override
