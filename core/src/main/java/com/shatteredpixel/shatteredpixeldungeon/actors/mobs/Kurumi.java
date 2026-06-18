@@ -9,6 +9,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.KurumiSprite;
@@ -105,7 +107,7 @@ public class Kurumi extends Mob {
 	@Override
 	public Item createLoot() {
 		int tier = 1+level/5;
-		SMG smg = SMG.getSMG(tier);
+		SMG smg = (SMG) Gun.getGun(SMG.class, tier, 0); //SMG 생성
 		smg.identify();
 		return smg;
 	}

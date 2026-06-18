@@ -49,19 +49,4 @@ public class SG extends Gun {
             return 3f;
         }
     }
-
-    public static SG getSG(int tier) {
-        switch (tier) {
-            case 5:
-                return new SG_T5();
-            case 4:
-                return new SG_T4();
-            case 3:
-                return new SG_T3();
-            case 2:
-                return new SG_T2();
-            case 1: default:
-                return new SG_T1();
-        }
-    }
 }

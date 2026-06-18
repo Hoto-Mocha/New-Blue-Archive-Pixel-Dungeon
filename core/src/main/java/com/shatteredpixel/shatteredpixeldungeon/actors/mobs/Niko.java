@@ -9,6 +9,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.NikoSprite;
@@ -110,7 +112,7 @@ public class Niko extends Mob {
 	@Override
 	public Item createLoot() {
 		int tier = 1+level/5;
-		SG sg = SG.getSG(tier);
+		SG sg = (SG) Gun.getGun(SG.class, tier, 0); //SG 생성
 		sg.identify();
 		return sg;
 	}

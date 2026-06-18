@@ -10,6 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.YukinoSprite;
@@ -107,7 +108,7 @@ public class Yukino extends Mob {
 	@Override
 	public Item createLoot() {
 		int tier = 1+level/5;
-		AR ar = AR.getAR(tier);
+		AR ar = (AR) Gun.getGun(AR.class, tier, 0); //AR 생성
 		ar.identify();
 		return ar;
 	}

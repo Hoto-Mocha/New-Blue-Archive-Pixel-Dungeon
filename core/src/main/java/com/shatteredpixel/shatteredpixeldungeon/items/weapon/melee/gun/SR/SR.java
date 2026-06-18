@@ -28,19 +28,4 @@ public class SR extends Gun {
             image = ItemSpriteSheet.SNIPER_BULLET;
         }
     }
-
-    public static SR getSR(int tier) {
-        switch (tier) {
-            case 5:
-                return new SR_T5();
-            case 4:
-                return new SR_T4();
-            case 3:
-                return new SR_T3();
-            case 2:
-                return new SR_T2();
-            case 1: default:
-                return new SR_T1();
-        }
-    }
 }

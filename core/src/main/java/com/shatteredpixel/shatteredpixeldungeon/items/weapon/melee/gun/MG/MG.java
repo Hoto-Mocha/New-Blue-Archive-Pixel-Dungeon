@@ -40,19 +40,4 @@ public class MG extends Gun {
         }
     }
 
-    public static MG getMG(int tier) {
-        switch (tier) {
-            case 5:
-                return new MG_T5();
-            case 4:
-                return new MG_T4();
-            case 3:
-                return new MG_T3();
-            case 2:
-                return new MG_T2();
-            case 1: default:
-                return new MG_T1();
-        }
-    }
-
 }
