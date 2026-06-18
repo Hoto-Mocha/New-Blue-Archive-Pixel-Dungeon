@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class PenetrationShot extends ArmorAbility {
     {
-        baseChargeUse = 25f;
+        baseChargeUse = 35f;
     }
 
     @Override
@@ -170,8 +170,10 @@ public class PenetrationShot extends ArmorAbility {
         protected void onThrow(int cell) {
             Char ch = Actor.findChar(cell);
             if (ch != null) {
-                for (int attacks = 0; attacks < gun.shotPerShoot(); attacks++) {
-                    curUser.attack(ch, 1, 0, 1+0.25f*curUser.pointsInTalent(Talent.SHIROKO_ARMOR1_1));
+                int atkNum = (1+curUser.pointsInTalent(Talent.SHIROKO_ARMOR1_3)); //총 공격 횟수
+                float dmgMulti = (0.9f+0.1f*atkNum)/atkNum; //공격력 배율. 총 피해 증가량: 1타: +0%, 2타: +10%, 3타: +20%, 4타: +30%, 5타: +40%
+                for (int attacks = 0; attacks < gun.shotPerShoot() * (1+curUser.pointsInTalent(Talent.SHIROKO_ARMOR1_3)); attacks++) {
+                    curUser.attack(ch, dmgMulti, 0, 1+0.25f*curUser.pointsInTalent(Talent.SHIROKO_ARMOR1_1));
                     if (curUser.buff(IgnoreArmor.class) != null) {
                         Buff.affect(ch, Vulnerable.class, 10f);
                     }
