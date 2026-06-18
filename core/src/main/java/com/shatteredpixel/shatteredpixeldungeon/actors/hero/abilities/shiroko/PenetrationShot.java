@@ -3,10 +3,15 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
@@ -18,6 +23,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.MissileSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Callback;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -55,34 +61,34 @@ public class PenetrationShot extends ArmorAbility {
         }
 
         Gun gun = (Gun)hero.belongings.weapon; //장착한 총의 인스턴스
-        Gun tempGun = ((Gun)(hero.belongings.weapon).duplicate()); //장착한 총의 사본 생성. 여러 개의 탄환을 발사하면서 현재 장착한 총의 장탄수가 감소하지 않게 하기 위함
 
-
-        if (tempGun.round() <= 0) {
+        if (gun.round() <= 0) {
             GLog.w(Messages.get(this, "no_rounds"));
             return;
         }
 
-        Gun.Bullet bullet = tempGun.knockBullet(); //사본 총의 총알 생성
-        hero.belongings.thrownWeapon = bullet;
+        if (hero.hasTalent(Talent.SHIROKO_ARMOR1_2)) {
+            if (Random.Float() < 0.25f*hero.pointsInTalent(Talent.SHIROKO_ARMOR1_2)) {
+                Buff.affect(hero, IgnoreArmor.class);
+            }
+        }
 
-        bullet.setIgnoreWall(true); //총알이 벽을 무시하여 도달하도록 설정
+        hero.belongings.thrownWeapon = gun.knockBullet(); //사본 총의 총알 생성
 
         Ballistica aim = new Ballistica(hero.pos, target, Ballistica.STOP_TARGET); //현재 위치에서 지정한 위치에 벽을 무시하고 도달하는 직선 경로
         int finalPos = finalPos(aim, 2*hero.pointsInTalent(Talent.SHIROKO_ARMOR1_1)); //벽 관통을 계산한 탄환의 최종 도달 위치
 
-        bullet.ACC *= 1+0.25f*hero.pointsInTalent(Talent.SHIROKO_ARMOR1_1);
-        bullet.cast(hero, finalPos); //탄환 발사
-
-        gun.useRound(); //장착한 총의 장탄수 감소
+        knockBullet(gun, true).cast(hero, finalPos);
 
         ArrayList<Integer> chCells = getCharPositions(aim, finalPos);
 
         for (int cell : chCells) {
-            InvisibleShot invisibleShot = new InvisibleShot();
-            //보이지 않는 아이템을 각 위치로 던져, 아이템이 도착한 시점에 공격. 탄환과 속도가 동일하므로 탄환이 지나가며 공격하는 것처럼 보임
-            invisibleShot.cast(hero, cell);
+            knockBullet(gun, false).cast(hero, cell);
         }
+
+        gun.useRound(); //장착한 총의 장탄수 감소
+
+        hero.sprite.zap(finalPos);
 
         hero.belongings.thrownWeapon = null;
 
@@ -134,10 +140,24 @@ public class PenetrationShot extends ArmorAbility {
         return prevPos;
     }
 
-    public static class InvisibleShot extends Item {
+    public PenetrationBullet knockBullet(Gun gun, boolean visible) {
+        return new PenetrationBullet(gun, visible);
+    }
 
-        {
-            image = ItemSpriteSheet.NO_BULLET;
+    public static class PenetrationBullet extends Item {
+
+        Gun gun;
+        boolean visible;
+
+        PenetrationBullet(Gun gun, boolean visible) {
+            this.gun = gun;
+            this.visible = visible;
+
+            if (visible) {
+                this.image = gun.knockBullet().image;
+            } else {
+                this.image = ItemSpriteSheet.NO_BULLET;
+            }
         }
 
         @Override
@@ -147,12 +167,18 @@ public class PenetrationShot extends ArmorAbility {
 
         @Override
         protected void onThrow(int cell) {
-            if (Actor.findChar(cell) != null) curUser.attack(Actor.findChar(cell), 1, 0, 1+0.25f*curUser.pointsInTalent(Talent.SHIROKO_ARMOR1_1));
+            if (Actor.findChar(cell) != null) {
+                for (int attacks = 0; attacks < gun.shotPerShoot(); attacks++) {
+                    curUser.attack(Actor.findChar(cell), 1, 0, 1+0.25f*curUser.pointsInTalent(Talent.SHIROKO_ARMOR1_1));
+                }
+            }
         }
 
         @Override
         public void cast( final Hero user, final int dst ) {
             final int cell = throwPos( user, dst );
+
+            user.busy();
 
             Char enemy = Actor.findChar( cell );
 
@@ -161,6 +187,11 @@ public class PenetrationShot extends ArmorAbility {
                 public void call() {
                     curUser = user;
                     onThrow(cell);
+                    if (visible) {
+                        CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 4);
+                        CellEmitter.center(cell).burst(BlastParticle.FACTORY, 4);
+                        curUser.spendAndNext(gun.knockBullet().delayFactor(curUser));
+                    }
                 }
             };
 
@@ -173,6 +204,8 @@ public class PenetrationShot extends ArmorAbility {
             }
         }
     }
+
+    public static class IgnoreArmor extends FlavourBuff {}
 
     @Override
     public Talent[] talents() {
