@@ -38,10 +38,6 @@ public class PenetrationShot extends ArmorAbility {
         return HeroIcon.SHIROKO_1;
     }
 
-    public boolean useTargeting(){
-        return true;
-    }
-
     @Override
     public String targetingPrompt() {
         return Messages.get(this, "prompt");

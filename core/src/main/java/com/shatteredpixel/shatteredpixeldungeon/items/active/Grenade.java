@@ -150,6 +150,9 @@ public class Grenade extends Item {
         return 10 + Dungeon.scalingDepth()*2;
     }
 
+    //needs to be overridden
+    public void effectsOnChar(Char ch) {} //폭발에 영향을 받고 살아남은 적에게 입히는 효과
+
     public Boomer knockItem(){
         return new Boomer();
     }
@@ -242,6 +245,10 @@ public class Grenade extends Item {
 
             if (dmg > 0) {
                 ch.damage(dmg, this);
+            }
+
+            if (ch.isAlive()) {
+                effectsOnChar(ch);
             }
 
             if (ch == Dungeon.hero && !ch.isAlive()) {

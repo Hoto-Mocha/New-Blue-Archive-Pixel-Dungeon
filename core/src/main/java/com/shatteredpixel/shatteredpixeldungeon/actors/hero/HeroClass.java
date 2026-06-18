@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.QuickSlot;
@@ -57,7 +56,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.Shad
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.SmokeBomb;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.GPSRoute;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.PenetrationShot;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.RidingGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.WeakeningGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.HeroicLeap;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Shockwave;
@@ -432,7 +431,7 @@ public enum HeroClass {
 			case HOSHINO:
 				return new ArmorAbility[]{new Chase(), new SpikeShield(), new ShieldParry()};
 			case SHIROKO:
-				return new ArmorAbility[]{new PenetrationShot(), new RidingGrenade(), new GPSRoute()};
+				return new ArmorAbility[]{new PenetrationShot(), new WeakeningGrenade(), new GPSRoute()};
 
 			case WARRIOR:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
