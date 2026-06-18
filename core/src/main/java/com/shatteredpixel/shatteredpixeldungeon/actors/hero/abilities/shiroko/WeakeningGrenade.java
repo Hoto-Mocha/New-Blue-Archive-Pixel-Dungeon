@@ -16,6 +16,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -23,7 +24,7 @@ import com.watabou.utils.Random;
 
 public class WeakeningGrenade extends ArmorAbility {
     {
-        baseChargeUse = 25f;
+        baseChargeUse = 35f;
     }
 
     @Override
@@ -82,7 +83,9 @@ public class WeakeningGrenade extends ArmorAbility {
 
             if (Dungeon.hero.hasTalent(Talent.SHIROKO_ARMOR2_2)) {
                 float chance = 0.3f*Dungeon.hero.pointsInTalent(Talent.SHIROKO_ARMOR2_2);
+                GLog.i(chance + "");
                 if (Random.Float() < chance) {
+                    GameScene.flash(0x80FFFFFF);
                     Buff.affect(ch, Blindness.class, 5f);
                 }
                 if (Random.Float() < chance-1) {
