@@ -48,6 +48,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ScrollEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SuperNovaCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SupportDrone;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
@@ -1516,8 +1517,9 @@ public enum Talent {
 
 		if (hero.hasTalent(Talent.MIYAKO_T1_4)
 				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)
+				&& enemy.isAlive()
 				&& enemy.buff(ConfusionTracker.class) == null){
-			dmg += Random.IntRange(hero.pointsInTalent(Talent.MIYAKO_T1_4) , 2);
+			Buff.affect(enemy, Vertigo.class, 1+hero.pointsInTalent(Talent.MIYAKO_T1_4));
 			Buff.affect(enemy, ConfusionTracker.class);
 		}
 
