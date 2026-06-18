@@ -720,8 +720,6 @@ public class Gun extends MeleeWeapon {
 
         private float accMulti = 1f;
         private boolean ignoreWall = false;
-        private boolean playSound = true;
-        private boolean usesTurn = true;
 
         public void setAccMulti(float multi) {
             accMulti = multi;
@@ -729,14 +727,6 @@ public class Gun extends MeleeWeapon {
 
         public void setIgnoreWall(boolean isIgnore) {
             ignoreWall = isIgnore;
-        }
-
-        public void setPlaySound(boolean doesPlay) {
-            playSound = doesPlay;
-        }
-
-        public void setUsesTurn(boolean hasDelay) {
-            usesTurn = hasDelay;
         }
 
         @Override
@@ -839,7 +829,7 @@ public class Gun extends MeleeWeapon {
 
         @Override
         public float castDelay(Char user, int cell) {
-            return usesTurn ? delayFactor(user) : 0;
+            return delayFactor(user);
         }
 
         @Override
@@ -998,9 +988,7 @@ public class Gun extends MeleeWeapon {
 
         @Override
         public void throwSound() {
-            if (playSound) {
-                Sample.INSTANCE.play( Assets.Sounds.HIT_CRUSH, 1, Random.Float(0.33f, 0.66f) );
-            }
+            Sample.INSTANCE.play( Assets.Sounds.HIT_CRUSH, 1, Random.Float(0.33f, 0.66f) );
         }
 
         @Override
