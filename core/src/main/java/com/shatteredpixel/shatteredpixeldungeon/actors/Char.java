@@ -85,6 +85,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.Pow
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Chase;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.DeathMark;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.PenetrationShot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.AuraOfProtection;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BeamingRay;
@@ -418,6 +419,10 @@ public abstract class Char extends Actor {
 				}
 
 				if (h.buff(MonkEnergy.MonkAbility.UnarmedAbilityTracker.class) != null){
+					dr = 0;
+				}
+
+				if (h.buff(PenetrationShot.IgnoreArmor.class) != null){
 					dr = 0;
 				}
 			}
@@ -1085,6 +1090,12 @@ public abstract class Char extends Actor {
 
 			//special case for hoshino armor ability
 			if (src instanceof Chase){
+				icon = FloatingText.PHYS_DMG_NO_BLOCK;
+			}
+
+			//special case for shiroko armor ability
+			if (src == Dungeon.hero
+					&& Dungeon.hero.buff(PenetrationShot.IgnoreArmor.class) != null){
 				icon = FloatingText.PHYS_DMG_NO_BLOCK;
 			}
 

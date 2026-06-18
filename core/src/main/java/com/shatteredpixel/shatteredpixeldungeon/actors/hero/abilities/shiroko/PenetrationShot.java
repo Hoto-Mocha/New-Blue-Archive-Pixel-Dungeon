@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -167,9 +168,13 @@ public class PenetrationShot extends ArmorAbility {
 
         @Override
         protected void onThrow(int cell) {
-            if (Actor.findChar(cell) != null) {
+            Char ch = Actor.findChar(cell);
+            if (ch != null) {
                 for (int attacks = 0; attacks < gun.shotPerShoot(); attacks++) {
-                    curUser.attack(Actor.findChar(cell), 1, 0, 1+0.25f*curUser.pointsInTalent(Talent.SHIROKO_ARMOR1_1));
+                    curUser.attack(ch, 1, 0, 1+0.25f*curUser.pointsInTalent(Talent.SHIROKO_ARMOR1_1));
+                    if (curUser.buff(IgnoreArmor.class) != null) {
+                        Buff.affect(ch, Vulnerable.class, 10f);
+                    }
                 }
             }
         }
@@ -191,6 +196,9 @@ public class PenetrationShot extends ArmorAbility {
                         CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 4);
                         CellEmitter.center(cell).burst(BlastParticle.FACTORY, 4);
                         curUser.spendAndNext(gun.knockBullet().delayFactor(curUser));
+                        if (curUser.buff(IgnoreArmor.class) != null) {
+                            curUser.buff(IgnoreArmor.class).detach();
+                        }
                     }
                 }
             };
