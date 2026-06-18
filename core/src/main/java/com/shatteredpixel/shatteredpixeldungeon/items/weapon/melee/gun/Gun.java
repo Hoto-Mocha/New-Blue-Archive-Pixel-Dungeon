@@ -721,7 +721,7 @@ public class Gun extends MeleeWeapon {
         private float accMulti = 1f;
         private boolean ignoreWall = false;
         private boolean playSound = true;
-        private boolean usesTurn = false;
+        private boolean usesTurn = true;
 
         public void setAccMulti(float multi) {
             accMulti = multi;
@@ -839,7 +839,7 @@ public class Gun extends MeleeWeapon {
 
         @Override
         public float castDelay(Char user, int cell) {
-            return usesTurn ? super.castDelay(user, cell) : 0;
+            return usesTurn ? delayFactor(user) : 0;
         }
 
         @Override
