@@ -28,4 +28,19 @@ public class GL extends Gun {
         }
     }
 
+    public static GL getGL(int tier) {
+        switch (tier) {
+            case 5:
+                return new GL_T5();
+            case 4:
+                return new GL_T4();
+            case 3:
+                return new GL_T3();
+            case 2:
+                return new GL_T2();
+            case 1: default:
+                return new GL_T1();
+        }
+    }
+
 }

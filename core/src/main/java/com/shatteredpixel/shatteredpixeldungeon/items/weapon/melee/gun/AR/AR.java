@@ -37,4 +37,19 @@ public class AR extends Gun {
             image = ItemSpriteSheet.SINGLE_BULLET;
         }
     }
+
+    public static AR getAR(int tier) {
+        switch (tier) {
+            case 5:
+                return new AR_T5();
+            case 4:
+                return new AR_T4();
+            case 3:
+                return new AR_T3();
+            case 2:
+                return new AR_T2();
+            case 1: default:
+                return new AR_T1();
+        }
+    }
 }
