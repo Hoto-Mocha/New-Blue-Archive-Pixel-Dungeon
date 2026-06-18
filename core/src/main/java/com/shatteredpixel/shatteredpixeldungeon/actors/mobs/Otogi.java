@@ -34,7 +34,7 @@ public class Otogi extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 2 + level, 3 + 3*level); //원거리 공격 피해량. 유키노보다 50% 높음, 현재 층에 따라 증가
+		return Random.NormalIntRange( 2 + level, 3 + 3*level); //원거리 공격 피해량. 유키노보다 높음, 현재 층에 따라 증가
 	}
 
 	@Override
@@ -44,13 +44,13 @@ public class Otogi extends Mob {
 
 	@Override
 	public int attackSkill( Char target ) {
-		return 6 + level; //정확성
+		return 2 + level*2; //정확성
 	}
 
 	@Override
 	protected boolean canAttack( Char enemy ) {
 		return !Dungeon.level.adjacent( pos, enemy.pos )
-				&& (super.canAttack(enemy) || new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos); //원거리에서만 공격 가능. 투사체가 닿을 수 있는 곳에만 공격 가능
+				&& (super.canAttack(enemy) || new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos ); //원거리에서만 공격 가능. 투사체가 닿을 수 있는 곳에만 공격 가능
 	}
 
 	@Override

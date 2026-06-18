@@ -33,7 +33,7 @@ public class Kurumi extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 1 + level/2, 1 + level + level/2); //근접 공격 피해량. 유키노보다 낮으며, 현재 층에 따라 증가
+		return Random.NormalIntRange( 1 + level/2, 1 + level + level/2 ); //근접 공격 피해량. 유키노보다 낮으며, 현재 층에 따라 증가
 	}
 
 	@Override

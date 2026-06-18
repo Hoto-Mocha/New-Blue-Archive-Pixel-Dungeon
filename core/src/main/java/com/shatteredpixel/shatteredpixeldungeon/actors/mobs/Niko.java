@@ -33,7 +33,7 @@ public class Niko extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 1 + level, 3 + 3*level); //산탄총 공격 피해량. 유키노보다 약 1.5배 높음, 현재 층에 따라 증가
+		return Random.NormalIntRange( 1 + level, 3 + 3*level); //산탄총 공격 피해량. 유키노보다 높음, 현재 층에 따라 증가
 	}
 
 	@Override
