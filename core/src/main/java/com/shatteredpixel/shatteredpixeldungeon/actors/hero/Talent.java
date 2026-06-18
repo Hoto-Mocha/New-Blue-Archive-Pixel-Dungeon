@@ -1536,7 +1536,7 @@ public enum Talent {
 
 	public static int onDefenseProc(Hero hero, Char enemy, int damage) {
 
-		if (hero.buff(FirstAidCooldown.class) == null && hero.HP <= hero.HT/4) {
+		if (hero.buff(FirstAidCooldown.class) == null && hero.HP <= hero.HT/4 && hero.hasTalent(Talent.HOSHINO_T1_1)) {
 			hero.heal(2+2*hero.pointsInTalent(Talent.HOSHINO_T1_1));
 			Buff.affect(hero, FirstAidCooldown.class, 50f);
 		}
