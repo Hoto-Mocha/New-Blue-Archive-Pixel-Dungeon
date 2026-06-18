@@ -71,6 +71,7 @@ public class PenetrationShot extends ArmorAbility {
         Ballistica aim = new Ballistica(hero.pos, target, Ballistica.STOP_TARGET); //현재 위치에서 지정한 위치에 벽을 무시하고 도달하는 직선 경로
         int finalPos = finalPos(aim, 2*hero.pointsInTalent(Talent.SHIROKO_ARMOR1_1)); //벽 관통을 계산한 탄환의 최종 도달 위치
 
+        bullet.ACC *= 1+0.25f*hero.pointsInTalent(Talent.SHIROKO_ARMOR1_1);
         bullet.cast(hero, finalPos); //탄환 발사
 
         gun.useRound(); //장착한 총의 장탄수 감소
@@ -146,7 +147,7 @@ public class PenetrationShot extends ArmorAbility {
 
         @Override
         protected void onThrow(int cell) {
-            if (Actor.findChar(cell) != null) curUser.attack(Actor.findChar(cell));
+            if (Actor.findChar(cell) != null) curUser.attack(Actor.findChar(cell), 1, 0, 1+0.25f*curUser.pointsInTalent(Talent.SHIROKO_ARMOR1_1));
         }
 
         @Override
