@@ -430,8 +430,9 @@ public class IronHorus extends Item {
                     detach();
                     return;
                 }
-                if (Dungeon.hero.buff(Roots.class) != null) {
-                    GLog.w(Messages.get(ShieldBashBuff.class, "cannot_move"));
+                if (Dungeon.hero.rooted) {
+                    PixelScene.shake( 1, 1f );
+                    Dungeon.hero.yellW("rooted");
                     return;
                 }
                 int distance;
@@ -445,18 +446,18 @@ public class IronHorus extends Item {
                 }
                 if (target != null) {
                     if (Dungeon.level.distance(Dungeon.hero.pos, target) > distance) {
-                        GLog.w(Messages.get(ShieldBashBuff.class, "cannot_reach"));
+                        Dungeon.hero.yellW("bad_location");
                         return;
                     }
 
                     if (!Dungeon.level.passable[target]) {
-                        GLog.w(Messages.get(ShieldBashBuff.class, "cannot_reach"));
+                        Dungeon.hero.yellW("bad_location");
                         return;
                     }
 
                     Ballistica path = new Ballistica(Dungeon.hero.pos, target, Ballistica.PROJECTILE | Ballistica.IGNORE_SOFT_SOLID);
                     if (!Objects.equals(path.collisionPos, target)) {
-                        GLog.w(Messages.get(ShieldBashBuff.class, "cannot_reach"));
+                        Dungeon.hero.yellW("bad_location");
                         return;
                     }
 

@@ -19,7 +19,6 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MirrorSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.TargetHealthIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -76,18 +75,18 @@ public class SwiftMovement extends Buff implements ActionIndicator.Action {
                 Hero hero = Dungeon.hero;
                 
                 if (!Dungeon.level.adjacent(hero.pos, target)){
-                    GLog.w(Messages.get(this, "too_far"));
+                    hero.yellW("too_far");
                     return;
                 }
 
                 if (Dungeon.hero.rooted){
                     PixelScene.shake( 1, 1f );
-                    GLog.w(Messages.get(this, "rooted"));
+                    hero.yellW("rooted");
                     return;
                 }
 
                 if (!Dungeon.level.passable[target] || Actor.findChar(target) != null){
-                    GLog.w(Messages.get(this, "bad_location"));
+                    hero.yellW("bad_location");
                     return;
                 }
 
