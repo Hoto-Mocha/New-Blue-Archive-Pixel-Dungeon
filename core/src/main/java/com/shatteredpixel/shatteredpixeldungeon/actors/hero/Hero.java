@@ -653,7 +653,7 @@ public class Hero extends Char {
 		}
 
 		if (hero.hasTalent(Talent.SHIROKO_EX1_2) && hero.buff(Bicycle.BicycleBuff.class) != null) {
-			evasion *= 1 + hero.speed()*hero.pointsInTalent(Talent.SHIROKO_EX1_2)/6f;
+			evasion *= Math.max(1, 1+(hero.speed()-1)*hero.pointsInTalent(Talent.SHIROKO_EX1_2)/6f);
 		}
 
 		return Math.max(1, Math.round(evasion));
