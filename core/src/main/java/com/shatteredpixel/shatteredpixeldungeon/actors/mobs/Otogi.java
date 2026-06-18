@@ -8,6 +8,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.OtogiSprite;
 import com.watabou.utils.Bundle;
@@ -30,6 +32,8 @@ public class Otogi extends Mob {
 		immunities.add(Amok.class); 	//광란 면역
 		immunities.add(Drowsy.class); 	//졸림 면역
 		immunities.add(AllyBuff.class); //아군으로 만들 수 없음
+
+		lootChance = 1f;
 	}
 
 	@Override
@@ -95,6 +99,14 @@ public class Otogi extends Mob {
 		level = bundle.getInt( LEVEL );
 		adjustStats(level);
 		super.restoreFromBundle(bundle);
+	}
+
+	@Override
+	public Item createLoot() {
+		int tier = 1+level/5;
+		SR sr = SR.getSR(tier);
+		sr.identify();
+		return sr;
 	}
 	
 }

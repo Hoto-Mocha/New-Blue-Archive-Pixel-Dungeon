@@ -8,6 +8,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.NikoSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -29,6 +31,8 @@ public class Niko extends Mob {
 		immunities.add(Amok.class); 	//광란 면역
 		immunities.add(Drowsy.class); 	//졸림 면역
 		immunities.add(AllyBuff.class); //아군으로 만들 수 없음
+
+		lootChance = 1f;
 	}
 
 	@Override
@@ -89,6 +93,14 @@ public class Niko extends Mob {
 		level = bundle.getInt( LEVEL );
 		adjustStats(level);
 		super.restoreFromBundle(bundle);
+	}
+
+	@Override
+	public Item createLoot() {
+		int tier = 1+level/5;
+		SG sg = SG.getSG(tier);
+		sg.identify();
+		return sg;
 	}
 
 }
