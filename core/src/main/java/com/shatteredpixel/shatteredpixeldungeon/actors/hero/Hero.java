@@ -74,6 +74,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Ch
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.ShieldParry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.GPSRoute;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HallowedGround;
@@ -809,6 +810,10 @@ public class Hero extends Char {
 		Bicycle.BicycleBuff bicycleBuff = buff(Bicycle.BicycleBuff.class);
 		if (bicycleBuff != null) {
 			speed *= 2f;
+		}
+
+		if (buff(GPSRoute.RouteBuff.class) != null && buff(GPSRoute.RouteBuff.class).onPath()) {
+			speed *= 3f;
 		}
 
 		speed = AscensionChallenge.modifyHeroSpeed(speed);
