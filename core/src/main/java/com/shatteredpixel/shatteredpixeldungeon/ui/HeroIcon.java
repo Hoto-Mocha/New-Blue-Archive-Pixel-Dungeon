@@ -138,9 +138,9 @@ public class HeroIcon extends Image {
 	public static final int HOSHINO_1		= 128+49;
 	public static final int HOSHINO_2		= 128+50;
 	public static final int HOSHINO_3		= 128+51;
-	public static final int SHIROKO_1		= 128+49;
-	public static final int SHIROKO_2		= 128+50;
-	public static final int SHIROKO_3		= 128+51;
+	public static final int SHIROKO_1		= 128+52;
+	public static final int SHIROKO_2		= 128+53;
+	public static final int SHIROKO_3		= 128+54;
 
 	//new action indicator visuals
   	public static final int CHARGE				= 128+72;
