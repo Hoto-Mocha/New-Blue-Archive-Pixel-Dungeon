@@ -254,7 +254,7 @@ public enum HeroClass {
 		Dungeon.quickslot.setSlot(0, superNova);
 
 		ThrowingStone stones = new ThrowingStone();
-		stones.quantity(3).collect();
+		stones.identify().quantity(3).collect();
 		Dungeon.quickslot.setSlot(1, stones);
 
 		if (hero.belongings.armor != null){
