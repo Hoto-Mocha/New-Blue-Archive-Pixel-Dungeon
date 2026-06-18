@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -28,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Bundle;
@@ -245,6 +247,9 @@ public class SuperNova extends MeleeWeapon {
         if (charge != null) charge.detach();
 
         curUser.sprite.zap(target);
+        Sample.INSTANCE.play(Assets.Sounds.RAY, 1, 1);
+        Sample.INSTANCE.play(Assets.Sounds.RAY, 0.8f, 1.2f);
+        Sample.INSTANCE.play(Assets.Sounds.RAY, 0.8f, 0.8f);
         int cell = beam.path.get(Math.min(beam.dist, maxDistance));
         curUser.sprite.parent.add(new Beam.SuperNovaRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell ), (empowered) ? 7 : 3));
 
@@ -268,6 +273,9 @@ public class SuperNova extends MeleeWeapon {
                     GLog.i( "%s: \"%s ", Messages.titleCase(hero.name()), Messages.get(Hero.class, "aris_supernova_" + dialogNumber) );
                     float delay = 1.2f;
                     hero.busy();
+                    Sample.INSTANCE.play(Assets.Sounds.CHARGEUP, 1, 1);
+                    Sample.INSTANCE.play(Assets.Sounds.CHARGEUP, 0.8f, 1.2f);
+                    Sample.INSTANCE.play(Assets.Sounds.CHARGEUP, 0.8f, 0.8f);
                     hero.sprite.parent.add(new Tweener(hero.sprite.parent, delay) { //delay초 후에 작동하도록 설정한 Tweener
                         @Override
                         protected void updateValues(float progress) { //시간이 지남에 따라 실행되는 함수
