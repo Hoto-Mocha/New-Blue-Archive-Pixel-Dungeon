@@ -96,9 +96,11 @@ public class BankRobber extends Buff implements ActionIndicator.Action {
         final Gun.Bullet bullet = gun.knockBullet(); //발사음 재생을 위한 인스턴스
         final int amount = Math.round(gun.tier()*rounds*1.5f);
         for (int i = 0; i < rounds; i++) {
-            Dungeon.hero.sprite.parent.add(new Tweener(Dungeon.hero.sprite.parent, delay) {
+            hero.sprite.parent.add(new Tweener(hero.sprite.parent, delay) {
                 @Override
-                protected void updateValues(float progress) {}
+                protected void updateValues(float progress) {
+                    hero.busy();
+                }
 
                 @Override
                 protected void onComplete() {
@@ -112,6 +114,7 @@ public class BankRobber extends Buff implements ActionIndicator.Action {
                     if (gun.round() == 0) { //마지막 발사일 때 능력 효과 발동
                         onAction(hero, amount);
                     }
+                    hero.next();
                 }
             });
             //장탄수가 얼마나 되든 총 0.4초가 소모됨. 장탄수가 많을수록 발사 속도가 빠르고, 적을수록 발사 속도가 느려짐.
@@ -134,16 +137,25 @@ public class BankRobber extends Buff implements ActionIndicator.Action {
             }
         }
 
+        boolean immediateDread = false;
         for (Mob mob : targets){
+            if (hero.hasTalent(Talent.SHIROKO_EX2_1) && targets.size() >= 2 && Dungeon.level.adjacent(mob.pos, hero.pos)) {
+                Buff.affect(mob, Paralysis.class, 1f);
+                immediateDread = true;
+            }
+
+            if (mob.buff(Terror.class) != null) {
+                if (mob.buff(Terror.class).cooldown() >= 20 && !mob.isImmune(Dread.class)
+                    || (immediateDread && Random.Float() < 1f * hero.pointsInTalent(Talent.SHIROKO_EX2_1))) {
+                    mob.buff(Terror.class).detach();
+                    Buff.affect( mob, Dread.class ).object = hero.id();
+
+                    createRoot(hero, mob);
+                }
+            }
+
             int finalAmount = Math.round(amount*(1-mob.HP/(float)mob.HT));
             Buff.affect(mob, Terror.class, finalAmount);
-
-            if (mob.buff(Terror.class) != null && mob.buff(Terror.class).cooldown() >= 20 && !mob.isImmune(Dread.class)) {
-                mob.buff(Terror.class).detach();
-                Buff.affect( mob, Dread.class ).object = hero.id();
-
-                createRoot(hero, mob);
-            }
         }
 
         if (hero.hasTalent(Talent.SHIROKO_EX2_3)) {
