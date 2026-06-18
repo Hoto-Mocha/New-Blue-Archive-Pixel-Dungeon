@@ -73,6 +73,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Shuriken;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -720,6 +721,7 @@ public class Gun extends MeleeWeapon {
         private float accMulti = 1f;
         private boolean ignoreWall = false;
         private boolean playSound = true;
+        private boolean usesTurn = false;
 
         public void setAccMulti(float multi) {
             accMulti = multi;
@@ -731,6 +733,10 @@ public class Gun extends MeleeWeapon {
 
         public void setPlaySound(boolean doesPlay) {
             playSound = doesPlay;
+        }
+
+        public void setUsesTurn(boolean hasDelay) {
+            usesTurn = hasDelay;
         }
 
         @Override
@@ -829,6 +835,11 @@ public class Gun extends MeleeWeapon {
             float speed = Gun.this.delayFactor(user) * shootingSpeed;
 
             return speed;
+        }
+
+        @Override
+        public float castDelay(Char user, int cell) {
+            return usesTurn ? super.castDelay(user, cell) : 0;
         }
 
         @Override
