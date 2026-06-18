@@ -80,10 +80,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HallowedGroun
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWard;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Smite;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Kurumi;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Monk;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Niko;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Otogi;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Snake;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Yukino;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CheckedCell;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
@@ -2350,6 +2354,9 @@ public class Hero extends Char {
 		Dungeon.hero.belongings.identify();
 
 		Dungeon.hero.yellN("die");
+		if (cause instanceof Yukino || cause instanceof Niko || cause instanceof Kurumi || cause instanceof Otogi) {
+			((Mob)cause).yell(Messages.get(cause.getClass(), "kill"));
+		}
 
 		int pos = Dungeon.hero.pos;
 

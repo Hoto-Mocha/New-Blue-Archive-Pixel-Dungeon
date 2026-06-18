@@ -231,7 +231,7 @@ public class Shopkeeper extends NPC {
 			}
 
 			Random.shuffle(candidates); //저장한 위치를 무작위 순서로 나열
-
+			int talkIndex = Random.Int(4);
 			for (int i = 0; i < 4; i++) { //4번 소환 후 나머지 생성 위치 후보는 버림
 				int spawnPos = candidates.get(i);
 				Mob toSpawn;
@@ -243,6 +243,10 @@ public class Shopkeeper extends NPC {
 					toSpawn = Kurumi.spawnAt(spawnPos);
 				} else { //네번째는 오토기 소환
 					toSpawn = Otogi.spawnAt(spawnPos);
+				}
+
+				if (i == talkIndex) {
+					toSpawn.yell(Messages.get(toSpawn.getClass(), "show"));
 				}
 
 				int pos = candidates.get(i); //생성 위치 후보에 저장된 위치를 가져옴

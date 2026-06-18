@@ -10,6 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.KurumiSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -17,6 +18,7 @@ import com.watabou.utils.Random;
 public class Kurumi extends Mob {
 
 	public int level;
+	public boolean hit = false;
 
 	{
 		state = HUNTING;
@@ -74,12 +76,23 @@ public class Kurumi extends Mob {
 		defenseSkill = 1 + level/3; //유키노보다 회피가 낮음
 	}
 
+	@Override
+	public int defenseProc(Char enemy, int damage) {
+		if (!hit) {
+			yell(Messages.get(this, "hit"));
+			hit = true;
+		}
+		return super.defenseProc(enemy, damage);
+	}
+
 	private static final String LEVEL	= "level";
+	private static final String HIT	= "hit";
 
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( LEVEL, level );
+		bundle.put( HIT, hit );
 	}
 
 	@SuppressWarnings("unchecked")
@@ -88,6 +101,7 @@ public class Kurumi extends Mob {
 		level = bundle.getInt( LEVEL );
 		adjustStats(level);
 		super.restoreFromBundle(bundle);
+		hit = bundle.getBoolean( HIT );
 	}
 
 	@Override
