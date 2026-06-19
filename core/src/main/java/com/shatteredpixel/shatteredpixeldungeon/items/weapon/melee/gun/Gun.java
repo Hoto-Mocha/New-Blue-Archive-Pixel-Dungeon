@@ -764,11 +764,7 @@ public class Gun extends MeleeWeapon {
 
             if (attacker instanceof Hero && ((Hero)attacker).heroClass == HeroClass.SHIROKO) {
                 if (Random.Float() < 1/(float)shotPerShoot()) {
-                    damage += (int)Math.ceil(Dungeon.scalingDepth()/5f);
-
-                    if (((Hero)attacker).hasTalent(Talent.SHIROKO_T1_3)) {
-                        damage += ((Hero)attacker).pointsInTalent(Talent.SHIROKO_T1_3);
-                    }
+                    defender.damage((int)Math.ceil(Dungeon.scalingDepth()/5f) + ((Hero)attacker).pointsInTalent(Talent.SHIROKO_T1_3), this);
                 }
             }
 
