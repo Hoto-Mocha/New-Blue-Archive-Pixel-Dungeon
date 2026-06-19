@@ -21,8 +21,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Wir
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.ConversionKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.GunSmithingTool;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
@@ -73,13 +75,13 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Shuriken;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -93,6 +95,8 @@ public class Gun extends MeleeWeapon {
     public static final String AC_SHOOT		= "SHOOT";
     public static final String AC_RELOAD    = "RELOAD";
 
+    protected static final String AC_DETACH       = "DETACH";
+
     protected int max_round; //최대 장탄수
     protected int round; //현재 장탄수
     protected float reload_time = 2f; //재장전 시간
@@ -102,6 +106,8 @@ public class Gun extends MeleeWeapon {
     protected boolean explode = false; //탄환 폭발 여부
     protected boolean spread = false; //산탄 여부. 멀리 떨어지면 탄환 위력이 감소한다.
     public static final String TXT_STATUS = "%d/%d";
+
+    ConversionKit kit;
 
     public boolean isEmpowered = false;
 
@@ -250,6 +256,7 @@ public class Gun extends MeleeWeapon {
     private static final String ATTACH_MOD = "attachMod";
     private static final String ENCHANT_MOD = "enchantMod";
     private static final String INSCRIBE_MOD = "inscribeMod";
+    private static final String KIT = "kit";
     @Override
     public void storeInBundle(Bundle bundle) {
         super.storeInBundle(bundle);
@@ -268,6 +275,7 @@ public class Gun extends MeleeWeapon {
         bundle.put(ATTACH_MOD, attachMod);
         bundle.put(ENCHANT_MOD, enchantMod);
         bundle.put(INSCRIBE_MOD, inscribeMod);
+        bundle.put(KIT, kit);
     }
 
     @Override
@@ -288,6 +296,7 @@ public class Gun extends MeleeWeapon {
         attachMod = bundle.getEnum(ATTACH_MOD, AttachMod.class);
         enchantMod = bundle.getEnum(ENCHANT_MOD, EnchantMod.class);
         inscribeMod = bundle.getEnum(INSCRIBE_MOD, InscribeMod.class);
+        kit = (ConversionKit) bundle.get(KIT);
     }
 
     @Override
@@ -306,6 +315,7 @@ public class Gun extends MeleeWeapon {
                 actions.remove(AC_THROW);
             }
         }
+        if (kit != null) actions.add(AC_DETACH);
         return actions;
     }
 
@@ -353,6 +363,15 @@ public class Gun extends MeleeWeapon {
             } else {
                 reload();
             }
+        }
+        if (action.equals(AC_DETACH) && kit != null){
+            ConversionKit detaching = detachKit();
+            GLog.i( Messages.get(Gun.class, "detach_kit") );
+            hero.sprite.operate(hero.pos);
+            if (!detaching.collect()){
+                Dungeon.level.drop(detaching, hero.pos);
+            }
+            updateQuickslot();
         }
     }
 
@@ -444,6 +463,8 @@ public class Gun extends MeleeWeapon {
             amount += hero.pointsInTalent(Talent.NONOMI_EX1_1);
         }
 
+        if (kit != null) amount += 1;
+
         return amount;
     }
 
@@ -463,6 +484,10 @@ public class Gun extends MeleeWeapon {
 
         if (hero != null && hero.hasTalent(Talent.NONOMI_EX1_1)) {
             amount += 1;
+        }
+
+        if (kit != null) {
+            amount -= 1;
         }
 
         amount = Math.max(0, amount);
@@ -683,6 +708,10 @@ public class Gun extends MeleeWeapon {
             info += Messages.get(this, "modded_end");
         }
 
+        if (kit != null) {
+            info += "\n\n" + Messages.get(Gun.class, "kit_attached");
+        }
+
         return info;
     }
 
@@ -700,6 +729,55 @@ public class Gun extends MeleeWeapon {
     public Bullet knockBullet(){
         Gdx.app.log("DEBUG", "instance created");
         return new Bullet();
+    }
+
+    public void affixKit(ConversionKit kit){
+        this.kit = kit;
+        if (kit.level() > 0){
+            //doesn't trigger upgrading logic such as affecting curses/glyphs
+            int newLevel = trueLevel()+1;
+            level(newLevel);
+            Badges.validateItemLevelAquired(this);
+        }
+    }
+
+    public ConversionKit detachKit(){
+        if (kit != null){
+
+            ConversionKit detaching = kit;
+            kit = null;
+
+            if (detaching.level() > 0){
+                degrade();
+            }
+
+            if (round() > maxRound()) quickReload();
+
+            return detaching;
+        } else {
+            return null;
+        }
+    }
+
+    public ConversionKit checkKit(){
+        return kit;
+    }
+
+    @Override
+    public Emitter emitter() {
+        if (kit == null) return super.emitter();
+        Emitter emitter = new Emitter();
+        emitter.pos(ItemSpriteSheet.film.width(image)/2f + 2f, ItemSpriteSheet.film.height(image)/3f);
+        emitter.fillTarget = false;
+        emitter.pour(Speck.factory( Speck.BLUE_LIGHT ), 0.6f);
+        return emitter;
+    }
+
+    @Override
+    public Item upgrade() {
+        if (kit != null && kit.level() == 0)
+            kit.upgrade();
+        return super.upgrade();
     }
 
     public class Bullet extends MissileWeapon {
