@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
@@ -10,6 +12,15 @@ public class HG extends Gun {
         round = max_round;
         shootingSpeed = 0.5f;
         reload_time = 1f;
+    }
+
+    @Override
+    public int STRReq(int lvl) {
+        int req = super.STRReq(lvl);
+        if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.NOA){
+            req -= 1;
+        }
+        return req;
     }
 
     @Override

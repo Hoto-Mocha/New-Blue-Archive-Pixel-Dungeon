@@ -48,6 +48,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WildM
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.CloseAirSupport;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Helicopter;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.WireHook;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.noa.Hologram;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.noa.SuperNovaBeam;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.noa.TrapDuplicate;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.BlackCard;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Present;
@@ -106,6 +109,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T1;
@@ -123,6 +127,7 @@ public enum HeroClass {
 	MIYAKO(HeroSubClass.RABBIT_SQUAD, HeroSubClass.SUPPORT_DRONE),
 	HOSHINO(HeroSubClass.SHIELD_BASH, HeroSubClass.SWIFT_MOVEMENT),
 	SHIROKO(HeroSubClass.PROFESSIONAL_RIDING, HeroSubClass.BANK_ROBBER),
+	NOA(HeroSubClass.DOUBLE_BARREL, HeroSubClass.AUTO_SEAR),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
@@ -189,6 +194,10 @@ public enum HeroClass {
 
 			case SHIROKO:
 				initShiroko( hero );
+				break;
+
+			case NOA:
+				initNoa( hero );
 				break;
 
 
@@ -315,6 +324,15 @@ public enum HeroClass {
 		new ScrollOfRage().identify();
 	}
 
+	private static void initNoa(Hero hero) {
+		HG_T1 hgT1 = new HG_T1();
+		(hero.belongings.weapon = hgT1).identify();
+		Dungeon.quickslot.setSlot(0, hgT1);
+
+		new PotionOfHealing().identify();
+		new ScrollOfRage().identify();
+	}
+
 	private static void initWarrior( Hero hero ) {
 		(hero.belongings.weapon = new WornShortsword()).identify();
 		ThrowingStone stones = new ThrowingStone();
@@ -432,6 +450,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new Chase(), new SpikeShield(), new ShieldParry()};
 			case SHIROKO:
 				return new ArmorAbility[]{new PenetrationShot(), new WeakeningGrenade(), new GPSRoute()};
+			case NOA:
+				return new ArmorAbility[]{new TrapDuplicate(), new Hologram(), new SuperNovaBeam()};
 
 			case WARRIOR:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
@@ -460,6 +480,8 @@ public enum HeroClass {
 				return Assets.Sprites.HOSHINO;
 			case SHIROKO:
 				return Assets.Sprites.SHIROKO;
+			case NOA:
+				return Assets.Sprites.NOA;
 			case WARRIOR:
 				return Assets.Sprites.WARRIOR;
 			case MAGE:
@@ -487,6 +509,8 @@ public enum HeroClass {
 				return Assets.Splashes.HOSHINO;
 			case SHIROKO:
 				return Assets.Splashes.SHIROKO;
+			case NOA:
+				return Assets.Splashes.NOA;
 			case WARRIOR:
 				return Assets.Splashes.WARRIOR;
 			case MAGE:
