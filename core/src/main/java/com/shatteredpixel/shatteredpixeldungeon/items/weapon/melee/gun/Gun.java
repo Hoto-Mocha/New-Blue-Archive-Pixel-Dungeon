@@ -11,6 +11,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SwiftMovement;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -419,6 +420,10 @@ public class Gun extends MeleeWeapon {
 
         if (round == 0 && hero.hasTalent(Talent.HOSHINO_T1_4)) {
             Buff.affect(hero, Barrier.class).setShield(1+2*hero.pointsInTalent(Talent.HOSHINO_T1_4));
+        }
+
+        if (round == 0 && hero.hasTalent(Talent.NOA_T2_4)) {
+            Buff.affect(hero, GreaterHaste.class).set(hero.pointsInTalent(Talent.NOA_T2_4));
         }
     }
 
