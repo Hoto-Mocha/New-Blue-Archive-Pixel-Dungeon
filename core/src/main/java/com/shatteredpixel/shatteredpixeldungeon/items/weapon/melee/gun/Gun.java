@@ -558,6 +558,9 @@ public class Gun extends MeleeWeapon {
     }
 
     protected int bulletMin() {
+        if (Dungeon.hero != null) {
+            return bulletMin(this.buffedLvl()+RingOfSharpshooting.levelDamageBonus(hero));
+        }
         return bulletMin(this.buffedLvl());
     }
 
@@ -568,8 +571,7 @@ public class Gun extends MeleeWeapon {
 
     protected int bulletMax(int lvl) {
         if (Dungeon.hero != null) {
-            int damage = baseBulletMax(lvl) +
-                    RingOfSharpshooting.levelDamageBonus(hero);
+            int damage = baseBulletMax(lvl);
 
             if (hero.buff(Talent.IntimidateBonusDamageBuff.class) != null) {
                 damage += hero.buff(Talent.IntimidateBonusDamageBuff.class).dmgBonus();
@@ -582,6 +584,9 @@ public class Gun extends MeleeWeapon {
     }
 
     protected int bulletMax() {
+        if (Dungeon.hero != null) {
+            return bulletMax(this.buffedLvl()+RingOfSharpshooting.levelDamageBonus(hero));
+        }
         return bulletMax(this.buffedLvl());
     }
 
