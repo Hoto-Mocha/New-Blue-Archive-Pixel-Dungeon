@@ -540,7 +540,7 @@ public class Gun extends MeleeWeapon {
     }
 
     protected int bulletMin(int lvl) {
-        if (Dungeon.hero != null) {
+        if (hero != null) {
             int damage = tier() +
                     lvl +
                     RingOfSharpshooting.levelDamageBonus(hero);
@@ -558,7 +558,7 @@ public class Gun extends MeleeWeapon {
     }
 
     protected int bulletMin() {
-        if (Dungeon.hero != null) {
+        if (hero != null) {
             return bulletMin(this.buffedLvl()+RingOfSharpshooting.levelDamageBonus(hero));
         }
         return bulletMin(this.buffedLvl());
@@ -570,7 +570,7 @@ public class Gun extends MeleeWeapon {
     }
 
     protected int bulletMax(int lvl) {
-        if (Dungeon.hero != null) {
+        if (hero != null) {
             int damage = baseBulletMax(lvl);
 
             if (hero.buff(Talent.IntimidateBonusDamageBuff.class) != null) {
@@ -584,7 +584,7 @@ public class Gun extends MeleeWeapon {
     }
 
     protected int bulletMax() {
-        if (Dungeon.hero != null) {
+        if (hero != null) {
             return bulletMax(this.buffedLvl()+RingOfSharpshooting.levelDamageBonus(hero));
         }
         return bulletMax(this.buffedLvl());
@@ -852,8 +852,8 @@ public class Gun extends MeleeWeapon {
             }
 
             if (attacker instanceof Hero && ((Hero)attacker).hasTalent(Talent.SHIROKO_T3_2)) {
-                int dur = 10*Dungeon.hero.pointsInTalent(Talent.SHIROKO_T3_2);
-                Buff.append(Dungeon.hero, TalismanOfForesight.CharAwareness.class, dur).charID = defender.id();
+                int dur = 10*hero.pointsInTalent(Talent.SHIROKO_T3_2);
+                Buff.append(hero, TalismanOfForesight.CharAwareness.class, dur).charID = defender.id();
             }
 
             return Gun.this.proc(attacker, defender, damage);
