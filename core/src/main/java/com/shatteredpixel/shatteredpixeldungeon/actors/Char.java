@@ -682,6 +682,10 @@ public abstract class Char extends Actor {
 				//TODO enemy.defenseSound? currently miss plays for monks/crab even when they parry
 				Sample.INSTANCE.play(Assets.Sounds.MISS);
 			}
+
+			if (this instanceof Hero && Dungeon.hero.hasTalent(Talent.NOA_T1_3)) {
+				Buff.affect(this, Talent.TakingAimTracker.class).countUp(1);
+			}
 			
 			return false;
 			

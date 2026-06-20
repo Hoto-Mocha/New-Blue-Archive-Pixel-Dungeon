@@ -590,11 +590,16 @@ public class Hero extends Char {
 		if (buff(Bicycle.BicycleBuff.class) != null) {
 			accuracy *= 0.5f+0.25f*pointsInTalent(Talent.SHIROKO_T3_1);
 		}
+
+		int accuracyBonus = 0;
+		if (buff(Talent.TakingAimTracker.class) != null) {
+			accuracyBonus += (1+2*pointsInTalent(Talent.NOA_T1_3) * (int) buff(Talent.TakingAimTracker.class).count());
+		}
 		
 		if (!RingOfForce.fightingUnarmed(this)) {
-			return Math.max(1, Math.round(attackSkill * accuracy * wep.accuracyFactor( this, target )));
+			return Math.max(1, Math.round((attackSkill + accuracyBonus) * accuracy * wep.accuracyFactor( this, target )));
 		} else {
-			return Math.max(1, Math.round(attackSkill * accuracy));
+			return Math.max(1, Math.round((attackSkill + accuracyBonus) * accuracy));
 		}
 	}
 	

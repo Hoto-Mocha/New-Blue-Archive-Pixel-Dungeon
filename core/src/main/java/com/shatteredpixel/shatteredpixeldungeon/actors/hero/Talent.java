@@ -1594,6 +1594,8 @@ public enum Talent {
 			hero.buff(SupportDrone.class).attackProc(enemy);
 		}
 
+		if (hero.buff(TakingAimTracker.class) != null) hero.buff(TakingAimTracker.class).detach();
+
 		return dmg;
 	}
 
@@ -2187,4 +2189,6 @@ public enum Talent {
 
 		GameScene.updateFog();
 	}
+
+	public static class TakingAimTracker extends CounterBuff {}
 }
