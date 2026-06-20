@@ -76,6 +76,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.EmptyScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
@@ -1335,6 +1336,12 @@ public enum Talent {
 			int distance = 4+2*hero.pointsInTalent(Talent.HOSHINO_T2_2);
 
 			StoneOfClairvoyance.mapping(pos, (int)Math.ceil(distance*factor));
+		}
+		if (hero.hasTalent(Talent.NOA_T2_2) && Random.Float() < (0.1f+0.1f*hero.pointsInTalent(Talent.NOA_T2_2))*factor) {
+			Item scroll = new EmptyScroll();
+			if (!scroll.doPickUp(hero)) {
+				Dungeon.level.drop(scroll, hero.pos).sprite.drop(hero.pos);
+			}
 		}
 	}
 

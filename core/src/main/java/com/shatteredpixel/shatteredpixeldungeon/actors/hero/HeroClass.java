@@ -335,6 +335,7 @@ public enum HeroClass {
 
 		if (hero.belongings.weapon instanceof Gun){
 			((Gun) hero.belongings.weapon).affixKit(new ConversionKit());
+			((Gun) hero.belongings.weapon).quickReload();
 			Catalog.setSeen(ConversionKit.class); //as it's not added to the inventory
 		}
 
