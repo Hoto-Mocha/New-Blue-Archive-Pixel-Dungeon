@@ -31,13 +31,13 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Kurumi;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Fox;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Kurumi;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Niko;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Otogi;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Yukino;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Niko;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Otogi;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Yukino;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -45,7 +45,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
@@ -231,20 +230,30 @@ public class Shopkeeper extends NPC {
 				candidates.add(pos+i);
 			}
 
+			ArrayList<Fox> foxes = new ArrayList<>();
+			Yukino yukino = null;
+			Niko niko = null;
+			Kurumi kurumi = null;
+			Otogi otogi = null;
 			Random.shuffle(candidates); //저장한 위치를 무작위 순서로 나열
 			int talkIndex = Random.Int(4);
 			for (int i = 0; i < 4; i++) { //4번 소환 후 나머지 생성 위치 후보는 버림
 				int spawnPos = candidates.get(i);
-				Mob toSpawn;
+				Fox toSpawn;
 				if (i == 0) { //첫번째는 유키노 소환
-					toSpawn = Yukino.spawnAt(spawnPos);
+					toSpawn = Fox.spawnAt(spawnPos, new Yukino());
+					yukino = (Yukino) toSpawn;
 				} else if (i == 1) { //두번째는 니코 소환
-					toSpawn = Niko.spawnAt(spawnPos);
+					toSpawn = Fox.spawnAt(spawnPos, new Niko());
+					niko = (Niko) toSpawn;
 				} else if (i == 2) { //세번째는 쿠루미 소환
-					toSpawn = Kurumi.spawnAt(spawnPos);
+					toSpawn = Fox.spawnAt(spawnPos, new Kurumi());
+					kurumi = (Kurumi) toSpawn;
 				} else { //네번째는 오토기 소환
-					toSpawn = Otogi.spawnAt(spawnPos);
+					toSpawn = Fox.spawnAt(spawnPos, new Otogi());
+					otogi = (Otogi) toSpawn;
 				}
+				foxes.add(toSpawn);
 
 				if (i == talkIndex) {
 					toSpawn.yell(Messages.get(toSpawn.getClass(), "show"));
@@ -274,6 +283,9 @@ public class Shopkeeper extends NPC {
 				}
 				CellEmitter.get(spawnPos).burst(Speck.factory(Speck.WOOL), 4);
 				GameScene.add(toSpawn, 0f);
+			}
+			for (Fox fox : foxes) {
+				fox.setAlly( yukino, niko, kurumi, otogi );
 			}
 
 		} else {

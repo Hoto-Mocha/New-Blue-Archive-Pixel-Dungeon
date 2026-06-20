@@ -8,18 +8,11 @@ import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Kurumi;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Niko;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Otogi;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Yukino;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Sheep;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Fox;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
@@ -29,6 +22,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotio
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.GooBlob;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.MetalShard;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.Pickaxe;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.TrinketCatalyst;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
@@ -41,15 +35,12 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTextInput;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTitledMessage;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Point;
-import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
@@ -376,11 +367,11 @@ public class Teleporter extends Item {
 //                    }
 //                }
 
-                Char ch = Actor.findChar(target);
-                if (ch instanceof Shopkeeper) {
-                    ((Shopkeeper)ch).run(true);
-                    curUser.next();
-                }
+//                Char ch = Actor.findChar(target);
+//                if (ch instanceof Shopkeeper) {
+//                    ((Shopkeeper)ch).run(true);
+//                    curUser.next();
+//                }
 
 //                Mob mob;
 //                switch (Random.Int(4)) {
@@ -399,6 +390,28 @@ public class Teleporter extends Item {
 //                }
 //                GameScene.add(mob, 2f);
 //                curUser.next();
+
+//                Char ch = Actor.findChar(target);
+//                if (ch != null) {
+//                    if (ScrollOfTeleportation.teleportChar(ch)){
+//
+//                        if (ch instanceof Mob) {
+//                            if (((Mob) ch).state == ((Mob) ch).HUNTING) ((Mob) ch).state = ((Mob) ch).WANDERING;
+//                            ((Mob) ch).beckon(Dungeon.level.randomDestination( ch ));
+//                        }
+//                        if (!Char.hasProp(ch, Char.Property.BOSS) && !Char.hasProp(ch, Char.Property.MINIBOSS)) {
+//                            Buff.affect(ch, Paralysis.class, Paralysis.DURATION);
+//                        }
+//
+//                    }
+//                } else {
+//                    GLog.w( Messages.get(this, "no_target") );
+//                }
+
+                Char ch = Actor.findChar(target);
+                if (ch instanceof Fox) {
+                    GLog.i(((Fox)ch).findPartner().name());
+                }
             }
         }
         @Override

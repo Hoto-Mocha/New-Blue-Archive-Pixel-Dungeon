@@ -79,6 +79,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
@@ -167,6 +168,7 @@ public enum HeroClass {
 			new RingOfHaste().identify().upgrade(100).collect();
 			new RingOfAccuracy().identify().upgrade(100).collect();
 			new AlchemistsToolkit().identify().upgrade(10).collect();
+			new SkeletonKey().identify().upgrade(10).collect();
 			new ElixirOfHoneyedHealing().identify().quantity(500).collect();
 			new PlateArmor().identify().upgrade(100).collect();
 			new Teleporter().collect();
