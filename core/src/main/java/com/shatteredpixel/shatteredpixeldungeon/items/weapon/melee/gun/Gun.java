@@ -474,6 +474,9 @@ public class Gun extends MeleeWeapon {
 
     public void useRound() {
         round--;
+        if (hero.hasTalent(Talent.NOA_T1_4) && round == 0) {
+            Buff.affect(hero, Barrier.class).setShield(1+hero.pointsInTalent(Talent.NOA_T1_4));
+        }
         updateQuickslot();
     }
 
