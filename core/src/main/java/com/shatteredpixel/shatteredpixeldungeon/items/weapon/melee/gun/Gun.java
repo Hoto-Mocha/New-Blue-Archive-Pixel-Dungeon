@@ -524,10 +524,26 @@ public class Gun extends MeleeWeapon {
     }
 
     @Override
+    public int min(int lvl) {
+        int damage = super.min(lvl);
+
+        if (hero != null && hero.hasTalent(Talent.NOA_T1_1)) {
+            if (kit != null) damage += hero.pointsInTalent(Talent.NOA_T1_1);
+        }
+
+        return damage;
+    }
+
+    @Override
     public int max(int lvl) {
         int damage;
         int talentBonus = 0;
-        if (Dungeon.hero != null) {
+
+        if (hero != null && hero.hasTalent(Talent.NOA_T1_1)) {
+            if (kit != null) talentBonus += 2;
+        }
+
+        if (hero != null) {
             damage = 3*(tier()+1) +
                     lvl*(tier()+1) +
                     talentBonus; //근접 무기로서의 최대 데미지
