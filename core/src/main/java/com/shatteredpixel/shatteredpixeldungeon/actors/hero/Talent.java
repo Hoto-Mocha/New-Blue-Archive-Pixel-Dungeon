@@ -37,6 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.EnhancedRings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
@@ -1210,6 +1211,9 @@ public enum Talent {
 		}
 		if (hero.hasTalent(Talent.SHIROKO_T2_1)) {
 			Buff.affect(hero, Haste.class, 1+hero.pointsInTalent(Talent.SHIROKO_T2_1));
+		}
+		if (hero.hasTalent(Talent.NOA_T2_1)) {
+			Buff.affect(hero, Healing.class).setHeal(2+3*hero.pointsInTalent(Talent.NOA_T2_1), 0, 1);
 		}
 	}
 
