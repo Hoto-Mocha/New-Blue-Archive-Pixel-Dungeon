@@ -470,6 +470,10 @@ public class Gun extends MeleeWeapon {
 
         if (kit != null) amount += 1;
 
+        if (hero != null && hero.hasTalent(Talent.NOA_T3_1)) {
+            amount += hero.pointsInTalent(Talent.NOA_T3_1);
+        }
+
         return amount;
     }
 
