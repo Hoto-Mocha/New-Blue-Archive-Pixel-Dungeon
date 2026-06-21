@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.ConversionKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.GunSmithingTool;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
@@ -819,6 +820,30 @@ public class Gun extends MeleeWeapon {
         if (kit != null && kit.level() == 0)
             kit.upgrade();
         return super.upgrade();
+    }
+
+    private static boolean evaluatingTwinUpgrades = false;
+    @Override
+    public int buffedLvl() {
+        if (!evaluatingTwinUpgrades && Dungeon.hero != null && isEquipped(Dungeon.hero) && Dungeon.hero.hasTalent(Talent.NOA_EX1_2)){
+            KindOfWeapon other = null;
+            if (Dungeon.hero.belongings.weapon() != this) other = Dungeon.hero.belongings.weapon();
+            if (Dungeon.hero.belongings.secondWep() != this) other = Dungeon.hero.belongings.secondWep();
+
+            if (other instanceof Gun) {
+                evaluatingTwinUpgrades = true;
+                int otherLevel = other.buffedLvl();
+                evaluatingTwinUpgrades = false;
+
+                //weaker weapon needs to be 2/1/0 tiers lower, based on talent level
+                if ((tier() + (3 - Dungeon.hero.pointsInTalent(Talent.NOA_EX1_2))) <= ((Gun) other).tier()
+                        && otherLevel > super.buffedLvl()) {
+                    return otherLevel;
+                }
+
+            }
+        }
+        return super.buffedLvl();
     }
 
     public class Bullet extends MissileWeapon {
