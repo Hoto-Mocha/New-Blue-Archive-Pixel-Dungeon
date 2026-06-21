@@ -470,8 +470,8 @@ public class Gun extends MeleeWeapon {
 
         if (kit != null) amount += 1;
 
-        if (hero != null && hero.hasTalent(Talent.NOA_T3_1)) {
-            amount += hero.pointsInTalent(Talent.NOA_T3_1);
+        if (hero != null && hero.hasTalent(Talent.NOA_T3_2)) {
+            amount += hero.pointsInTalent(Talent.NOA_T3_2);
         }
 
         return amount;
@@ -862,27 +862,36 @@ public class Gun extends MeleeWeapon {
 
             damage += bulletDamageBonus(attacker, defender);
 
-            if (attacker instanceof Hero && ((Hero)attacker).hasTalent(Talent.HOSHINO_T2_5) && attacker.buff(Barrier.class) == null) {
-                int shield = 2+3*((Hero)attacker).pointsInTalent(Talent.HOSHINO_T2_5)-distance;
-                if (shield > 0) {
-                    Buff.affect(attacker, Barrier.class).setShield(shield);
+            if (attacker instanceof Hero) {
+                Hero hero = (Hero) attacker;
+                if (hero.hasTalent(Talent.HOSHINO_T2_5) && hero.buff(Barrier.class) == null) {
+                    int shield = 2+3*hero.pointsInTalent(Talent.HOSHINO_T2_5)-distance;
+                    if (shield > 0) {
+                        Buff.affect(hero, Barrier.class).setShield(shield);
+                    }
+                }
+
+                if (hero.hasTalent(Talent.HOSHINO_T3_1)) {
+                    Buff.affect(defender, Talent.TacticalSuppressTracker.class);
+                }
+
+                if (hero.heroClass == HeroClass.SHIROKO) {
+                    if (Random.Float() < 1/(float)shotPerShoot()) {
+                        defender.damage((int)Math.ceil(Dungeon.scalingDepth()/5f) + hero.pointsInTalent(Talent.SHIROKO_T1_3), this);
+                    }
+                }
+
+                if (hero.hasTalent(Talent.SHIROKO_T3_2)) {
+                    int dur = 10*hero.pointsInTalent(Talent.SHIROKO_T3_2);
+                    Buff.append(hero, TalismanOfForesight.CharAwareness.class, dur).charID = defender.id();
+                }
+
+                if (hero.hasTalent(Talent.NOA_T3_1) && hero.buff(Talent.PerfectPrecisionTracker.class) == null) {
+                    Buff.affect(hero, Talent.PerfectPrecisionTracker.class, hero.cooldown()+4f);
                 }
             }
 
-            if (attacker instanceof Hero && ((Hero)attacker).hasTalent(Talent.HOSHINO_T3_1)) {
-                Buff.affect(defender, Talent.TacticalSuppressTracker.class);
-            }
 
-            if (attacker instanceof Hero && ((Hero)attacker).heroClass == HeroClass.SHIROKO) {
-                if (Random.Float() < 1/(float)shotPerShoot()) {
-                    defender.damage((int)Math.ceil(Dungeon.scalingDepth()/5f) + ((Hero)attacker).pointsInTalent(Talent.SHIROKO_T1_3), this);
-                }
-            }
-
-            if (attacker instanceof Hero && ((Hero)attacker).hasTalent(Talent.SHIROKO_T3_2)) {
-                int dur = 10*hero.pointsInTalent(Talent.SHIROKO_T3_2);
-                Buff.append(hero, TalismanOfForesight.CharAwareness.class, dur).charID = defender.id();
-            }
 
             return Gun.this.proc(attacker, defender, damage);
         }
@@ -1007,6 +1016,10 @@ public class Gun extends MeleeWeapon {
 
             if (hero.buff(Talent.IntimidateBonusDamageBuff.class) != null) {
                 hero.buff(Talent.IntimidateBonusDamageBuff.class).use();
+            }
+
+            if (hero.buff(Talent.PerfectPrecisionTracker.class) != null) {
+                hero.buff(Talent.PerfectPrecisionTracker.class).detach();
             }
         }
 

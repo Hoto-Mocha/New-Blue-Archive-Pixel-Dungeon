@@ -2202,4 +2202,11 @@ public enum Talent {
 	}
 
 	public static class TakingAimTracker extends CounterBuff {}
+
+	public static class PerfectPrecisionTracker extends FlavourBuff{
+		{ type = buffType.POSITIVE; }
+		public int icon() { return BuffIndicator.INVERT_MARK; }
+		public void tintIcon(Image icon) { icon.hardlight(1f, 1f, 0.0f); }
+		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 5)); }
+	};
 }

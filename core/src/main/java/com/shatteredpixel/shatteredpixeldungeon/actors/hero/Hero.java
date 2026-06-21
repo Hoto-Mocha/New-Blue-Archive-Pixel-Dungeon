@@ -561,8 +561,16 @@ public class Hero extends Char {
 							accuracy *= Float.POSITIVE_INFINITY; break;
 					}
 				} else if (buff(Talent.InstantFocusingTracker.class) != null) {
-					// 2x/5x/inf. ACC for duelist if she just used a weapon ability
 					switch (pointsInTalent(Talent.HOSHINO_EX1_3)){
+						default: case 1:
+							accuracy *= 2; break;
+						case 2:
+							accuracy *= 5; break;
+						case 3:
+							accuracy *= Float.POSITIVE_INFINITY; break;
+					}
+				} else if (buff(Talent.PerfectPrecisionTracker.class) != null) {
+					switch (pointsInTalent(Talent.NOA_T3_1)){
 						default: case 1:
 							accuracy *= 2; break;
 						case 2:
@@ -577,6 +585,7 @@ public class Hero extends Char {
 					buff.uses--;
 				}
 			}
+
 		} else {
 			if (buff(Momentum.class) != null && buff(Momentum.class).freerunning()){
 				accuracy *= 1f + pointsInTalent(Talent.PROJECTILE_MOMENTUM)/2f;
