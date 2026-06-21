@@ -425,6 +425,10 @@ public class Gun extends MeleeWeapon {
         if (round == 0 && hero.hasTalent(Talent.NOA_T2_4)) {
             Buff.affect(hero, GreaterHaste.class).set(hero.pointsInTalent(Talent.NOA_T2_4));
         }
+
+        if (hero.hasTalent(Talent.NOA_EX1_1) && hero.belongings.secondWep() instanceof Gun) {
+            ((Gun)hero.belongings.secondWep()).manualReload(hero.pointsInTalent(Talent.NOA_EX1_1), false);
+        }
     }
 
     public void quickReload() {	//다른 것들을 작동시키지 않고 탄창만 완전히 재장전하는 메서드
