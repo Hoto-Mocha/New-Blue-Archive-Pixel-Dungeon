@@ -79,7 +79,7 @@ public class DoubleBarrelMark extends FlavourBuff implements ActionIndicator.Act
 
 	@Override
 	public int actionIcon() {
-		return HeroIcon.DOUBLE_BARREL;
+		return HeroIcon.DOUBLE_BARREL_ACTION;
 	}
 
 	@Override
