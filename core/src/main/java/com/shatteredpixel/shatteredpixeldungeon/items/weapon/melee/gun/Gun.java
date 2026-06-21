@@ -815,6 +815,8 @@ public class Gun extends MeleeWeapon {
 
     public class Bullet extends MissileWeapon {
 
+        private boolean specialShot = false;
+
         {
             image = ItemSpriteSheet.SINGLE_BULLET;
             hitSound = Assets.Sounds.PUFF;
@@ -840,6 +842,14 @@ public class Gun extends MeleeWeapon {
             ignoreWall = isIgnore;
         }
 
+        public void setSpecialShot(boolean isSpecial) {
+            this.specialShot = isSpecial;
+        }
+
+        public boolean isSpecialShot() {
+            return this.specialShot;
+        }
+
         @Override
         public int proc(Char attacker, Char defender, int damage) {
             boolean isDebuffed = false;
@@ -856,7 +866,10 @@ public class Gun extends MeleeWeapon {
             int distance = Dungeon.level.distance(attacker.pos, defender.pos) - 1; //적과 나 사이의 간격, 근접한 경우 0
             float multiplier = 1;
             if (spread) {
-                multiplier = multiplier * (float) Math.pow(0.9f, distance);
+                multiplier *= (float) Math.pow(0.9f, distance);
+            }
+            if (isSpecialShot()) {
+                multiplier *= 0.67f;
             }
             damage = Math.round(damage * multiplier);
 
@@ -937,6 +950,8 @@ public class Gun extends MeleeWeapon {
             if (user.buff(Bipod.BipodBuff.class) != null) {
                 return 0;
             }
+
+            if (specialShot) return 0;
 
             float speed = Gun.this.delayFactor(user) * shootingSpeed;
 

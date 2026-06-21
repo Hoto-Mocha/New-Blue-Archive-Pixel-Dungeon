@@ -46,6 +46,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Foresight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
@@ -1627,6 +1628,25 @@ public class Hero extends Char {
 							} else {
 								Buff.prolong(Hero.this, SnipersMark.class, SnipersMark.DURATION).set(enemy.id(), 0);
 							}
+						}
+						Actor.remove(this);
+						return true;
+					}
+				});
+			}
+			break;
+		case DOUBLE_BARREL:
+			if (wep instanceof Gun.Bullet && enemy != this && hero.buff(DoubleBarrelMark.class) == null && !((Gun.Bullet) wep).isSpecialShot()) {
+				Actor.add(new Actor() {
+
+					{
+						actPriority = VFX_PRIO;
+					}
+
+					@Override
+					protected boolean act() {
+						if (enemy.isAlive()) {
+							Buff.prolong(Hero.this, DoubleBarrelMark.class, DoubleBarrelMark.DURATION).set(enemy.id(), 0);
 						}
 						Actor.remove(this);
 						return true;

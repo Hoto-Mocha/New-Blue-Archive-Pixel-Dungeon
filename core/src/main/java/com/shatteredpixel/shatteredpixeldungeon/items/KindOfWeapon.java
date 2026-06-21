@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -79,6 +80,40 @@ abstract public class KindOfWeapon extends EquipableItem {
 							updateQuickslot();
 						//if this item wasn't quickslotted, but the item it is replacing as equipped was
 						//then also have the item occupy the unequipped item's quickslot
+						} else if (slotOfUnequipped != -1 && defaultAction() != null) {
+							Dungeon.quickslot.setSlot( slotOfUnequipped, KindOfWeapon.this );
+							updateQuickslot();
+						}
+					}
+				}
+			});
+		} else if (this instanceof HG && hero.subClass == HeroSubClass.DOUBLE_BARREL && action.equals(AC_EQUIP)){ //the others are same with champion
+			usesTargeting = false;
+			String primaryName = Messages.titleCase(hero.belongings.weapon != null ? hero.belongings.weapon.trueName() : Messages.get(KindOfWeapon.class, "empty"));
+			String secondaryName = Messages.titleCase(hero.belongings.secondWep != null ? hero.belongings.secondWep.trueName() : Messages.get(KindOfWeapon.class, "empty"));
+			if (primaryName.length() > 18) primaryName = primaryName.substring(0, 15) + "...";
+			if (secondaryName.length() > 18) secondaryName = secondaryName.substring(0, 15) + "...";
+			GameScene.show(new WndOptions(
+					new ItemSprite(this),
+					Messages.titleCase(name()),
+					Messages.get(KindOfWeapon.class, "which_equip_msg"),
+					Messages.get(KindOfWeapon.class, "which_equip_primary", primaryName),
+					Messages.get(KindOfWeapon.class, "which_equip_secondary", secondaryName)
+			){
+				@Override
+				protected void onSelect(int index) {
+					super.onSelect(index);
+					if (index == 0 || index == 1){
+						int slot = Dungeon.quickslot.getSlot( KindOfWeapon.this );
+						slotOfUnequipped = -1;
+						if (index == 0) {
+							doEquip(hero);
+						} else {
+							equipSecondary(hero);
+						}
+						if (slot != -1) {
+							Dungeon.quickslot.setSlot( slot, KindOfWeapon.this );
+							updateQuickslot();
 						} else if (slotOfUnequipped != -1 && defaultAction() != null) {
 							Dungeon.quickslot.setSlot( slotOfUnequipped, KindOfWeapon.this );
 							updateQuickslot();

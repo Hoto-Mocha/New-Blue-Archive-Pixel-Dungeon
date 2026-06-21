@@ -47,6 +47,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Daze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FireImbue;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
@@ -1168,6 +1169,9 @@ public abstract class Char extends Actor {
 			}
 			if (ch.buff(SnipersMark.class) != null && ch.buff(SnipersMark.class).object == id()){
 				ch.buff(SnipersMark.class).detach();
+			}
+			if (ch.buff(DoubleBarrelMark.class) != null && ch.buff(DoubleBarrelMark.class).object == id()){
+				ch.buff(DoubleBarrelMark.class).detach();
 			}
 			if (ch.buff(Talent.FollowupStrikeTracker.class) != null
 					&& ch.buff(Talent.FollowupStrikeTracker.class).object == id()){
