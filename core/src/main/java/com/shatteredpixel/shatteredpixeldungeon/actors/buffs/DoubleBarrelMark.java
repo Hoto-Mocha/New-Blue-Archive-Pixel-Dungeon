@@ -115,7 +115,5 @@ public class DoubleBarrelMark extends FlavourBuff implements ActionIndicator.Act
 
 		bullet.cast(hero, cell);
 		detach();
-
-		bullet.setSpecialShot(false);
 	}
 }
