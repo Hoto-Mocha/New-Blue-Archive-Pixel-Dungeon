@@ -1636,7 +1636,7 @@ public class Hero extends Char {
 			}
 			break;
 		case DOUBLE_BARREL:
-			if (wep instanceof Gun.Bullet && enemy != this && hero.buff(DoubleBarrelMark.class) == null && !((Gun.Bullet) wep).isSpecialShot()) {
+			if (((wep instanceof Gun.Bullet && !((Gun.Bullet) wep).isSpecialShot()) || (hasTalent(Talent.NOA_EX1_3) && !(wep instanceof Gun.Bullet))) && enemy != this && hero.buff(DoubleBarrelMark.class) == null) {
 				Actor.add(new Actor() {
 
 					{

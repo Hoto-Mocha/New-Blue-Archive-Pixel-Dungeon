@@ -934,6 +934,11 @@ public abstract class Mob extends Char {
 			Buff.affect(Dungeon.hero, Barrier.class).setShield(2+3*Dungeon.hero.pointsInTalent(Talent.SHIROKO_T1_4));
 		}
 
+		if (cause == Dungeon.hero && Dungeon.hero.pointsInTalent(Talent.NOA_EX1_3) >= 3 && Dungeon.level.adjacent(this.pos, Dungeon.hero.pos)) {
+			if (Dungeon.hero.belongings.weapon() instanceof Gun) ((Gun) Dungeon.hero.belongings.weapon()).quickReload();
+			if (Dungeon.hero.belongings.secondWep() instanceof Gun) ((Gun) Dungeon.hero.belongings.secondWep()).quickReload();
+		}
+		
 		boolean soulMarked = buff(SoulMark.class) != null;
 
 		super.die( cause );
