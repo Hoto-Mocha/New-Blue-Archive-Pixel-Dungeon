@@ -502,6 +502,10 @@ public class Gun extends MeleeWeapon {
             amount -= 1;
         }
 
+        if (hero != null && hero.belongings.secondWep() == this) {
+            amount += 1;
+        }
+
         amount = Math.max(0, amount);
         return amount;
     }
