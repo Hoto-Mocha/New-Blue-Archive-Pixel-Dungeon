@@ -28,6 +28,10 @@ import java.util.ArrayList;
 
 public class BankRobber extends Buff implements ActionIndicator.Action {
 
+    {
+        revivePersists = true;
+    }
+
     @Override
     public String actionName() {
         return Messages.get(this, "action_name");
