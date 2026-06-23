@@ -503,7 +503,9 @@ public class Bicycle extends Item {
 		public void detach() {
 			super.detach();
 			Buff.affect(hero, BicycleCooldown.class, 5f);
-			ActionIndicator.clearAction();
+			if (ActionIndicator.action == this) {
+				ActionIndicator.clearAction();
+			}
 		}
 
 
