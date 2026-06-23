@@ -130,7 +130,7 @@ public enum HeroClass {
 	MIYAKO(HeroSubClass.RABBIT_SQUAD, HeroSubClass.SUPPORT_DRONE),
 	HOSHINO(HeroSubClass.SHIELD_BASH, HeroSubClass.SWIFT_MOVEMENT),
 	SHIROKO(HeroSubClass.PROFESSIONAL_RIDING, HeroSubClass.BANK_ROBBER),
-	NOA(HeroSubClass.DOUBLE_BARREL, HeroSubClass.AUTO_SEAR),
+	NOA(HeroSubClass.DOUBLE_BARREL, HeroSubClass.CONVERSATION),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),

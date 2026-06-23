@@ -216,7 +216,7 @@ public class Badges {
 		BOSS_SLAIN_3_PROFESSIONAL_RIDING,
 		BOSS_SLAIN_3_BANK_ROBBER,
 		BOSS_SLAIN_3_DOUBLE_BARREL,
-		BOSS_SLAIN_3_AUTO_SEAR,
+		BOSS_SLAIN_3_CONVERSATION,
 //		BOSS_SLAIN_3_GLADIATOR,
 //		BOSS_SLAIN_3_BERSERKER,
 //		BOSS_SLAIN_3_WARLOCK,
@@ -876,7 +876,7 @@ public class Badges {
 		thirdBossSubclassBadges.put(HeroSubClass.PROFESSIONAL_RIDING, Badge.BOSS_SLAIN_3_PROFESSIONAL_RIDING);
 		thirdBossSubclassBadges.put(HeroSubClass.BANK_ROBBER, Badge.BOSS_SLAIN_3_BANK_ROBBER);
 		thirdBossSubclassBadges.put(HeroSubClass.DOUBLE_BARREL, Badge.BOSS_SLAIN_3_DOUBLE_BARREL);
-		thirdBossSubclassBadges.put(HeroSubClass.AUTO_SEAR, Badge.BOSS_SLAIN_3_AUTO_SEAR);
+		thirdBossSubclassBadges.put(HeroSubClass.CONVERSATION, Badge.BOSS_SLAIN_3_CONVERSATION);
 //		thirdBossSubclassBadges.put(HeroSubClass.BERSERKER, Badge.BOSS_SLAIN_3_BERSERKER);
 //		thirdBossSubclassBadges.put(HeroSubClass.GLADIATOR, Badge.BOSS_SLAIN_3_GLADIATOR);
 //		thirdBossSubclassBadges.put(HeroSubClass.BATTLEMAGE, Badge.BOSS_SLAIN_3_BATTLEMAGE);

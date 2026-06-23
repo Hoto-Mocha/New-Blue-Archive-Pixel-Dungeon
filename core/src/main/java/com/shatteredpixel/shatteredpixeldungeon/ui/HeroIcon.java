@@ -125,7 +125,7 @@ public class HeroIcon extends Image {
 	public static final int PROFESSIONAL_RIDING	= 128+8;
 	public static final int BANK_ROBBER		= 128+9;
 	public static final int DOUBLE_BARREL	= 128+10;
-	public static final int AUTO_SEAR		= 128+11;
+	public static final int CONVERSATION	 = 128+11;
 
 	//new armor abilities
 	public static final int ARIS_1			= 128+40;
@@ -157,7 +157,7 @@ public class HeroIcon extends Image {
   	public static final int PROFESSIONAL_RIDING_ACTION= 128+78;
   	public static final int BANK_ROBBER_ACTION= 128+79;
   	public static final int DOUBLE_BARREL_ACTION= 128+80;
-  	public static final int AUTO_SEAR_ACTION= 128+81;
+  	public static final int CONVERSATION_ACTION= 128+81;
 
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );

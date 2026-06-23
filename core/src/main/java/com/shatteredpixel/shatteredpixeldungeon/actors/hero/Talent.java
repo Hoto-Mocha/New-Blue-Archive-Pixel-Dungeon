@@ -1968,7 +1968,7 @@ public enum Talent {
 			case DOUBLE_BARREL:
 				Collections.addAll(tierTalents, NOA_EX1_1, NOA_EX1_2, NOA_EX1_3);
 				break;
-			case AUTO_SEAR:
+			case CONVERSATION:
 				Collections.addAll(tierTalents, NOA_EX2_1, NOA_EX2_2, NOA_EX2_3);
 				break;
 			case BERSERKER:

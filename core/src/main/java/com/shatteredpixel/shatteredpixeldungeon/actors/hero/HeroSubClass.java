@@ -48,7 +48,7 @@ public enum HeroSubClass {
 	BANK_ROBBER(HeroIcon.BANK_ROBBER),
 
 	DOUBLE_BARREL(HeroIcon.DOUBLE_BARREL),
-	AUTO_SEAR(HeroIcon.AUTO_SEAR),
+	CONVERSATION(HeroIcon.CONVERSATION),
 
 
 
