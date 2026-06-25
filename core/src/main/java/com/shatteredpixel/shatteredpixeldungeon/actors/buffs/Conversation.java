@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Bee;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -119,6 +120,7 @@ public class Conversation extends Buff implements ActionIndicator.Action {
     }
 
     public void charge(float amount) {
+        if (Dungeon.hero.pointsInTalent(Talent.NOA_EX2_1) >= 3) amount *= 1.5f;
         partialCharge += amount;
         while (partialCharge >= 1) {
             partialCharge -= 1;
