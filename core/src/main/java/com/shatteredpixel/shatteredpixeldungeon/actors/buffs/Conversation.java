@@ -20,10 +20,14 @@ import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.BitmapText;
+import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Bundle;
@@ -37,6 +41,9 @@ public class Conversation extends Buff implements ActionIndicator.Action {
     {
         revivePersists = true;
     }
+
+    private float partialCharge = 0f;
+    private int charge = 0;
 
     @Override
     public String actionName() {
@@ -55,7 +62,20 @@ public class Conversation extends Buff implements ActionIndicator.Action {
 
     @Override
     public void doAction() {
+        if (charge < 1) {
+            Dungeon.hero.yellW("no_charge");
+            return;
+        }
         GameScene.selectCell(selector);
+    }
+
+    @Override
+    public Visual secondaryVisual() {
+        BitmapText txt = new BitmapText(PixelScene.pixelFont);
+        txt.text( Integer.toString(charge) );
+        txt.hardlight(CharSprite.BLUE);
+        txt.measure();
+        return txt;
     }
 
     @Override
@@ -70,11 +90,45 @@ public class Conversation extends Buff implements ActionIndicator.Action {
         super.detach();
     }
 
+    private final static String PARTIAL_CHARGE = "partialCharge";
+    private final static String CHARGE = "charge";
+
+    @Override
+    public void storeInBundle(Bundle bundle) {
+        super.storeInBundle(bundle);
+        bundle.put(PARTIAL_CHARGE, partialCharge);
+        bundle.put(CHARGE, charge);
+    }
+
     @Override
     public void restoreFromBundle(Bundle bundle) {
         super.restoreFromBundle(bundle);
 
+        partialCharge = bundle.getFloat(PARTIAL_CHARGE);
+        charge = bundle.getInt(CHARGE);
+
         ActionIndicator.setAction(this);
+    }
+
+    public int energyCap(){
+        return Math.max(10, 5 + Dungeon.hero.lvl/2);
+    }
+
+    public void charge() {
+        charge(1f);
+    }
+
+    public void charge(float amount) {
+        partialCharge += amount;
+        while (partialCharge >= 1) {
+            partialCharge -= 1;
+            charge++;
+        }
+        if (charge >= energyCap()) {
+            charge = energyCap();
+            partialCharge = 0;
+        }
+        ActionIndicator.refresh();
     }
 
     private static final float MINOR_DEBUFF_WEAKEN = 1/4f;
@@ -168,7 +222,8 @@ public class Conversation extends Buff implements ActionIndicator.Action {
                 });
                 i++;
             }
-
+            charge--;
+            ActionIndicator.refresh();
         }
         @Override
         public String prompt() {
