@@ -204,6 +204,7 @@ public class Conversation extends Buff implements ActionIndicator.Action {
             Sample.INSTANCE.play(Assets.Sounds.LULLABY);
             Sample.INSTANCE.play(Assets.Sounds.READ);
             hero.sprite.centerEmitter().burst( Speck.factory( Speck.NOTE ), 1 );
+            Invisibility.dispel(hero);
 
             int i = 0;
             final int pathSize = path.subPath(1, path.dist).size();
@@ -218,7 +219,11 @@ public class Conversation extends Buff implements ActionIndicator.Action {
                         CellEmitter.get(cell).burst( Speck.factory( Speck.NOTE ), 1 );
                         if (finalI == pathSize-1) {
                             onUse(hero, ch);
-                            hero.spendAndNext(1f);
+                            if (Random.Float() < hero.pointsInTalent(Talent.NOA_EX2_2)/3f) {
+                                hero.next();
+                            } else {
+                                hero.spendAndNext(1f);
+                            }
                         }
                     }
                 });
@@ -284,6 +289,11 @@ public class Conversation extends Buff implements ActionIndicator.Action {
                 }
             }
             AllyBuff.affectAndLoot(enemy, hero, ScrollOfSirensSong.Enthralled.class);
+
+            if (hero.hasTalent(Talent.NOA_EX2_3)) {
+                int toHeal = enemy.HT - enemy.HP;
+                enemy.heal(Math.round(toHeal/(4f-hero.pointsInTalent(Talent.NOA_EX2_3))));
+            }
         }
     }
 
