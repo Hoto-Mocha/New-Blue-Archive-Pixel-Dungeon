@@ -40,7 +40,7 @@ public class Hologram extends ArmorAbility {
     
     @Override
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
-        if (spawnImages(hero, 1) > 0) {
+        if (spawnImages(hero, Random.Float() < 0.25f*hero.pointsInTalent(Talent.NOA_ARMOR2_1) ? 2 : 1) > 0) {
             hero.sprite.operate(hero.pos);
             hero.spendAndNext(1f);
             armor.charge -= chargeUse(hero);
