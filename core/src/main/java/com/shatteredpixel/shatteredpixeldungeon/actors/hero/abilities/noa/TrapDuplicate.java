@@ -20,7 +20,11 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.PathFinder;
+import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
+
+import java.util.ArrayList;
 
 public class TrapDuplicate extends ArmorAbility {
 
@@ -68,6 +72,22 @@ public class TrapDuplicate extends ArmorAbility {
             Trap t = Dungeon.level.traps.get(target);
             if (t != null && t.active && t.visible) {
                 t.disarm(); //even disarms traps that normally wouldn't be
+
+                if (hero.hasTalent(Talent.NOA_ARMOR1_1)) {
+                    int num = 2*hero.pointsInTalent(Talent.NOA_ARMOR1_1);
+                    ArrayList<Trap> candidates = new ArrayList<>();
+                    for (int i : PathFinder.NEIGHBOURS8) {
+                        int c = target + i;
+                        Trap otherTrap = Dungeon.level.traps.get(c);
+                        if (otherTrap != null) {
+                            candidates.add(otherTrap);
+                        }
+                    }
+                    Random.shuffle(candidates);
+                    for (int i = 0; i < Math.min(candidates.size(), num); i++) {
+                        candidates.get(i).disarm();
+                    }
+                }
 
                 hero.sprite.zap(target);
                 armor.charge -= chargeUse(hero);
