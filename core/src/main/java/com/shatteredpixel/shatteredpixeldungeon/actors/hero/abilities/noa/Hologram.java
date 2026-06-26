@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.AlphaTweener;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -134,6 +135,8 @@ public class Hologram extends ArmorAbility {
             spriteClass = HologramSprite.class;
         }
 
+        private int dodgesUsed = 0;
+
         @Override
         public void duplicate(Hero hero) {
             this.hero = hero;
@@ -163,6 +166,23 @@ public class Hologram extends ArmorAbility {
         }
 
         @Override
+        public int defenseSkill(Char enemy) {
+            if (Dungeon.hero.hasTalent(Talent.NOA_ARMOR2_3) &&
+                    dodgesUsed < 2*Dungeon.hero.pointsInTalent(Talent.NOA_ARMOR2_3)) {
+                dodgesUsed++;
+                return Char.INFINITE_EVASION;
+            }
+            return super.defenseSkill(enemy);
+        }
+
+        @Override
+        public int drRoll() {
+            int dr = super.drRoll();
+            if (hero.hasTalent(Talent.NOA_ARMOR1_2)) dr += Random.NormalIntRange(hero.pointsInTalent(Talent.NOA_ARMOR1_2), 4*hero.pointsInTalent(Talent.NOA_ARMOR1_2));
+            return dr;
+        }
+
+        @Override
         public int damageRoll() {
             int damage;
             if (hero.belongings.weapon() instanceof Gun){
@@ -171,6 +191,20 @@ public class Hologram extends ArmorAbility {
                 damage = 1;
             }
             return damage;
+        }
+
+        private static final String DODGES_USED     = "dodges_used";
+
+        @Override
+        public void storeInBundle(Bundle bundle) {
+            super.storeInBundle(bundle);
+            bundle.put(DODGES_USED, dodgesUsed);
+        }
+
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+            dodgesUsed = bundle.getInt(DODGES_USED);
         }
     }
 }
