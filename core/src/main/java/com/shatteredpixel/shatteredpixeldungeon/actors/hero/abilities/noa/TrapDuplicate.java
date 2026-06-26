@@ -11,6 +11,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbili
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LightSmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.ReclaimTrap;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
@@ -65,7 +66,15 @@ public class TrapDuplicate extends ArmorAbility {
         //pre-v3.0.0
         if (hero.buff(ReclaimedTrap.class) != null){
             storedTrap = hero.buff(ReclaimedTrap.class).trap;
-            hero.buff(ReclaimedTrap.class).detach();
+
+            if (hero.buff(ReclaimedTrap.class) != null) {
+                if (Random.Float() < 1f-0.1f*hero.pointsInTalent(Talent.NOA_ARMOR1_3) || target == hero.pos) {
+                    hero.buff(ReclaimedTrap.class).detach();
+                } else {
+                    GLog.p(Messages.get(this, "trap_preserved"));
+                    ScrollOfRecharging.charge(hero);
+                }
+            }
         }
 
         if (storedTrap == null) {
@@ -105,9 +114,8 @@ public class TrapDuplicate extends ArmorAbility {
         } else {
 
             if (target == hero.pos) {
-                if (hero.buff(ReclaimedTrap.class) != null) {
-                    hero.buff(ReclaimedTrap.class).detach();
-                }
+                hero.buff(ReclaimedTrap.class).detach();
+
                 hero.sprite.operate(hero.pos);
                 Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
                 CellEmitter.get(hero.pos).burst(LightSmokeParticle.FACTORY, 3);
@@ -118,6 +126,8 @@ public class TrapDuplicate extends ArmorAbility {
                 t.reclaimed = true;
                 Bestiary.countEncounter(t.getClass());
                 t.activate();
+
+                if (hero.hasTalent(Talent.NOA_ARMOR1_2)) new TrapBomb().explode(target);
 
                 Invisibility.dispel();
                 hero.sprite.zap(target);
@@ -151,6 +161,16 @@ public class TrapDuplicate extends ArmorAbility {
         public void restoreFromBundle(Bundle bundle) {
             super.restoreFromBundle(bundle);
             trap = bundle.getClass(TRAP);
+        }
+    }
+
+    public static class TrapBomb extends Bomb.ConjuredBomb {
+        {
+            Hero hero = Dungeon.hero;
+            if (hero != null) {
+                minDamage = 2*(1+hero.pointsInTalent(Talent.NOA_ARMOR1_2));
+                maxDamage = 12*hero.pointsInTalent(Talent.NOA_ARMOR1_2);
+            }
         }
     }
 }
