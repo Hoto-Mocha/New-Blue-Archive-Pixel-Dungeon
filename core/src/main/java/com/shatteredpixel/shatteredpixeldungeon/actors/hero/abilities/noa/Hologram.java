@@ -4,6 +4,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -75,6 +77,10 @@ public class Hologram extends ArmorAbility {
             mob.duplicate( hero );
             GameScene.add( mob );
             appear( mob, respawnPoints.get( index ) );
+
+            if (hero.hasTalent(Talent.NOA_ARMOR2_2)) {
+                Buff.affect(mob, Barrier.class).setShield(15*hero.pointsInTalent(Talent.NOA_ARMOR2_2));
+            }
 
             respawnPoints.remove( index );
             nImages--;
