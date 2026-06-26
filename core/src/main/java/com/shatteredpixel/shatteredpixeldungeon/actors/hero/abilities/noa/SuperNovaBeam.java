@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -30,6 +31,17 @@ import java.util.ArrayList;
 public class SuperNovaBeam extends ArmorAbility {
     {
         baseChargeUse = 50f;
+    }
+
+    @Override
+    public float chargeUse(Hero hero) {
+        float chargeUse = super.chargeUse(hero);
+
+        if (hero.buff(SuperNovaBeamTracker.class) != null) {
+            chargeUse *= (float) Math.pow(0.9f, hero.pointsInTalent(Talent.NOA_ARMOR3_3));
+        }
+
+        return chargeUse;
     }
 
     @Override
@@ -79,6 +91,10 @@ public class SuperNovaBeam extends ArmorAbility {
 
                         if (hero.hasTalent(Talent.NOA_ARMOR3_1)) {
                             Buff.prolong(hero, Light.class, 50*hero.pointsInTalent(Talent.NOA_ARMOR3_1));
+                        }
+
+                        if (hero.hasTalent(Talent.NOA_ARMOR3_3) && hero.buff(SuperNovaBeamTracker.class) == null) {
+                            Buff.affect(hero, SuperNovaBeamTracker.class, 5f);
                         }
 
                         hero.spendAndNext(Actor.TICK);
@@ -141,4 +157,6 @@ public class SuperNovaBeam extends ArmorAbility {
     public Talent[] talents() {
         return new Talent[]{Talent.NOA_ARMOR3_1, Talent.NOA_ARMOR3_2, Talent.NOA_ARMOR3_3, Talent.HEROIC_ENERGY};
     }
+
+    public static class SuperNovaBeamTracker extends FlavourBuff {}
 }
