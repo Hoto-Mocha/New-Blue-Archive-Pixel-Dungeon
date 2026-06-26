@@ -121,7 +121,7 @@ public class SuperNovaBeam extends ArmorAbility {
             }
 
         }
-        int damage = Random.NormalIntRange(20, 100);
+        int damage = Random.NormalIntRange(Math.round(20*0.25f*hero.pointsInTalent(Talent.NOA_ARMOR3_2)), Math.round(100*0.25f*hero.pointsInTalent(Talent.NOA_ARMOR3_2)));
 
         for (Char ch : chars) {
             ch.damage( damage, this );
