@@ -110,6 +110,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		ANGULAR_SPEEDS.put(NikoSprite.NikoShot.class,		  0);
 		ANGULAR_SPEEDS.put(OtogiSprite.OtogiShot.class,		  0);
 		ANGULAR_SPEEDS.put(PenetrationShot.PenetrationBullet.class,  0);
+		ANGULAR_SPEEDS.put(HologramSprite.HologramShot.class,  0);
 
 		//720 is default
 
@@ -182,7 +183,8 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		 || item instanceof YukinoSprite.YukinoShot
 		 || item instanceof NikoSprite.NikoShot
 		 || item instanceof OtogiSprite.OtogiShot
-		 || item instanceof PenetrationShot.PenetrationBullet) {
+		 || item instanceof PenetrationShot.PenetrationBullet
+		 || item instanceof HologramSprite.HologramShot) {
 			speed *= 3f;
 		}
 		
