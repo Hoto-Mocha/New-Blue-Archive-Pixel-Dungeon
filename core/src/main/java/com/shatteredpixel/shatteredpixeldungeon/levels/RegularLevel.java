@@ -43,6 +43,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Torch;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
+import com.shatteredpixel.shatteredpixeldungeon.items.food.HardTack;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.SupplyRation;
 import com.shatteredpixel.shatteredpixeldungeon.items.journal.DocumentPage;
 import com.shatteredpixel.shatteredpixeldungeon.items.journal.GuidePage;
@@ -554,6 +555,32 @@ public abstract class RegularLevel extends Level {
 					}
 				}
 			}
+		if (Dungeon.hero.hasTalent(Talent.MIYU_T1_1)){
+			Talent.HardTackDropped dropped = Buff.affect(Dungeon.hero, Talent.HardTackDropped.class);
+			int targetFloor = (int)(2 + dropped.count());
+			if (dropped.count() > 4) targetFloor++;
+			if (Dungeon.depth >= targetFloor && dropped.count() < 2 + 2*Dungeon.hero.pointsInTalent(Talent.CACHED_RATIONS)){
+				int cell;
+				int tries = 100;
+				boolean valid;
+				do {
+					cell = randomDropCell(SpecialRoom.class);
+					valid = cell != -1 && !(room(cell) instanceof SecretRoom)
+							&& !(room(cell) instanceof ShopRoom)
+							&& map[cell] != Terrain.EMPTY_SP
+							&& map[cell] != Terrain.WATER
+							&& map[cell] != Terrain.PEDESTAL;
+				} while (tries-- > 0 && !valid);
+				if (valid) {
+					if (map[cell] == Terrain.HIGH_GRASS || map[cell] == Terrain.FURROWED_GRASS) {
+						map[cell] = Terrain.GRASS;
+						losBlocking[cell] = false;
+					}
+					drop(new HardTack(), cell).type = Heap.Type.CHEST;
+					dropped.countUp(2);
+				}
+			}
+		}
 		Random.popGenerator();
 
 		//guide pages
