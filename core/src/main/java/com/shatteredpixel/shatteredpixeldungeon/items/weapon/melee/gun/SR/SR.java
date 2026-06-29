@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
@@ -10,6 +12,15 @@ public class SR extends Gun {
         round = max_round;
         reload_time = 3f;
         shootingAccuracy = 1.5f;
+    }
+
+    @Override
+    public int STRReq(int lvl) {
+        int req = super.STRReq(lvl);
+        if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.MIYU){
+            req -= 1;
+        }
+        return req;
     }
 
     @Override

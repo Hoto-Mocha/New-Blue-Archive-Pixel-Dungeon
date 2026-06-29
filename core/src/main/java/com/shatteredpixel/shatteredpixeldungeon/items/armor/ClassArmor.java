@@ -118,6 +118,9 @@ abstract public class ClassArmor extends Armor {
 			case NOA:
 				classArmor = new NoaArmor();
 				break;
+			case MIYU:
+				classArmor = new MiyuArmor();
+				break;
 			case WARRIOR:
 				classArmor = new WarriorArmor();
 				break;

@@ -592,6 +592,48 @@ public enum Talent {
 	NOA_ARMOR3_2(24, 5, 4),
 	NOA_ARMOR3_3(25, 5, 4),
 
+	//Miyu T1
+	MIYU_T1_1(0, 6, 2),
+	MIYU_T1_2(1, 6, 2),
+	MIYU_T1_3(2, 6, 2),
+	MIYU_T1_4(3, 6, 2),
+
+	//Miyu T2
+	MIYU_T2_1(4, 6, 2),
+	MIYU_T2_2(5, 6, 2),
+	MIYU_T2_3(6, 6, 2),
+	MIYU_T2_4(7, 6, 2),
+	MIYU_T2_5(8, 6, 2),
+
+	//Miyu T3
+	MIYU_T3_1(9, 6, 3),
+	MIYU_T3_2(10, 6, 3),
+
+	//Telescope T3
+	MIYU_EX1_1(11, 6, 3),
+	MIYU_EX1_2(12, 6, 3),
+	MIYU_EX1_3(13, 6, 3),
+
+	//Camouflage T3
+	MIYU_EX2_1(14, 6, 3),
+	MIYU_EX2_2(15, 6, 3),
+	MIYU_EX2_3(16, 6, 3),
+
+	//Armor Ability 1 T4
+	MIYU_ARMOR1_1(17, 6, 4),
+	MIYU_ARMOR1_2(18, 6, 4),
+	MIYU_ARMOR1_3(19, 6, 4),
+
+	//Armor Ability 2 T4
+	MIYU_ARMOR2_1(20, 6, 4),
+	MIYU_ARMOR2_2(21, 6, 4),
+	MIYU_ARMOR2_3(22, 6, 4),
+
+	//Armor Ability 3 T4
+	MIYU_ARMOR3_1(23, 6, 4),
+	MIYU_ARMOR3_2(24, 6, 4),
+	MIYU_ARMOR3_3(25, 6, 4),
+
 	//universal T4
 	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one
 	//Ratmogrify T4
@@ -872,9 +914,9 @@ public enum Talent {
 				case NOA:
 					y = 5;
 					break;
-//				case MIYU:
-//					y = 6;
-//					break;
+				case MIYU:
+					y = 6;
+					break;
 //				case YUZU:
 //					y = 7;
 //					break;
@@ -1803,6 +1845,9 @@ public enum Talent {
 			case NOA:
 				Collections.addAll(tierTalents, NOA_T1_1, NOA_T1_2, NOA_T1_3, NOA_T1_4);
 				break;
+			case MIYU:
+				Collections.addAll(tierTalents, MIYU_T1_1, MIYU_T1_2, MIYU_T1_3, MIYU_T1_4);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HEARTY_MEAL, VETERANS_INTUITION, PROVOKED_ANGER, IRON_WILL);
 				break;
@@ -1850,6 +1895,9 @@ public enum Talent {
 			case NOA:
 				Collections.addAll(tierTalents, NOA_T2_1, NOA_T2_2, NOA_T2_3, NOA_T2_4, NOA_T2_5);
 				break;
+			case MIYU:
+				Collections.addAll(tierTalents, MIYU_T2_1, MIYU_T2_2, MIYU_T2_3, MIYU_T2_4, MIYU_T2_5);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, IRON_STOMACH, LIQUID_WILLPOWER, RUNIC_TRANSFERENCE, LETHAL_MOMENTUM, IMPROVISED_PROJECTILES);
 				break;
@@ -1896,6 +1944,9 @@ public enum Talent {
 				break;
 			case NOA:
 				Collections.addAll(tierTalents, NOA_T3_1, NOA_T3_2);
+				break;
+			case MIYU:
+				Collections.addAll(tierTalents, MIYU_T3_1, MIYU_T3_2);
 				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HOLD_FAST, STRONGMAN);
@@ -1978,6 +2029,12 @@ public enum Talent {
 				break;
 			case CONVERSATION:
 				Collections.addAll(tierTalents, NOA_EX2_1, NOA_EX2_2, NOA_EX2_3);
+				break;
+			case TELESCOPE:
+				Collections.addAll(tierTalents, MIYU_EX1_1, MIYU_EX1_2, MIYU_EX1_3);
+				break;
+			case CAMOUFLAGE:
+				Collections.addAll(tierTalents, MIYU_EX2_1, MIYU_EX2_2, MIYU_EX2_3);
 				break;
 			case BERSERKER:
 				Collections.addAll(tierTalents, ENDLESS_RAGE, DEATHLESS_FURY, ENRAGED_CATALYST);

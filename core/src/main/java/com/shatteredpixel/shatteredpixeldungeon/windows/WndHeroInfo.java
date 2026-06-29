@@ -77,6 +77,9 @@ public class WndHeroInfo extends WndTabbed {
 			case NOA:
 				tabIcon = new ItemSprite(ItemSpriteSheet.CONVERSION_KIT, null);
 				break;
+			case MIYU:
+				tabIcon = new ItemSprite(ItemSpriteSheet.TRASH_BIN, null);
+				break;
 			case WARRIOR:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SEAL, null);
 				break;
@@ -229,6 +232,13 @@ public class WndHeroInfo extends WndTabbed {
 							new TalentIcon(Talent.NOA_T1_2),
 							new TalentIcon(Talent.NOA_T2_3),
 							new ItemSprite(ItemSpriteSheet.HG_TIER_1),
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+					break;
+				case MIYU:
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.TRASH_BIN),
+							new TalentIcon(Talent.MIYU_T1_2),
+							Icons.GRASS.get(),
+							new ItemSprite(ItemSpriteSheet.SR_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 

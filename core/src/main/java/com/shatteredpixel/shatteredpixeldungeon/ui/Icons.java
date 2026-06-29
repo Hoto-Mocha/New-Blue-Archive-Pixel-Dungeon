@@ -493,6 +493,8 @@ public enum Icons {
 				return new ItemSprite(ItemSpriteSheet.BICYCLE);
 			case NOA:
 				return new ItemSprite(ItemSpriteSheet.CONVERSION_KIT);
+			case MIYU:
+				return new ItemSprite(ItemSpriteSheet.TRASH_BIN);
 			case WARRIOR:
 				return new ItemSprite(ItemSpriteSheet.SEAL);
 			case MAGE:
