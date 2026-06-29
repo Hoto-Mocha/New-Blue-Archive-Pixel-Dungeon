@@ -1569,6 +1569,14 @@ public enum Talent {
 			Buff.affect(enemy, SuckerPunchTracker.class);
 		}
 
+		if (hero.hasTalent(Talent.MIYU_T1_3)
+				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)
+				&& enemy.buff(AmbushShotTracker.class) == null
+				&& hero.belongings.attackingWeapon() instanceof Gun.Bullet){
+			dmg += 1+hero.pointsInTalent(Talent.MIYU_T1_3);
+			Buff.affect(enemy, AmbushShotTracker.class);
+		}
+
 		if (hero.hasTalent(Talent.FOLLOWUP_STRIKE) && enemy.isAlive() && enemy.alignment == Char.Alignment.ENEMY) {
 			if (hero.belongings.attackingWeapon() instanceof MissileWeapon) {
 				Buff.prolong(hero, FollowupStrikeTracker.class, 5f).object = enemy.id();
@@ -1826,6 +1834,8 @@ public enum Talent {
 			dmgBonus = bundle.getInt( DMG_BONUS );
 		}
 	}
+
+	public static class AmbushShotTracker extends Buff {}
 
 	//new buff here
 
