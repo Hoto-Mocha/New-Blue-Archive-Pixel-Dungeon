@@ -77,6 +77,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.TrashBin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
@@ -359,8 +360,12 @@ public enum HeroClass {
 		ThrowingKnife knives = new ThrowingKnife();
 		knives.identify().collect();
 
+		TrashBin bin = new TrashBin();
+		bin.collect();
+
 		Dungeon.quickslot.setSlot(0, srT1);
-		Dungeon.quickslot.setSlot(1, knives);
+		Dungeon.quickslot.setSlot(1, bin);
+		Dungeon.quickslot.setSlot(2, knives);
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
