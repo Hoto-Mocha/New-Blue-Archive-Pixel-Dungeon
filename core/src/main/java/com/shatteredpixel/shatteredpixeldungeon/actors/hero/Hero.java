@@ -2875,4 +2875,15 @@ public class Hero extends Char {
 			Buff.affect(this, SupportDrone.class).kill();
 		}
 	}
+
+	@Override
+	public float stealth() {
+		float stealth = super.stealth();
+
+		if (heroClass == HeroClass.MIYU) {
+			stealth += 2;
+		}
+
+		return stealth;
+	}
 }
