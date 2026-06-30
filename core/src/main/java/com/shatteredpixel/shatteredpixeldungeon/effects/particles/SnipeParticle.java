@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.effects.particles;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.Callback;
@@ -36,6 +37,19 @@ public class SnipeParticle extends PixelParticle {
                     ((SnipeParticle)emitter.recycle( SnipeParticle.class )).reset( x + p.x, y + p.y );
                 }
                 CellEmitter.center(target.pos).burst(ShootParticle.factory(target, tier, lvl, callback), 1);
+                CellEmitter.center(target.pos).burst(SnipeOuterParticle.factory(), 1);
+            }
+        };
+    }
+
+    public static Emitter.Factory factory(Char target, Gun.Bullet bullet, Callback callback) {
+        return new Emitter.Factory() {
+            @Override
+            public void emit(Emitter emitter, int index, float x, float y) {
+                for (PointF p : POINTS) {
+                    ((SnipeParticle)emitter.recycle( SnipeParticle.class )).reset( x + p.x, y + p.y );
+                }
+                CellEmitter.center(target.pos).burst(ShootParticle.factory(target, bullet, callback), 1);
                 CellEmitter.center(target.pos).burst(SnipeOuterParticle.factory(), 1);
             }
         };

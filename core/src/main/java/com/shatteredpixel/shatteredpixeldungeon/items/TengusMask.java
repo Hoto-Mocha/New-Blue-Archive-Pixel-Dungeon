@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Conversation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitSquadBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Snipe;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SpreadShotBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SwiftMovement;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -129,6 +130,9 @@ public class TengusMask extends Item {
 		}
 		if (way == HeroSubClass.CONVERSATION) {
 			Buff.affect(curUser, Conversation.class);
+		}
+		if (way == HeroSubClass.TELESCOPE) {
+			Buff.affect(curUser, Snipe.class);
 		}
 
 		((HeroSprite)curUser.sprite).updateArmor();

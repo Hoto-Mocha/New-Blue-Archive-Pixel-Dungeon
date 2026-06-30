@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Snipe;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -980,6 +981,14 @@ public class Dungeon {
 		}
 
 		for (RevealedArea a : hero.buffs(RevealedArea.class)){
+			if (Dungeon.depth != a.depth || Dungeon.branch != a.branch) continue;
+			BArray.or( level.visited, level.heroFOV, a.pos - 1 - level.width(), 3, level.visited );
+			BArray.or( level.visited, level.heroFOV, a.pos - 1, 3, level.visited );
+			BArray.or( level.visited, level.heroFOV, a.pos - 1 + level.width(), 3, level.visited );
+			GameScene.updateFog(a.pos, 2);
+		}
+
+		for (Snipe.ScopedArea a : hero.buffs(Snipe.ScopedArea.class)){
 			if (Dungeon.depth != a.depth || Dungeon.branch != a.branch) continue;
 			BArray.or( level.visited, level.heroFOV, a.pos - 1 - level.width(), 3, level.visited );
 			BArray.or( level.visited, level.heroFOV, a.pos - 1, 3, level.visited );

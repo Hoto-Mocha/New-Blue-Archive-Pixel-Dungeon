@@ -13,7 +13,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.NoticeTracker;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Snipe;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SwiftMovement;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
@@ -22,7 +24,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.WireHook;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
@@ -92,7 +93,10 @@ import com.watabou.utils.Random;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Gun extends MeleeWeapon {
@@ -856,6 +860,7 @@ public class Gun extends MeleeWeapon {
     public class Bullet extends MissileWeapon {
 
         private boolean specialShot = false;
+        private boolean snipeShot = false;
 
         {
             image = ItemSpriteSheet.SINGLE_BULLET;
@@ -888,6 +893,14 @@ public class Gun extends MeleeWeapon {
 
         public boolean isSpecialShot() {
             return this.specialShot;
+        }
+
+        public void setSnipeShot(boolean isSnipe) {
+            this.snipeShot = isSnipe;
+        }
+
+        public boolean isSnipeShot() {
+            return this.snipeShot;
         }
 
         @Override
@@ -992,6 +1005,23 @@ public class Gun extends MeleeWeapon {
                     }
                 }
             }
+            if (isSnipeShot()) {
+                Char enemy = hero.attackTarget();
+                switch ((Dungeon.level.distance(owner.pos, enemy.pos)-1) / 3 + 1) {
+                    case 1:
+                        damage = Math.round(damage * 1.1f);
+                        break;
+                    case 2:
+                        damage = Math.round(damage * 1.2f);
+                        break;
+                    case 3:
+                        damage = Math.round(damage * 1.35f);
+                        break;
+                    case 4: default:
+                        damage = Math.round(damage * 1.5f);
+                        break;
+                }
+            }
             return damage;
         }
 
@@ -1020,6 +1050,8 @@ public class Gun extends MeleeWeapon {
 
         @Override
         public float accuracyFactor(Char owner, Char target) {
+            if (isSnipeShot()) return Char.INFINITE_ACCURACY;
+
             float ACC = super.accuracyFactor(owner, target);
             ACC *= shootingAccuracy * accMulti;
             if (Gun.this.attachMod == AttachMod.LASER_ATTACH) {
@@ -1204,7 +1236,13 @@ public class Gun extends MeleeWeapon {
                 if (target == curUser.pos) {
                     execute(hero, AC_RELOAD);
                 } else {
-                    knockBullet().cast(curUser, target);
+                    if (curUser.buff(Snipe.ScopedArea.class) != null && curUser.buff(Snipe.ScopedArea.class).posInArea(target) && Actor.findChar(target) != null) {
+                        if (curUser.buff(Snipe.ScopedArea.class).posInArea(target)) {
+                            curUser.buff(Snipe.ScopedArea.class).snipe(target, Actor.findChar(target), knockBullet());
+                        }
+                    } else {
+                        knockBullet().cast(curUser, target);
+                    }
                 }
             }
         }

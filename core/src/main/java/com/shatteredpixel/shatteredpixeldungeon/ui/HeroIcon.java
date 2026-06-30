@@ -162,7 +162,8 @@ public class HeroIcon extends Image {
   	public static final int PROFESSIONAL_RIDING_ACTION= 128+78;
   	public static final int BANK_ROBBER_ACTION= 128+79;
   	public static final int DOUBLE_BARREL_ACTION= 128+80;
-  	public static final int CONVERSATION_ACTION= 128+81;
+  	public static final int CONVERSATION_ACTION	= 128+81;
+  	public static final int TELESCOPE_ACTION	= 128+82;
 
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );
