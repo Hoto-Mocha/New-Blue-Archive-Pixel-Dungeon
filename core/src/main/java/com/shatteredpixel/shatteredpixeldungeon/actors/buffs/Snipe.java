@@ -95,6 +95,9 @@ public class Snipe extends Buff implements ActionIndicator.Action {
                         Buff.prolong(ch, Slow.class, 2f);
                     }
                 }
+                if (hero.hasTalent(Talent.MIYU_EX1_3) && hero.belongings.weapon() instanceof Gun) {
+                    ((Gun) hero.belongings.weapon()).manualReload(hero.pointsInTalent(Talent.MIYU_EX1_3), true);
+                }
                 Buff.affect(hero, ScopedArea.class).setup(area, 10f, target, Dungeon.depth, Dungeon.branch);
                 hero.sprite.operate(target);
                 hero.next();
