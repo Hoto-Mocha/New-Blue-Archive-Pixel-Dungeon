@@ -68,7 +68,7 @@ public class TrashBin extends Item {
 				CellEmitter.get( hero.pos ).burst( Speck.factory( Speck.WOOL ), 6 );
 				curUser.spendAndNext(Actor.TICK);
 
-				Buff.affect(hero, TrashBinCooldown.class, 20f);
+				Buff.affect(hero, TrashBinCooldown.class, TrashBinCooldown.DURATION);
 			} else {
 				Dungeon.hero.yellN("bin_cooldown");	//"...아직은 사용할 수 없어요..."
 			}
@@ -92,6 +92,8 @@ public class TrashBin extends Item {
 
 	public static class TrashBinCooldown extends FlavourBuff {
 
+		public static final float DURATION = 20f;
+
 		{
 			type = buffType.NEUTRAL;
 			announced = false;
@@ -105,6 +107,11 @@ public class TrashBin extends Item {
 		@Override
 		public void tintIcon(Image icon) {
 			icon.hardlight(0x2091DB);
+		}
+
+		@Override
+		public float iconFadePercent() {
+			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
 		}
 
 	}
