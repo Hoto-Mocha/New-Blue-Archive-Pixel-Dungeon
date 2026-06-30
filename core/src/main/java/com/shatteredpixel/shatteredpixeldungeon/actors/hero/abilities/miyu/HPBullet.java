@@ -3,7 +3,9 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -59,6 +61,8 @@ public class HPBullet extends ArmorAbility {
 
         public boolean proc(Char enemy, int damage) {
             detach();
+            if (!(target instanceof Hero)) return false;
+            Hero hero = (Hero) target;
             if (enemy.isImmune(Bleeding.class)) {
                 return false;
             } else {
@@ -68,6 +72,10 @@ public class HPBullet extends ArmorAbility {
                     damage = Math.round(damage * 0.33f);
                 }
                 Buff.affect(enemy, Bleeding.class).set(damage);
+                if (hero.hasTalent(Talent.MIYU_ARMOR2_1)) {
+                    if (!enemy.isImmune(Cripple.class)) Buff.affect(enemy, Cripple.class, 4f*hero.pointsInTalent(Talent.MIYU_ARMOR2_1));
+                    if (!enemy.isImmune(Roots.class)) Buff.affect(enemy, Roots.class, 2f*hero.pointsInTalent(Talent.MIYU_ARMOR2_1));
+                }
                 return true;
             }
         }
