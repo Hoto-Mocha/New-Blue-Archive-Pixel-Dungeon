@@ -923,26 +923,7 @@ public abstract class Mob extends Char {
 			GLog.i( Messages.get(this, "died") );
 		}
 
-		if (cause == Dungeon.hero || cause instanceof SupportDrone) {
-			Dungeon.hero.onEnemyKill(this);
-		}
-
-		if (cause == Dungeon.hero && Dungeon.hero.hasTalent(Talent.HOSHINO_T2_5)) {
-			Buff.affect(Dungeon.hero, Talent.IntimidateBonusDamageBuff.class).set();
-		}
-
-		if (cause == Dungeon.hero && Dungeon.hero.buff(Bicycle.DriftCooldown.class) != null) {
-			Dungeon.hero.buff(Bicycle.DriftCooldown.class).kill();
-		}
-
-		if (cause == Dungeon.hero && Dungeon.hero.hasTalent(Talent.SHIROKO_T1_4)) {
-			Buff.affect(Dungeon.hero, Barrier.class).setShield(2+3*Dungeon.hero.pointsInTalent(Talent.SHIROKO_T1_4));
-		}
-
-		if (cause == Dungeon.hero && Dungeon.hero.pointsInTalent(Talent.NOA_EX1_3) >= 3 && Dungeon.level.adjacent(this.pos, Dungeon.hero.pos)) {
-			if (Dungeon.hero.belongings.weapon() instanceof Gun) ((Gun) Dungeon.hero.belongings.weapon()).quickReload();
-			if (Dungeon.hero.belongings.secondWep() instanceof Gun) ((Gun) Dungeon.hero.belongings.secondWep()).quickReload();
-		}
+		Talent.onKill(cause, this);
 		
 		boolean soulMarked = buff(SoulMark.class) != null;
 

@@ -1752,6 +1752,13 @@ public enum Talent {
 		}
 	}
 
+	public static void onKill(Object cause, Mob mob) {
+		Hero hero = Dungeon.hero;
+		if (cause == hero) {
+			hero.onEnemyKill(mob);
+		}
+	}
+
 	public static class FirstAidCooldown extends FlavourBuff {
 		public int icon() { return BuffIndicator.TIME; }
 		public void tintIcon(Image icon) { icon.hardlight(0.15f, 0.2f, 0.5f); }

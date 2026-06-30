@@ -2874,6 +2874,19 @@ public class Hero extends Char {
 		if (subClass == HeroSubClass.SUPPORT_DRONE) {
 			Buff.affect(this, SupportDrone.class).kill();
 		}
+		if (hasTalent(Talent.HOSHINO_T2_5)) {
+			Buff.affect(this, Talent.IntimidateBonusDamageBuff.class).set();
+		}
+		if (buff(Bicycle.DriftCooldown.class) != null) {
+			buff(Bicycle.DriftCooldown.class).kill();
+		}
+		if (this.hasTalent(Talent.SHIROKO_T1_4)) {
+			Buff.affect(this, Barrier.class).setShield(2+3*pointsInTalent(Talent.SHIROKO_T1_4));
+		}
+		if (pointsInTalent(Talent.NOA_EX1_3) >= 3 && Dungeon.level.adjacent(mob.pos, pos)) {
+			if (belongings.weapon() instanceof Gun) ((Gun) belongings.weapon()).quickReload();
+			if (belongings.secondWep() instanceof Gun) ((Gun) belongings.secondWep()).quickReload();
+		}
 	}
 
 	@Override
