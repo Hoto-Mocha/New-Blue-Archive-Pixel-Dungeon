@@ -22,7 +22,7 @@ public class SnipeAreaParticle extends PixelParticle.Shrinking {
 
 		lifespan = 0.6f;
 
-		color( 0xFF0000 );
+		color( 0xFFFF00 );
 	}
 
 	public void reset( float x, float y){
