@@ -1369,6 +1369,42 @@ public enum Talent {
 				Item.updateQuickslot();
 			}
 		}
+		if (hero.hasTalent(Talent.MIYU_T2_2)) {
+			ArrayList<Integer> grassCells = new ArrayList<>();
+			for (int i : PathFinder.NEIGHBOURS9){
+				grassCells.add(cell+i);
+			}
+			Random.shuffle(grassCells);
+			for (int grassCell : grassCells){
+				Char ch = Actor.findChar(grassCell);
+				if (ch != null && ch.alignment == Char.Alignment.ENEMY){
+					//1/2 turns of roots
+					Buff.affect(ch, Roots.class, factor * hero.pointsInTalent(MIYU_T2_2));
+				}
+				if (Dungeon.level.map[grassCell] == Terrain.EMPTY ||
+						Dungeon.level.map[grassCell] == Terrain.EMBERS ||
+						Dungeon.level.map[grassCell] == Terrain.EMPTY_DECO){
+					Level.set(grassCell, Terrain.GRASS);
+					GameScene.updateMap(grassCell);
+				}
+				CellEmitter.get(grassCell).burst(LeafParticle.LEVEL_SPECIFIC, 4);
+			}
+			// 4/6 cells total
+			int totalGrassCells = (int) (factor * (2 + 2 * hero.pointsInTalent(MIYU_T2_2)));
+			while (grassCells.size() > totalGrassCells){
+				grassCells.remove(0);
+			}
+			for (int grassCell : grassCells){
+				int t = Dungeon.level.map[grassCell];
+				if ((t == Terrain.EMPTY || t == Terrain.EMPTY_DECO || t == Terrain.EMBERS
+						|| t == Terrain.GRASS || t == Terrain.FURROWED_GRASS)
+						&& Dungeon.level.plants.get(grassCell) == null){
+					Level.set(grassCell, Terrain.HIGH_GRASS);
+					GameScene.updateMap(grassCell);
+				}
+			}
+			Dungeon.observe();
+		}
 	}
 
 	public static void onScrollUsed( Hero hero, int pos, float factor, Class<?extends Item> cls ){
