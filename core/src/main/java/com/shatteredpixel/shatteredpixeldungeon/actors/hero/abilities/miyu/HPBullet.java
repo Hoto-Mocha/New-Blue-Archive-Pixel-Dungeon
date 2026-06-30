@@ -36,7 +36,7 @@ public class HPBullet extends ArmorAbility {
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
         if (target == null) return;
         if (!(hero.belongings.weapon() instanceof Gun)) {
-            hero.yellW("need gun");
+            hero.yellW("need_gun");
             return;
         }
 
