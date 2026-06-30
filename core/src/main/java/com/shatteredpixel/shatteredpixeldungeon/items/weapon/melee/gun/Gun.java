@@ -1060,6 +1060,10 @@ public class Gun extends MeleeWeapon {
 
             boolean willAggroEnemy = true; //어그로를 끌지 않는 경우에 false
 
+            if (hero.hasTalent(Talent.MIYU_T2_5) && Random.Float() < 0.5f*hero.pointsInTalent(Talent.MIYU_T2_5)) {
+                willAggroEnemy = false;
+            }
+
             if (willAggroEnemy) {
                 aggro();
             }
