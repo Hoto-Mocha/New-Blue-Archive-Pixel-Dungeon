@@ -72,6 +72,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.TrashBin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
@@ -1755,6 +1756,10 @@ public enum Talent {
 
 		if (hero.hasTalent(Talent.MIYU_T2_3)) {
 			Buff.affect(hero, Invisibility.class, 1+hero.pointsInTalent(Talent.MIYU_T2_3));
+		}
+
+		if (hero.hasTalent(Talent.MIYU_EX2_3)) {
+			Buff.affect(hero, TrashBin.EvasionBuff.class);
 		}
 	}
 

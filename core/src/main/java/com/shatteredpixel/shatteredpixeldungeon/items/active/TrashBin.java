@@ -152,4 +152,23 @@ public class TrashBin extends Item {
 		}
 
 	}
+
+	public static class EvasionBuff extends Buff {
+
+		{
+			type = buffType.POSITIVE;
+			announced = true;
+		}
+
+		@Override
+		public int icon() {
+			return BuffIndicator.HASTE;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(0.25f, 1.5f, 1f);
+		}
+
+	}
 }

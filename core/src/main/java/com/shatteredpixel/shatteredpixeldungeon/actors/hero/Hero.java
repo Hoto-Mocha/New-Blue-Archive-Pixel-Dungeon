@@ -704,6 +704,10 @@ public class Hero extends Char {
 			return Messages.get(Monk.class, "parried");
 		}
 
+		if (buff(TrashBin.EvasionBuff.class) != null){
+			buff(TrashBin.EvasionBuff.class).detach();
+		}
+
 		if (hasTalent(Talent.MIYAKO_T2_4)) {
 			if (belongings.weapon() instanceof Gun && Random.Float() < 0.25f * pointsInTalent(Talent.MIYAKO_T2_4)) {
 				((Gun)belongings.weapon()).manualReload();
