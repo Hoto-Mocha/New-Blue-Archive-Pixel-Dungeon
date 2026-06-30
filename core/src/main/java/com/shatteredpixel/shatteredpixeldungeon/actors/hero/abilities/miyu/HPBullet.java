@@ -6,6 +6,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Weakness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -75,6 +77,10 @@ public class HPBullet extends ArmorAbility {
                 if (hero.hasTalent(Talent.MIYU_ARMOR2_1)) {
                     if (!enemy.isImmune(Cripple.class)) Buff.affect(enemy, Cripple.class, 4f*hero.pointsInTalent(Talent.MIYU_ARMOR2_1));
                     if (!enemy.isImmune(Roots.class)) Buff.affect(enemy, Roots.class, 2f*hero.pointsInTalent(Talent.MIYU_ARMOR2_1));
+                }
+                if (hero.hasTalent(Talent.MIYU_ARMOR2_2)) {
+                    if (!enemy.isImmune(Weakness.class)) Buff.affect(enemy, Weakness.class, Math.round(1.5f*hero.pointsInTalent(Talent.MIYU_ARMOR2_2)));
+                    if (!enemy.isImmune(Vulnerable.class)) Buff.affect(enemy, Vulnerable.class, Math.round(1.5f*hero.pointsInTalent(Talent.MIYU_ARMOR2_2)));
                 }
                 return true;
             }
