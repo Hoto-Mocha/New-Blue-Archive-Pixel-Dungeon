@@ -12,6 +12,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.NoticeTracker;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SwiftMovement;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -21,6 +22,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.WireHook;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
@@ -825,10 +827,11 @@ public class Gun extends MeleeWeapon {
     private static boolean evaluatingTwinUpgrades = false;
     @Override
     public int buffedLvl() {
-        if (!evaluatingTwinUpgrades && Dungeon.hero != null && isEquipped(Dungeon.hero) && Dungeon.hero.hasTalent(Talent.NOA_EX1_2)){
+        int level = super.buffedLvl();
+        if (!evaluatingTwinUpgrades && hero != null && isEquipped(hero) && hero.hasTalent(Talent.NOA_EX1_2)){
             KindOfWeapon other = null;
-            if (Dungeon.hero.belongings.weapon() != this) other = Dungeon.hero.belongings.weapon();
-            if (Dungeon.hero.belongings.secondWep() != this) other = Dungeon.hero.belongings.secondWep();
+            if (hero.belongings.weapon() != this) other = hero.belongings.weapon();
+            if (hero.belongings.secondWep() != this) other = hero.belongings.secondWep();
 
             if (other instanceof Gun) {
                 evaluatingTwinUpgrades = true;
@@ -836,14 +839,18 @@ public class Gun extends MeleeWeapon {
                 evaluatingTwinUpgrades = false;
 
                 //weaker weapon needs to be 2/1/0 tiers lower, based on talent level
-                if ((tier() + (3 - Dungeon.hero.pointsInTalent(Talent.NOA_EX1_2))) <= ((Gun) other).tier()
+                if ((tier() + (3 - hero.pointsInTalent(Talent.NOA_EX1_2))) <= ((Gun) other).tier()
                         && otherLevel > super.buffedLvl()) {
                     return otherLevel;
                 }
 
             }
         }
-        return super.buffedLvl();
+        if (hero != null && hero.buff(NoticeTracker.class) != null && !NoticeTracker.isNoticed() && this.isEquipped(hero)) {
+            level += hero.pointsInTalent(Talent.MIYU_T3_2);
+        }
+
+        return level;
     }
 
     public class Bullet extends MissileWeapon {
@@ -970,6 +977,21 @@ public class Gun extends MeleeWeapon {
         @Override
         public int damageRoll(Char owner) {
             int damage = bulletDamage();
+            if (owner instanceof Hero && ((Hero)owner).hasTalent(Talent.MIYU_T3_1)) {
+                Hero hero = (Hero)owner;
+                Char enemy = hero.attackTarget();
+                if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
+                    //deals 25/33/50% toward max to max on surprise, instead of min to max.
+                    int diff = max() - min();
+                    damage = augment.damageFactor(Hero.heroDamageIntRange(
+                            min() + Math.round(diff/(float)(5-((Hero)owner).pointsInTalent(Talent.MIYU_T3_1))),
+                            max()));
+                    int exStr = hero.STR() - STRReq();
+                    if (exStr > 0) {
+                        damage += Hero.heroDamageIntRange(0, exStr);
+                    }
+                }
+            }
             return damage;
         }
 

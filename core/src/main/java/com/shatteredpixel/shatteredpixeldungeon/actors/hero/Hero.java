@@ -60,6 +60,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.NoticeTracker;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
@@ -1031,6 +1032,8 @@ public class Hero extends Char {
 		if (hasTalent(Talent.NONOMI_T3_2) && belongings.weapon instanceof Gun) {
 			if (Random.Float() < 0.05f * pointsInTalent(Talent.NONOMI_T3_2)) ((Gun)belongings.weapon).manualReload();
 		}
+
+		if (buff(NoticeTracker.class) != null) Item.updateQuickslot();
 
 		return actResult;
 	}

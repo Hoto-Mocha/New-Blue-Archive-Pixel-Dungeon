@@ -41,6 +41,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.NoticeTracker;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitSquadBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
@@ -1146,6 +1147,11 @@ public enum Talent {
 
 		if (talent == MIYAKO_T2_5) {
 			hero.updateHT(true);
+		}
+
+		if (talent == MIYU_T3_2) {
+			Buff.affect(hero, NoticeTracker.class);
+			Item.updateQuickslot();
 		}
 	}
 

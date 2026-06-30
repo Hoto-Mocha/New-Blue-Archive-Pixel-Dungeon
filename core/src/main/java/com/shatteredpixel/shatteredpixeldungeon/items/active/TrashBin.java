@@ -53,6 +53,7 @@ public class TrashBin extends Item {
 							{actPriority = VFX_PRIO;}
 							public boolean act() {
 								if (((Mob) ch).state == ((Mob) ch).HUNTING || ((Mob) ch).state == ((Mob) ch).FLEEING){
+									((Mob) ch).clearEnemy();
 									((Mob) ch).state = ((Mob) ch).WANDERING;
 									((Mob) ch).beckon(Dungeon.level.randomDestination(ch));
 									ch.sprite.showLost();
@@ -67,6 +68,8 @@ public class TrashBin extends Item {
 				Sample.INSTANCE.play(Assets.Sounds.PUFF);
 				CellEmitter.get( hero.pos ).burst( Speck.factory( Speck.WOOL ), 6 );
 				curUser.next();
+
+				updateQuickslot();
 
 				Buff.affect(hero, TrashBinCooldown.class, TrashBinCooldown.DURATION);
 			} else {

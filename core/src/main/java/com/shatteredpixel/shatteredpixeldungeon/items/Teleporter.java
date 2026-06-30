@@ -409,8 +409,8 @@ public class Teleporter extends Item {
 //                }
 
                 Char ch = Actor.findChar(target);
-                if (ch instanceof Fox) {
-                    GLog.i(((Fox)ch).findPartner().name());
+                if (ch instanceof Mob) {
+                    GLog.i(((Mob) ch).isTargeting(Dungeon.hero)+"");
                 }
             }
         }

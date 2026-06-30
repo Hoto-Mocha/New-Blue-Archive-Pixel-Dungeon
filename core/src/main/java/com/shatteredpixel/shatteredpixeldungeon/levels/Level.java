@@ -1299,7 +1299,7 @@ public abstract class Level implements Bundlable {
 
 			//grass is see-through by some specific entities, but not during the fungi quest
 			if (!(Dungeon.level instanceof  MiningLevel) || Blacksmith.Quest.Type() != Blacksmith.Quest.FUNGI){
-				if ((c instanceof Hero && ((Hero) c).subClass == HeroSubClass.WARDEN)
+				if ((c instanceof Hero && (((Hero) c).subClass == HeroSubClass.WARDEN || ((Hero) c).subClass == HeroSubClass.CAMOUFLAGE))
 						|| c instanceof YogFist.SoiledFist || c instanceof GnollGeomancer) {
 					if (blocking == null) {
 						System.arraycopy(Dungeon.level.losBlocking, 0, modifiableBlocking, 0, modifiableBlocking.length);
