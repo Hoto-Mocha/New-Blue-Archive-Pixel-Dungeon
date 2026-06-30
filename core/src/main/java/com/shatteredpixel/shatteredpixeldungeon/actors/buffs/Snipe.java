@@ -137,6 +137,16 @@ public class Snipe extends Buff implements ActionIndicator.Action {
             return Math.max(0, (max - left) / max);
         }
 
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc", Messages.decimalFormat("#.##", left));
+        }
+
+        @Override
+        public String iconTextDisplay() {
+            return Messages.decimalFormat("#.##", left);
+        }
+
         public void setup(ArrayList<Integer> area, float duration, int pos, int depth, int branch){
             this.areaPositions = area;
 
