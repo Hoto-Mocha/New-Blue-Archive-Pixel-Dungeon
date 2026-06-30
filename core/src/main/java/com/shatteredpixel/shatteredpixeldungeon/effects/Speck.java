@@ -72,7 +72,8 @@ public class Speck extends Image {
 	public static final int BLIZZARD    = 119;
 	public static final int YELLOW_LIGHT= 120;
 	public static final int BLUE_LIGHT  = 121;
-	
+	public static final int GREEN_LIGHT = 122;
+
 	private static final int SIZE = 7;
 	
 	private int type;
@@ -119,6 +120,7 @@ public class Speck extends Image {
 		case RED_LIGHT:
 		case YELLOW_LIGHT:
 		case BLUE_LIGHT:
+		case GREEN_LIGHT:
 			frame( film.get( LIGHT ) );
 			break;
 		case EVOKE:
@@ -228,6 +230,13 @@ public class Speck extends Image {
 
 		case BLUE_LIGHT:
 			tint(0xFF00CCFF);
+			angle = Random.Float( 360 );
+			angularSpeed = 90;
+			lifespan = 1f;
+			break;
+
+		case GREEN_LIGHT:
+			tint(0xFF00B300);
 			angle = Random.Float( 360 );
 			angularSpeed = 90;
 			lifespan = 1f;
@@ -445,6 +454,7 @@ public class Speck extends Image {
 			case RED_LIGHT:
 			case YELLOW_LIGHT:
 			case BLUE_LIGHT:
+			case GREEN_LIGHT:
 			case LIGHT:
 				am = scale.set( p < 0.2f ? p * 5f : (1 - p) * 1.25f ).x;
 				break;

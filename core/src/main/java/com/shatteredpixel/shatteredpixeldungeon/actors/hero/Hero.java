@@ -838,6 +838,14 @@ public class Hero extends Char {
 			speed *= 3f;
 		}
 
+		if (pointsInTalent(Talent.MIYU_EX2_3) >= 3) {
+			int t = Dungeon.level.map[pos];
+			if (t == Terrain.FURROWED_GRASS || t == Terrain.HIGH_GRASS) {
+				speed *= 2f;
+				sprite.emitter().startDelayed(Speck.factory(Speck.GREEN_LIGHT), 0.02f, Random.IntRange(1, 3), 0.05f);
+			}
+		}
+
 		speed = AscensionChallenge.modifyHeroSpeed(speed);
 		
 		return speed;
