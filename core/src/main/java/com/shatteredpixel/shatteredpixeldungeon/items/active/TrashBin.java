@@ -7,15 +7,19 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -63,7 +67,18 @@ public class TrashBin extends Item {
 						}.attachTo(ch);
 					}
 				}
-				Dungeon.hero.yellI("bin_use_" + (Random.IntRange(1, 3)));
+
+				if (hero.subClass == HeroSubClass.CAMOUFLAGE) {
+					for (int i : PathFinder.NEIGHBOURS8) {
+						int cell = hero.pos + i;
+						int t = Dungeon.level.map[cell];
+						if (t == Terrain.EMPTY || t == Terrain.EMPTY_DECO || t == Terrain.EMBERS
+								|| t == Terrain.GRASS) {
+							Level.set(cell, Terrain.FURROWED_GRASS);
+						}
+					}
+				}
+				hero.yellI("bin_use_" + (Random.IntRange(1, 3)));
 				curUser.sprite.operate(curUser.pos);
 				Sample.INSTANCE.play(Assets.Sounds.PUFF);
 				CellEmitter.get( hero.pos ).burst( Speck.factory( Speck.WOOL ), 6 );
@@ -73,7 +88,7 @@ public class TrashBin extends Item {
 
 				Buff.affect(hero, TrashBinCooldown.class, TrashBinCooldown.DURATION);
 			} else {
-				Dungeon.hero.yellN("bin_cooldown");	//"...아직은 사용할 수 없어요..."
+				hero.yellN("bin_cooldown");	//"...아직은 사용할 수 없어요..."
 			}
 		}
 	}

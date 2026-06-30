@@ -2907,6 +2907,10 @@ public class Hero extends Char {
 			stealth += 2;
 		}
 
+		if (subClass == HeroSubClass.CAMOUFLAGE) {
+			stealth += this.lvl/3f;
+		}
+
 		return stealth;
 	}
 }
