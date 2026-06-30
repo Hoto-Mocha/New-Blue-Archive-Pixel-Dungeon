@@ -48,15 +48,15 @@ public class TrashBin extends Item {
 		if (action.equals(AC_USE)) {
 			if (Dungeon.hero.buff(TrashBinCooldown.class) == null) {
 				for (Char ch : Actor.chars()) {
-					if (ch instanceof Mob && !(ch instanceof NPC) && ch.alignment == Char.Alignment.ENEMY) {
+					if (ch instanceof Mob && ch.alignment == Char.Alignment.ENEMY && ((Mob) ch).state != ((Mob) ch).SLEEPING) {
 						new FlavourBuff(){
 							{actPriority = VFX_PRIO;}
 							public boolean act() {
-								if (((Mob) ch).state == ((Mob) ch).HUNTING){
+								if (((Mob) ch).state == ((Mob) ch).HUNTING || ((Mob) ch).state == ((Mob) ch).FLEEING){
 									((Mob) ch).state = ((Mob) ch).WANDERING;
-									((Mob) ch).beckon(Dungeon.level.randomDestination(ch));
-									ch.sprite.showLost();
 								}
+								((Mob) ch).beckon(Dungeon.level.randomDestination(ch));
+								ch.sprite.showLost();
 								return super.act();
 							}
 						}.attachTo(ch);
@@ -66,7 +66,7 @@ public class TrashBin extends Item {
 				curUser.sprite.operate(curUser.pos);
 				Sample.INSTANCE.play(Assets.Sounds.PUFF);
 				CellEmitter.get( hero.pos ).burst( Speck.factory( Speck.WOOL ), 6 );
-				curUser.spendAndNext(Actor.TICK);
+				curUser.next();
 
 				Buff.affect(hero, TrashBinCooldown.class, TrashBinCooldown.DURATION);
 			} else {
