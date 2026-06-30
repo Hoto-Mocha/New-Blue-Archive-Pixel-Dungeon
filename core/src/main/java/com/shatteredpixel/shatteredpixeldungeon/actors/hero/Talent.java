@@ -1273,6 +1273,9 @@ public enum Talent {
 		if (hero.hasTalent(Talent.NOA_T2_1)) {
 			Buff.affect(hero, Healing.class).setHeal(2+3*hero.pointsInTalent(Talent.NOA_T2_1), 0, 1);
 		}
+		if (hero.hasTalent(Talent.MIYU_T2_1)) {
+			Buff.affect(hero, Invisibility.class, 2+3*hero.pointsInTalent(Talent.MIYU_T2_1));
+		}
 	}
 
 	public static class WarriorFoodImmunity extends FlavourBuff{
