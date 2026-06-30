@@ -506,7 +506,7 @@ public class Gun extends MeleeWeapon {
 
         amount = this.magazineMod.reloadTimeFactor(amount);
 
-        if (hero != null && hero.pointsInTalent(Talent.MIYU_EX2_2) >= 2) {
+        if (hero != null && hero.pointsInTalent(Talent.MIYU_EX2_3) >= 2) {
             int t = Dungeon.level.map[hero.pos];
             if (t == Terrain.FURROWED_GRASS || t == Terrain.HIGH_GRASS) {
                 amount -= 2;
