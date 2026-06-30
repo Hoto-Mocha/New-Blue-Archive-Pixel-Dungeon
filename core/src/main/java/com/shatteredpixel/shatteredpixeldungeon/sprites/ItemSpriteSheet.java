@@ -819,6 +819,7 @@ public class ItemSpriteSheet {
 	public static final int BICYCLE 		= UNIQUE_ITEM+4;
 	public static final int CONVERSION_KIT	= UNIQUE_ITEM+5;
 	public static final int TRASH_BIN		= UNIQUE_ITEM+6;
+	public static final int FLASHBANG_GRENADE	= UNIQUE_ITEM+7;
 	static {
 		assignItemRect(SUPER_NOVA, 	16, 16);
 		assignItemRect(CLAYMORE, 	13, 13);
@@ -827,6 +828,7 @@ public class ItemSpriteSheet {
 		assignItemRect(BICYCLE, 	16, 16);
 		assignItemRect(CONVERSION_KIT, 	12, 13);
 		assignItemRect(TRASH_BIN, 	16, 16);
+		assignItemRect(FLASHBANG_GRENADE, 	13, 13);
 	}
 
 	private static final int NEW_ARMOR 	= 								xy(1, 34);
