@@ -108,6 +108,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Grenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.TrashBin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Stone;
@@ -2896,6 +2897,10 @@ public class Hero extends Char {
 		}
 		if (subClass == HeroSubClass.TELESCOPE) {
 			Buff.affect(this, Snipe.class);
+		}
+		if (hasTalent(Talent.MIYU_EX2_1) && buff(TrashBin.TrashBinCooldown.class) != null
+				&& Random.Float() < (float)pointsInTalent(Talent.MIYU_EX2_1)/3) {
+			buff(TrashBin.TrashBinCooldown.class).detach();
 		}
 	}
 
