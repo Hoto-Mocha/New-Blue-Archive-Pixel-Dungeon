@@ -8,10 +8,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -75,6 +77,23 @@ public class TrashBin extends Item {
 						if (t == Terrain.EMPTY || t == Terrain.EMPTY_DECO || t == Terrain.EMBERS
 								|| t == Terrain.GRASS) {
 							Level.set(cell, Terrain.FURROWED_GRASS);
+							CellEmitter.get(cell).burst(LeafParticle.LEVEL_SPECIFIC, 4);
+							if (Dungeon.level.heroFOV[cell]) Dungeon.observe();
+						}
+						if (hero.hasTalent(Talent.MIYU_EX2_2) && t == Terrain.WATER) {
+							switch (hero.pointsInTalent(Talent.MIYU_EX2_2)) {
+								case 1: default:
+									Level.set(cell, Terrain.GRASS);
+									break;
+								case 2:
+									Level.set(cell, Terrain.FURROWED_GRASS);
+									break;
+								case 3:
+									Level.set(cell, Terrain.HIGH_GRASS);
+									break;
+							}
+							CellEmitter.get(cell).burst(LeafParticle.LEVEL_SPECIFIC, 4);
+							if (Dungeon.level.heroFOV[cell]) Dungeon.observe();
 						}
 					}
 				}
