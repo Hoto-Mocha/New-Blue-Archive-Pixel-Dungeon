@@ -65,6 +65,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Snipe;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipersMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SupportDrone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.TimeStasis;
@@ -2892,6 +2893,9 @@ public class Hero extends Char {
 		}
 		if (hasTalent(Talent.MIYU_T2_4)) {
 			Buff.affect(this, GreaterHaste.class).set(1+2*pointsInTalent(Talent.MIYU_T2_4));
+		}
+		if (subClass == HeroSubClass.TELESCOPE) {
+			Buff.affect(this, Snipe.class);
 		}
 	}
 

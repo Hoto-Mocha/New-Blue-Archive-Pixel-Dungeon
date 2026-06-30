@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class Snipe extends Buff implements ActionIndicator.Action {
     {
-        revivePersists = true;
         type = buffType.NEUTRAL;
     }
 
@@ -31,6 +30,12 @@ public class Snipe extends Buff implements ActionIndicator.Action {
     public boolean attachTo(Char target) {
         ActionIndicator.setAction(this);
         return super.attachTo(target);
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        ActionIndicator.clearAction();
     }
 
     @Override
@@ -82,6 +87,7 @@ public class Snipe extends Buff implements ActionIndicator.Action {
                 hero.sprite.operate(target);
                 hero.next();
                 Dungeon.observe();
+                detach();
             }
         }
 
