@@ -1,8 +1,12 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlueParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SnipeParticle;
@@ -14,6 +18,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
@@ -70,7 +75,8 @@ public class Snipe extends Buff implements ActionIndicator.Action {
         public void onSelect(Integer target) {
             Hero hero = Dungeon.hero;
             if (target != null) {
-                if (Dungeon.level.solid[target]) {
+                if (!Dungeon.level.passable[target]) {
+                    hero.yellW("cannot_see_wall");
                     return;
                 }
                 if (hero.buff(ScopedArea.class) != null) {
@@ -80,9 +86,15 @@ public class Snipe extends Buff implements ActionIndicator.Action {
                 ArrayList<Integer> area = new ArrayList<>();
 
                 for (int i : PathFinder.NEIGHBOURS9) {
+                    if (!Dungeon.level.passable[target + i]) continue;
                     area.add(target + i);
+                    Char ch = Actor.findChar(target + i);
+                    if (ch instanceof Mob && ch.alignment == Char.Alignment.ENEMY
+                            && hero.hasTalent(Talent.MIYU_EX1_1)
+                            && Dungeon.level.distance(hero.pos, ch.pos) >= 12-3*hero.pointsInTalent(Talent.MIYU_EX1_1)) {
+                        Buff.prolong(ch, Slow.class, 2f);
+                    }
                 }
-
                 Buff.affect(hero, ScopedArea.class).setup(area, 10f, target, Dungeon.depth, Dungeon.branch);
                 hero.sprite.operate(target);
                 hero.next();
@@ -93,7 +105,7 @@ public class Snipe extends Buff implements ActionIndicator.Action {
 
         @Override
         public String prompt() {
-            return Messages.get(SpiritBow.class, "prompt");
+            return Messages.get(Snipe.class, "prompt");
         }
     };
 
