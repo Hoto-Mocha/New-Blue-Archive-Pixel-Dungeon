@@ -73,7 +73,11 @@ public class HPBullet extends ArmorAbility {
                         || Char.hasProp(enemy, Char.Property.BOSS_MINION)) {
                     damage = Math.round(damage * 0.33f);
                 }
+                if (hero.hasTalent(Talent.MIYU_ARMOR2_3)) {
+                    damage = Math.round(damage * (1+0.1f*hero.pointsInTalent(Talent.MIYU_ARMOR2_3)));
+                }
                 Buff.affect(enemy, Bleeding.class).set(damage);
+
                 if (hero.hasTalent(Talent.MIYU_ARMOR2_1)) {
                     if (!enemy.isImmune(Cripple.class)) Buff.affect(enemy, Cripple.class, 4f*hero.pointsInTalent(Talent.MIYU_ARMOR2_1));
                     if (!enemy.isImmune(Roots.class)) Buff.affect(enemy, Roots.class, 2f*hero.pointsInTalent(Talent.MIYU_ARMOR2_1));
