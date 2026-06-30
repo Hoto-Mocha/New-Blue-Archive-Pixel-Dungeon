@@ -1703,6 +1703,16 @@ public enum Talent {
 		return damage;
 	}
 
+	public static void onTrampleGrass(Hero hero) {
+		if (hero.hasTalent(Talent.MIYU_T1_4)) {
+			Buff.affect(hero, Barrier.class).setShield(1+hero.pointsInTalent(Talent.MIYU_T1_4));
+		}
+
+		if (hero.hasTalent(Talent.MIYU_T2_3)) {
+			Buff.affect(hero, Invisibility.class, 1+hero.pointsInTalent(Talent.MIYU_T2_3));
+		}
+	}
+
 	public static class FirstAidCooldown extends FlavourBuff {
 		public int icon() { return BuffIndicator.TIME; }
 		public void tintIcon(Image icon) { icon.hardlight(0.15f, 0.2f, 0.5f); }

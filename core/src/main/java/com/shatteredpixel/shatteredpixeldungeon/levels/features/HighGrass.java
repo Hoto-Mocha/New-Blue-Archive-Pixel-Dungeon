@@ -156,6 +156,10 @@ public class HighGrass {
 			if (ch != null) {
 				Camouflage.activate(ch, ch.glyphLevel(Camouflage.class));
 			}
+
+			if (ch instanceof Hero) {
+				Talent.onTrampleGrass((Hero)ch);
+			}
 			
 		}
 		
