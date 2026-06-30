@@ -22,6 +22,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.WireHook;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.HPBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -1153,9 +1154,18 @@ public class Gun extends MeleeWeapon {
                     CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
                     CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
                 } else {
-                    if (!curUser.shoot( enemy, this )) {
-                        CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
-                        CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                    if (curUser.buff(HPBullet.HPBulletBuff.class) != null) {
+                        if (!curUser.buff(HPBullet.HPBulletBuff.class).proc(enemy, damageRoll(curUser))) {
+                            if (!curUser.shoot( enemy, this )) {
+                                CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
+                                CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                            }
+                        }
+                    } else {
+                        if (!curUser.shoot( enemy, this )) {
+                            CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
+                            CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                        }
                     }
                 }
             }
@@ -1191,7 +1201,11 @@ public class Gun extends MeleeWeapon {
 
             for (Char target : targets){
                 for (int i = 0; i < shotPerShoot(); i++) {
-                    curUser.shoot(target, this);
+                    if (curUser.buff(HPBullet.HPBulletBuff.class) != null) {
+                        if (!curUser.buff(HPBullet.HPBulletBuff.class).proc(target, damageRoll(curUser))) curUser.shoot(target, this);
+                    } else {
+                        curUser.shoot(target, this);
+                    }
                 }
                 if (!target.isAlive()) {
                     killedEnemy = true;
