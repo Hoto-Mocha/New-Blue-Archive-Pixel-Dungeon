@@ -4,12 +4,12 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.Random;
 
-public class BlueParticle extends PixelParticle.Shrinking {
+public class SnipeAreaParticle extends PixelParticle.Shrinking {
 
 	public static final Emitter.Factory FACTORY = new Emitter.Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((BlueParticle)emitter.recycle( BlueParticle.class )).reset( x, y );
+			((SnipeAreaParticle)emitter.recycle( SnipeAreaParticle.class )).reset( x, y );
 		}
 		@Override
 		public boolean lightMode() {
@@ -17,12 +17,12 @@ public class BlueParticle extends PixelParticle.Shrinking {
 		}
 	};
 
-	public BlueParticle() {
+	public SnipeAreaParticle() {
 		super();
 
 		lifespan = 0.6f;
 
-		color( 0x548CFD );
+		color( 0xFF0000 );
 	}
 
 	public void reset( float x, float y){
