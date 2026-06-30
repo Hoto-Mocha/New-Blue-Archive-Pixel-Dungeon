@@ -80,6 +80,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -504,6 +505,14 @@ public class Gun extends MeleeWeapon {
         float amount = reload_time;
 
         amount = this.magazineMod.reloadTimeFactor(amount);
+
+        if (hero != null && hero.pointsInTalent(Talent.MIYU_EX2_2) >= 2) {
+            int t = Dungeon.level.map[hero.pos];
+            if (t == Terrain.FURROWED_GRASS || t == Terrain.HIGH_GRASS) {
+                amount -= 2;
+            }
+            amount = Math.max(1, amount);
+        }
 
         if (hero != null && hero.hasTalent(Talent.NONOMI_EX1_1)) {
             amount += 1;
