@@ -112,10 +112,8 @@ public class TrapDuplicate extends ArmorAbility {
             }
 
         } else {
-
             if (target == hero.pos) {
-                hero.buff(ReclaimedTrap.class).detach();
-
+                GLog.i(Messages.get(this, "trap_removed"));
                 hero.sprite.operate(hero.pos);
                 Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
                 CellEmitter.get(hero.pos).burst(LightSmokeParticle.FACTORY, 3);
