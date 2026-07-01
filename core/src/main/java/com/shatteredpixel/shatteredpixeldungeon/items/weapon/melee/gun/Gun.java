@@ -605,9 +605,7 @@ public class Gun extends MeleeWeapon {
 
     protected int bulletMin(int lvl) {
         if (hero != null) {
-            int damage = tier() +
-                    lvl +
-                    RingOfSharpshooting.levelDamageBonus(hero);
+            int damage = tier() + lvl + RingOfSharpshooting.levelDamageBonus(hero);
 
             if (hero.buff(Talent.IntimidateBonusDamageBuff.class) != null) {
                 damage += hero.buff(Talent.IntimidateBonusDamageBuff.class).dmgBonus();
@@ -615,15 +613,14 @@ public class Gun extends MeleeWeapon {
 
             return damage;
         } else {
-            return tier() +
-                    lvl;
+            return tier() + lvl;
         }
 
     }
 
     protected int bulletMin() {
         if (hero != null) {
-            return bulletMin(this.buffedLvl()+RingOfSharpshooting.levelDamageBonus(hero));
+            return bulletMin(this.buffedLvl());
         }
         return bulletMin(this.buffedLvl());
     }
@@ -635,7 +632,7 @@ public class Gun extends MeleeWeapon {
 
     protected int bulletMax(int lvl) {
         if (hero != null) {
-            int damage = baseBulletMax(lvl);
+            int damage = baseBulletMax(lvl+RingOfSharpshooting.levelDamageBonus(hero));
 
             if (hero.buff(Talent.IntimidateBonusDamageBuff.class) != null) {
                 damage += hero.buff(Talent.IntimidateBonusDamageBuff.class).dmgBonus();
@@ -649,7 +646,7 @@ public class Gun extends MeleeWeapon {
 
     protected int bulletMax() {
         if (hero != null) {
-            return bulletMax(this.buffedLvl()+RingOfSharpshooting.levelDamageBonus(hero));
+            return bulletMax(this.buffedLvl());
         }
         return bulletMax(this.buffedLvl());
     }
@@ -693,7 +690,7 @@ public class Gun extends MeleeWeapon {
         //근접 무기의 설명을 모두 가져옴, 여기에서 할 것은 근접 무기의 설명에 추가로 생기는 문장을 더하는 것
         if (levelKnown) { //감정되어 있을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_desc",
-                    shotPerShoot(), augment.damageFactor(bulletMin(buffedLvl())), augment.damageFactor(bulletMax(buffedLvl())), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
+                    shotPerShoot(), augment.damageFactor(bulletMin(Dungeon.hero != null ? buffedLvl()+RingOfSharpshooting.levelDamageBonus(hero) : buffedLvl())), augment.damageFactor(bulletMax(Dungeon.hero != null ? buffedLvl()+RingOfSharpshooting.levelDamageBonus(hero) : buffedLvl())), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
         } else { //감정되어 있지 않을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_typical_desc",
                     shotPerShoot(), augment.damageFactor(bulletMin(0)), augment.damageFactor(bulletMax(0)), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
