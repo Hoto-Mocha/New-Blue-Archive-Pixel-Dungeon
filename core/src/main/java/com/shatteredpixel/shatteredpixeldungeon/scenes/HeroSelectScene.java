@@ -268,18 +268,37 @@ public class HeroSelectScene extends PixelScene {
 			float curY = title.bottom() + uiSpacing;
 
 			int count = 0;
+			int totalCount = 0;
+			final int NEW_LINE_COUNT = 3;
 			for (StyledButton button : heroBtns){
 				button.setRect(curX, curY, btnWidth, btnHeight);
 				align(button);
 				curX += btnWidth+1;
 				count++;
-				if (count >= (1+heroBtns.size())/2){
+				totalCount++;
+//				if (count >= (1+heroBtns.size())/2){
+//					curX -= btnWidth*count + count;
+//					curY += btnHeight+1;
+//					if (heroBtns.size()%2 != 0){
+//						curX += btnWidth/2f;
+//					}
+//					count = 0;
+//				}
+				if (count >= NEW_LINE_COUNT){ //버튼 3개마다 줄바꿈
 					curX -= btnWidth*count + count;
 					curY += btnHeight+1;
-					if (heroBtns.size()%2 != 0){
-						curX += btnWidth/2f;
-					}
 					count = 0;
+				}
+				if ((heroBtns.size() - totalCount+1) / NEW_LINE_COUNT == 0) {
+					//한 줄의 나열해야 하는 버튼의 홀수 짝수 여부와 남은 버튼의 홀수 짝수 여부가 다르다면
+					//버튼 하나를 절반으로 쪼개서 그 너비를 더함. 가운데 정렬을 위함
+					curX += (heroBtns.size() - totalCount) % 2 != NEW_LINE_COUNT % 2 ? btnWidth/2f : 0;
+
+					//한 줄의 나열해야 하는 버튼의 홀수 짝수 여부와 남은 버튼의 홀수 짝수 여부가 다르다면 나열할 버튼 개수에 1개를 더함
+					//위에서 버튼 하나를 절반으로 쪼개서 더했기 때문
+					boolean roundUp = NEW_LINE_COUNT % 2 != (heroBtns.size() - totalCount) % 2;
+					int emptyCells = (heroBtns.size() - totalCount) + (roundUp ? 1 : 0);
+					curX += btnWidth*emptyCells+emptyCells;
 				}
 			}
 
@@ -329,16 +348,34 @@ public class HeroSelectScene extends PixelScene {
 
 			int btnWidth = HeroBtn.MIN_WIDTH;
 
-			float curX = insets.left + (w - btnWidth * heroBtns.size()) / 2f;
+			int halfCount = (1+heroBtns.size())/2;
+			float curX = insets.left + (w - btnWidth * halfCount) / 2f;
 			if (curX > 0) {
-				btnWidth += Math.min(curX / (heroBtns.size() / 2f), 15);
-				curX = insets.left + (w - btnWidth * heroBtns.size()) / 2f;
+				btnWidth += Math.min(curX / (halfCount / 2f), 15);
+				curX = insets.left + (w - btnWidth * halfCount) / 2f;
 			}
 			float curY = insets.top + h - HeroBtn.HEIGHT + 3;
 
-			for (StyledButton button : heroBtns) {
-				button.setRect(curX, curY, btnWidth, HeroBtn.HEIGHT + insets.bottom);
+//			for (StyledButton button : heroBtns) {
+//				button.setRect(curX, curY, btnWidth, HeroBtn.HEIGHT + insets.bottom);
+//				curX += btnWidth;
+//			}
+
+			int count = 0;
+			int totalCount = 0;
+			for (StyledButton button : heroBtns){
+				button.setRect(curX, curY, btnWidth, HeroBtn.HEIGHT);
 				curX += btnWidth;
+				count++;
+				totalCount++;
+				if (count >= halfCount){
+					curX -= btnWidth*count;
+					curY -= HeroBtn.HEIGHT;
+					count = 0;
+				}
+				if (totalCount == halfCount) {
+					curX += (btnWidth)/2f;
+				}
 			}
 
 			//add a darkening bar along bottom
@@ -351,7 +388,7 @@ public class HeroSelectScene extends PixelScene {
 				add(blocker);
 			}
 
-			title.setPos(insets.left + (w - title.width()) / 2f, insets.top + (h - HeroBtn.HEIGHT - title.height() - 4));
+			title.setPos(insets.left + (w - title.width()) / 2f, insets.top + (h - HeroBtn.HEIGHT*2 - title.height() - 4));
 
 			btnOptions.setRect(heroBtns.get(0).left() + 16, Camera.main.height-HeroBtn.HEIGHT-16, 20, 21);
 			optionsPane.setPos(heroBtns.get(0).left(), 0);
@@ -465,7 +502,7 @@ public class HeroSelectScene extends PixelScene {
 			startBtn.text(Messages.titleCase(cl.title()));
 			startBtn.setSize(startBtn.reqWidth() + 8, 21);
 
-			startBtn.setPos((Camera.main.width - startBtn.width())/2f, (Camera.main.height - insets.bottom - HeroBtn.HEIGHT + 2 - startBtn.height()));
+			startBtn.setPos((Camera.main.width - startBtn.width())/2f, (Camera.main.height - insets.bottom - HeroBtn.HEIGHT*2 + 2 - startBtn.height()));
 			PixelScene.align(startBtn);
 
 			infoButton.visible = infoButton.active = true;
