@@ -10,6 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.AntiMaterialRifle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Fox;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
@@ -408,10 +409,12 @@ public class Teleporter extends Item {
 //                    GLog.w( Messages.get(this, "no_target") );
 //                }
 
-                Char ch = Actor.findChar(target);
-                if (ch instanceof Mob) {
-                    GLog.i(((Mob) ch).isTargeting(Dungeon.hero)+"");
-                }
+//                Char ch = Actor.findChar(target);
+//                if (ch instanceof Mob) {
+//                    GLog.i(((Mob) ch).isTargeting(Dungeon.hero)+"");
+//                }
+
+                if (Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class) != null) Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class).detach();
             }
         }
         @Override

@@ -18,11 +18,11 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
+
+import java.util.ArrayList;
 
 public class SR_SP extends SR {
     public Gun originalGun;
@@ -32,6 +32,13 @@ public class SR_SP extends SR {
 
         tier = 6;
         bones = false;
+    }
+
+    @Override
+    public ArrayList<String> actions(Hero hero) {
+        ArrayList<String> actions = super.actions(hero);
+        actions.remove(AC_THROW);
+        return actions;
     }
 
     @Override
@@ -48,22 +55,52 @@ public class SR_SP extends SR {
     public void useRound() {
         super.useRound();
         if (round == 0) {
-            doUnequip(Dungeon.hero, false, false);
+            changeWeapon(Dungeon.hero, true);
+            Dungeon.hero.belongings.weapon = originalGun;
         }
     }
 
     @Override
+    public void doDrop(Hero hero) {
+        changeWeapon(hero, true);
+        Dungeon.level.drop(originalGun, hero.pos).sprite.drop();
+    }
+
+    @Override
     public boolean doUnequip(Hero hero, boolean collect, boolean single) {
+        changeWeapon(hero, true);
+        if (collect) {
+            if (!originalGun.collect(hero.belongings.backpack)) {
+                Dungeon.level.drop(originalGun, hero.pos).sprite.drop();
+            }
+        };
+        return true;
+    }
+
+    @Override
+    protected void onThrow(int cell) {
+        super.onThrow(cell);
+    }
+
+    public void changeWeapon(Hero hero, boolean changeQuickslot) {
         hero.yellI("switching_original");
-        hero.belongings.weapon = originalGun;
-        int slot = Dungeon.quickslot.getSlot(this);
-        if (slot != -1
-                && originalGun.defaultAction() != null){
-            Dungeon.quickslot.setSlot(slot, originalGun);
-        }
+        originalGun.keptThoughLostInvent = this.keptThoughLostInvent;
+        hero.belongings.weapon = null;
         if (Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class) != null) Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class).detach();
+        int slot = Dungeon.quickslot.getSlot(this);
+        if (changeQuickslot) {
+            if (slot != -1
+                    && originalGun.defaultAction() != null){
+                Dungeon.quickslot.setSlot(slot, originalGun);
+            }
+        } else {
+            if (slot != -1
+                    && originalGun.defaultAction() != null){
+                Dungeon.quickslot.clearSlot(slot);
+            }
+        }
+
         updateQuickslot();
-        return false;
     }
 
     public void set(Gun gun) {

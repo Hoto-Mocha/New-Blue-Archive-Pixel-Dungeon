@@ -22,6 +22,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.WireHook;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.AntiMaterialRifle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.HPBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -75,6 +76,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_SP;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T3;
@@ -388,6 +390,15 @@ public class Gun extends MeleeWeapon {
     @Override
     public boolean doEquip(Hero hero) {
         IronHorus.detachBuff(hero);
+        if (hero.buff(AntiMaterialRifle.GotRifleTracker.class) != null) {
+            Item sr = hero.belongings.getItem(SR_SP.class);
+            if (sr != null) {
+                int slot = Dungeon.quickslot.getSlot(sr);
+                Buff.affect(hero, AntiMaterialRifle.QuickSlotSet.class).set(this, slot);
+            } else {
+                hero.buff(AntiMaterialRifle.GotRifleTracker.class).detach();
+            }
+        }
         return super.doEquip(hero);
     }
 
