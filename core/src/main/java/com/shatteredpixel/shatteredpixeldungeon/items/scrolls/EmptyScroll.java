@@ -29,7 +29,7 @@ public class EmptyScroll extends InventoryScroll {
     @Override
     protected void onItemSelected(Item item) {
         this.detach(curUser.belongings.backpack);
-        Item scroll = item.duplicate();
+        Item scroll = item.duplicate().quantity(1);
         if (!scroll.doPickUp(curUser)) {
             Dungeon.level.drop(scroll, curUser.pos).sprite.drop(curUser.pos);
         }
