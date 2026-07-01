@@ -83,7 +83,6 @@ public class PenetrationShot extends ArmorAbility {
         ArrayList<Integer> chCells = getCharPositions(aim, finalPos);
 
         for (int cell : chCells) {
-            if (cell == hero.pos) continue;
             knockBullet(gun, false).cast(hero, cell);
         }
 
@@ -170,7 +169,7 @@ public class PenetrationShot extends ArmorAbility {
         @Override
         protected void onThrow(int cell) {
             Char ch = Actor.findChar(cell);
-            if (ch != null) {
+            if (ch != null && !(ch instanceof Hero)) {
                 int atkNum = (1+curUser.pointsInTalent(Talent.SHIROKO_ARMOR1_3)); //총 공격 횟수
                 float dmgMulti = (0.9f+0.1f*atkNum)/atkNum; //공격력 배율. 총 피해 증가량: 1타: +0%, 2타: +10%, 3타: +20%, 4타: +30%, 5타: +40%
                 for (int attacks = 0; attacks < gun.shotPerShoot() * (1+curUser.pointsInTalent(Talent.SHIROKO_ARMOR1_3)); attacks++) {
