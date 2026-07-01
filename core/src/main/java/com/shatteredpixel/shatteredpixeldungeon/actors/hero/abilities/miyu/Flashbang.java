@@ -58,7 +58,8 @@ public class Flashbang extends ArmorAbility {
 
         new FlashBangGrenade().knockItem().cast(hero, target);
 
-        Invisibility.dispel();
+        //섬광탄이 터질 때 작동하므로 불필요
+        //Invisibility.dispel();
         armor.charge -= chargeUse(hero);
         armor.updateQuickslot();
     }
@@ -136,6 +137,7 @@ public class Flashbang extends ArmorAbility {
             //needs to be overridden
             @Override
             protected void activate(int cell) {
+                super.activate(cell);
                 explode(cell);
             }
         }

@@ -55,6 +55,7 @@ public class Claymore extends Grenade {
 
         @Override
         protected void activate(int cell) {
+            super.activate(cell);
             blast(cell);
         }
 
@@ -81,7 +82,6 @@ public class Claymore extends Grenade {
                     30*openUpMulti,
                     Ballistica.STOP_SOLID | Ballistica.STOP_TARGET);
 
-            Invisibility.dispel();
             hero.sprite.zap(cell);
 
             ArrayList<Char> affected = new ArrayList<>();

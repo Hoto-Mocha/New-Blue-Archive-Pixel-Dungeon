@@ -47,6 +47,7 @@ public class HandGrenade extends Grenade {
         //needs to be overridden
         @Override
         protected void activate(int cell) {
+            super.activate(cell);
             explode(cell);
         }
 

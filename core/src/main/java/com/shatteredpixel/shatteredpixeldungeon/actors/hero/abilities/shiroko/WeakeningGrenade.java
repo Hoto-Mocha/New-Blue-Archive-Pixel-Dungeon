@@ -60,7 +60,8 @@ public class WeakeningGrenade extends ArmorAbility {
             gun.manualReload(hero.pointsInTalent(Talent.SHIROKO_ARMOR2_3), true);
         }
 
-        Invisibility.dispel();
+        //수류탄이 폭발할때 작동하므로 불필요
+        //Invisibility.dispel();
         armor.charge -= chargeUse(hero);
         armor.updateQuickslot();
     }
@@ -107,6 +108,7 @@ public class WeakeningGrenade extends ArmorAbility {
 
             @Override
             protected void activate(int cell) {
+                super.activate(cell);
                 explode(cell);
             }
 
