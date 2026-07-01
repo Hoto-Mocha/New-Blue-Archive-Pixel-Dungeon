@@ -989,12 +989,14 @@ public class ItemSpriteSheet {
 	public static final int SR_TIER_3	= SR+2;
 	public static final int SR_TIER_4	= SR+3;
 	public static final int SR_TIER_5	= SR+4;
+	public static final int SR_SPECIAL	= SR+5;
 	static{
 		assignItemRect(SR_TIER_1,	13, 16);
 		assignItemRect(SR_TIER_2,	13, 16);
 		assignItemRect(SR_TIER_3,	15, 16);
 		assignItemRect(SR_TIER_4,	15, 16);
 		assignItemRect(SR_TIER_5, 	15, 16);
+		assignItemRect(SR_SPECIAL, 	15, 16);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite

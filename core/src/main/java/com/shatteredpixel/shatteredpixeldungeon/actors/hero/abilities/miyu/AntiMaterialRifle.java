@@ -1,13 +1,21 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_SP;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
+import com.watabou.noosa.audio.Sample;
 
 public class AntiMaterialRifle extends ArmorAbility {
     {
@@ -20,20 +28,43 @@ public class AntiMaterialRifle extends ArmorAbility {
     }
 
     @Override
-    public String targetingPrompt() {
-        return Messages.get(this, "prompt");
-    }
-
-    @Override
-    public int targetedPos(Char user, int dst) {
-        return dst;
-    }
-
-    @Override
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
         if (target == null) return;
+        if (!(hero.belongings.weapon() instanceof Gun)) {
+            hero.yellW("need_gun");
+            return;
+        }
 
+        if (hero.buff(GotRifleTracker.class) != null) {
+            hero.yellW("already_got");
+            return;
+        }
 
+        Gun gun = (Gun) hero.belongings.weapon();
+        SR_SP sr = new SR_SP();
+        sr.upgrade(gun.level());
+        sr.enchantment          = gun.enchantment;
+        sr.curseInfusionBonus   = gun.curseInfusionBonus;
+        sr.masteryPotionBonus   = gun.masteryPotionBonus;
+        sr.levelKnown           = gun.levelKnown;
+        sr.cursedKnown          = gun.cursedKnown;
+        sr.cursed               = gun.cursed;
+        sr.augment              = gun.augment;
+        sr.enchantHardened      = gun.enchantHardened;
+        sr.set(gun);
+        hero.belongings.weapon = sr;
+        int slot = Dungeon.quickslot.getSlot(gun);
+        if (slot != -1
+                && sr.defaultAction() != null){
+            Dungeon.quickslot.setSlot(slot, sr);
+        }
+        hero.yellI("switching_new");
+        Item.updateQuickslot();
+
+        Buff.affect(hero, GotRifleTracker.class);
+
+        hero.sprite.operate(hero.pos);
+        Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
 
         Invisibility.dispel();
         armor.charge -= chargeUse(hero);
@@ -43,5 +74,9 @@ public class AntiMaterialRifle extends ArmorAbility {
     @Override
     public Talent[] talents() {
         return new Talent[]{Talent.MIYU_ARMOR3_1, Talent.MIYU_ARMOR3_2, Talent.MIYU_ARMOR3_3, Talent.HEROIC_ENERGY};
+    }
+
+    public static class GotRifleTracker extends Buff {
+        {revivePersists = true;}
     }
 }
