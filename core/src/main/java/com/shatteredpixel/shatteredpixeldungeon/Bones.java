@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.remains.RemainsItem;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.FileUtils;
@@ -146,6 +147,10 @@ public class Bones {
 			} else {
 				item = null;
 			}
+		}
+
+		if (item instanceof Gun) {
+			((Gun)item).detachKit();
 		}
 		
 		return item;
