@@ -105,7 +105,7 @@ public class TrashBin extends Item {
 
 				updateQuickslot();
 
-				Buff.affect(hero, TrashBinCooldown.class, TrashBinCooldown.DURATION);
+				Buff.affect(hero, TrashBinCooldown.class, TrashBinCooldown.DURATION-1);
 			} else {
 				hero.yellN("bin_cooldown");	//"...아직은 사용할 수 없어요..."
 			}
