@@ -3,6 +3,8 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.AntiMaterialRifle;
@@ -111,12 +113,14 @@ public class SR_SP extends SR {
 
         @Override
         public int proc(Char attacker, Char defender, int damage) {
-            Ballistica path = new Ballistica(attacker.pos, defender.pos, Ballistica.WALL_PENETRATION);
             if (!wallPenetration) {
                 Ballistica trajectory = new Ballistica(attacker.pos, defender.pos, Ballistica.STOP_TARGET);
                 trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
                 int power = 4 + 2 * Dungeon.hero.pointsInTalent(Talent.MIYU_ARMOR3_1);
                 WandOfBlastWave.throwChar(defender, trajectory, power, false, true, this);
+            }
+            if (Dungeon.hero.hasTalent(Talent.MIYU_ARMOR3_1)) {
+                Buff.affect(defender, Vulnerable.class, 5f*Dungeon.hero.pointsInTalent(Talent.MIYU_ARMOR3_1));
             }
             return super.proc(attacker, defender, damage);
         }
