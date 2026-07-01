@@ -153,7 +153,9 @@ public class TrashBin extends Item {
 
 	}
 
-	public static class EvasionBuff extends Buff {
+	public static class EvasionBuff extends FlavourBuff {
+
+		public static final float DURATION = 3f;
 
 		{
 			type = buffType.POSITIVE;
@@ -170,5 +172,9 @@ public class TrashBin extends Item {
 			icon.hardlight(0.25f, 1.5f, 1f);
 		}
 
+		@Override
+		public float iconFadePercent() {
+			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+		}
 	}
 }

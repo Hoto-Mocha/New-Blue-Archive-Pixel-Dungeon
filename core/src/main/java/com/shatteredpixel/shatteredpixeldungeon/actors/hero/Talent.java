@@ -1759,7 +1759,7 @@ public enum Talent {
 		}
 
 		if (hero.hasTalent(Talent.MIYU_EX2_3)) {
-			Buff.affect(hero, TrashBin.EvasionBuff.class);
+			Buff.affect(hero, TrashBin.EvasionBuff.class, TrashBin.EvasionBuff.DURATION);
 		}
 	}
 
