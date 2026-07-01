@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.AntiMaterialRifle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.PenetrationShot;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -114,7 +115,8 @@ public class SR_SP extends SR {
             if (!wallPenetration) {
                 Ballistica trajectory = new Ballistica(attacker.pos, defender.pos, Ballistica.STOP_TARGET);
                 trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
-                WandOfBlastWave.throwChar(defender, trajectory, 4, false, true, this);
+                int power = 4 + 2 * Dungeon.hero.pointsInTalent(Talent.MIYU_ARMOR3_1);
+                WandOfBlastWave.throwChar(defender, trajectory, power, false, true, this);
             }
             return super.proc(attacker, defender, damage);
         }
