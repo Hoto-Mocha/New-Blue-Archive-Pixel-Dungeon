@@ -30,7 +30,7 @@ If you have Shattered Pixel Dungeon on Steam, you can play BAPD via following in
 
 # Contents
 
-- 7 of characters with unique abilities(and adding continuously)
+- 7 of characters with unique abilities and special items(and adding continuously)
 >- **Aris** - Difficulty: **Special**
 >- **Nonomi** - Difficulty: **Easy**
 >- **Miyako** - Difficulty: **Normal**
@@ -56,6 +56,8 @@ If you have Shattered Pixel Dungeon on Steam, you can play BAPD via following in
 >- **Bicycle**(Shiroko)
 >- **Conversion Kit**(Noa)
 >- **Trash Bin**(Miyu)
+
+- New appearance of Cave level and NPCs(Shopkeeper, Blacksmith)
 
 # Shattered Pixel Dungeon
 
