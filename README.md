@@ -1,3 +1,62 @@
+# Blue Archive Pixel Dungeon
+
+Blue Archive Pixel Dungeon(BAPD) is a mod based on [Shattered Pixel Dungeon](https://shatteredpixel.com/shatteredpd/)'s open source and Blue Archive IP.
+
+This project currently supports only Korean language only. There's no plan to translate this for now.
+
+# How to Play
+
+You can play this game by installing **[version-name]-android.apk** for **Android** users, or directly running **[version-name]-desktop.jar** via JRE for PC users.
+
+If you have Shattered Pixel Dungeon on Steam, you can play BAPD via following instructions:
+
+1. Download `[version-name]-desktop.jar` in [Releases Page](https://github.com/Hoto-Mocha/New-Blue-Archive-Pixel-Dungeon/releases).
+
+2. Right-click the game title in your library, and click `Properties...` .
+
+3. Click `Browse...` in **Installed Files** tab.
+
+4. Open `app` folder.
+
+5. Find `desktop-[version-name].jar` file.
+
+6. Rename the `[version-name]-desktop.jar` file(this is what you have downloaded in this repository) to be same with that file's name(`desktop-[version-name].jar`). You can backup the original Shattered's game file if you want.
+
+7. Overwrite Shattered's **.jar** file with the renamed file.
+
+8. Run **Shattered Pixel Dungeon** in Steam.
+
+9. If you want to revert the game, run `Verify Integrity of Game Files` in steam, or overwrite the **.jar** file again with the file you backed up.
+
+# Contents
+
+- 7 of characters with unique abilities(and adding continuously)
+>- **Aris** - Difficulty: **Special**
+>- **Nonomi** - Difficulty: **Easy**
+>- **Miyako** - Difficulty: **Normal**
+>- **Hoshino** - Difficulty: **Easy**
+>- **Shiroko** - Difficulty: **Normal**
+>- **Noa** - Difficulty: **Normal**
+>- **Miyu** - Difficulty: **Hard**
+
+- Guns
+>- **AR**(Assult Rifle)
+>- **GL**(Grenade Launcher)
+>- **HG**(Handgun)
+>- **MG**(Machine Gun)
+>- **SG**(Shotgun)
+>- **SMG**(SubMachine Gun)
+>- **SR**(Sniper Rifle)
+
+- Special Items
+>- **Emblem**(Aris)
+>- **Hand Grenade**(Miyako)
+>- **Claymore**(Miyako)
+>- **Iron Horus**(Hoshino)
+>- **Bicycle**(Shiroko)
+>- **Conversion Kit**(Noa)
+>- **Trash Bin**(Miyu)
+
 # Shattered Pixel Dungeon
 
 [Shattered Pixel Dungeon](https://shatteredpixel.com/shatteredpd/) is an open-source traditional roguelike dungeon crawler with randomized levels and enemies, and hundreds of items to collect and use. It's based on the [source code of Pixel Dungeon](https://github.com/00-Evan/pixel-dungeon-gradle), by [Watabou](https://watabou.itch.io/).
