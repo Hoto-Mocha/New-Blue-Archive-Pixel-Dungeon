@@ -2,7 +2,7 @@
 
 Blue Archive Pixel Dungeon(BAPD) is a mod based on [Shattered Pixel Dungeon](https://shatteredpixel.com/shatteredpd/)'s open source and Blue Archive IP.
 
-This project currently supports only Korean language only. There's no plan to translate this for now.
+This project currently supports only Korean language now. There's no plan to translate this for now.
 
 # How to Play
 
