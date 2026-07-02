@@ -4,6 +4,8 @@ Blue Archive Pixel Dungeon(BAPD) is a mod based on [Shattered Pixel Dungeon](htt
 
 This project currently supports only Korean language now. There's no plan to translate this for now.
 
+**This project uses AI for making character splash arts.**
+
 # How to Play
 
 You can play this game by installing **[version-name]-android.apk** for **Android** users, or directly running **[version-name]-desktop.jar** via JRE for PC users.
