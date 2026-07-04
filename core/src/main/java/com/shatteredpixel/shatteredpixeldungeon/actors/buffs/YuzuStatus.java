@@ -9,7 +9,6 @@ public class YuzuStatus extends Buff {
     int dmgBonus = 0;
     float dmgMulti = 1.2f;
     float creditMulti = 1f;
-    float HPMulti = 1f;
     float dropMulti = 1f;
 
     {
@@ -34,10 +33,6 @@ public class YuzuStatus extends Buff {
 
     public float creditMulti() {
         return this.creditMulti;
-    }
-
-    public float HPMulti() {
-        return this.HPMulti;
     }
 
     public float dropMulti() {
@@ -65,7 +60,6 @@ public class YuzuStatus extends Buff {
     private static final String DMG_BONUS = "dmgBonus";
     private static final String DMG_MULTI = "dmgMulti";
     private static final String CREDIT_MULTI = "creditMulti";
-    private static final String HP_MULTI = "HPMulti";
     private static final String DROP_MULTI = "dropMulti";
 
     @Override
@@ -74,7 +68,6 @@ public class YuzuStatus extends Buff {
         bundle.put(DMG_BONUS, dmgBonus);
         bundle.put(DMG_MULTI, dmgMulti);
         bundle.put(CREDIT_MULTI, creditMulti);
-        bundle.put(HP_MULTI, HPMulti);
         bundle.put(DROP_MULTI, dropMulti);
     }
 
@@ -84,10 +77,19 @@ public class YuzuStatus extends Buff {
         dmgBonus = bundle.getInt(DMG_BONUS);
         dmgMulti = bundle.getFloat(DMG_MULTI);
         creditMulti = bundle.getFloat(CREDIT_MULTI);
-        HPMulti = bundle.getFloat(HP_MULTI);
         dropMulti = bundle.getFloat(DROP_MULTI);
     }
 
     public static class CriticalTracker extends Buff {}
+
+    public static float yuzuCreditBonus(Hero hero) {
+        if (hero.buff(YuzuStatus.class) == null) return 1f;
+        else return hero.buff(YuzuStatus.class).creditMulti();
+    }
+
+    public static float yuzuDropBonus(Hero hero) {
+        if (hero.buff(YuzuStatus.class) == null) return 1f;
+        else return hero.buff(YuzuStatus.class).dropMulti();
+    }
 
 }

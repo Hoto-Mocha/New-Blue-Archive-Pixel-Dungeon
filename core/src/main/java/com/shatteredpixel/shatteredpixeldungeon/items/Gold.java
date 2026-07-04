@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.YuzuStatus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
@@ -58,16 +59,17 @@ public class Gold extends Item {
 	
 	@Override
 	public boolean doPickUp(Hero hero, int pos) {
+		int finalAmount = Math.round(quantity * YuzuStatus.yuzuCreditBonus(hero));
 
 		Catalog.setSeen(getClass());
 		Statistics.itemTypesDiscovered.add(getClass());
 
-		Dungeon.gold += quantity;
-		Statistics.goldCollected += quantity;
+		Dungeon.gold += finalAmount;
+		Statistics.goldCollected += finalAmount;
 		Badges.validateGoldCollected();
 
 		GameScene.pickUp( this, pos );
-		hero.sprite.showStatusWithIcon( CharSprite.NEUTRAL, Integer.toString(quantity), FloatingText.GOLD );
+		hero.sprite.showStatusWithIcon( CharSprite.NEUTRAL, Integer.toString(finalAmount), FloatingText.GOLD );
 		hero.spendAndNext( pickupDelay() );
 		
 		Sample.INSTANCE.play( Assets.Sounds.GOLD, 1, 1, Random.Float( 0.9f, 1.1f ) );
