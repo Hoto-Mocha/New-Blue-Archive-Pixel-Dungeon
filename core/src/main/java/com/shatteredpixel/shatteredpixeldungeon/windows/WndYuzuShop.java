@@ -36,7 +36,7 @@ public class WndYuzuShop extends Window {
 
 		IconTitle title;
 		if (!info){
-			title = new IconTitle(new ItemSprite(laptop), Messages.titleCase(Messages.get(this, "cast_title")));
+			title = new IconTitle(new ItemSprite(laptop), Messages.titleCase(Messages.get(this, "shop_title")));
 		} else {
 			title = new IconTitle(Icons.INFO.get(), Messages.titleCase(Messages.get(this, "info_title")));
 		}
@@ -58,9 +58,9 @@ public class WndYuzuShop extends Window {
 		if (info){
 			msg = PixelScene.renderTextBlock( Messages.get( this, "info_desc"), 6);
 		} else if (DeviceCompat.isDesktop()){
-			msg = PixelScene.renderTextBlock( Messages.get( this, "cast_desc_desktop"), 6);
+			msg = PixelScene.renderTextBlock( Messages.get( this, "shop_desc_desktop"), 6);
 		} else {
-			msg = PixelScene.renderTextBlock( Messages.get( this, "cast_desc_mobile"), 6);
+			msg = PixelScene.renderTextBlock( Messages.get( this, "shop_desc_mobile"), 6);
 		}
 		msg.maxWidth(WIDTH);
 		msg.setPos(0, title.bottom()+4);
@@ -173,7 +173,6 @@ public class WndYuzuShop extends Window {
 							//do nothing
 							break;
 						case 0:
-							hide();
 							content.onSelect(Dungeon.hero);
 							break;
 						case 1:

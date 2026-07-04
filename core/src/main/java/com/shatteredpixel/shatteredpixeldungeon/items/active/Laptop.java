@@ -6,6 +6,8 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndYuzuShop;
 
+import java.util.ArrayList;
+
 public class Laptop extends Item {
 
     public static final String AC_USE		= "USE";
@@ -15,6 +17,13 @@ public class Laptop extends Item {
         levelKnown = true;
         bones = false;
         defaultAction = AC_USE;
+    }
+
+    @Override
+    public ArrayList<String> actions(Hero hero) {
+        ArrayList<String> actions = super.actions(hero);
+        actions.add( AC_USE );
+        return actions;
     }
 
     @Override

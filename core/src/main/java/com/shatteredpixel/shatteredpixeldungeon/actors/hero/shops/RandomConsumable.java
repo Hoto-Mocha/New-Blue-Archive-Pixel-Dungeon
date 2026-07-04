@@ -27,7 +27,7 @@ public class RandomConsumable extends YuzuShopContent {
     }
 
     @Override
-    public int goldUse(Hero hero) {
+    public int creditUse(Hero hero) {
         return 150 * (1+(hero.lvl/5));
     }
 
