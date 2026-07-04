@@ -414,7 +414,8 @@ public class Teleporter extends Item {
 //                    GLog.i(((Mob) ch).isTargeting(Dungeon.hero)+"");
 //                }
 
-                if (Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class) != null) Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class).detach();
+//                if (Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class) != null) Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class).detach();
+                new Gold(100000).doPickUp(Dungeon.hero, Dungeon.hero.pos);
             }
         }
         @Override

@@ -53,7 +53,7 @@ public class QuestEnemy extends Buff {
     public void detach() {
         super.detach();
         Buff.affect(Dungeon.hero, QuestEnemyTracker.class);
-        Dungeon.level.drop(new Gold(100+50*(Dungeon.hero.lvl/5+1) + Random.IntRange(-50, +50)), target.pos).sprite.drop();
+        Dungeon.level.drop(new Gold().random(), target.pos).sprite.drop();
     }
 
     public static class QuestEnemyTracker extends Buff {}

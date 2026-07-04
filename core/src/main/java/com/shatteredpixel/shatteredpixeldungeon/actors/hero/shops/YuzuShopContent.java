@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public abstract class YuzuShopContent {
     public abstract void onSelect(Hero hero);
 
-    public float goldUse( Hero hero ){
+    public int goldUse( Hero hero ){
         return 1;
     }
 
@@ -23,11 +23,11 @@ public abstract class YuzuShopContent {
     }
 
     public String shortDesc(){
-        return Messages.get(this, "short_desc") + " " + Messages.get(this, "gold_cost", (int)goldUse(Dungeon.hero));
+        return Messages.get(this, "short_desc") + " " + Messages.get(this, "gold_cost", goldUse(Dungeon.hero));
     }
 
     public String desc(){
-        return Messages.get(this, "desc") + "\n\n" + Messages.get(this, "gold_cost", (int)goldUse(Dungeon.hero));
+        return Messages.get(this, "desc") + "\n\n" + Messages.get(this, "gold_cost", goldUse(Dungeon.hero));
     }
 
     public int icon(){
@@ -35,7 +35,7 @@ public abstract class YuzuShopContent {
     }
 
     public void onContentSelect(Hero hero) {
-
+        Dungeon.gold -= goldUse(hero);
     }
 
     public static ArrayList<YuzuShopContent> getContentList(Hero yuzu, int tier) {
