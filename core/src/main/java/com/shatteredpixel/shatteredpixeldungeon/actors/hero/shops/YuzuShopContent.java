@@ -2,8 +2,10 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.watabou.noosa.Visual;
 
 import java.util.ArrayList;
 
@@ -43,6 +45,7 @@ public abstract class YuzuShopContent {
 
         if (tier == 1) {
             contents.add(RandomConsumable.INSTANCE);
+            contents.add(RandomEquipment.INSTANCE);
         } else if (tier == 2) {
 
         }
@@ -54,5 +57,28 @@ public abstract class YuzuShopContent {
         ArrayList<YuzuShopContent> contents = new ArrayList<>();
 
         return contents;
+    }
+
+    public static void showFlareForBonusDrop( Visual vis, int tier ){
+        if (vis == null || vis.parent == null) return;
+        switch (tier){
+            default:
+                break; //do nothing
+            case 1:
+                new Flare(6, 20).color(0x00FF00, true).show(vis, 3f);
+                break;
+            case 2:
+                new Flare(6, 24).color(0x00AAFF, true).show(vis, 3.33f);
+                break;
+            case 3:
+                new Flare(6, 28).color(0xAA00FF, true).show(vis, 3.67f);
+                break;
+            case 4:
+                new Flare(6, 32).color(0xFFAA00, true).show(vis, 4f);
+                break;
+            case 5:
+                new Flare(6, 36).color(0xFF0000, true).show(vis, 4.33f);
+                break;
+        }
     }
 }
