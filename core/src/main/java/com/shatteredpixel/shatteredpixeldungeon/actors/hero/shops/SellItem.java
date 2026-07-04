@@ -2,15 +2,12 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-
-import java.util.LinkedList;
+import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 
 public class SellItem extends YuzuShopContent {
     public static SellItem INSTANCE = new SellItem();
@@ -22,28 +19,25 @@ public class SellItem extends YuzuShopContent {
 
     @Override
     public void onSelect(Hero hero) {
-        if (creditUse(hero) == 0) return;
-        Heap heap = Dungeon.level.heaps.get(hero.pos);
+        Heap heap = getHeap(hero);
         if (heap == null) return;
         sellItem(hero, heap);
     }
 
     public void sellItem(Hero hero, Heap heap) {
         int totalValue = 0;
-        LinkedList<Item> items = heap.items;
         if (heap.type != Heap.Type.HEAP) {
-            GLog.w(Messages.get(this, "no_items"));
             return;
         } else {
-            for (Item item : items.toArray( new Item[0] )) {
+            for (Item item : heap.items.toArray( new Item[0] )) {
 
                 //doesn't sell unique items and items cannot sell
-                if (item.unique || item.value() < 0){
+                if (item.unique || item.value() <= 0){
                     continue;
                 }
 
                 totalValue += item.value();
-                items.remove( item );
+                heap.items.remove( item );
             }
 
             if (heap.isEmpty()){
@@ -53,11 +47,19 @@ public class SellItem extends YuzuShopContent {
             }
         }
 
-        if (totalValue == 0) {
-            GLog.w(Messages.get(this, "no_items"));
-        } else {
-            new Gold(totalValue).doPickUp(hero, hero.pos);
+        new Gold(totalValue).doPickUp(hero, hero.pos);
+    }
+
+    public int checkValue(Heap heap) {
+        int totalValue = 0;
+        for (Item item : heap.items.toArray( new Item[0] )) {
+            //doesn't count unique items and items cannot sell
+            if (item.unique || item.value() <= 0){
+                continue;
+            }
+            totalValue += item.value();
         }
+        return totalValue;
     }
 
     @Override
@@ -67,7 +69,19 @@ public class SellItem extends YuzuShopContent {
 
     @Override
     public boolean canSelect(Hero hero) {
-        Heap heap = Dungeon.level.heaps.get(hero.pos);
-        return heap != null && heap.type == Heap.Type.HEAP;
+        Heap heap = getHeap(hero);
+        return super.canSelect(hero) && heap != null && heap.type == Heap.Type.HEAP && checkValue(heap) > 0;
+    }
+
+    public Heap getHeap(Hero hero) {
+        return Dungeon.level.heaps.get(hero.pos);
+    }
+
+    public String desc(){
+        if (canSelect(Dungeon.hero)) {
+            return Messages.get(this, "desc_value", checkValue(getHeap(Dungeon.hero))) + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
+        } else {
+            return Messages.get(this, "desc") + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
+        }
     }
 }

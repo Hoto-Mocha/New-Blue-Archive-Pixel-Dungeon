@@ -3,8 +3,11 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Laptop;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndYuzuShop;
 import com.watabou.noosa.Visual;
 
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ public abstract class YuzuShopContent {
     }
 
     public String shortDesc(){
-        return Messages.get(this, "short_desc") + " " + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
+        return Messages.get(this, "short_desc") + ".\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
     }
 
     public String desc(){
@@ -36,8 +39,13 @@ public abstract class YuzuShopContent {
         return HeroIcon.NONE;
     }
 
-    public void onContentSelect(Hero hero) {
+    public void onContentSelect(Laptop laptop, Hero hero, boolean info) {
         Dungeon.gold -= creditUse(hero);
+        if (!hideWindow()) GameScene.show(new WndYuzuShop(laptop, hero, info));
+    }
+
+    public boolean hideWindow() {
+        return false;
     }
 
     public static ArrayList<YuzuShopContent> getContentList(Hero yuzu, int tier) {

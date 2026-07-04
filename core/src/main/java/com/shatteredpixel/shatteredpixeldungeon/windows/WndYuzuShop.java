@@ -83,7 +83,7 @@ public class WndYuzuShop extends Window {
 			ArrayList<IconButton> contentBtns = new ArrayList<>();
 
 			for (YuzuShopContent content : contents) {
-				IconButton contentBtn = new ShopButton(content, info);
+				IconButton contentBtn = new ShopButton(content, yuzu, laptop, info);
 				add(contentBtn);
 				contentBtns.add(contentBtn);
 			}
@@ -108,15 +108,23 @@ public class WndYuzuShop extends Window {
 	public class ShopButton extends IconButton {
 
 		YuzuShopContent content;
+		Hero yuzu;
+		Laptop laptop;
 		boolean info;
 
 		NinePatch bg;
 
-		public ShopButton(YuzuShopContent content, boolean info){
+		public ShopButton(YuzuShopContent content, Hero yuzu, Laptop laptop, boolean info){
 			super(new HeroIcon(content));
 
 			this.content = content;
+			this.yuzu = yuzu;
+			this.laptop = laptop;
 			this.info = info;
+
+			if (!content.canSelect(Dungeon.hero)){
+				icon.alpha( 0.3f );
+			}
 
 			bg = Chrome.get(Chrome.Type.TOAST);
 			addToBack(bg);
@@ -130,6 +138,9 @@ public class WndYuzuShop extends Window {
 		@Override
 		protected void onPointerUp() {
 			super.onPointerUp();
+			if (!content.canSelect(Dungeon.hero)){
+				icon.alpha( 0.3f );
+			}
 		}
 
 		@Override
@@ -148,9 +159,11 @@ public class WndYuzuShop extends Window {
 			if (info){
 				GameScene.show(new WndTitledMessage(new HeroIcon(content), Messages.titleCase(content.name()), content.desc()));
 			} else {
-				content.onSelect(Dungeon.hero);
-				content.onContentSelect(Dungeon.hero);
-				Item.updateQuickslot();
+				if (!content.canSelect(Dungeon.hero)) {
+					return;
+				} else {
+					executeContent();
+				}
 			}
 		}
 
@@ -173,7 +186,7 @@ public class WndYuzuShop extends Window {
 							//do nothing
 							break;
 						case 0:
-							content.onSelect(Dungeon.hero);
+							executeContent();
 							break;
 						case 1:
 							GameScene.show(new WndTitledMessage(new HeroIcon(content), Messages.titleCase(content.name()), content.desc()));
@@ -191,6 +204,13 @@ public class WndYuzuShop extends Window {
 		@Override
 		protected String hoverText() {
 			return "_" + Messages.titleCase(content.name()) + "_\n" + content.shortDesc();
+		}
+
+		public void executeContent() {
+			hide();
+			content.onSelect(Dungeon.hero);
+			content.onContentSelect(laptop, Dungeon.hero, info);
+			Item.updateQuickslot();
 		}
 	}
 
