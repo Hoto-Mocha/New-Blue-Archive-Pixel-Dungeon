@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops.YuzuShopContent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.ClericSpell;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
@@ -125,45 +126,57 @@ public class HeroIcon extends Image {
 	public static final int PROFESSIONAL_RIDING	= 128+8;
 	public static final int BANK_ROBBER		= 128+9;
 	public static final int DOUBLE_BARREL	= 128+10;
-	public static final int CONVERSATION	 = 128+11;
-	public static final int TELESCOPE	 = 128+12;
-	public static final int CAMOUFLAGE	 = 128+13;
+	public static final int CONVERSATION	= 128+11;
+	public static final int TELESCOPE	 	= 128+12;
+	public static final int CAMOUFLAGE	 	= 128+13;
+	public static final int NEO_AVANT_GARDE = 128+14;
+	public static final int WALLET_WARRIOR	= 128+15;
 
 	//new armor abilities
-	public static final int ARIS_1			= 128+40;
-	public static final int ARIS_2			= 128+41;
-	public static final int ARIS_3			= 128+42;
-	public static final int NONOMI_1		= 128+43;
-	public static final int NONOMI_2		= 128+44;
-	public static final int NONOMI_3		= 128+45;
-	public static final int MIYAKO_1		= 128+46;
-	public static final int MIYAKO_2		= 128+47;
-	public static final int MIYAKO_3		= 128+48;
-	public static final int HOSHINO_1		= 128+49;
-	public static final int HOSHINO_2		= 128+50;
-	public static final int HOSHINO_3		= 128+51;
-	public static final int SHIROKO_1		= 128+52;
-	public static final int SHIROKO_2		= 128+53;
-	public static final int SHIROKO_3		= 128+54;
-	public static final int NOA_1			= 128+55;
-	public static final int NOA_2			= 128+56;
-	public static final int NOA_3			= 128+57;
-	public static final int MIYU_1			= 128+58;
-	public static final int MIYU_2			= 128+59;
-	public static final int MIYU_3			= 128+60;
+	public static final int ARIS_1			= 128+24;
+	public static final int ARIS_2			= 128+25;
+	public static final int ARIS_3			= 128+26;
+	public static final int NONOMI_1		= 128+27;
+	public static final int NONOMI_2		= 128+28;
+	public static final int NONOMI_3		= 128+29;
+	public static final int MIYAKO_1		= 128+30;
+	public static final int MIYAKO_2		= 128+31;
+	public static final int MIYAKO_3		= 128+32;
+	public static final int HOSHINO_1		= 128+33;
+	public static final int HOSHINO_2		= 128+34;
+	public static final int HOSHINO_3		= 128+35;
+	public static final int SHIROKO_1		= 128+36;
+	public static final int SHIROKO_2		= 128+37;
+	public static final int SHIROKO_3		= 128+38;
+	public static final int NOA_1			= 128+39;
+	public static final int NOA_2			= 128+40;
+	public static final int NOA_3			= 128+41;
+	public static final int MIYU_1			= 128+42;
+	public static final int MIYU_2			= 128+43;
+	public static final int MIYU_3			= 128+44;
+	public static final int YUZU_1			= 128+45;
+	public static final int YUZU_2			= 128+46;
+	public static final int YUZU_3			= 128+47;
 
 	//new action indicator visuals
-  	public static final int CHARGE				= 128+72;
-  	public static final int SHOOT_ALL_ACTION	= 128+73;
-  	public static final int SPREAD_SHOT_ACTION	= 128+74;
-  	public static final int RABBIT_SQUAD_ACTION	= 128+75;
-  	public static final int SHIELD_BASH_ACTION	= 128+76;
-  	public static final int SWIFT_MOVEMENT_ACTION= 128+77;
-  	public static final int PROFESSIONAL_RIDING_ACTION= 128+78;
-  	public static final int BANK_ROBBER_ACTION= 128+79;
-  	public static final int DOUBLE_BARREL_ACTION= 128+80;
-  	public static final int CONVERSATION_ACTION	= 128+81;
-  	public static final int TELESCOPE_ACTION	= 128+82;
+  	public static final int CHARGE						= 128+64;
+  	public static final int SHOOT_ALL_ACTION			= 128+65;
+  	public static final int SPREAD_SHOT_ACTION			= 128+66;
+  	public static final int RABBIT_SQUAD_ACTION			= 128+67;
+  	public static final int SHIELD_BASH_ACTION			= 128+68;
+  	public static final int SWIFT_MOVEMENT_ACTION		= 128+69;
+  	public static final int PROFESSIONAL_RIDING_ACTION	= 128+70;
+  	public static final int BANK_ROBBER_ACTION			= 128+71;
+  	public static final int DOUBLE_BARREL_ACTION		= 128+72;
+  	public static final int CONVERSATION_ACTION			= 128+73;
+  	public static final int TELESCOPE_ACTION			= 128+74;
+
+	//Yuzu abilities
+	public static final int SHOP_1			= 128 + 88;
+	public static final int SHOP_2			= 128 + 89;
+	public static final int SHOP_3			= 128 + 90;
+	public static final int SHOP_4			= 128 + 91;
+	public static final int SHOP_5			= 128 + 92;
 
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );
@@ -195,6 +208,14 @@ public class HeroIcon extends Image {
 			film = new TextureFilm(texture, SIZE, SIZE);
 		}
 		frame(film.get(spell.icon()));
+	}
+
+	public HeroIcon(YuzuShopContent content){
+		super( Assets.Interfaces.HERO_ICONS );
+		if (film == null){
+			film = new TextureFilm(texture, SIZE, SIZE);
+		}
+		frame(film.get(content.icon()));
 	}
 
 }

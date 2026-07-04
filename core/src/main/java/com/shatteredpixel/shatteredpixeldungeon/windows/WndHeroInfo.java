@@ -26,10 +26,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops.RandomConsumable;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
@@ -79,6 +81,9 @@ public class WndHeroInfo extends WndTabbed {
 				break;
 			case MIYU:
 				tabIcon = new ItemSprite(ItemSpriteSheet.TRASH_BIN, null);
+				break;
+			case YUZU:
+				tabIcon = new ItemSprite(ItemSpriteSheet.LAPTOP, null);
 				break;
 			case WARRIOR:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SEAL, null);
@@ -238,6 +243,13 @@ public class WndHeroInfo extends WndTabbed {
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.TRASH_BIN),
 							new TalentIcon(Talent.MIYU_T1_2),
 							Icons.GRASS.get(),
+							new ItemSprite(ItemSpriteSheet.SR_TIER_1),
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+					break;
+				case YUZU:
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.LAPTOP),
+							new TalentIcon(Talent.YUZU_T1_2),
+							new HeroIcon(RandomConsumable.INSTANCE),
 							new ItemSprite(ItemSpriteSheet.SR_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;

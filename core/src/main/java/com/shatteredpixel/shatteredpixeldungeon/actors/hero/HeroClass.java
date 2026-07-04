@@ -66,6 +66,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.We
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.HeroicLeap;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Shockwave;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.Cabinet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.Missile;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.PVP;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.ConversionKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -77,6 +80,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Laptop;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.TrashBin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
@@ -115,6 +119,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Rapier;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T1;
@@ -137,6 +142,7 @@ public enum HeroClass {
 	SHIROKO(HeroSubClass.PROFESSIONAL_RIDING, HeroSubClass.BANK_ROBBER),
 	NOA(HeroSubClass.DOUBLE_BARREL, HeroSubClass.CONVERSATION),
 	MIYU(HeroSubClass.TELESCOPE, HeroSubClass.CAMOUFLAGE),
+	YUZU(HeroSubClass.NEO_AVANT_GARDE, HeroSubClass.WALLET_WARRIOR),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
@@ -212,6 +218,10 @@ public enum HeroClass {
 
 			case MIYU:
 				initMiyu( hero );
+				break;
+
+			case YUZU:
+				initYuzu( hero );
 				break;
 
 
@@ -371,6 +381,19 @@ public enum HeroClass {
 		new ScrollOfRage().identify();
 	}
 
+	private static void initYuzu(Hero hero) {
+		GL_T1 glT1 = new GL_T1();
+		(hero.belongings.weapon = glT1).identify();
+		Laptop laptop = new Laptop();
+		laptop.collect();
+
+		Dungeon.quickslot.setSlot(0, glT1);
+		Dungeon.quickslot.setSlot(1, laptop);
+
+		new PotionOfHealing().identify();
+		new ScrollOfRage().identify();
+	}
+
 	private static void initWarrior( Hero hero ) {
 		(hero.belongings.weapon = new WornShortsword()).identify();
 		ThrowingStone stones = new ThrowingStone();
@@ -492,6 +515,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new TrapDuplicate(), new Hologram(), new SuperNovaBeam()};
 			case MIYU:
 				return new ArmorAbility[]{new Flashbang(), new HPBullet(), new AntiMaterialRifle()};
+			case YUZU:
+				return new ArmorAbility[]{new PVP(), new Cabinet(), new Missile()};
 
 			case WARRIOR:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
@@ -524,6 +549,8 @@ public enum HeroClass {
 				return Assets.Sprites.NOA;
 			case MIYU:
 				return Assets.Sprites.MIYU;
+			case YUZU:
+				return Assets.Sprites.YUZU;
 			case WARRIOR:
 				return Assets.Sprites.WARRIOR;
 			case MAGE:
@@ -555,6 +582,8 @@ public enum HeroClass {
 				return Assets.Splashes.NOA;
 			case MIYU:
 				return Assets.Splashes.MIYU;
+			case YUZU:
+				return Assets.Splashes.YUZU;
 			case WARRIOR:
 				return Assets.Splashes.WARRIOR;
 			case MAGE:

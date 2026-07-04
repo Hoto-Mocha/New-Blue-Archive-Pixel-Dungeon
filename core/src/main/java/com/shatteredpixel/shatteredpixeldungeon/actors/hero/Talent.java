@@ -637,6 +637,48 @@ public enum Talent {
 	MIYU_ARMOR3_2(24, 6, 4),
 	MIYU_ARMOR3_3(25, 6, 4),
 
+	//Yuzu T1
+	YUZU_T1_1(0, 7, 2),
+	YUZU_T1_2(1, 7, 2),
+	YUZU_T1_3(2, 7, 2),
+	YUZU_T1_4(3, 7, 2),
+
+	//Yuzu T2
+	YUZU_T2_1(4, 7, 2),
+	YUZU_T2_2(5, 7, 2),
+	YUZU_T2_3(6, 7, 2),
+	YUZU_T2_4(7, 7, 2),
+	YUZU_T2_5(8, 7, 2),
+
+	//Yuzu T3
+	YUZU_T3_1(9, 7, 3),
+	YUZU_T3_2(10, 7, 3),
+
+	//Neo Avant-Garde T3
+	YUZU_EX1_1(11, 6, 3),
+	YUZU_EX1_2(12, 6, 3),
+	YUZU_EX1_3(13, 6, 3),
+
+	//Wallet Warrior T3
+	YUZU_EX2_1(14, 6, 3),
+	YUZU_EX2_2(15, 6, 3),
+	YUZU_EX2_3(16, 6, 3),
+
+	//Armor Ability 1 T4
+	YUZU_ARMOR1_1(17, 6, 4),
+	YUZU_ARMOR1_2(18, 6, 4),
+	YUZU_ARMOR1_3(19, 6, 4),
+
+	//Armor Ability 2 T4
+	YUZU_ARMOR2_1(20, 6, 4),
+	YUZU_ARMOR2_2(21, 6, 4),
+	YUZU_ARMOR2_3(22, 6, 4),
+
+	//Armor Ability 3 T4
+	YUZU_ARMOR3_1(23, 6, 4),
+	YUZU_ARMOR3_2(24, 6, 4),
+	YUZU_ARMOR3_3(25, 6, 4),
+
 	//universal T4
 	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one
 	//Ratmogrify T4
