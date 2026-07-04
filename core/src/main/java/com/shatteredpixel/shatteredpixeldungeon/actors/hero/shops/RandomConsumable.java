@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
@@ -41,7 +42,7 @@ public class RandomConsumable extends YuzuShopContent {
 
     @Override
     public int creditUse(Hero hero) {
-        return 150 * (1+(hero.lvl/5));
+        return 150 * inflationParameter();
     }
 
     public static Item genConsumableDrop(int level) {

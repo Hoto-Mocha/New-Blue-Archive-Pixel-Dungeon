@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Laptop;
@@ -46,6 +47,11 @@ public abstract class YuzuShopContent {
 
     public boolean hideWindow() {
         return false;
+    }
+
+    public static int inflationParameter() {
+        //based on the depth of deepest floor that has been visited
+        return 1+(Math.min(Statistics.deepestFloor, 25)/5);
     }
 
     public static ArrayList<YuzuShopContent> getContentList(Hero yuzu, int tier) {

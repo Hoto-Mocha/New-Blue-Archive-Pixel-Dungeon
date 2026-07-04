@@ -49,6 +49,6 @@ public class RandomEquipment extends YuzuShopContent {
 
     @Override
     public int creditUse(Hero hero) {
-        return 500 * (1+(hero.lvl/5));
+        return 500 * inflationParameter();
     }
 }
