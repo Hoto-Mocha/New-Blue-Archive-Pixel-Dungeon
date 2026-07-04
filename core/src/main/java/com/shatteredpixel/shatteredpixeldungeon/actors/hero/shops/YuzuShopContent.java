@@ -46,6 +46,7 @@ public abstract class YuzuShopContent {
         if (tier == 1) {
             contents.add(RandomConsumable.INSTANCE);
             contents.add(RandomEquipment.INSTANCE);
+            contents.add(SellItem.INSTANCE);
         } else if (tier == 2) {
 
         }
