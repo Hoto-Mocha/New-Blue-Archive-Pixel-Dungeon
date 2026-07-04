@@ -79,6 +79,9 @@ public abstract class YuzuShopContent {
             case 5:
                 new Flare(6, 36).color(0xFF0000, true).show(vis, 4.33f);
                 break;
+            case 6:
+                new Flare(6, 40).color(0x0000FF, true).show(vis, 4.67f);
+                break;
         }
     }
 }

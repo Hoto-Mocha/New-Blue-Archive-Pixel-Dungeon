@@ -22,7 +22,9 @@ public class RandomEquipment extends YuzuShopContent {
         Item prize = prize();
         prize.cursedKnown = true;
         Dungeon.level.drop(prize, hero.pos).sprite.drop();
-        if (prize.level() >= 2) {
+        if (prize.level() >= 3) {
+            showFlareForBonusDrop(hero.sprite, 6);
+        } else if (prize.level() >= 2) {
             showFlareForBonusDrop(hero.sprite, 5);
         } else if (prize.level() >= 1) {
             showFlareForBonusDrop(hero.sprite, 4);
