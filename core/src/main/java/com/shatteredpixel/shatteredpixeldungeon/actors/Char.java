@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -45,6 +47,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Critical;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Daze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
@@ -517,7 +520,11 @@ public abstract class Char extends Actor {
 					dmg *= 0.5f;
 				}
 			}
-			
+
+			if (this instanceof Hero && this.buff(Critical.class) != null) {
+				dmg = this.buff(Critical.class).criticalDamage((Hero)this, enemy, dmg);
+			}
+
 			int effectiveDamage = enemy.defenseProc( this, Math.round(dmg) );
 			//do not trigger on-hit logic if defenseProc returned a negative value
 			if (effectiveDamage >= 0) {
@@ -1078,6 +1085,11 @@ public abstract class Char extends Actor {
 		}
 		
 		if (sprite != null) {
+			String dmgText = Integer.toString(dmg + shielded);
+			if (hero.buff(Critical.CriticalTracker.class) != null) {
+				dmgText += "!";
+				hero.buff(Critical.CriticalTracker.class).detach();
+			}
 			//defaults to normal damage icon if no other ones apply
 			int                                                         icon = FloatingText.PHYS_DMG;
 			if (NO_ARMOR_PHYSICAL_SOURCES.contains(src.getClass()))     icon = FloatingText.PHYS_DMG_NO_BLOCK;
@@ -1129,7 +1141,7 @@ public abstract class Char extends Actor {
 			}
 			hitMissIcon = -1;
 
-			sprite.showStatusWithIcon(CharSprite.NEGATIVE, Integer.toString(dmg + shielded), icon);
+			sprite.showStatusWithIcon(CharSprite.NEGATIVE, dmgText, icon);
 		}
 
 		if (HP < 0) HP = 0;
