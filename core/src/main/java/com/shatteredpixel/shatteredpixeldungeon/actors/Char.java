@@ -47,7 +47,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Critical;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.YuzuStatus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Daze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
@@ -521,8 +521,8 @@ public abstract class Char extends Actor {
 				}
 			}
 
-			if (this instanceof Hero && this.buff(Critical.class) != null) {
-				dmg = this.buff(Critical.class).criticalDamage((Hero)this, enemy, dmg);
+			if (this instanceof Hero && this.buff(YuzuStatus.class) != null) {
+				dmg = this.buff(YuzuStatus.class).criticalDamage((Hero)this, enemy, dmg);
 			}
 
 			int effectiveDamage = enemy.defenseProc( this, Math.round(dmg) );
@@ -1086,9 +1086,9 @@ public abstract class Char extends Actor {
 		
 		if (sprite != null) {
 			String dmgText = Integer.toString(dmg + shielded);
-			if (hero.buff(Critical.CriticalTracker.class) != null) {
+			if (hero.buff(YuzuStatus.CriticalTracker.class) != null) {
 				dmgText += "!";
-				hero.buff(Critical.CriticalTracker.class).detach();
+				hero.buff(YuzuStatus.CriticalTracker.class).detach();
 			}
 			//defaults to normal damage icon if no other ones apply
 			int                                                         icon = FloatingText.PHYS_DMG;

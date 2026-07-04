@@ -27,7 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.QuickSlot;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Critical;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.YuzuStatus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.BatteryChange;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
@@ -392,7 +392,7 @@ public enum HeroClass {
 		Dungeon.quickslot.setSlot(0, glT1);
 		Dungeon.quickslot.setSlot(1, laptop);
 
-		Buff.affect(hero, Critical.class);
+		Buff.affect(hero, YuzuStatus.class);
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
