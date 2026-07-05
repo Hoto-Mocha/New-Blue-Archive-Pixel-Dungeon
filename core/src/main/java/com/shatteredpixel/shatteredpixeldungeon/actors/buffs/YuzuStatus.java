@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
@@ -62,6 +63,7 @@ public class YuzuStatus extends Buff {
     private int critDmgBonus(Hero hero) {
         int bonus = 0;
 
+        if (hero.hasTalent(Talent.YUZU_T1_3)) bonus += 1+2*hero.pointsInTalent(Talent.YUZU_T1_3);
         return bonus;
     }
 
