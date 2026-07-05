@@ -34,7 +34,9 @@ public class YuzuStatus extends Buff {
     //크리티컬 확률 관련
     public float baseChance(Hero hero) {
         if (hero.buff(CertainCritBuff.class) != null) return 1;
-        return 0.05f+(0.01f*hero.lvl);
+        float chance = 0.05f+(0.01f*hero.lvl);
+        if (hero.buff(SerialCritBuff.class) != null) chance += 0.1f*hero.pointsInTalent(Talent.YUZU_T2_4);
+        return chance;
     }
 
     public float chance(Hero hero) {
@@ -68,6 +70,7 @@ public class YuzuStatus extends Buff {
     }
 
     public float criticalDamage(Hero hero, Char enemy, float dmg) {
+        if (hero.buff(SerialCritBuff.class) != null) hero.buff(SerialCritBuff.class).detach();
         if (isCritical(hero)) {
             dmg *= critDmgMulti(hero);
             dmg += critDmgBonus(hero);
@@ -85,6 +88,9 @@ public class YuzuStatus extends Buff {
         }
         if (hero.buff(PayToWinBuff.class) != null) {
             hero.buff(PayToWinBuff.class).detach();
+        }
+        if (hero.hasTalent(Talent.YUZU_T2_4)) {
+            Buff.affect(hero, SerialCritBuff.class);
         }
     }
 
@@ -210,5 +216,7 @@ public class YuzuStatus extends Buff {
     }
 
     public static class PayToWinBuff extends Buff {}
+
+    public static class SerialCritBuff extends Buff {}
 
 }
