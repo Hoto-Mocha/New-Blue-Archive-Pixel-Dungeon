@@ -11,8 +11,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
 public class BuyCreditMulti extends YuzuShopContent {
     public static final BuyCreditMulti INSTANCE = new BuyCreditMulti();
-    private final float INCREMENT = 0.1f;
-    private final int MAX_LEVEL = 20;
 
     @Override
     public int icon() {
@@ -21,33 +19,33 @@ public class BuyCreditMulti extends YuzuShopContent {
 
     @Override
     public void onSelect(Hero hero) {
-        Buff.affect(hero, YuzuStatus.class).creditMulti += INCREMENT;
+        Buff.affect(hero, YuzuStatus.class).buyStat(YuzuStatus.CREDIT_MULTI);
         CellEmitter.center( hero.pos ).burst( Speck.factory( Speck.STAR ), 1 );
         CellEmitter.get( hero.pos ).burst( Speck.factory( Speck.FORGE ), 1 );
     }
 
     @Override
     public boolean canSelect(Hero hero) {
-        return super.canSelect(hero) && YuzuStatus.yuzuCreditMulti(hero)-1 < INCREMENT*MAX_LEVEL;
+        return super.canSelect(hero) && YuzuStatus.yuzuCreditMulti(hero)-1 < YuzuStatus.CREDIT_MULTI_INCREMENT*YuzuStatus.MAX_LEVEL;
     }
 
     @Override
     public String shortDesc() {
-        return Messages.get(this, "short_desc", Messages.decimalFormat("#", 100*INCREMENT))
+        return Messages.get(this, "short_desc", Messages.decimalFormat("#", 100*YuzuStatus.CREDIT_MULTI_INCREMENT))
                 + ".\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
     }
 
     public String desc(){
         return Messages.get(this, "desc",
-                Messages.decimalFormat("#", 100*INCREMENT),
-                Messages.decimalFormat("#", 100*INCREMENT*MAX_LEVEL),
+                Messages.decimalFormat("#", 100*YuzuStatus.CREDIT_MULTI_INCREMENT),
+                Messages.decimalFormat("#", 100*YuzuStatus.CREDIT_MULTI_INCREMENT*YuzuStatus.MAX_LEVEL),
                 Messages.decimalFormat("#", 100),
-                Messages.decimalFormat("#", 100*(YuzuStatus.yuzuCreditMulti(Dungeon.hero)-1)))
+                Messages.decimalFormat("#.##", 100*(YuzuStatus.yuzuCreditMulti(Dungeon.hero)-1)))
                 + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
     }
 
     @Override
     public int creditUse(Hero hero) {
-        return 1000*(1+(int)((YuzuStatus.yuzuCreditMulti(hero)-1)/INCREMENT));
+        return 1000*(1+(int)((YuzuStatus.yuzuCreditMulti(hero)-1)/YuzuStatus.CREDIT_MULTI_INCREMENT));
     }
 }

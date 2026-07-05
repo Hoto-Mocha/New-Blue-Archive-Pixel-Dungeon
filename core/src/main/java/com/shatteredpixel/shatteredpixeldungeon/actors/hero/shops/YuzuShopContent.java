@@ -62,6 +62,7 @@ public abstract class YuzuShopContent {
             contents.add(RandomConsumable.INSTANCE);
             contents.add(RandomEquipment.INSTANCE);
             contents.add(SellItem.INSTANCE);
+            contents.add(PayToWin.INSTANCE);
         } else if (tier == 2) {
             contents.add(BuyCritChance.INSTANCE);
             contents.add(BuyCritDmgMulti.INSTANCE);

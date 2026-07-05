@@ -11,8 +11,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
 public class BuyCritDmgMulti extends YuzuShopContent {
     public static final BuyCritDmgMulti INSTANCE = new BuyCritDmgMulti();
-    private final float INCREMENT = 0.05f;
-    private final int MAX_LEVEL = 20;
 
     @Override
     public int icon() {
@@ -21,33 +19,34 @@ public class BuyCritDmgMulti extends YuzuShopContent {
 
     @Override
     public void onSelect(Hero hero) {
-        Buff.affect(hero, YuzuStatus.class).critDmgMulti += INCREMENT;
+        Buff.affect(hero, YuzuStatus.class).buyStat(YuzuStatus.CRIT_DMG);
         CellEmitter.center( hero.pos ).burst( Speck.factory( Speck.STAR ), 1 );
         CellEmitter.get( hero.pos ).burst( Speck.factory( Speck.FORGE ), 1 );
     }
 
     @Override
     public boolean canSelect(Hero hero) {
-        return super.canSelect(hero) && YuzuStatus.yuzuCritDmgMulti(hero)-1.2f < INCREMENT*MAX_LEVEL;
+        return super.canSelect(hero)
+                && YuzuStatus.yuzuCritDmgMulti(hero) - YuzuStatus.yuzuBaseCritDmgMulti(hero) < YuzuStatus.CRIT_DMG_INCREMENT*YuzuStatus.MAX_LEVEL;
     }
 
     @Override
     public String shortDesc() {
-        return Messages.get(this, "short_desc", Messages.decimalFormat("#", 100*INCREMENT))
+        return Messages.get(this, "short_desc", Messages.decimalFormat("#", 100*YuzuStatus.CRIT_DMG_INCREMENT))
                 + ".\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
     }
 
     public String desc(){
         return Messages.get(this, "desc",
-                Messages.decimalFormat("#", 100*INCREMENT),
-                Messages.decimalFormat("#", 100*INCREMENT*MAX_LEVEL),
-                Messages.decimalFormat("#", 100*1.2f),
-                Messages.decimalFormat("#", 100*(YuzuStatus.yuzuCritDmgMulti(Dungeon.hero)-1.2f)))
+                Messages.decimalFormat("#", 100*YuzuStatus.CRIT_DMG_INCREMENT),
+                Messages.decimalFormat("#", 100*YuzuStatus.CRIT_DMG_INCREMENT*YuzuStatus.MAX_LEVEL),
+                Messages.decimalFormat("#", 100*YuzuStatus.yuzuBaseCritDmgMulti(Dungeon.hero)),
+                Messages.decimalFormat("#", 100*(YuzuStatus.yuzuCritDmgMulti(Dungeon.hero) - YuzuStatus.yuzuBaseCritDmgMulti(Dungeon.hero))))
                 + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
     }
 
     @Override
     public int creditUse(Hero hero) {
-        return 1000*(1+(int)((YuzuStatus.yuzuCritDmgMulti(hero)-1.2f)/INCREMENT));
+        return 1000*(1+(int)((YuzuStatus.yuzuCritDmgMulti(hero)-YuzuStatus.yuzuBaseCritDmgMulti(hero))/YuzuStatus.CRIT_DMG_INCREMENT));
     }
 }
