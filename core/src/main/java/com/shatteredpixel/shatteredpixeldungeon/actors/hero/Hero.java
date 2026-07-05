@@ -70,6 +70,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipersMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SupportDrone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.TimeStasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.YuzuStatus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.AscendedForm;
@@ -2718,11 +2719,11 @@ public class Hero extends Char {
 							
 						//unintentional trap detection scales from 40% at floor 0 to 30% at floor 25
 						} else if (Dungeon.level.map[curr] == Terrain.SECRET_TRAP) {
-							chance = 0.4f - (Dungeon.depth / 250f);
+							chance = 0.4f - (Dungeon.depth / 250f) + YuzuStatus.yuzuSearchChanceBonus(this);
 							
 						//unintentional door detection scales from 20% at floor 0 to 0% at floor 20
 						} else {
-							chance = 0.2f - (Dungeon.depth / 100f);
+							chance = 0.2f - (Dungeon.depth / 100f) + YuzuStatus.yuzuSearchChanceBonus(this);
 						}
 
 						//don't want to let the player search though hidden doors in tutorial

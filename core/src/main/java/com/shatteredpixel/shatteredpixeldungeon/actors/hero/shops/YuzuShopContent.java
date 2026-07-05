@@ -76,6 +76,7 @@ public abstract class YuzuShopContent {
             contents.add(BuyCritDmgMulti.INSTANCE);
             contents.add(BuyCreditMulti.INSTANCE);
             contents.add(BuyDropMulti.INSTANCE);
+            contents.add(BuySearchChance.INSTANCE);
         }
 
         return contents;

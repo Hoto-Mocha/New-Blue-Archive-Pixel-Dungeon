@@ -27,6 +27,10 @@ public class YuzuStatus extends Buff {
     public static final String DROP_MULTI = "dropMulti";
     private int dropMultiCount = 0;
 
+    public static final float SEARCH_CHANCE_INCREMENT = 0.02f;
+    public static final String SEARCH_CHANCE = "searchChance";
+    private int searchChanceCount = 0;
+
     {
         revivePersists = true;
     }
@@ -104,6 +108,11 @@ public class YuzuStatus extends Buff {
         return 1f + DROP_MULTI_INCREMENT * dropMultiCount;
     }
 
+    //탐색 확률 증가량 관련
+    public float searchChanceBonus() {
+        return SEARCH_CHANCE_INCREMENT * searchChanceCount;
+    }
+
     //스테이터스 구매
     public void buyStat(String key) {
         switch (key) {
@@ -119,6 +128,9 @@ public class YuzuStatus extends Buff {
             case DROP_MULTI:
                 dropMultiCount++;
                 return;
+            case SEARCH_CHANCE:
+                searchChanceCount++;
+                return;
             default:
                 return;
         }
@@ -128,7 +140,7 @@ public class YuzuStatus extends Buff {
     private static final String CRIT_DMG_COUNT = "critDmgCount";
     private static final String CREDIT_MULTI_COUNT = "creditMultiCount";
     private static final String DROP_MULTI_COUNT = "dropMultiCount";
-
+    private static final String SEARCH_CHANCE_COUNT = "searchChanceCount";
 
     @Override
     public void storeInBundle(Bundle bundle) {
@@ -137,6 +149,7 @@ public class YuzuStatus extends Buff {
         bundle.put(CRIT_DMG_COUNT, critDmgCount);
         bundle.put(CREDIT_MULTI_COUNT, creditMultiCount);
         bundle.put(DROP_MULTI_COUNT, dropMultiCount);
+        bundle.put(SEARCH_CHANCE_COUNT, searchChanceCount);
     }
 
     @Override
@@ -146,6 +159,7 @@ public class YuzuStatus extends Buff {
         critDmgCount = bundle.getInt(CRIT_DMG_COUNT);
         creditMultiCount = bundle.getInt(CREDIT_MULTI_COUNT);
         dropMultiCount = bundle.getInt(DROP_MULTI_COUNT);
+        searchChanceCount = bundle.getInt(SEARCH_CHANCE_COUNT);
     }
 
     public static class CriticalTracker extends Buff {}
@@ -178,6 +192,11 @@ public class YuzuStatus extends Buff {
     public static float yuzuDropMulti(Hero hero) {
         if (hero.buff(YuzuStatus.class) == null) return 1f;
         else return hero.buff(YuzuStatus.class).dropMulti(hero);
+    }
+
+    public static float yuzuSearchChanceBonus(Hero hero) {
+        if (hero.buff(YuzuStatus.class) == null) return 0f;
+        else return hero.buff(YuzuStatus.class).searchChanceBonus();
     }
 
     public static class CertainCritBuff extends CounterBuff {
