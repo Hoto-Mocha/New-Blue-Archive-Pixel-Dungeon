@@ -1517,7 +1517,7 @@ public enum Talent {
 			Buff.affect(hero, Conversation.class).charge(2*factor);
 		}
 		if (hero.hasTalent(Talent.YUZU_T2_2)) {
-			int distance = 2+3*hero.pointsInTalent(Talent.YUZU_T2_2);
+			int distance = 4+4*hero.pointsInTalent(Talent.YUZU_T2_2);
 			StoneOfClairvoyance.mapping(pos, (int)Math.ceil(distance*factor));
 		}
 	}
