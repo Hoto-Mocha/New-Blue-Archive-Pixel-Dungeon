@@ -1515,6 +1515,10 @@ public enum Talent {
 		if (hero.subClass == HeroSubClass.CONVERSATION && hero.hasTalent(Talent.NOA_EX2_1)) {
 			Buff.affect(hero, Conversation.class).charge(2*factor);
 		}
+		if (hero.hasTalent(Talent.YUZU_T2_2)) {
+			int distance = 2+3*hero.pointsInTalent(Talent.YUZU_T2_2);
+			StoneOfClairvoyance.mapping(pos, (int)Math.ceil(distance*factor));
+		}
 	}
 
 	public static void onRunestoneUsed( Hero hero, int pos, Class<?extends Item> cls ){
