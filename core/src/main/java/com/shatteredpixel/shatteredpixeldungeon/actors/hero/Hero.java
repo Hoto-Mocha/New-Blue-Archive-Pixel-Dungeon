@@ -1707,6 +1707,10 @@ public class Hero extends Char {
 			damage = buff(SupportDrone.class).hit(this, damage);
 		}
 
+		if (enemy == this && heroClass == HeroClass.YUZU && this.belongings.attackingWeapon() instanceof Gun.Bullet) {
+			damage = Math.round(damage * 0.25f);
+		}
+
 		damage = Talent.onDefenseProc(this, enemy, damage);
 
 		return super.defenseProc( enemy, damage );
