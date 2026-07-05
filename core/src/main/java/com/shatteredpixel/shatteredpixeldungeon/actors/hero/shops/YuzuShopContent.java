@@ -4,7 +4,9 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
+import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Laptop;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -12,6 +14,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndYuzuShop;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -42,7 +45,11 @@ public abstract class YuzuShopContent {
 
     public void onContentSelect(Laptop laptop, Hero hero, boolean info) {
         Dungeon.gold -= creditUse(hero);
-        Sample.INSTANCE.play(Assets.Sounds.GOLD);
+        if (hero.hasTalent(Talent.YUZU_T2_5)) {
+            new Gold(Math.round(creditUse(hero)*0.05f*hero.pointsInTalent(Talent.YUZU_T2_5))).doPickUp(hero, hero.pos);
+        } else {
+            Sample.INSTANCE.play( Assets.Sounds.GOLD, 1, 1, Random.Float( 0.9f, 1.1f ) );
+        }
         if (!hideWindow()) GameScene.show(new WndYuzuShop(laptop, hero, info));
     }
 
