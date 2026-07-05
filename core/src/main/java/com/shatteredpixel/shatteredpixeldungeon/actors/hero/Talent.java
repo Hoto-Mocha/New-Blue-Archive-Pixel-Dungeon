@@ -53,6 +53,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SuperNovaCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SupportDrone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.YuzuStatus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
@@ -1324,6 +1325,9 @@ public enum Talent {
 		}
 		if (hero.hasTalent(Talent.MIYU_T2_1)) {
 			Buff.affect(hero, Invisibility.class, 2+3*hero.pointsInTalent(Talent.MIYU_T2_1));
+		}
+		if (hero.hasTalent(Talent.YUZU_T1_1)) {
+			Buff.affect(hero, YuzuStatus.CertainCritBuff.class).countUp(1+hero.pointsInTalent(Talent.YUZU_T1_1));
 		}
 	}
 
