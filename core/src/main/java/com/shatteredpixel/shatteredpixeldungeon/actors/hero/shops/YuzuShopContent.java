@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -10,15 +11,14 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndYuzuShop;
 import com.watabou.noosa.Visual;
+import com.watabou.noosa.audio.Sample;
 
 import java.util.ArrayList;
 
 public abstract class YuzuShopContent {
     public abstract void onSelect(Hero hero);
 
-    public int creditUse(Hero hero ){
-        return 1;
-    }
+    public abstract int creditUse(Hero hero);
 
     public boolean canSelect( Hero hero ){
         return Dungeon.gold >= creditUse(hero);
@@ -42,6 +42,7 @@ public abstract class YuzuShopContent {
 
     public void onContentSelect(Laptop laptop, Hero hero, boolean info) {
         Dungeon.gold -= creditUse(hero);
+        Sample.INSTANCE.play(Assets.Sounds.GOLD);
         if (!hideWindow()) GameScene.show(new WndYuzuShop(laptop, hero, info));
     }
 
@@ -62,7 +63,8 @@ public abstract class YuzuShopContent {
             contents.add(RandomEquipment.INSTANCE);
             contents.add(SellItem.INSTANCE);
         } else if (tier == 2) {
-
+            contents.add(BuyCritChance.INSTANCE);
+            contents.add(BuyCritDmgMulti.INSTANCE);
         }
 
         return contents;

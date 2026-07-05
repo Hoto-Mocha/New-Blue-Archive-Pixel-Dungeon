@@ -59,7 +59,7 @@ public class Gold extends Item {
 	
 	@Override
 	public boolean doPickUp(Hero hero, int pos) {
-		int finalAmount = Math.round(quantity * YuzuStatus.yuzuCreditBonus(hero));
+		int finalAmount = Math.round(quantity * YuzuStatus.yuzuCreditMulti(hero));
 
 		Catalog.setSeen(getClass());
 		Statistics.itemTypesDiscovered.add(getClass());
