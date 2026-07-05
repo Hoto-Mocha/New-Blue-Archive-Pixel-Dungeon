@@ -655,29 +655,29 @@ public enum Talent {
 	YUZU_T3_2(10, 7, 3),
 
 	//Neo Avant-Garde T3
-	YUZU_EX1_1(11, 6, 3),
-	YUZU_EX1_2(12, 6, 3),
-	YUZU_EX1_3(13, 6, 3),
+	YUZU_EX1_1(11, 7, 3),
+	YUZU_EX1_2(12, 7, 3),
+	YUZU_EX1_3(13, 7, 3),
 
 	//Wallet Warrior T3
-	YUZU_EX2_1(14, 6, 3),
-	YUZU_EX2_2(15, 6, 3),
-	YUZU_EX2_3(16, 6, 3),
+	YUZU_EX2_1(14, 7, 3),
+	YUZU_EX2_2(15, 7, 3),
+	YUZU_EX2_3(16, 7, 3),
 
 	//Armor Ability 1 T4
-	YUZU_ARMOR1_1(17, 6, 4),
-	YUZU_ARMOR1_2(18, 6, 4),
-	YUZU_ARMOR1_3(19, 6, 4),
+	YUZU_ARMOR1_1(17, 7, 4),
+	YUZU_ARMOR1_2(18, 7, 4),
+	YUZU_ARMOR1_3(19, 7, 4),
 
 	//Armor Ability 2 T4
-	YUZU_ARMOR2_1(20, 6, 4),
-	YUZU_ARMOR2_2(21, 6, 4),
-	YUZU_ARMOR2_3(22, 6, 4),
+	YUZU_ARMOR2_1(20, 7, 4),
+	YUZU_ARMOR2_2(21, 7, 4),
+	YUZU_ARMOR2_3(22, 7, 4),
 
 	//Armor Ability 3 T4
-	YUZU_ARMOR3_1(23, 6, 4),
-	YUZU_ARMOR3_2(24, 6, 4),
-	YUZU_ARMOR3_3(25, 6, 4),
+	YUZU_ARMOR3_1(23, 7, 4),
+	YUZU_ARMOR3_2(24, 7, 4),
+	YUZU_ARMOR3_3(25, 7, 4),
 
 	//universal T4
 	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one
@@ -962,9 +962,9 @@ public enum Talent {
 				case MIYU:
 					y = 6;
 					break;
-//				case YUZU:
-//					y = 7;
-//					break;
+				case YUZU:
+					y = 7;
+					break;
 //				case IZUNA:
 //					y = 8;
 //					break;
@@ -1988,6 +1988,9 @@ public enum Talent {
 			case MIYU:
 				Collections.addAll(tierTalents, MIYU_T1_1, MIYU_T1_2, MIYU_T1_3, MIYU_T1_4);
 				break;
+			case YUZU:
+				Collections.addAll(tierTalents, YUZU_T1_1, YUZU_T1_2, YUZU_T1_3, YUZU_T1_4);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HEARTY_MEAL, VETERANS_INTUITION, PROVOKED_ANGER, IRON_WILL);
 				break;
@@ -2038,6 +2041,9 @@ public enum Talent {
 			case MIYU:
 				Collections.addAll(tierTalents, MIYU_T2_1, MIYU_T2_2, MIYU_T2_3, MIYU_T2_4, MIYU_T2_5);
 				break;
+			case YUZU:
+				Collections.addAll(tierTalents, YUZU_T2_1, YUZU_T2_2, YUZU_T2_3, YUZU_T2_4, YUZU_T2_5);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, IRON_STOMACH, LIQUID_WILLPOWER, RUNIC_TRANSFERENCE, LETHAL_MOMENTUM, IMPROVISED_PROJECTILES);
 				break;
@@ -2087,6 +2093,9 @@ public enum Talent {
 				break;
 			case MIYU:
 				Collections.addAll(tierTalents, MIYU_T3_1, MIYU_T3_2);
+				break;
+			case YUZU:
+				Collections.addAll(tierTalents, YUZU_T3_1, YUZU_T3_2);
 				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HOLD_FAST, STRONGMAN);
@@ -2175,6 +2184,12 @@ public enum Talent {
 				break;
 			case CAMOUFLAGE:
 				Collections.addAll(tierTalents, MIYU_EX2_1, MIYU_EX2_2, MIYU_EX2_3);
+				break;
+			case NEO_AVANT_GARDE:
+				Collections.addAll(tierTalents, YUZU_EX1_1, YUZU_EX1_2, YUZU_EX1_3);
+				break;
+			case WALLET_WARRIOR:
+				Collections.addAll(tierTalents, YUZU_EX2_1, YUZU_EX2_2, YUZU_EX2_3);
 				break;
 			case BERSERKER:
 				Collections.addAll(tierTalents, ENDLESS_RAGE, DEATHLESS_FURY, ENRAGED_CATALYST);
