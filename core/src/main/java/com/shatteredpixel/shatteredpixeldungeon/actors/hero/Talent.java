@@ -78,6 +78,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.TrashBin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
@@ -1821,6 +1822,10 @@ public enum Talent {
 
 		if (hero.buff(SpikeShield.SpikeShieldBuff.class) != null && (hero.buff(IronHorus.TacticalShieldBuff.class) != null || hero.buff(IronHorus.LightTacticalShieldBuff.class) != null)) {
 			hero.buff(SpikeShield.SpikeShieldBuff.class).onHit(hero, enemy);
+		}
+
+		if (hero.hasTalent(Talent.YUZU_T2_3)) {
+			Viscosity.applyViscosity(hero, 1+2*hero.pointsInTalent(Talent.YUZU_T2_3));
 		}
 
 		return damage;
