@@ -65,6 +65,7 @@ public abstract class YuzuShopContent {
         } else if (tier == 2) {
             contents.add(BuyCritChance.INSTANCE);
             contents.add(BuyCritDmgMulti.INSTANCE);
+            contents.add(BuyCreditMulti.INSTANCE);
         }
 
         return contents;

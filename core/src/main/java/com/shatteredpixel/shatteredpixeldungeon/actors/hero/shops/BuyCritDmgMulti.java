@@ -33,11 +33,17 @@ public class BuyCritDmgMulti extends YuzuShopContent {
 
     @Override
     public String shortDesc() {
-        return Messages.get(this, "short_desc", (int)(100*INCREMENT)) + ".\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
+        return Messages.get(this, "short_desc", Messages.decimalFormat("#", 100*INCREMENT))
+                + ".\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
     }
 
     public String desc(){
-        return Messages.get(this, "desc", (int)(100*INCREMENT), (int)(100*INCREMENT*MAX_LEVEL), (int)(Math.ceil(100*YuzuStatus.yuzuCritDmgMulti(Dungeon.hero)))) + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
+        return Messages.get(this, "desc",
+                Messages.decimalFormat("#", 100*INCREMENT),
+                Messages.decimalFormat("#", 100*INCREMENT*MAX_LEVEL),
+                Messages.decimalFormat("#", 100*1.2f),
+                Messages.decimalFormat("#", 100*(YuzuStatus.yuzuCritDmgMulti(Dungeon.hero))-1.2f))
+                + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
     }
 
     @Override

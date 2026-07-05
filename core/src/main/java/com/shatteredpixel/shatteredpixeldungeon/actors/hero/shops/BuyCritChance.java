@@ -33,11 +33,16 @@ public class BuyCritChance extends YuzuShopContent {
 
     @Override
     public String shortDesc() {
-        return Messages.get(this, "short_desc", (int)(100*INCREMENT)) + ".\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
+        return Messages.get(this, "short_desc", Messages.decimalFormat("#", 100*INCREMENT)) + ".\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
     }
 
     public String desc(){
-        return Messages.get(this, "desc", (int)(100*INCREMENT), (int)(100*INCREMENT*MAX_LEVEL), (int)(Math.ceil(100*YuzuStatus.yuzuCritChanceMulti(Dungeon.hero)))) + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
+        return Messages.get(this, "desc",
+                Messages.decimalFormat("#", 100*INCREMENT),
+                Messages.decimalFormat("#", 100*INCREMENT*MAX_LEVEL),
+                Messages.decimalFormat("#", 100*(0.05f+0.01f*Dungeon.hero.lvl)),
+                Messages.decimalFormat("#", 100*YuzuStatus.yuzuCritChanceMulti(Dungeon.hero)))
+                + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
     }
 
     @Override
