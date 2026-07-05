@@ -31,6 +31,7 @@ public class HardTack extends Food {
                 || Dungeon.hero.hasTalent(Talent.SHIROKO_T2_1)
                 || Dungeon.hero.hasTalent(Talent.NOA_T2_1)
                 || Dungeon.hero.hasTalent(Talent.MIYU_T2_1)
+                || Dungeon.hero.hasTalent(Talent.YUZU_T2_1)
         ){
             return 0;
         } else {

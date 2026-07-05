@@ -112,6 +112,7 @@ public class Food extends Item {
 			|| Dungeon.hero.hasTalent(Talent.SHIROKO_T2_1)
 			|| Dungeon.hero.hasTalent(Talent.NOA_T2_1)
 			|| Dungeon.hero.hasTalent(Talent.MIYU_T2_1)
+			|| Dungeon.hero.hasTalent(Talent.YUZU_T2_1)
 		){
 			return TIME_TO_EAT - 2;
 		} else {
