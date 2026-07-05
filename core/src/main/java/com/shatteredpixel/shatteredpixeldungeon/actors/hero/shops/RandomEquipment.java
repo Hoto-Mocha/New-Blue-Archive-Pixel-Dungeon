@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -20,6 +21,9 @@ public class RandomEquipment extends YuzuShopContent {
     @Override
     public void onSelect(Hero hero) {
         Item prize = prize();
+        if (Random.Float() < 0.05f*hero.pointsInTalent(Talent.YUZU_T3_1)) {
+            prize.upgrade(1);
+        }
         prize.cursedKnown = true;
         Dungeon.level.drop(prize, hero.pos).sprite.drop();
         if (prize.level() >= 3) {

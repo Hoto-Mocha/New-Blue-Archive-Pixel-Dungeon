@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Honeypot;
@@ -34,7 +35,7 @@ public class RandomConsumable extends YuzuShopContent {
 
     @Override
     public void onSelect(Hero hero) {
-        Item prize = genConsumableDrop(0);
+        Item prize = genConsumableDrop(hero.pointsInTalent(Talent.YUZU_T3_1));
         Dungeon.level.drop(prize, hero.pos).sprite.drop();
         showFlareForBonusDrop(hero.sprite, latestDropTier);
         latestDropTier = 0;
