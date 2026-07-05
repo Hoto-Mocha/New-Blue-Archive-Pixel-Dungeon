@@ -9,26 +9,26 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
-public class BuyCritDmgMulti extends YuzuShopContent {
-    public static final BuyCritDmgMulti INSTANCE = new BuyCritDmgMulti();
-    private final float INCREMENT = 0.05f;
+public class BuyCreditMulti extends YuzuShopContent {
+    public static final BuyCreditMulti INSTANCE = new BuyCreditMulti();
+    private final float INCREMENT = 0.1f;
     private final int MAX_LEVEL = 20;
 
     @Override
     public int icon() {
-        return HeroIcon.SHOP_7;
+        return HeroIcon.SHOP_8;
     }
 
     @Override
     public void onSelect(Hero hero) {
-        Buff.affect(hero, YuzuStatus.class).critDmgMulti += INCREMENT;
+        Buff.affect(hero, YuzuStatus.class).creditMulti += INCREMENT;
         CellEmitter.center( hero.pos ).burst( Speck.factory( Speck.STAR ), 1 );
         CellEmitter.get( hero.pos ).burst( Speck.factory( Speck.FORGE ), 1 );
     }
 
     @Override
     public boolean canSelect(Hero hero) {
-        return super.canSelect(hero) && YuzuStatus.yuzuCritDmgMulti(hero)-1.2f < INCREMENT*MAX_LEVEL;
+        return super.canSelect(hero) && YuzuStatus.yuzuCreditMulti(hero)-1 < INCREMENT*MAX_LEVEL;
     }
 
     @Override
@@ -41,13 +41,13 @@ public class BuyCritDmgMulti extends YuzuShopContent {
         return Messages.get(this, "desc",
                 Messages.decimalFormat("#", 100*INCREMENT),
                 Messages.decimalFormat("#", 100*INCREMENT*MAX_LEVEL),
-                Messages.decimalFormat("#", 100*1.2f),
-                Messages.decimalFormat("#", 100*(YuzuStatus.yuzuCritDmgMulti(Dungeon.hero)-1.2f)))
+                Messages.decimalFormat("#", 100),
+                Messages.decimalFormat("#", 100*(YuzuStatus.yuzuCreditMulti(Dungeon.hero)-1)))
                 + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
     }
 
     @Override
     public int creditUse(Hero hero) {
-        return 1000*(1+(int)((YuzuStatus.yuzuCritDmgMulti(hero)-1.2f)/INCREMENT));
+        return 1000*(1+(int)((YuzuStatus.yuzuCreditMulti(hero)-1)/INCREMENT));
     }
 }
