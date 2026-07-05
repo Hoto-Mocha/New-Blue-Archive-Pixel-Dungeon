@@ -1173,6 +1173,9 @@ public class Gun extends MeleeWeapon {
                         if (!curUser.shoot( enemy, this )) {
                             CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
                             CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                            if (curUser.hasTalent(Talent.YUZU_T1_4) && Dungeon.level.adjacent(curUser.pos, enemy.pos)) {
+                                Buff.affect(hero, Barrier.class).setShield(2+3*curUser.pointsInTalent(Talent.YUZU_T1_4));
+                            }
                         }
                     }
                 }
@@ -1212,7 +1215,11 @@ public class Gun extends MeleeWeapon {
                     if (curUser.buff(HPBullet.HPBulletBuff.class) != null) {
                         if (!curUser.buff(HPBullet.HPBulletBuff.class).proc(target, damageRoll(curUser))) curUser.shoot(target, this);
                     } else {
-                        curUser.shoot(target, this);
+                        if (!curUser.shoot(target, this)) {
+                            if (curUser.hasTalent(Talent.YUZU_T1_4) && Dungeon.level.adjacent(curUser.pos, target.pos)) {
+                                Buff.affect(hero, Barrier.class).setShield(2+3*curUser.pointsInTalent(Talent.YUZU_T1_4));
+                            }
+                        }
                     }
                 }
                 if (!target.isAlive()) {
