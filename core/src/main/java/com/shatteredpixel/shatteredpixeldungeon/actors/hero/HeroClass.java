@@ -183,6 +183,7 @@ public enum HeroClass {
 			new RingOfAccuracy().identify().upgrade(100).collect();
 			new AlchemistsToolkit().identify().upgrade(10).collect();
 			new SkeletonKey().identify().upgrade(10).collect();
+//			new TalismanOfForesight().identify().upgrade(10).collect();
 			new ElixirOfHoneyedHealing().identify().quantity(500).collect();
 			new PlateArmor().identify().upgrade(100).collect();
 			new Teleporter().collect();
