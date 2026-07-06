@@ -146,6 +146,7 @@ public class BuffIndicator extends Component {
 	public static final int GPS_ROUTE = 105;
 	public static final int SNIPE = 106;
 	public static final int HP_BULLET = 107;
+	public static final int AVANT_GARDE_KUN = 108;
 
 	public static final int SIZE_SMALL  = 7;
 	public static final int SIZE_LARGE  = 16;
