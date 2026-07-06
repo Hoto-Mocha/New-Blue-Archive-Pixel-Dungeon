@@ -793,7 +793,6 @@ public class Gun extends MeleeWeapon {
 
     //needs to be overridden
     public Bullet knockBullet(){
-        Gdx.app.log("DEBUG", "instance created");
         return new Bullet();
     }
 

@@ -1,8 +1,17 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.EmmisionParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -14,8 +23,13 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Visual;
+import com.watabou.noosa.audio.Sample;
+import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
+
+import java.util.ArrayList;
 
 public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
@@ -111,8 +125,10 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
                 AvantGardeKunBuff.this.HP = buff.offBoard();
             } else if (Dungeon.level.adjacent(hero.pos, target)) {
                 //근접 공격
+                meleeAttack(hero, target);
             } else {
                 //원거리 공격
+                shootGun(hero, target);
             }
         }
 
@@ -121,6 +137,67 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
             return Messages.get(AvantGardeKunBuff.class, "prompt");
         }
     };
+
+    public void shootGun(Hero hero, int cell) {
+        ArrayList<Gun> availableGuns = new ArrayList<>();
+        for (Gun gun : hero.belongings.getAllItems(Gun.class)) {
+            if (gun.round() > 0) {
+                availableGuns.add(gun);
+            }
+        }
+        if (availableGuns.isEmpty()) {
+            hero.yellW("no_available_guns");
+            return;
+        }
+
+        hero.busy();
+
+        int shot = 0;
+        final int MAX_SHOT = 3;
+        while (shot < Math.min(MAX_SHOT, availableGuns.size())) {
+            shot++;
+            Gun gun = Random.element(availableGuns);
+            int finalShot = shot;
+            Dungeon.hero.sprite.parent.add(new Tweener(Dungeon.hero.sprite.parent, 0.1f * finalShot) {
+                @Override
+                protected void updateValues(float progress) {}
+
+                @Override
+                protected void onComplete() {
+                    if (finalShot == MAX_SHOT) {
+                        hero.spendAndNext(Actor.TICK);
+                    }
+                    Gun.Bullet bullet = gun.knockBullet();
+                    bullet.setSpecialShot(true);
+                    bullet.cast(hero, cell);
+                    super.onComplete();
+                }
+            });
+        }
+    }
+
+    public void meleeAttack(Hero hero, int cell) {
+        Char enemy = Actor.findChar(cell);
+        if (enemy == null) return;
+
+        Callback callback = new Callback() {
+            @Override
+            public void call() {
+                Sample.INSTANCE.play(Assets.Sounds.GAS, 1f, 0.75f);
+                CellEmitter.center(hero.pos).start(EmmisionParticle.FACTORY, 0.05f, 20);
+                hero.sprite.idle();
+            }
+        };
+        hero.sprite.attack(cell, callback);
+        enemy.sprite.flash();
+        Sample.INSTANCE.play(Assets.Sounds.HIT, 0.75f);
+        Elastic.pushEnemy(hero, enemy, hero.belongings.weapon(), 3);
+
+        for (Gun gun : hero.belongings.getAllItems(Gun.class)) {
+            gun.quickReload();
+        }
+        hero.spendAndNext(Actor.TICK);
+    }
 
     public void updateRobot(int level) {
         if (this.HP != 0) {
