@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AvantGardeKunBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BankRobber;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Conversation;
@@ -133,6 +134,9 @@ public class TengusMask extends Item {
 		}
 		if (way == HeroSubClass.TELESCOPE) {
 			Buff.affect(curUser, Snipe.class);
+		}
+		if (way == HeroSubClass.AVANT_GARDE_KUN) {
+			Buff.affect(curUser, AvantGardeKunBuff.class);
 		}
 
 		((HeroSprite)curUser.sprite).updateArmor();

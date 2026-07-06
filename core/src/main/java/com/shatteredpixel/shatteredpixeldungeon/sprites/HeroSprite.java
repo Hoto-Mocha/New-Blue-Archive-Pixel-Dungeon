@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AvantGardeKunBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HeroDisguise;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
@@ -94,11 +95,52 @@ public class HeroSprite extends CharSprite {
 
 		read = new Animation( 20, false );
 		read.frames( film, 19, 20, 20, 20, 20, 20, 20, 20, 20, 19 );
+
+		if (Dungeon.hero.buff(AvantGardeKunBuff.OnBoard.class) != null) replaceAvantGardeSprite();
 		
 		if (Dungeon.hero.isAlive())
 			idle();
 		else
 			die();
+	}
+
+	public void updateSprite() {
+		texture( Dungeon.hero.heroClass.spritesheet() );
+		updateArmor();
+		place( Dungeon.hero.pos );
+	}
+
+	public void replaceAvantGardeSprite() {
+
+		texture( Assets.Sprites.AVANT_GARDE_KUN );
+		TextureFilm film = new TextureFilm( texture, 20, 20 );
+
+		idle = new Animation( 10, true );
+		idle.frames( film, 0, 1 );
+
+		run = new Animation( 10, true );
+		run.frames( film, 2, 3 );
+
+		die = new Animation( 3, false );
+		die.frames( film, 1 );
+
+		attack = new Animation( 15, false );
+		attack.frames( film, 4, 5, 6 );
+
+		zap = new Animation( 15, false );
+		zap.frames( film, 7, 8, 7, 8, 7, 8, 9, 9, 10, 10, 9, 9, 10, 10, 0 );
+
+		operate = die.clone();
+		fly = die.clone();
+		read = die.clone();
+
+		if (Dungeon.hero.isAlive())
+			idle();
+		else
+			die();
+
+		//바뀐 스프라이트의 크기에 맞게 스프라이트를 중앙으로 정렬하고 카메라를 스프라이트 중앙에 위치시킴
+		place( Dungeon.hero.pos );
 	}
 	
 	@Override
@@ -157,7 +199,7 @@ public class HeroSprite extends CharSprite {
 	@Override
 	public void update() {
 		sleeping = ch.isAlive() && ((Hero)ch).resting;
-		
+
 		super.update();
 	}
 	
