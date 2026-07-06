@@ -15,6 +15,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Visual;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Random;
 
 public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
@@ -145,6 +146,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         public static final int HP_PER_LVL = 3;
         int HT = BASE_HT;
         int HP = HT;
+        int lvl = 0;
 
         @Override
         public void fx(boolean on) {
@@ -179,17 +181,20 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         public int newRobot(int level) {
             this.HT = BASE_HT+level*HP_PER_LVL;
             this.HP = this.HT;
+            this.lvl = level;
             return 0;
         }
 
         public void updateRobot(int level) {
             this.HT = BASE_HT+level*HP_PER_LVL;
             this.HP += HP_PER_LVL;
+            this.lvl = level;
         }
 
         public int onBoard(int level, int HP) {
             this.HT = BASE_HT+level*HP_PER_LVL;
             this.HP = HP;
+            this.lvl = level;
             return 0;
         }
 
@@ -199,7 +204,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         }
 
         public int hit(int damage) {
-            HP -= damage;
+            HP -= damage - Random.NormalIntRange(0, (int)Math.ceil(lvl/3f));
             if (HP <= 0) {
                 detach();
                 Buff.affect(target, RobotCooldown.class, RobotCooldown.DURATION);
@@ -210,12 +215,14 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
         private static final String ROBOT_HP = "HP";
         private static final String ROBOT_HT = "HT";
+        private static final String ROBOT_LVL = "lvl";
 
         @Override
         public void storeInBundle(Bundle bundle) {
             super.storeInBundle(bundle);
             bundle.put(ROBOT_HP, HP);
             bundle.put(ROBOT_HT, HT);
+            bundle.put(ROBOT_LVL, lvl);
         }
 
         @Override
@@ -223,6 +230,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
             super.restoreFromBundle(bundle);
             HP = bundle.getInt(ROBOT_HP);
             HT = bundle.getInt(ROBOT_HT);
+            lvl = bundle.getInt(ROBOT_LVL);
         }
     }
 
