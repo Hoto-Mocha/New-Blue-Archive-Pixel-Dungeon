@@ -225,7 +225,7 @@ public class Badges {
 		BOSS_SLAIN_3_CONVERSATION,
 		BOSS_SLAIN_3_TELESCOPE,
 		BOSS_SLAIN_3_CAMOUFLAGE,
-		BOSS_SLAIN_3_NEO_AVANT_GARDE,
+		BOSS_SLAIN_3_AVANT_GARDE_KUN,
 		BOSS_SLAIN_3_WALLET_WARRIOR,
 //		BOSS_SLAIN_3_GLADIATOR,
 //		BOSS_SLAIN_3_BERSERKER,
@@ -893,7 +893,7 @@ public class Badges {
 		thirdBossSubclassBadges.put(HeroSubClass.CONVERSATION, Badge.BOSS_SLAIN_3_CONVERSATION);
 		thirdBossSubclassBadges.put(HeroSubClass.TELESCOPE, Badge.BOSS_SLAIN_3_TELESCOPE);
 		thirdBossSubclassBadges.put(HeroSubClass.CAMOUFLAGE, Badge.BOSS_SLAIN_3_CAMOUFLAGE);
-		thirdBossSubclassBadges.put(HeroSubClass.NEO_AVANT_GARDE, Badge.BOSS_SLAIN_3_NEO_AVANT_GARDE);
+		thirdBossSubclassBadges.put(HeroSubClass.AVANT_GARDE_KUN, Badge.BOSS_SLAIN_3_AVANT_GARDE_KUN);
 		thirdBossSubclassBadges.put(HeroSubClass.WALLET_WARRIOR, Badge.BOSS_SLAIN_3_WALLET_WARRIOR);
 //		thirdBossSubclassBadges.put(HeroSubClass.BERSERKER, Badge.BOSS_SLAIN_3_BERSERKER);
 //		thirdBossSubclassBadges.put(HeroSubClass.GLADIATOR, Badge.BOSS_SLAIN_3_GLADIATOR);
