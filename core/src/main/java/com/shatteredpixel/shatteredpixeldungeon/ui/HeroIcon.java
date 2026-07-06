@@ -129,7 +129,7 @@ public class HeroIcon extends Image {
 	public static final int CONVERSATION	= 128+11;
 	public static final int TELESCOPE	 	= 128+12;
 	public static final int CAMOUFLAGE	 	= 128+13;
-	public static final int NEO_AVANT_GARDE = 128+14;
+	public static final int AVANT_GARDE_KUN = 128+14;
 	public static final int WALLET_WARRIOR	= 128+15;
 
 	//new armor abilities
@@ -170,6 +170,7 @@ public class HeroIcon extends Image {
   	public static final int DOUBLE_BARREL_ACTION		= 128+72;
   	public static final int CONVERSATION_ACTION			= 128+73;
   	public static final int TELESCOPE_ACTION			= 128+74;
+  	public static final int AVANT_GARDE_KUN_ACTION		= 128+75;
 
 	//Yuzu abilities
 	public static final int SHOP_1			= 128 + 88;
