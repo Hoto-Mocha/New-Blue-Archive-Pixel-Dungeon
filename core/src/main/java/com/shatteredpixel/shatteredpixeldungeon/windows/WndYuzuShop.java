@@ -208,8 +208,8 @@ public class WndYuzuShop extends Window {
 
 		public void executeContent() {
 			hide();
-			content.onContentSelect(laptop, Dungeon.hero, info);
 			content.onSelect(Dungeon.hero);
+			content.onContentSelect(laptop, Dungeon.hero, info);
 			Item.updateQuickslot();
 		}
 	}
