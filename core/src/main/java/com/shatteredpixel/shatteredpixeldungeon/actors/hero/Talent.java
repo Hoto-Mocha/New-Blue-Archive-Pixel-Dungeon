@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
@@ -40,7 +39,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.EnhancedRings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.NoticeTracker;
@@ -660,7 +658,7 @@ public enum Talent {
 	YUZU_T3_1(9, 7, 3),
 	YUZU_T3_2(10, 7, 3),
 
-	//Neo Avant-Garde T3
+	//Avant-Garde Kun T3
 	YUZU_EX1_1(11, 7, 3),
 	YUZU_EX1_2(12, 7, 3),
 	YUZU_EX1_3(13, 7, 3),
@@ -2225,7 +2223,7 @@ public enum Talent {
 			case CAMOUFLAGE:
 				Collections.addAll(tierTalents, MIYU_EX2_1, MIYU_EX2_2, MIYU_EX2_3);
 				break;
-			case NEO_AVANT_GARDE:
+			case AVANT_GARDE_KUN:
 				Collections.addAll(tierTalents, YUZU_EX1_1, YUZU_EX1_2, YUZU_EX1_3);
 				break;
 			case WALLET_WARRIOR:
