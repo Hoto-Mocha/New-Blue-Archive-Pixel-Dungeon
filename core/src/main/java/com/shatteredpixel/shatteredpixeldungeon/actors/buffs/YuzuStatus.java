@@ -96,6 +96,19 @@ public class YuzuStatus extends Buff {
         if (hero.hasTalent(Talent.YUZU_T2_4)) {
             Buff.affect(hero, SerialCritBuff.class);
         }
+        if (hero.hasTalent(Talent.YUZU_T3_2) && Random.Float() < 1/(float)(4-hero.pointsInTalent(Talent.YUZU_T3_2))) {
+            //need to delay this to prevent consuming the buff from self attack with explosion at the attacking turn
+            new FlavourBuff() {
+                {
+                    actPriority = VFX_PRIO;
+                }
+
+                public boolean act() {
+                    Buff.affect(hero, UZQMode.class);
+                    return super.act();
+                }
+            }.attachTo(hero);
+        }
     }
 
     //크레딧 획득량 관련
@@ -237,5 +250,17 @@ public class YuzuStatus extends Buff {
     public static class PayToWinBuff extends Buff {}
 
     public static class SerialCritBuff extends Buff {}
+
+    public static class UZQMode extends Buff {
+        @Override
+        public int icon() {
+            return BuffIndicator.HASTE;
+        }
+
+        @Override
+        public void tintIcon(Image icon) {
+            icon.hardlight(0x00AAFF);
+        }
+    }
 
 }

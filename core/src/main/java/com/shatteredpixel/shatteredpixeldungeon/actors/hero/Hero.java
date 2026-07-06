@@ -643,6 +643,11 @@ public class Hero extends Char {
 			return INFINITE_EVASION;
 		}
 
+		if (buff(YuzuStatus.UZQMode.class) != null) {
+			buff(YuzuStatus.UZQMode.class).detach();
+			return INFINITE_EVASION;
+		}
+
 		float evasion = defenseSkill;
 		
 		evasion *= RingOfEvasion.evasionMultiplier( this );
