@@ -3,7 +3,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -15,9 +14,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Visual;
-import com.watabou.noosa.tweeners.PosTweener;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
 
 public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
@@ -241,5 +238,17 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         public float iconFadePercent() {
             return Math.max(0, (DURATION - visualcooldown()) / DURATION);
         }
+    }
+
+    public static int processDamage(Char target, int damage, Object src) {
+        //hunger damage is not affected by shielding
+        if (src instanceof Hunger){
+            return damage;
+        }
+
+        if (target.buff(AvantGardeKunBuff.OnBoard.class) != null) {
+            damage = target.buff(AvantGardeKunBuff.OnBoard.class).hit(damage);
+        }
+        return damage;
     }
 }
