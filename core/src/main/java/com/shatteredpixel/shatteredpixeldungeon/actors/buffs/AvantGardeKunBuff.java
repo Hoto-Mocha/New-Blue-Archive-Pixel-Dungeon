@@ -104,6 +104,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
         Hero hero = (Hero)target;
         if (hero.buff(RobotCooldown.class) != null) {
+            hero.yellW("robot_cooldown");
             return;
         }
 
@@ -112,7 +113,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         } else {
             if (this.HP != 0) {
                 this.HP = Buff.affect(hero, OnBoard.class).onBoard(hero.lvl, this.HP);
-            } else {
+            } else { //일반적으로 도달할 일 없음
                 this.HP = Buff.affect(hero, OnBoard.class).newRobot(hero.lvl);
             }
         }
@@ -212,10 +213,17 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         }
     }
 
+    public void repairRobot(int level, int amount) {
+        if (this.HP != 0) {
+            this.HP = Math.min(this.HP+amount, OnBoard.BASE_HT+level*OnBoard.HP_PER_LVL);
+        }
+    }
+
     public void ready(int level) {
         if (this.HP > 0) return;
         this.HP = OnBoard.BASE_HT+level*OnBoard.HP_PER_LVL;
         ActionIndicator.refresh();
+        ((Hero)target).yellP("robot_ready");
     }
 
     public static void onLevelUp(Hero hero) {
@@ -224,6 +232,17 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         }
         if (hero.buff(OnBoard.class) != null) {
             hero.buff(OnBoard.class).updateRobot(hero.lvl);
+        }
+    }
+
+    public static void repairRobot(Hero hero, int talentLvl) {
+        if (hero.buff(AvantGardeKunBuff.class) == null) return;
+        if (hero.buff(AvantGardeKunBuff.class).HP > 0) {
+            hero.buff(AvantGardeKunBuff.class).repairRobot(hero.lvl, 2*talentLvl);
+        } else if (hero.buff(OnBoard.class) != null) {
+            hero.buff(OnBoard.class).repairRobot(hero.lvl, 2*talentLvl);
+        } else if (hero.buff(RobotCooldown.class) != null) {
+            hero.buff(RobotCooldown.class).cool(10*talentLvl);
         }
     }
 
@@ -294,7 +313,13 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
         public void updateRobot(int level) {
             this.HT = BASE_HT+level*HP_PER_LVL;
-            this.HP += HP_PER_LVL;
+            this.HP = Math.min(this.HT, this.HP+HP_PER_LVL);
+            this.lvl = level;
+        }
+
+        public void repairRobot(int level, int amount) {
+            this.HT = BASE_HT+level*HP_PER_LVL;
+            this.HP = Math.min(this.HT, this.HP+amount);
             this.lvl = level;
         }
 
@@ -367,6 +392,10 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         @Override
         public float iconFadePercent() {
             return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+        }
+
+        public void cool(float amount) {
+            spend(-amount);
         }
     }
 

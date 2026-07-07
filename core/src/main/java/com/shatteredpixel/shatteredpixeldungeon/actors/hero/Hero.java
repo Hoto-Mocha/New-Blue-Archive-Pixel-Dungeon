@@ -2931,6 +2931,9 @@ public class Hero extends Char {
 				&& Random.Float() < (float)pointsInTalent(Talent.MIYU_EX2_1)/3) {
 			buff(TrashBin.TrashBinCooldown.class).detach();
 		}
+		if (hasTalent(Talent.YUZU_EX1_1)) {
+			AvantGardeKunBuff.repairRobot(this, pointsInTalent(Talent.YUZU_EX1_1));
+		}
 	}
 
 	@Override
