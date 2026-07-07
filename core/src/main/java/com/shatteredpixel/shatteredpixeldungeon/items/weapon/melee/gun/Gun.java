@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AvantGardeKunBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -869,6 +870,9 @@ public class Gun extends MeleeWeapon {
         }
         if (hero != null && hero.buff(NoticeTracker.class) != null && !NoticeTracker.isNoticed() && this.isEquipped(hero)) {
             level += hero.pointsInTalent(Talent.MIYU_T3_2);
+        }
+        if (hero != null && hero.buff(AvantGardeKunBuff.GunUpgradeBuff.class) != null) {
+            level = Math.min(level+1+hero.pointsInTalent(Talent.YUZU_EX1_2), 3+hero.pointsInTalent(Talent.YUZU_EX1_2));
         }
 
         return level;

@@ -5,11 +5,13 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.EmmisionParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -159,12 +161,20 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         }
 
         hero.busy();
+        hero.spend(1f);
+
+        if (hero.hasTalent(Talent.YUZU_EX1_2)) {
+            Buff.affect(hero, GunUpgradeBuff.class);
+            Item.updateQuickslot();
+        }
 
         int shot = 0;
         final int MAX_SHOT = 3;
-        while (shot < Math.min(MAX_SHOT, availableGuns.size())) {
+        final int SIZE = availableGuns.size();
+        while (shot < Math.min(MAX_SHOT, SIZE)) {
             shot++;
             Gun gun = Random.element(availableGuns);
+            availableGuns.remove(gun);
             int finalShot = shot;
             Dungeon.hero.sprite.parent.add(new Tweener(Dungeon.hero.sprite.parent, 0.1f * finalShot) {
                 @Override
@@ -172,9 +182,6 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
                 @Override
                 protected void onComplete() {
-                    if (finalShot == MAX_SHOT) {
-                        hero.spendAndNext(Actor.TICK);
-                    }
                     Gun.Bullet bullet = gun.knockBullet();
                     bullet.setSpecialShot(true);
                     bullet.cast(hero, cell);
@@ -409,5 +416,15 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
             damage = target.buff(AvantGardeKunBuff.OnBoard.class).hit(damage);
         }
         return damage;
+    }
+
+    public static class GunUpgradeBuff extends Buff {
+        {actPriority = VFX_PRIO;}
+
+        @Override
+        public boolean act() {
+            detach();
+            return super.act();
+        }
     }
 }
