@@ -78,7 +78,11 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
     @Override
     public String actionName() {
-        return Messages.get(this, "action_name");
+        if (Dungeon.hero.buff(OnBoard.class) == null) {
+            return Messages.get(this, "action_onboard");
+        } else {
+            return Messages.get(this, "action_name");
+        }
     }
 
     @Override
