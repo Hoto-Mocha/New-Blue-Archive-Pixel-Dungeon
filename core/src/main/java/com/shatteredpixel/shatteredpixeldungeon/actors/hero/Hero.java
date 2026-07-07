@@ -760,6 +760,10 @@ public class Hero extends Char {
 			dr += IronHorus.drRoll(this);
 		}
 
+		if (buff(AvantGardeKunBuff.OnBoard.class) != null) {
+			dr += buff(AvantGardeKunBuff.OnBoard.class).drRoll();
+		}
+
 		return dr;
 	}
 	
