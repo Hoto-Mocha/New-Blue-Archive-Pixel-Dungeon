@@ -201,7 +201,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
     public void updateRobot(int level) {
         if (this.HP != 0) {
-            this.HP += OnBoard.HP_PER_LVL;
+            this.HP = Math.min(this.HP+OnBoard.HP_PER_LVL, OnBoard.BASE_HT+level*OnBoard.HP_PER_LVL);
         }
     }
 
