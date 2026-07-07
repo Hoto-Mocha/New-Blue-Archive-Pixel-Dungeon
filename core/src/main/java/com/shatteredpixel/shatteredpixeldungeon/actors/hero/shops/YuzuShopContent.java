@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
@@ -77,6 +78,10 @@ public abstract class YuzuShopContent {
             contents.add(BuyCreditMulti.INSTANCE);
             contents.add(BuyDropMulti.INSTANCE);
             contents.add(BuySearchChance.INSTANCE);
+        } else if (tier == 3) {
+            if (yuzu.subClass == HeroSubClass.WALLET_WARRIOR) {
+                contents.add(BuyConsole.INSTANCE);
+            }
         }
 
         return contents;
