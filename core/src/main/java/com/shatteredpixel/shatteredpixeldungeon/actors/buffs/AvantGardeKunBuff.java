@@ -6,12 +6,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.EmmisionParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
-import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -101,6 +101,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
             detach();
             return;
         }
+
         Hero hero = (Hero)target;
         if (hero.buff(RobotCooldown.class) != null) {
             return;
@@ -115,6 +116,8 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
                 this.HP = Buff.affect(hero, OnBoard.class).newRobot(hero.lvl);
             }
         }
+
+        ActionIndicator.refresh();
     }
 
     private CellSelector.Listener selector = new CellSelector.Listener() {
@@ -209,6 +212,12 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         }
     }
 
+    public void ready(int level) {
+        if (this.HP > 0) return;
+        this.HP = OnBoard.BASE_HT+level*OnBoard.HP_PER_LVL;
+        ActionIndicator.refresh();
+    }
+
     public static void onLevelUp(Hero hero) {
         if (hero.buff(AvantGardeKunBuff.class) != null) {
             hero.buff(AvantGardeKunBuff.class).updateRobot(hero.lvl);
@@ -245,6 +254,12 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         }
 
         @Override
+        public void detach() {
+            ActionIndicator.refresh();
+            super.detach();
+        }
+
+        @Override
         public int icon() {
             return BuffIndicator.AVANT_GARDE_KUN;
         }
@@ -259,7 +274,18 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
             return Integer.toString(HP);
         }
 
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc", HP, BASE_HT+lvl*HP_PER_LVL);
+        }
+
+        public int drRoll() {
+            return Random.NormalIntRange(0, (int)Math.ceil(lvl/3f));
+        }
+
         public int newRobot(int level) {
+            Sample.INSTANCE.play(Assets.Sounds.PUFF);
+            CellEmitter.get(target.pos).burst(Speck.factory(Speck.WOOL), 10);
             this.HT = BASE_HT+level*HP_PER_LVL;
             this.HP = this.HT;
             this.lvl = level;
@@ -273,6 +299,8 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         }
 
         public int onBoard(int level, int HP) {
+            Sample.INSTANCE.play(Assets.Sounds.PUFF);
+            CellEmitter.get(target.pos).burst(Speck.factory(Speck.WOOL), 10);
             this.HT = BASE_HT+level*HP_PER_LVL;
             this.HP = HP;
             this.lvl = level;
@@ -280,15 +308,20 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         }
 
         public int offBoard() {
+            Sample.INSTANCE.play(Assets.Sounds.PUFF);
+            CellEmitter.get(target.pos).burst(Speck.factory(Speck.WOOL), 10);
             detach();
             return this.HP;
         }
 
         public int hit(int damage) {
-            HP -= damage - Random.NormalIntRange(0, (int)Math.ceil(lvl/3f));
+            HP -= damage;
             if (HP <= 0) {
                 detach();
                 Buff.affect(target, RobotCooldown.class, RobotCooldown.DURATION);
+                Sample.INSTANCE.play(Assets.Sounds.BLAST, 0.75f);
+                CellEmitter.center(target.pos).burst(BlastParticle.FACTORY, 30);
+                CellEmitter.get(target.pos).burst(SmokeParticle.FACTORY, 4);
                 return -HP; //로봇이 파괴된 경우 남은 피해를 반환
             }
             return 0; //로봇이 피해를 전부 흡수했을 경우 0을 반환
@@ -321,6 +354,14 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         @Override
         public int icon() {
             return BuffIndicator.TIME;
+        }
+
+        @Override
+        public void detach() {
+            if (target instanceof Hero && target.buff(AvantGardeKunBuff.class) != null) {
+                target.buff(AvantGardeKunBuff.class).ready(((Hero)target).lvl);
+            }
+            super.detach();
         }
 
         @Override
