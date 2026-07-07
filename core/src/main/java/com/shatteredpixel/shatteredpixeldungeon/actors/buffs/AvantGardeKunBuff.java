@@ -14,6 +14,8 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -23,12 +25,14 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -134,8 +138,19 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
             if (target == hero.pos) {
                 AvantGardeKunBuff.this.HP = buff.offBoard();
             } else if (Dungeon.level.adjacent(hero.pos, target)) {
-                //근접 공격
-                meleeAttack(hero, target);
+                if (Actor.findById(target) != null) {
+                    //근접 공격
+                    meleeAttack(hero, target);
+                } else if (hero.hasTalent(Talent.YUZU_EX1_3)
+                        && Dungeon.level.solid[target]
+                        && target < Dungeon.level.map.length
+                        && target % Dungeon.level.width() != 1                          //왼쪽 벽
+                        && target % Dungeon.level.width() != Dungeon.level.width()-1    //오른쪽 벽
+                        && target > Dungeon.level.width()                               //위쪽 벽
+                        && target < Dungeon.level.map.length-Dungeon.level.width()      //아래쪽 벽
+                ) {
+                    breakWall(hero, target);
+                }
             } else {
                 //원거리 공격
                 shootGun(hero, target);
@@ -212,6 +227,27 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
             gun.quickReload();
         }
         hero.spendAndNext(Actor.TICK);
+    }
+
+    public void breakWall(Hero hero, int cell) {
+        hero.sprite.attack(cell, new Callback() {
+            @Override
+            public void call() {
+                if (Dungeon.level.heroFOV[ cell ]){
+                    CellEmitter.get( cell - Dungeon.level.width() ).start(Speck.factory(Speck.ROCK), 0.07f, 10);
+                }
+                Level.set(cell, Terrain.EMPTY);
+                for (int i : PathFinder.NEIGHBOURS9) {
+                    Dungeon.level.discoverable[cell+i] = true;
+                }
+
+                Sample.INSTANCE.play(Assets.Sounds.ROCKS);
+                GameScene.updateMap(cell);
+                hero.spendAndNext(4-hero.pointsInTalent(Talent.YUZU_EX1_3));
+                hero.sprite.idle();
+                Dungeon.observe();
+            }
+        });
     }
 
     public void updateRobot(int level) {
