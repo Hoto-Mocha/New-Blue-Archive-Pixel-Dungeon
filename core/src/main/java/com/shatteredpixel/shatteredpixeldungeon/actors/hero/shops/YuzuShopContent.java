@@ -80,7 +80,7 @@ public abstract class YuzuShopContent {
             contents.add(BuySearchChance.INSTANCE);
         } else if (tier == 3) {
             if (yuzu.subClass == HeroSubClass.WALLET_WARRIOR) {
-                contents.add(BuyConsole.INSTANCE);
+                contents.add(BuyFighterConsole.INSTANCE);
             }
         }
 

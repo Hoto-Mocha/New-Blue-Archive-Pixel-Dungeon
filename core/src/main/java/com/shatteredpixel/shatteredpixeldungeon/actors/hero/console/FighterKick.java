@@ -3,8 +3,8 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.console;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
-public class FighterPunch extends YuzuConsoleContent {
-    public static final FighterPunch INSTANCE = new FighterPunch();
+public class FighterKick extends YuzuConsoleContent {
+    public static final FighterKick INSTANCE = new FighterKick();
 
     @Override
     public void onSelect(Hero hero) {
@@ -18,6 +18,6 @@ public class FighterPunch extends YuzuConsoleContent {
 
     @Override
     public int icon() {
-        return HeroIcon.FIGHTER_1;
+        return HeroIcon.FIGHTER_3;
     }
 }

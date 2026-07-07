@@ -53,6 +53,9 @@ public abstract class YuzuConsoleContent {
 
         if (console instanceof FighterConsole) {
             contents.add(FighterPunch.INSTANCE);
+            contents.add(FighterUpperCut.INSTANCE);
+            contents.add(FighterKick.INSTANCE);
+            contents.add(FighterFinish.INSTANCE);
         }
 
         return contents;

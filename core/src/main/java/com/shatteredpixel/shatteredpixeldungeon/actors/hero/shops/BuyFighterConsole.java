@@ -5,8 +5,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.Console;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.FighterConsole;
 
-public class BuyConsole extends YuzuShopContent {
-    public static final BuyConsole INSTANCE = new BuyConsole();
+public class BuyFighterConsole extends YuzuShopContent {
+    public static final BuyFighterConsole INSTANCE = new BuyFighterConsole();
 
     @Override
     public int icon() {

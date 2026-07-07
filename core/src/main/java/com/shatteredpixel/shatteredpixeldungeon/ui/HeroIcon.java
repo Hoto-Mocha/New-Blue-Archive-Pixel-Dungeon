@@ -184,6 +184,18 @@ public class HeroIcon extends Image {
 	public static final int SHOP_8			= 128 + 95;
 	public static final int SHOP_9			= 128 + 96;
 	public static final int SHOP_10			= 128 + 97;
+	public static final int SHOP_11			= 128 + 98;
+	public static final int SHOP_12			= 128 + 99;
+	public static final int SHOP_13			= 128 + 100;
+	public static final int SHOP_14			= 128 + 101;
+	public static final int SHOP_15			= 128 + 102;
+
+	public static final int FIGHTER_1		= 128 + 112;
+	public static final int FIGHTER_2		= 128 + 113;
+	public static final int FIGHTER_3		= 128 + 114;
+	public static final int FIGHTER_4		= 128 + 115;
+
+
 
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );
