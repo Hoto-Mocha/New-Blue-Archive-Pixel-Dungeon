@@ -2226,7 +2226,7 @@ public enum Talent {
 			case AVANT_GARDE_KUN:
 				Collections.addAll(tierTalents, YUZU_EX1_1, YUZU_EX1_2, YUZU_EX1_3);
 				break;
-			case WALLET_WARRIOR:
+			case GAME_START:
 				Collections.addAll(tierTalents, YUZU_EX2_1, YUZU_EX2_2, YUZU_EX2_3);
 				break;
 			case BERSERKER:

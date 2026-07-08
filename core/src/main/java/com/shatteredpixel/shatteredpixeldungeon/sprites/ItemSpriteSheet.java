@@ -821,6 +821,10 @@ public class ItemSpriteSheet {
 	public static final int TRASH_BIN		= UNIQUE_ITEM+6;
 	public static final int FLASHBANG_GRENADE	= UNIQUE_ITEM+7;
 	public static final int LAPTOP			= UNIQUE_ITEM+8;
+	public static final int CONTINUE_CONSOLE= UNIQUE_ITEM+9;
+	public static final int FIGHTER_CONSOLE	= UNIQUE_ITEM+10;
+	public static final int FANTASY_CONSOLE	= UNIQUE_ITEM+11;
+	public static final int SNADBOX_CONSOLE	= UNIQUE_ITEM+12;
 	static {
 		assignItemRect(SUPER_NOVA, 	16, 16);
 		assignItemRect(CLAYMORE, 	13, 13);
@@ -831,6 +835,10 @@ public class ItemSpriteSheet {
 		assignItemRect(TRASH_BIN, 	16, 16);
 		assignItemRect(FLASHBANG_GRENADE, 	13, 13);
 		assignItemRect(LAPTOP, 	14, 14);
+		assignItemRect(CONTINUE_CONSOLE, 	15, 15);
+		assignItemRect(FIGHTER_CONSOLE, 	15, 15);
+		assignItemRect(FANTASY_CONSOLE, 	15, 15);
+		assignItemRect(SNADBOX_CONSOLE, 	15, 15);
 	}
 
 	private static final int NEW_ARMOR 	= 								xy(1, 34);

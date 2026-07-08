@@ -144,7 +144,7 @@ public enum HeroClass {
 	SHIROKO(HeroSubClass.PROFESSIONAL_RIDING, HeroSubClass.BANK_ROBBER),
 	NOA(HeroSubClass.DOUBLE_BARREL, HeroSubClass.CONVERSATION),
 	MIYU(HeroSubClass.TELESCOPE, HeroSubClass.CAMOUFLAGE),
-	YUZU(HeroSubClass.AVANT_GARDE_KUN, HeroSubClass.WALLET_WARRIOR),
+	YUZU(HeroSubClass.AVANT_GARDE_KUN, HeroSubClass.GAME_START),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),

@@ -79,7 +79,8 @@ public abstract class YuzuShopContent {
             contents.add(BuyDropMulti.INSTANCE);
             contents.add(BuySearchChance.INSTANCE);
         } else if (tier == 3) {
-            if (yuzu.subClass == HeroSubClass.WALLET_WARRIOR) {
+            if (yuzu.subClass == HeroSubClass.GAME_START) {
+                contents.add(BuyContinueConsole.INSTANCE);
                 contents.add(BuyFighterConsole.INSTANCE);
             }
         }

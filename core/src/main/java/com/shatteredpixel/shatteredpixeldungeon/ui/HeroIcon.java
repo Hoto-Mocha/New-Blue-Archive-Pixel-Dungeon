@@ -131,7 +131,7 @@ public class HeroIcon extends Image {
 	public static final int TELESCOPE	 	= 128+12;
 	public static final int CAMOUFLAGE	 	= 128+13;
 	public static final int AVANT_GARDE_KUN = 128+14;
-	public static final int WALLET_WARRIOR	= 128+15;
+	public static final int GAME_START		= 128+15;
 
 	//new armor abilities
 	public static final int ARIS_1			= 128+24;

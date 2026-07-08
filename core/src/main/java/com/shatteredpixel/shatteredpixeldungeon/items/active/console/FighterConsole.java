@@ -9,10 +9,8 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndYuzuFighterConsole;
 
 public class FighterConsole extends Console {
-    public static FighterConsole INSTANCE_FOR_WINDOW = new FighterConsole();
-
     {
-        image = ItemSpriteSheet.SCROLL_EMPTY;
+        image = ItemSpriteSheet.FIGHTER_CONSOLE;
     }
 
     @Override
@@ -20,5 +18,11 @@ public class FighterConsole extends Console {
         Buff.affect(hero, FighterConsoleContent.FighterConsoleBuff.class).set();
         BuffIndicator.refreshHero();
         GameScene.show(new WndYuzuFighterConsole(this, hero));
+        detach(hero.belongings.backpack);
+    }
+
+    @Override
+    public int value() {
+        return 300/5;
     }
 }
