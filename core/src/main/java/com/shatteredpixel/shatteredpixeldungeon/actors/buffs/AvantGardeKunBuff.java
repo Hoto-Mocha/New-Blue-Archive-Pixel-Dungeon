@@ -176,8 +176,6 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         }
 
         hero.busy();
-        hero.spend(1f);
-
         if (hero.hasTalent(Talent.YUZU_EX1_2)) {
             Buff.affect(hero, GunUpgradeBuff.class);
             Item.updateQuickslot();
@@ -197,6 +195,9 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
                 @Override
                 protected void onComplete() {
+                    if (finalShot == MAX_SHOT) {
+                        hero.spend(1f);
+                    }
                     Gun.Bullet bullet = gun.knockBullet();
                     bullet.setSpecialShot(true);
                     bullet.cast(hero, cell);
