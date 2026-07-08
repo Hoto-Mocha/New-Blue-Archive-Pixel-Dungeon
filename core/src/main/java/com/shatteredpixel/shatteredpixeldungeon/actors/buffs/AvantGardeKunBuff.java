@@ -138,7 +138,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
             if (target == hero.pos) {
                 AvantGardeKunBuff.this.HP = buff.offBoard();
             } else if (Dungeon.level.adjacent(hero.pos, target)) {
-                if (Actor.findById(target) != null) {
+                if (Actor.findChar(target) != null) {
                     //근접 공격
                     meleeAttack(hero, target);
                 } else if (hero.hasTalent(Talent.YUZU_EX1_3)
