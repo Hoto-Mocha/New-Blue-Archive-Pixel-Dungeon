@@ -35,7 +35,6 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
 
     //파이터 콘솔 버프
     public static class FighterConsoleBuff extends ConsoleBuff {
-        private static final int MAX_COUNT = 10;
         boolean attackEnhanced = false;
 
         @Override
@@ -59,13 +58,6 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
         }
 
         @Override
-        public void countUp(float inc) {
-            if (count() > MAX_COUNT) return;
-            if (count() + inc > MAX_COUNT) inc = MAX_COUNT - count();
-            super.countUp(inc);
-        }
-
-        @Override
         public void countDown(float inc) {
             if (!enhancedThisTurn) attackEnhanced = false;
             super.countDown(inc);
@@ -73,7 +65,6 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
 
         public void attackEnhance() {
             attackEnhanced = true;
-            enhancedThisTurn = true;
         }
 
         public boolean isAttackEnhanced() {

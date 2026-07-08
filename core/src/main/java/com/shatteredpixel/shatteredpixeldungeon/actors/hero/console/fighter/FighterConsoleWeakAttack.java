@@ -39,6 +39,7 @@ public class FighterConsoleWeakAttack extends FighterConsoleContent {
 
         hero.busy();
         Buff.affect(hero, FighterConsoleBuff.class).attackEnhance();
+        Buff.affect(hero, FighterConsoleBuff.class).enhancedThisTurn = true;
         int damage = damageRoll(hero)/(isEnhanced(hero) ? 1 : 2) - enemy.drRoll();
         hero.sprite.attack(enemy.pos, new Callback() {
             @Override

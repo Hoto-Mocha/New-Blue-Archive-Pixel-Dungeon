@@ -17,6 +17,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndYuzuConsole;
 import com.watabou.utils.Bundle;
 
@@ -99,15 +100,24 @@ public abstract class YuzuConsoleContent {
     };
 
     public static class ConsoleBuff extends CounterBuff {
+        private static final int MAX_COUNT = 10;
         private boolean enhanced = false;
-        protected boolean enhancedThisTurn = false;
+        public boolean enhancedThisTurn = false;
 
         {
             type = buffType.POSITIVE;
         }
 
-        public void set(int tokens) {
-            countUp(tokens);
+        public void set() {
+            countUp(MAX_COUNT);
+        }
+
+        @Override
+        public void countUp(float inc) {
+            if ((int)count() > MAX_COUNT) return;
+            if ((int)count() + inc > MAX_COUNT) inc = MAX_COUNT - count();
+            super.countUp(inc);
+            GLog.i(count()+"");
         }
 
         @Override
@@ -125,7 +135,6 @@ public abstract class YuzuConsoleContent {
 
         public void enhance() {
             enhanced = true;
-            enhancedThisTurn = true;
         }
 
         public boolean isEnhanced() {
@@ -133,17 +142,20 @@ public abstract class YuzuConsoleContent {
         }
 
         private static final String ENHANCED = "enhanced";
+        private static final String ENHANCED_THIS_TURN = "enhancedThisTurn";
 
         @Override
         public void storeInBundle(Bundle bundle) {
             super.storeInBundle(bundle);
             bundle.put(ENHANCED, enhanced);
+            bundle.put(ENHANCED_THIS_TURN, enhancedThisTurn);
         }
 
         @Override
         public void restoreFromBundle(Bundle bundle) {
             super.restoreFromBundle(bundle);
             enhanced = bundle.getBoolean(ENHANCED);
+            enhancedThisTurn = bundle.getBoolean(ENHANCED_THIS_TURN);
         }
     }
 

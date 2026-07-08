@@ -16,7 +16,7 @@ public class FighterConsole extends Console {
 
     @Override
     public void showWindow(Hero hero) {
-        Buff.affect(hero, FighterConsoleContent.FighterConsoleBuff.class).countUp(10);
+        Buff.affect(hero, FighterConsoleContent.FighterConsoleBuff.class).set();
         GameScene.show(new WndYuzuFighterConsole(this, hero));
     }
 }
