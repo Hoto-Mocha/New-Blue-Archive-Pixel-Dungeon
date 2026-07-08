@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleCharge;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleContent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleDown;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleLeft;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleRight;
@@ -26,11 +27,13 @@ public abstract class YuzuConsoleContent {
         if (useTargeting()) {
             GameScene.selectCell(selector);
         } else {
-            execute(hero);
+            if (execute(hero)) {
+                onContentExecuted(hero);
+            }
         }
     };
 
-    public abstract void execute(Hero hero);
+    public abstract boolean execute(Hero hero);
 
     public abstract boolean canSelect( Hero hero );
 
@@ -44,7 +47,6 @@ public abstract class YuzuConsoleContent {
             if (b instanceof ConsoleBuff) {
                 enhanced = ((ConsoleBuff) b).isEnhanced();
                 if (enhanced) {
-                    enhanced = true;
                     break;
                 }
             }
@@ -56,8 +58,12 @@ public abstract class YuzuConsoleContent {
         return HeroIcon.NONE;
     }
 
-    public void onContentSelect(Console console, Hero hero) {
+    public void onContentSelect(Console console, Hero hero) { //버튼을 눌렀을 때 작동
         if (!hideWindow()) GameScene.show(new WndYuzuConsole(console, hero));
+    }
+
+    public void onContentExecuted(Hero hero) { //컨텐츠 내용을 성공적으로 실행했을 때 작동
+        //no nothing by default
     }
 
     public boolean hideWindow() {
@@ -94,6 +100,7 @@ public abstract class YuzuConsoleContent {
 
     public static class ConsoleBuff extends CounterBuff {
         private boolean enhanced = false;
+        protected boolean enhancedThisTurn = false;
 
         {
             type = buffType.POSITIVE;
@@ -106,7 +113,8 @@ public abstract class YuzuConsoleContent {
         @Override
         public void countDown(float inc) {
             super.countDown(inc);
-            enhanced = false;
+            if (!enhancedThisTurn) enhanced = false;
+            enhancedThisTurn = false;
             if (count() <= 0) detach();
         }
 
@@ -117,6 +125,7 @@ public abstract class YuzuConsoleContent {
 
         public void enhance() {
             enhanced = true;
+            enhancedThisTurn = true;
         }
 
         public boolean isEnhanced() {

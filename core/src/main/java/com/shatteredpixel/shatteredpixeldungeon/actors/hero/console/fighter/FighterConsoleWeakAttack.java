@@ -23,8 +23,8 @@ public class FighterConsoleWeakAttack extends FighterConsoleContent {
     }
 
     @Override
-    public void execute(Hero hero) {
-        super.execute(hero);
+    public boolean execute(Hero hero) {
+        if (!super.execute(hero)) return false;
 
         ArrayList<Mob> adjacentMobs = new ArrayList<>();
         for (Char ch : Actor.chars()) {
@@ -32,12 +32,13 @@ public class FighterConsoleWeakAttack extends FighterConsoleContent {
                 adjacentMobs.add((Mob) ch);
             }
         }
-        if (adjacentMobs.isEmpty()) return;
+        if (adjacentMobs.isEmpty()) return false;
 
         Mob enemy = Random.element(adjacentMobs);
-        if (enemy == null || enemy.alignment != Char.Alignment.ENEMY) return;
+        if (enemy == null || enemy.alignment != Char.Alignment.ENEMY) return false;
 
         hero.busy();
+        Buff.affect(hero, FighterConsoleBuff.class).attackEnhance();
         int damage = damageRoll(hero)/(isEnhanced(hero) ? 1 : 2) - enemy.drRoll();
         hero.sprite.attack(enemy.pos, new Callback() {
             @Override
@@ -46,15 +47,14 @@ public class FighterConsoleWeakAttack extends FighterConsoleContent {
                 Sample.INSTANCE.play(Assets.Sounds.HIT);
                 enemy.damage(damage, hero);
                 hero.spendAndNext(0.5f);
-                Buff.affect(hero, FighterConsoleBuff.class).attackEnhance();
             }
         });
 
-        super.execute(hero);
+        return true;
     }
 
     @Override
     public boolean isEnhanced(Hero hero) {
-        return super.isEnhanced(hero) || (hero.buff(FighterConsoleBuff.class) != null && hero.buff(FighterConsoleBuff.class).isAttackEnhanced());
+        return super.isEnhanced(hero) || ((hero.buff(FighterConsoleBuff.class) != null && hero.buff(FighterConsoleBuff.class).isAttackEnhanced()));
     }
 }

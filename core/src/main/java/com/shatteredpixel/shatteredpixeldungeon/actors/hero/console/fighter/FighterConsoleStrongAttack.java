@@ -23,8 +23,8 @@ public class FighterConsoleStrongAttack extends FighterConsoleContent {
     }
 
     @Override
-    public void execute(Hero hero) {
-        super.execute(hero);
+    public boolean execute(Hero hero) {
+        if (!super.execute(hero)) return false;
 
         ArrayList<Mob> adjacentMobs = new ArrayList<>();
         for (Char ch : Actor.chars()) {
@@ -32,10 +32,10 @@ public class FighterConsoleStrongAttack extends FighterConsoleContent {
                 adjacentMobs.add((Mob) ch);
             }
         }
-        if (adjacentMobs.isEmpty()) return;
+        if (adjacentMobs.isEmpty()) return false;
 
         Mob enemy = Random.element(adjacentMobs);
-        if (enemy == null || enemy.alignment != Char.Alignment.ENEMY) return;
+        if (enemy == null || enemy.alignment != Char.Alignment.ENEMY) return false;
 
         hero.busy();
         int damage = Math.round(damageRoll(hero)*(isEnhanced(hero) ? 1.5f : 1) - enemy.drRoll());
@@ -51,10 +51,12 @@ public class FighterConsoleStrongAttack extends FighterConsoleContent {
                 hero.spendAndNext(1f);
             }
         });
+
+        return true;
     }
 
     @Override
     public boolean isEnhanced(Hero hero) {
-        return super.isEnhanced(hero) || (hero.buff(FighterConsoleBuff.class) != null && hero.buff(FighterConsoleBuff.class).isAttackEnhanced());
+        return super.isEnhanced(hero) || ((hero.buff(FighterConsoleBuff.class) != null && hero.buff(FighterConsoleBuff.class).isAttackEnhanced()));
     }
 }

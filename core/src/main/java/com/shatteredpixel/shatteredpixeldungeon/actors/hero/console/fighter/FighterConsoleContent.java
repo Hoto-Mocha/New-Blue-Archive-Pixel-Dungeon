@@ -13,10 +13,10 @@ import com.watabou.utils.Bundle;
 public abstract class FighterConsoleContent extends YuzuConsoleContent {
 
     @Override
-    public void execute(Hero hero) {
-        if (!hero.ready) return;
-        if (hero.buff(FighterConsoleBuff.class) == null) return;
-        Buff.affect(hero, FighterConsoleBuff.class).countDown(1);
+    public boolean execute(Hero hero) {
+        if (!hero.ready) return false;
+        if (hero.buff(FighterConsoleBuff.class) == null) return false;
+        return true;
     }
 
     @Override
@@ -28,7 +28,14 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
         if (!hideWindow()) GameScene.show(new WndYuzuFighterConsole(console, hero));
     }
 
+    @Override
+    public void onContentExecuted(Hero hero) {
+        Buff.affect(hero, FighterConsoleContent.FighterConsoleBuff.class).countDown(1);
+    }
+
+    //파이터 콘솔 버프
     public static class FighterConsoleBuff extends ConsoleBuff {
+        private static final int MAX_COUNT = 10;
         boolean attackEnhanced = false;
 
         @Override
@@ -42,13 +49,31 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
         }
 
         @Override
+        public float iconFadePercent() {
+            return Math.max(0, (10-count())/10f);
+        }
+
+        @Override
+        public String iconTextDisplay() {
+            return Integer.toString((int)count());
+        }
+
+        @Override
+        public void countUp(float inc) {
+            if (count() > MAX_COUNT) return;
+            if (count() + inc > MAX_COUNT) inc = MAX_COUNT - count();
+            super.countUp(inc);
+        }
+
+        @Override
         public void countDown(float inc) {
-            attackEnhanced = false;
+            if (!enhancedThisTurn) attackEnhanced = false;
             super.countDown(inc);
         }
 
         public void attackEnhance() {
             attackEnhanced = true;
+            enhancedThisTurn = true;
         }
 
         public boolean isAttackEnhanced() {

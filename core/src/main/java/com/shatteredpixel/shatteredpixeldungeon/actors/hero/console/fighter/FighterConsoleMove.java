@@ -14,10 +14,11 @@ public abstract class FighterConsoleMove extends FighterConsoleContent {
     public abstract int targetPos(Hero hero);
 
     @Override
-    public void execute(Hero hero) {
-        super.execute(hero);
+    public boolean execute(Hero hero) {
+        if (!super.execute(hero)) return false;
 
-        if (!(Dungeon.level.passable[targetPos(hero)] || Dungeon.level.avoid[targetPos(hero)]) || Actor.findChar(targetPos(hero)) != null) return;
+        if (!(Dungeon.level.passable[targetPos(hero)] || Dungeon.level.avoid[targetPos(hero)])
+                || Actor.findChar(targetPos(hero)) != null) return false;
 
         final float MOVE_TURNS = isEnhanced(hero) ? 0 : 1 / (hero.speed()*3);
         hero.busy();
@@ -34,5 +35,7 @@ public abstract class FighterConsoleMove extends FighterConsoleContent {
                 hero.spendAndNext(MOVE_TURNS);
             }
         });
+
+        return true;
     }
 }
