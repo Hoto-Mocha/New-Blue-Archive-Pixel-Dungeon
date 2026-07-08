@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.YuzuConsoleContent;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.Console;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndYuzuFighterConsole;
@@ -36,11 +37,7 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
     //파이터 콘솔 버프
     public static class FighterConsoleBuff extends ConsoleBuff {
         boolean attackEnhanced = false;
-
-        @Override
-        public int icon() {
-            return BuffIndicator.HASTE;
-        }
+        public boolean enhancedThisTurn = false;
 
         @Override
         public void tintIcon(Image icon) {
@@ -60,11 +57,13 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
         @Override
         public void countDown(float inc) {
             if (!enhancedThisTurn) attackEnhanced = false;
+            enhancedThisTurn = false;
             super.countDown(inc);
         }
 
         public void attackEnhance() {
             attackEnhanced = true;
+            enhancedThisTurn = true;
         }
 
         public boolean isAttackEnhanced() {
@@ -72,17 +71,20 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
         }
 
         private static final String ATTACK_ENHANCED = "attackEnhanced";
+        private static final String ENHANCED_THIS_TURN = "enhancedThisTurn";
 
         @Override
         public void storeInBundle(Bundle bundle) {
             super.storeInBundle(bundle);
             bundle.put(ATTACK_ENHANCED, attackEnhanced);
+            bundle.put(ENHANCED_THIS_TURN, enhancedThisTurn);
         }
 
         @Override
         public void restoreFromBundle(Bundle bundle) {
             super.restoreFromBundle(bundle);
             attackEnhanced = bundle.getBoolean(ATTACK_ENHANCED);
+            enhancedThisTurn = bundle.getBoolean(ENHANCED_THIS_TURN);
         }
     }
 
@@ -99,7 +101,7 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
     }
 
     public static int damageRoll( Hero hero ){
-        int level = 0;
+        int level = 1;
         float tier = tier(hero.STR());
         int dmg = Hero.heroDamageIntRange(min(level, tier), max(level, tier));
         return dmg;

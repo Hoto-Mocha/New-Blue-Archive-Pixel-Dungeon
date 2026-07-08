@@ -16,6 +16,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.console.FighterCons
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndYuzuConsole;
@@ -102,10 +103,14 @@ public abstract class YuzuConsoleContent {
     public static class ConsoleBuff extends CounterBuff {
         private static final int MAX_COUNT = 10;
         private boolean enhanced = false;
-        public boolean enhancedThisTurn = false;
 
         {
             type = buffType.POSITIVE;
+        }
+
+        @Override
+        public int icon() {
+            return BuffIndicator.CONSOLE;
         }
 
         public void set() {
@@ -117,20 +122,18 @@ public abstract class YuzuConsoleContent {
             if ((int)count() > MAX_COUNT) return;
             if ((int)count() + inc > MAX_COUNT) inc = MAX_COUNT - count();
             super.countUp(inc);
-            GLog.i(count()+"");
         }
 
         @Override
         public void countDown(float inc) {
             super.countDown(inc);
-            if (!enhancedThisTurn) enhanced = false;
-            enhancedThisTurn = false;
+            enhanced = false;
             if (count() <= 0) detach();
         }
 
         @Override
         public String desc() {
-            return Messages.get(this, "desc", count());
+            return Messages.get(this, "desc", (int)count());
         }
 
         public void enhance() {
@@ -142,20 +145,17 @@ public abstract class YuzuConsoleContent {
         }
 
         private static final String ENHANCED = "enhanced";
-        private static final String ENHANCED_THIS_TURN = "enhancedThisTurn";
 
         @Override
         public void storeInBundle(Bundle bundle) {
             super.storeInBundle(bundle);
             bundle.put(ENHANCED, enhanced);
-            bundle.put(ENHANCED_THIS_TURN, enhancedThisTurn);
         }
 
         @Override
         public void restoreFromBundle(Bundle bundle) {
             super.restoreFromBundle(bundle);
             enhanced = bundle.getBoolean(ENHANCED);
-            enhancedThisTurn = bundle.getBoolean(ENHANCED_THIS_TURN);
         }
     }
 

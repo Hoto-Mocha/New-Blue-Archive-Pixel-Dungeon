@@ -106,8 +106,10 @@ public class WndYuzuFighterConsole extends Window {
 		@Override
 		protected void onPointerUp() {
 			super.onPointerUp();
-			if (!content.canSelect(Dungeon.hero)){
+			if (!content.canSelect(yuzu)){
 				icon.alpha( 0.3f );
+			} else if (content.isEnhanced(yuzu)) {
+				icon.brightness(3);
 			}
 		}
 

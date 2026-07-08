@@ -19,6 +19,11 @@ public class FighterConsoleCharge extends FighterConsoleContent {
         if (isEnhanced(hero)) Buff.affect(hero, FighterConsoleBuff.class).countUp(1);
         Buff.affect(hero, FighterConsoleBuff.class).enhance();
         hero.spendAndNext(1f);
-        return false;
+        return !isEnhanced(hero);
+    }
+
+    @Override
+    public boolean canSelect(Hero hero) {
+        return super.canSelect(hero) && hero.buff(FighterConsoleBuff.class) != null && hero.buff(FighterConsoleBuff.class).count() > 1;
     }
 }
