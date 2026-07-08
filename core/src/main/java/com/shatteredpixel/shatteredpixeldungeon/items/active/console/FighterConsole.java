@@ -1,9 +1,22 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.active.console;
 
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleContent;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndYuzuFighterConsole;
 
 public class FighterConsole extends Console {
+    public static FighterConsole INSTANCE_FOR_WINDOW = new FighterConsole();
+
     {
         image = ItemSpriteSheet.SCROLL_EMPTY;
+    }
+
+    @Override
+    public void showWindow(Hero hero) {
+        Buff.affect(hero, FighterConsoleContent.FighterConsoleBuff.class).countUp(10);
+        GameScene.show(new WndYuzuFighterConsole(this, hero));
     }
 }

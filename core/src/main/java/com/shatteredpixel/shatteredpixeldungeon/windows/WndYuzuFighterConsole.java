@@ -15,13 +15,13 @@ import com.watabou.noosa.NinePatch;
 
 import java.util.ArrayList;
 
-public class WndYuzuConsole extends Window {
+public class WndYuzuFighterConsole extends Window {
 
-	protected static final int WIDTH    = 120;
+	protected static final int WIDTH    = 126;
 
 	public static int BTN_SIZE = 20;
 
-	public WndYuzuConsole(Console console, Hero yuzu){
+	public WndYuzuFighterConsole(Console console, Hero yuzu){
 		ArrayList<YuzuConsoleContent> contents = YuzuConsoleContent.getContentList(yuzu, console);
 
 		ArrayList<IconButton> contentBtns = new ArrayList<>();
@@ -31,15 +31,40 @@ public class WndYuzuConsole extends Window {
 			add(contentBtn);
 			contentBtns.add(contentBtn);
 		}
-		int top = 0;
 
-		int left = 2 + (WIDTH - contentBtns.size() * (BTN_SIZE + 4)) / 2;
+		final int SPACING = 4;
+		final int ARROWS_LEFT = BTN_SIZE/2+(BTN_SIZE+SPACING)*2;
+		int btnIndex = 0;
 		for (IconButton btn : contentBtns) {
-			btn.setRect(left, 0, BTN_SIZE, BTN_SIZE);
-			left += btn.width() + 4;
+			if (btnIndex == 0) { //약공격
+				btn.setRect((int)((BTN_SIZE+SPACING)/2), 0, BTN_SIZE, BTN_SIZE);
+			}
+			if (btnIndex == 1) { //강공격
+				btn.setRect((int)((BTN_SIZE+SPACING)/2)+BTN_SIZE+SPACING, 0, BTN_SIZE, BTN_SIZE);
+			}
+			if (btnIndex == 2) { //기 모으기
+				btn.setRect(0, BTN_SIZE+SPACING, BTN_SIZE, BTN_SIZE);
+			}
+//			if (btnIndex == 3) { //
+//				btn.setRect(BTN_SIZE+SPACING, BTN_SIZE+SPACING, BTN_SIZE, BTN_SIZE);
+//			}
+			if (btnIndex == 3) { //왼쪽
+				btn.setRect(ARROWS_LEFT, (int)((BTN_SIZE+SPACING)/2), BTN_SIZE, BTN_SIZE);
+			}
+			if (btnIndex == 4) { //위
+				btn.setRect(ARROWS_LEFT + BTN_SIZE + SPACING, 0, BTN_SIZE, BTN_SIZE);
+			}
+			if (btnIndex == 5) { //아래
+				btn.setRect(ARROWS_LEFT + BTN_SIZE + SPACING, BTN_SIZE + SPACING, BTN_SIZE, BTN_SIZE);
+			}
+			if (btnIndex == 6) { //오른쪽
+				btn.setRect(ARROWS_LEFT + 2*(BTN_SIZE + SPACING), (int)((BTN_SIZE+SPACING)/2), BTN_SIZE, BTN_SIZE);
+			}
+
+			btnIndex++;
 		}
 
-		resize(WIDTH, top + BTN_SIZE);
+		resize(WIDTH, BTN_SIZE*2);
 
 		//if we are on mobile, offset the window down to just above the toolbar
 		if (SPDSettings.interfaceSize() != 2){
@@ -66,7 +91,7 @@ public class WndYuzuConsole extends Window {
 			if (!content.canSelect(yuzu)){
 				icon.alpha( 0.3f );
 			} else if (content.isEnhanced(yuzu)) {
-				icon.brightness(1.5f);
+				icon.brightness(3);
 			}
 
 			bg = Chrome.get(Chrome.Type.TOAST);

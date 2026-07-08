@@ -24,12 +24,16 @@ public class Console extends Item {
         return actions;
     }
 
+    public void showWindow(Hero hero) {
+        GameScene.show(new WndYuzuConsole(this, hero));
+    }
+
     @Override
     public void execute(Hero hero, String action) {
         super.execute(hero, action);
 
         if (action.equals(AC_USE)) {
-            GameScene.show(new WndYuzuConsole(this, hero));
+            showWindow(hero);
         }
     }
 

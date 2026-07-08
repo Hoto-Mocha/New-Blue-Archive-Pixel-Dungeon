@@ -190,10 +190,13 @@ public class HeroIcon extends Image {
 	public static final int SHOP_14			= 128 + 101;
 	public static final int SHOP_15			= 128 + 102;
 
-	public static final int FIGHTER_1		= 128 + 112;
-	public static final int FIGHTER_2		= 128 + 113;
-	public static final int FIGHTER_3		= 128 + 114;
-	public static final int FIGHTER_4		= 128 + 115;
+	public static final int FIGHTER_WEAK_ATK= 128 + 112;
+	public static final int FIGHTER_STROING_ATK= 128 + 113;
+	public static final int FIGHTER_CHARGE	= 128 + 114;
+	public static final int FIGHTER_LEFT	= 128 + 115;
+	public static final int FIGHTER_UP		= 128 + 116;
+	public static final int FIGHTER_DOWN	= 128 + 117;
+	public static final int FIGHTER_RIGHT	= 128 + 118;
 
 
 
