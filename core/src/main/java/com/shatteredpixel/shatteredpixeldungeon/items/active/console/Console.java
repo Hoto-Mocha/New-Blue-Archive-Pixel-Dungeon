@@ -12,6 +12,7 @@ public class Console extends Item {
     public static final String AC_USE		= "USE";
 
     {
+        stackable = true;
         levelKnown = true;
         bones = false;
         defaultAction = AC_USE;

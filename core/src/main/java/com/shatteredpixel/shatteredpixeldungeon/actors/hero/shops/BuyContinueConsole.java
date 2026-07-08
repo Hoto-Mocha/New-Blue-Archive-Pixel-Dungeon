@@ -4,13 +4,14 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.Console;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.ContinueConsole;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
 public class BuyContinueConsole extends YuzuShopContent {
     public static final BuyContinueConsole INSTANCE = new BuyContinueConsole();
 
     @Override
     public int icon() {
-        return super.icon();
+        return HeroIcon.CONTINUE_CONSOLE;
     }
 
     @Override

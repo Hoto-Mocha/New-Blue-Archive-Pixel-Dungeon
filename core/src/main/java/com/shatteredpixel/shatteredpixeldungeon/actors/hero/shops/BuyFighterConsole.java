@@ -5,13 +5,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.Console;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.FighterConsole;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
 public class BuyFighterConsole extends YuzuShopContent {
     public static final BuyFighterConsole INSTANCE = new BuyFighterConsole();
 
     @Override
     public int icon() {
-        return super.icon();
+        return HeroIcon.FIGHTER_CONSOLE;
     }
 
     @Override
