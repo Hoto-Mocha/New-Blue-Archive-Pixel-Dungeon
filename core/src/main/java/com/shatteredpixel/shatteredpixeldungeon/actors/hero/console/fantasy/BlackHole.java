@@ -32,11 +32,6 @@ public class BlackHole extends FantasyConsoleContent {
             GLog.i( Messages.get(Wand.class, "self_target") );
             return false;
         }
-
-        if (Dungeon.depth % 5 == 0) {
-            hero.yellW("cannot_do_boss");
-        }
-
         hero.busy();
         hero.sprite.zap(cell);
 
@@ -68,5 +63,10 @@ public class BlackHole extends FantasyConsoleContent {
     @Override
     public int countUse() {
         return 10;
+    }
+
+    @Override
+    public boolean canSelect(Hero hero) {
+        return super.canSelect(hero) && Dungeon.depth % 5 != 0;
     }
 }
