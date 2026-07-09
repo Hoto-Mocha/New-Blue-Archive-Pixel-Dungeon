@@ -1,8 +1,10 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.console;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.FireBall;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.Charge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.MoveDown;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.MoveLeft;
@@ -11,6 +13,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.Stro
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.MoveUp;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.WeakAttack;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.Console;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.console.FantasyConsole;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.FighterConsole;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
@@ -24,20 +27,20 @@ import java.util.ArrayList;
 
 public abstract class YuzuConsoleContent {
     public void onSelect(Hero hero) {
-        if (useTargeting()) {
+        if (usesTargeting()) {
             GameScene.selectCell(selector);
         } else {
-            if (execute(hero)) {
+            if (execute(hero, -1)) {
                 onContentExecuted(hero);
             }
         }
     };
 
-    public abstract boolean execute(Hero hero);
+    public abstract boolean execute(Hero hero, int target);
 
     public abstract boolean canSelect( Hero hero );
 
-    public boolean useTargeting() {
+    public boolean usesTargeting() {
         return false;
     }
 
@@ -81,20 +84,25 @@ public abstract class YuzuConsoleContent {
             contents.add(MoveUp.INSTANCE);
             contents.add(MoveDown.INSTANCE);
             contents.add(MoveRight.INSTANCE);
+        } else if (console instanceof FantasyConsole) {
+            contents.add(FireBall.INSTANCE);
         }
 
         return contents;
     }
 
-    protected static CellSelector.Listener selector = new CellSelector.Listener() {
+    protected CellSelector.Listener selector = new CellSelector.Listener() {
         @Override
         public void onSelect(Integer cell) {
-            //do nothing by default
+            if (cell == null) return;
+            if (YuzuConsoleContent.this.execute(Dungeon.hero, cell)) {
+                YuzuConsoleContent.this.onContentExecuted(Dungeon.hero);
+            }
         }
 
         @Override
         public String prompt() {
-            return "";
+            return Messages.get(YuzuConsoleContent.this, "prompt");
         }
     };
 

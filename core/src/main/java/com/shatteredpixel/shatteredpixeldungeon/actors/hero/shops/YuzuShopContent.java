@@ -82,6 +82,7 @@ public abstract class YuzuShopContent {
             if (yuzu.subClass == HeroSubClass.GAME_START) {
                 contents.add(BuyContinueConsole.INSTANCE);
                 contents.add(BuyFighterConsole.INSTANCE);
+                contents.add(BuyFantasyConsole.INSTANCE);
             }
         }
 
