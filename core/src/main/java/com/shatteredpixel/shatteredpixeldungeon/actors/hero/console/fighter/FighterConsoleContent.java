@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.YuzuConsoleContent;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.Console;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -89,7 +90,7 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
     }
 
     public static int damageRoll( Hero hero ){
-        int level = 1;
+        int level = 1+2*(hero.pointsInTalent(Talent.YUZU_EX2_1)-1);
         float tier = tier(hero.STR());
         int dmg = Hero.heroDamageIntRange(min(level, tier), max(level, tier));
         return dmg;
