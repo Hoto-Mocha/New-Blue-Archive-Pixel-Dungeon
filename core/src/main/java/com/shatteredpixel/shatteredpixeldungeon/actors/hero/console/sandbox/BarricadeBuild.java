@@ -61,6 +61,6 @@ public class BarricadeBuild extends SandboxConsoleContent {
 
     @Override
     public boolean canSelect(Hero hero) {
-        return super.canSelect(hero) && Dungeon.depth % 5 != 0;
+        return super.canSelect(hero) && Dungeon.depth % 5 != 0 && Dungeon.depth != 26;
     }
 }
