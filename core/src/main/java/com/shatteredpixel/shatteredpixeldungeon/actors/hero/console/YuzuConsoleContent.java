@@ -16,6 +16,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.Move
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.StrongAttack;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.MoveUp;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.WeakAttack;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox.BarricadeBuild;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox.Farming;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.Console;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.FantasyConsole;
@@ -98,6 +99,7 @@ public abstract class YuzuConsoleContent {
             contents.add(BlackHole.INSTANCE);
         } else if (console instanceof SandboxConsole) {
             contents.add(Farming.INSTANCE);
+            contents.add(BarricadeBuild.INSTANCE);
         }
 
         return contents;
