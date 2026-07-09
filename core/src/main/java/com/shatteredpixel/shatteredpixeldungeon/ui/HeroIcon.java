@@ -204,6 +204,12 @@ public class HeroIcon extends Image {
 	public static final int FANTASY_ICE_LANCE= 128 + 122;
 	public static final int FANTASY_BLACKHOLE= 128 + 123;
 
+	public static final int SANDBOX_FARMING	= 128 + 124;
+	public static final int SANDBOX_BARRICADE	= 128 + 125;
+	public static final int SANDBOX_BRIDGE	= 128 + 126;
+	public static final int SANDBOX_DIG		= 128 + 127;
+	public static final int SANDBOX_WELL	= 128 + 128;
+
 
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );
