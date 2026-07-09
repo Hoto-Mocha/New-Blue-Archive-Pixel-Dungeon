@@ -18,6 +18,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 public class Hydropump extends FantasyConsoleContent {
@@ -60,12 +61,14 @@ public class Hydropump extends FantasyConsoleContent {
         }
         geyser.activate();
 
-        if (Dungeon.level.map[cell] == Terrain.EMPTY_WELL && Random.Float() < 0.1f) {
-            Level.set(cell, Terrain.WELL);
-            Class<? extends WellWater> waterClass = (Class<? extends WellWater>) Random.element( WATERS );
-            Blob b = WellWater.seed(cell, 1, waterClass, Dungeon.level);
-            Notes.add( b.landmark() );
-            GameScene.updateMap( cell );
+        for (int i : PathFinder.NEIGHBOURS9) {
+            if (Dungeon.level.map[cell+i] == Terrain.EMPTY_WELL && Random.Float() < 0.1f) {
+                Level.set(cell+i, Terrain.WELL);
+                Class<? extends WellWater> waterClass = (Class<? extends WellWater>) Random.element( WATERS );
+                Blob b = WellWater.seed(cell+i, 1, waterClass, Dungeon.level);
+                Notes.add( b.landmark() );
+                GameScene.updateMap( cell+i );
+            }
         }
 
         hero.spendAndNext(1f);
