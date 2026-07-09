@@ -231,6 +231,11 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
     }
 
     public void breakWall(Hero hero, int cell) {
+        if (Dungeon.depth % 5 == 0) {
+            hero.yellW("cannot_do_boss");
+            return;
+        }
+
         hero.sprite.attack(cell, new Callback() {
             @Override
             public void call() {

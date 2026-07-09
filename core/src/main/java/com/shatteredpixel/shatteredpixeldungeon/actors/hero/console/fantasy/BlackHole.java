@@ -33,6 +33,10 @@ public class BlackHole extends FantasyConsoleContent {
             return false;
         }
 
+        if (Dungeon.depth % 5 == 0) {
+            hero.yellW("cannot_do_boss");
+        }
+
         hero.busy();
         hero.sprite.zap(cell);
 
