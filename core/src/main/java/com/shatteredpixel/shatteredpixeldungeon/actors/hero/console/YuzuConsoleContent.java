@@ -20,6 +20,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox.Barr
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox.BridgeBuild;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox.Farming;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox.WallDig;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox.WellDig;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.Console;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.FantasyConsole;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.FighterConsole;
@@ -104,6 +105,7 @@ public abstract class YuzuConsoleContent {
             contents.add(BarricadeBuild.INSTANCE);
             contents.add(BridgeBuild.INSTANCE);
             contents.add(WallDig.INSTANCE);
+            contents.add(WellDig.INSTANCE);
         }
 
         return contents;
