@@ -17,6 +17,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.Stro
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.MoveUp;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.WeakAttack;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox.BarricadeBuild;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox.BridgeBuild;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox.Farming;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.Console;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.FantasyConsole;
@@ -100,6 +101,7 @@ public abstract class YuzuConsoleContent {
         } else if (console instanceof SandboxConsole) {
             contents.add(Farming.INSTANCE);
             contents.add(BarricadeBuild.INSTANCE);
+            contents.add(BridgeBuild.INSTANCE);
         }
 
         return contents;
