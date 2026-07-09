@@ -2,6 +2,8 @@ package com.shatteredpixel.shatteredpixeldungeon.items.active.console;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.YuzuConsoleContent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.FantasyConsoleContent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleContent;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -15,6 +17,11 @@ public class FighterConsole extends Console {
 
     @Override
     public void showWindow(Hero hero) {
+        for (Buff b: hero.buffs()) {
+            if (b instanceof YuzuConsoleContent.ConsoleBuff && !(b instanceof FighterConsoleContent.FighterConsoleBuff)) {
+                b.detach();
+            }
+        }
         Buff.affect(hero, FighterConsoleContent.FighterConsoleBuff.class).set();
         BuffIndicator.refreshHero();
         GameScene.show(new WndYuzuFighterConsole(this, hero));
