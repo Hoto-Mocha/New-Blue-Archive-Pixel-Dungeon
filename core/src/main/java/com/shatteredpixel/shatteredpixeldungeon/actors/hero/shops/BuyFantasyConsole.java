@@ -31,6 +31,6 @@ public class BuyFantasyConsole extends YuzuShopContent {
 
     @Override
     public boolean canSelect(Hero hero) {
-        return hero.hasTalent(Talent.YUZU_EX2_2);
+        return super.canSelect(hero) && hero.hasTalent(Talent.YUZU_EX2_2);
     }
 }
