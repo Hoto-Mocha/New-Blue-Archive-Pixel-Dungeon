@@ -199,9 +199,7 @@ public class HeroIcon extends Image {
 	public static final int FIGHTER_RIGHT	= 128 + 118;
 
 	public static final int FANTASY_FIREBALL= 128 + 119;
-
-
-
+	public static final int FANTASY_LIGHTNING= 128 + 120;
 
 
 	public HeroIcon(HeroSubClass subCls){

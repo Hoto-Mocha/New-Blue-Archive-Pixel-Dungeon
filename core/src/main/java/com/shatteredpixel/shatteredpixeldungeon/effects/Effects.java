@@ -37,7 +37,8 @@ public class Effects {
 		LIGHT_RAY,
 		HEALTH_RAY,
 		YELLOW_RAY,
-		SUPERNOVA_RAY
+		SUPERNOVA_RAY,
+		THUNDERBOLT
 	}
 	
 	public static Image get( Type type ) {
@@ -75,6 +76,9 @@ public class Effects {
 				break;
 			case SUPERNOVA_RAY:
 				icon.frame(icon.texture.uvRect(16, 44, 32, 52));
+				break;
+			case THUNDERBOLT:
+				icon.frame(icon.texture.uvRect(0, 53, 32, 59));
 				break;
 		}
 		return icon;
