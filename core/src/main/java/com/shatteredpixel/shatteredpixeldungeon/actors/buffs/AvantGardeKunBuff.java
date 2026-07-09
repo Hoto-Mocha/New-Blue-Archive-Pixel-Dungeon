@@ -246,6 +246,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
                 for (int i : PathFinder.NEIGHBOURS9) {
                     Dungeon.level.discoverable[cell+i] = true;
                 }
+                Dungeon.level.losBlocking[cell] = false;
 
                 Sample.INSTANCE.play(Assets.Sounds.ROCKS);
                 GameScene.updateMap(cell);
