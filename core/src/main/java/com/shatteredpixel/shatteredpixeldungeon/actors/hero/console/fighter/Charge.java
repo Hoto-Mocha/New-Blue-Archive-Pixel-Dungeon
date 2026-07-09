@@ -13,8 +13,8 @@ public class Charge extends FighterConsoleContent {
     }
 
     @Override
-    public boolean execute(Hero hero) {
-        if (!super.execute(hero)) return false;
+    public boolean execute(Hero hero, int target) {
+        if (!super.execute(hero, target)) return false;
 
         if (isEnhanced(hero)) Buff.affect(hero, FighterConsoleBuff.class).countUp(1);
         Buff.affect(hero, FighterConsoleBuff.class).enhance();

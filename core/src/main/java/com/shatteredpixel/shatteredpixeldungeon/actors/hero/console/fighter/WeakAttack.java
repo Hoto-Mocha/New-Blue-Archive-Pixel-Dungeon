@@ -23,8 +23,8 @@ public class WeakAttack extends FighterConsoleContent {
     }
 
     @Override
-    public boolean execute(Hero hero) {
-        if (!super.execute(hero)) return false;
+    public boolean execute(Hero hero, int target) {
+        if (!super.execute(hero, target)) return false;
 
         ArrayList<Mob> adjacentMobs = new ArrayList<>();
         for (Char ch : Actor.chars()) {
