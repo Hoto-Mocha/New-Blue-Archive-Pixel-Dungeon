@@ -10,7 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 
-public abstract class FighterConsoleMove extends FighterConsoleContent {
+public abstract class Move extends FighterConsoleContent {
     public abstract int targetPos(Hero hero);
 
     @Override

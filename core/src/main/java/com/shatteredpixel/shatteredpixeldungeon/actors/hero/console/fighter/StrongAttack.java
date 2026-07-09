@@ -14,8 +14,8 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
-public class FighterConsoleStrongAttack extends FighterConsoleContent {
-    public static final FighterConsoleStrongAttack INSTANCE = new FighterConsoleStrongAttack();
+public class StrongAttack extends FighterConsoleContent {
+    public static final StrongAttack INSTANCE = new StrongAttack();
 
     @Override
     public int icon() {

@@ -3,13 +3,13 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.console;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleCharge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleDown;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleLeft;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleRight;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleStrongAttack;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleUp;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleWeakAttack;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.Charge;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.MoveDown;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.MoveLeft;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.MoveRight;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.StrongAttack;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.MoveUp;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.WeakAttack;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.Console;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.FighterConsole;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -74,13 +74,13 @@ public abstract class YuzuConsoleContent {
         ArrayList<YuzuConsoleContent> contents = new ArrayList<>();
 
         if (console instanceof FighterConsole) {
-            contents.add(FighterConsoleWeakAttack.INSTANCE);
-            contents.add(FighterConsoleStrongAttack.INSTANCE);
-            contents.add(FighterConsoleCharge.INSTANCE);
-            contents.add(FighterConsoleLeft.INSTANCE);
-            contents.add(FighterConsoleUp.INSTANCE);
-            contents.add(FighterConsoleDown.INSTANCE);
-            contents.add(FighterConsoleRight.INSTANCE);
+            contents.add(WeakAttack.INSTANCE);
+            contents.add(StrongAttack.INSTANCE);
+            contents.add(Charge.INSTANCE);
+            contents.add(MoveLeft.INSTANCE);
+            contents.add(MoveUp.INSTANCE);
+            contents.add(MoveDown.INSTANCE);
+            contents.add(MoveRight.INSTANCE);
         }
 
         return contents;

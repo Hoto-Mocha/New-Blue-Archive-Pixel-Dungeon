@@ -4,8 +4,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
-public class FighterConsoleCharge extends FighterConsoleContent {
-    public static final FighterConsoleCharge INSTANCE = new FighterConsoleCharge();
+public class Charge extends FighterConsoleContent {
+    public static final Charge INSTANCE = new Charge();
 
     @Override
     public int icon() {
