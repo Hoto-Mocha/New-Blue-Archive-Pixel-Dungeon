@@ -127,7 +127,8 @@ public abstract class YuzuConsoleContent {
     };
 
     public static class ConsoleBuff extends CounterBuff {
-        private static final int MAX_COUNT = 10;
+        public static final int MAX_COUNT = 15;
+        private static final int SET_COUNT = 10;
         private boolean enhanced = false;
 
         {
@@ -150,7 +151,11 @@ public abstract class YuzuConsoleContent {
         }
 
         public void set() {
-            countUp(MAX_COUNT);
+            countUp(SET_COUNT);
+        }
+
+        public void set(int amount) {
+            countUp(amount);
         }
 
         @Override
