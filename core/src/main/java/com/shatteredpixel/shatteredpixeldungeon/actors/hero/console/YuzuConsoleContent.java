@@ -4,7 +4,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleCharge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleContent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleDown;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleLeft;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleRight;
@@ -18,7 +17,6 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndYuzuConsole;
 import com.watabou.utils.Bundle;
 
