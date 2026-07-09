@@ -26,7 +26,7 @@ public class BridgeBuild extends SandboxConsoleContent {
         }
 
         if (!canBuild(target)) {
-            hero.yellW("cannot_build");
+            hero.yellW("cannot_do");
             return false;
         }
 

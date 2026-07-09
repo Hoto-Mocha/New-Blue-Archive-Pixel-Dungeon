@@ -30,7 +30,7 @@ public class Farming extends SandboxConsoleContent {
             return false;
         }
         if (!canBuild(target)) {
-            hero.yellW("cannot_build");
+            hero.yellW("cannot_do");
             return false;
         }
 

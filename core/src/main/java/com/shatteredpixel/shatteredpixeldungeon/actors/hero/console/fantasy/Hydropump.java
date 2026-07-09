@@ -37,6 +37,11 @@ public class Hydropump extends FantasyConsoleContent {
             return false;
         }
 
+        if (Dungeon.level.solid[cell] && Dungeon.level.map[cell] == Terrain.DOOR) {
+            hero.yellW("cannot_do");
+            return false;
+        }
+
         hero.busy();
         hero.sprite.zap(cell);
 

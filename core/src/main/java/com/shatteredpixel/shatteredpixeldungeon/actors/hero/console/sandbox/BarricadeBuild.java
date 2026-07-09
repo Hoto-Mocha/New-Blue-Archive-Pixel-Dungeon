@@ -31,7 +31,7 @@ public class BarricadeBuild extends SandboxConsoleContent {
             return false;
         }
         if (target == hero.pos && Dungeon.level.map[target] == Terrain.OPEN_DOOR) {
-            hero.yellW("cannot_build");
+            hero.yellW("cannot_do");
             return false;
         }
 
