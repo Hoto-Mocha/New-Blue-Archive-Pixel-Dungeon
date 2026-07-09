@@ -8,11 +8,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyLance;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.IceParticle;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -86,12 +84,12 @@ public class IceLance extends FantasyConsoleContent {
         } else {
             ((MissileSprite) hero.sprite.parent.recycle(MissileSprite.class)).
                     reset(hero.sprite,
-                            cell,
+                            aim.collisionPos,
                             new IceLanceVFX(),
                             new Callback() {
                                 @Override
                                 public void call() {
-                                    Splash.at(cell, 0xFF64D7FF, 10);
+                                    Splash.at(aim.collisionPos, 0xFF64D7FF, 10);
                                     Dungeon.level.pressCell(aim.collisionPos);
                                     hero.spendAndNext(1f);
                                 }
