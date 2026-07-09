@@ -12,11 +12,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Point;
@@ -31,10 +34,19 @@ public class FireBall extends FantasyConsoleContent {
 
     @Override
     public boolean execute(Hero hero, int cell) {
-        if (cell == hero.pos) return false;
+        if (cell == hero.pos) {
+            GLog.i( Messages.get(Wand.class, "self_target") );
+            return false;
+        }
         hero.busy();
         hero.sprite.zap(cell);
         Ballistica bolt = new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT);
+
+        if (Actor.findChar( bolt.collisionPos ) == hero){
+            GLog.i( Messages.get(Wand.class, "self_target") );
+            return false;
+        }
+        
         Point c = Dungeon.level.cellToPoint(bolt.collisionPos);
         boolean[] fieldOfView = new boolean[Dungeon.level.length()];
         ShadowCaster.castShadow(c.x, c.y, Dungeon.level.width(), fieldOfView, Dungeon.level.solid, isEnhanced(hero) ? 3 : 1);
