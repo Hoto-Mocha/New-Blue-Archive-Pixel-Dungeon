@@ -18,6 +18,7 @@ public class BuyFighterConsole extends YuzuShopContent {
     @Override
     public void onSelect(Hero hero) {
         Console prize = new FighterConsole();
+        hero.spend(-prize.pickupDelay());
         if (!prize.doPickUp(hero)) {
             Dungeon.level.drop(prize, hero.pos);
         }
