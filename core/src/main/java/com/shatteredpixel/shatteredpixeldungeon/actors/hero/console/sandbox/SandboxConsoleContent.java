@@ -30,6 +30,10 @@ public abstract class SandboxConsoleContent extends YuzuConsoleContent {
         return 1;
     }
 
+    public boolean canBuild(int target) {
+        return false;
+    }
+
     //판타지 콘솔 버프
     public static class SandboxConsoleBuff extends ConsoleBuff {
         @Override
