@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.PenetrationShot;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.IceLance;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyLance;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGeomancer;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -111,6 +112,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		ANGULAR_SPEEDS.put(OtogiSprite.OtogiShot.class,		  0);
 		ANGULAR_SPEEDS.put(PenetrationShot.PenetrationBullet.class,  0);
 		ANGULAR_SPEEDS.put(HologramSprite.HologramShot.class,  0);
+		ANGULAR_SPEEDS.put(IceLance.IceLanceVFX.class,  0);
 
 		//720 is default
 

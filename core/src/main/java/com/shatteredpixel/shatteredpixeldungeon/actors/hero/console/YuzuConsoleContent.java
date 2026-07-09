@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.FireBall;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.IceLance;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.Thunder;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.Charge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.MoveDown;
@@ -88,6 +89,7 @@ public abstract class YuzuConsoleContent {
         } else if (console instanceof FantasyConsole) {
             contents.add(FireBall.INSTANCE);
             contents.add(Thunder.INSTANCE);
+            contents.add(IceLance.INSTANCE);
         }
 
         return contents;
