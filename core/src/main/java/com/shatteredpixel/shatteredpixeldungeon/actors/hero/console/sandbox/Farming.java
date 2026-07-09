@@ -37,7 +37,6 @@ public class Farming extends SandboxConsoleContent {
         hero.sprite.zap(target);
         if (Dungeon.level.map[target] == Terrain.GRASS) {
             Dungeon.level.map[target] = Terrain.HIGH_GRASS;
-            return true;
         } else if (canBuild(target)) {
             Dungeon.level.map[target] = Terrain.GRASS;
         }

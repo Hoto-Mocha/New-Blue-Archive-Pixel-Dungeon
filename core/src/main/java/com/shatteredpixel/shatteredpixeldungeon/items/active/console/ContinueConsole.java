@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.active.console;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.FantasyConsoleContent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.FighterConsoleContent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox.SandboxConsoleContent;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndYuzuConsole;
@@ -21,6 +22,10 @@ public class ContinueConsole extends Console {
             return;
         } else if (hero.buff(FantasyConsoleContent.FantasyConsoleBuff.class) != null) {
             GameScene.show(new WndYuzuConsole(new FantasyConsole(), hero));
+            detach(hero.belongings.backpack);
+            return;
+        } else if (hero.buff(SandboxConsoleContent.SandboxConsoleBuff.class) != null) {
+            GameScene.show(new WndYuzuConsole(new SandboxConsole(), hero));
             detach(hero.belongings.backpack);
             return;
         }

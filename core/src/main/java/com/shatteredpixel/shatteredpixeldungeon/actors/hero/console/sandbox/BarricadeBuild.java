@@ -21,7 +21,7 @@ public class BarricadeBuild extends SandboxConsoleContent {
 
     @Override
     public boolean canBuild(int target) {
-        return Dungeon.level.passable[target] && !Dungeon.level.avoid[target];
+        return Dungeon.level.map[target] == Terrain.DOOR || (Dungeon.level.passable[target] && !Dungeon.level.avoid[target]);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class BarricadeBuild extends SandboxConsoleContent {
         }
 
         hero.sprite.zap(target);
-        if (Dungeon.level.map[target] != Terrain.OPEN_DOOR) {
+        if (Dungeon.level.map[target] != Terrain.OPEN_DOOR && Dungeon.level.map[target] != Terrain.DOOR) {
             if (Dungeon.level.map[target] == Terrain.EMPTY_SP) {
                 Level.set(target, Terrain.STATUE_SP);
             } else {
@@ -57,5 +57,10 @@ public class BarricadeBuild extends SandboxConsoleContent {
     @Override
     public int countUse() {
         return 2;
+    }
+
+    @Override
+    public boolean canSelect(Hero hero) {
+        return super.canSelect(hero) && Dungeon.depth % 5 != 0;
     }
 }
