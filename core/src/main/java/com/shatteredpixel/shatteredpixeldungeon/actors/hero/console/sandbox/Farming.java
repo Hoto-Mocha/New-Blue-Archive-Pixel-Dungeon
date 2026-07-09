@@ -18,10 +18,15 @@ public class Farming extends SandboxConsoleContent {
 
     @Override
     public boolean execute(Hero hero, int target) {
+        if (Dungeon.level.distance(hero.pos, target) > 1) {
+            hero.yellW("need_to_be_adjacent");
+            return false;
+        }
         if (Dungeon.level.map[target] != Terrain.GRASS
                 && Dungeon.level.map[target] != Terrain.EMPTY
                 && Dungeon.level.map[target] != Terrain.EMPTY_DECO
                 && Dungeon.level.map[target] != Terrain.WATER) {
+            hero.yellW("cannot_build");
             return false;
         }
 
