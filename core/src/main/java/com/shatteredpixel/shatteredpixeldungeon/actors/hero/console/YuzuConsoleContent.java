@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.BlackHole;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.FireBall;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.Hydropump;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.IceLance;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.Thunder;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fighter.Charge;
@@ -89,6 +90,7 @@ public abstract class YuzuConsoleContent {
             contents.add(MoveRight.INSTANCE);
         } else if (console instanceof FantasyConsole) {
             contents.add(FireBall.INSTANCE);
+            contents.add(Hydropump.INSTANCE);
             contents.add(Thunder.INSTANCE);
             contents.add(IceLance.INSTANCE);
             contents.add(BlackHole.INSTANCE);
