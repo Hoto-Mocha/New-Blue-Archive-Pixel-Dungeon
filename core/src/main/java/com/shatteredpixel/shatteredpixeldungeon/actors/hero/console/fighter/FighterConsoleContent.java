@@ -45,16 +45,6 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
         }
 
         @Override
-        public float iconFadePercent() {
-            return Math.max(0, (10-count())/10f);
-        }
-
-        @Override
-        public String iconTextDisplay() {
-            return Integer.toString((int)count());
-        }
-
-        @Override
         public void countDown(float inc) {
             if (!enhancedThisTurn) attackEnhanced = false;
             enhancedThisTurn = false;

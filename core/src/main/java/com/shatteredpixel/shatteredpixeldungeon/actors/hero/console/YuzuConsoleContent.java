@@ -113,6 +113,16 @@ public abstract class YuzuConsoleContent {
             return BuffIndicator.CONSOLE;
         }
 
+        @Override
+        public float iconFadePercent() {
+            return Math.max(0, (MAX_COUNT-count())/(float)MAX_COUNT);
+        }
+
+        @Override
+        public String iconTextDisplay() {
+            return Integer.toString((int)count());
+        }
+
         public void set() {
             countUp(MAX_COUNT);
         }
