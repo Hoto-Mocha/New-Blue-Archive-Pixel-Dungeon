@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.YuzuConsoleContent;
 import com.watabou.noosa.Image;
 
@@ -31,11 +32,11 @@ public abstract class FantasyConsoleContent extends YuzuConsoleContent {
     }
 
     public int min(Hero hero) {
-        return 10;
+        return 5*hero.pointsInTalent(Talent.YUZU_EX1_2)+hero.lvl/3;
     }
 
     public int max(Hero hero) {
-        return 30;
+        return 10*(hero.pointsInTalent(Talent.YUZU_EX1_2)+1)+hero.lvl;
     }
 
     public int damageRoll(Hero hero) {
