@@ -83,6 +83,7 @@ public abstract class YuzuShopContent {
                 contents.add(BuyContinueConsole.INSTANCE);
                 contents.add(BuyFighterConsole.INSTANCE);
                 contents.add(BuyFantasyConsole.INSTANCE);
+                contents.add(BuySandboxConsole.INSTANCE);
             }
         }
 
