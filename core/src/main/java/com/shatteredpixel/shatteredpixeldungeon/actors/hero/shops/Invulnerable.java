@@ -9,6 +9,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.VVIPM
 import com.watabou.noosa.audio.Sample;
 
 public class Invulnerable extends YuzuShopContent {
+    public static final Invulnerable INSTANCE = new Invulnerable();
+
     @Override
     public void onSelect(Hero hero) {
         Sample.INSTANCE.play(Assets.Sounds.CHARGEUP, 1f, 1.2f);

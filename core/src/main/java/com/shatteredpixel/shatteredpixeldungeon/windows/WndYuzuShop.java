@@ -68,7 +68,7 @@ public class WndYuzuShop extends Window {
 
 		int top = (int)msg.bottom()+4;
 
-		for (int i = 1; i <= 3; i++) {
+		for (int i = 1; i <= 4; i++) {
 
 			ArrayList<YuzuShopContent> contents = YuzuShopContent.getContentList(yuzu, i);
 
