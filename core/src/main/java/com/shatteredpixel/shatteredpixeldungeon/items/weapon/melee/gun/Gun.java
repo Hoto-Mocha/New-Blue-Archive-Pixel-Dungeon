@@ -651,7 +651,7 @@ public class Gun extends MeleeWeapon {
     }
 
     public int bulletDamage() {
-        int damage = Random.NormalIntRange(bulletMin(), bulletMax());
+        int damage = Hero.heroDamageIntRange(bulletMin(), bulletMax());
 
         damage = augment.damageFactor(damage);  //증강에 따라 변화하는 효과
 
