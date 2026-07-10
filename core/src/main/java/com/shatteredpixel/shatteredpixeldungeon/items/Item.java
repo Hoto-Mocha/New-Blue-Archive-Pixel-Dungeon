@@ -467,15 +467,6 @@ public class Item implements Bundlable {
 		if (byHero && Dungeon.hero != null && Dungeon.hero.isAlive()){
 			Catalog.setSeen(getClass());
 			Statistics.itemTypesDiscovered.add(getClass());
-
-			if (Dungeon.hero.hasTalent(Talent.ARIS_T1_3) && (this instanceof Potion || this instanceof Scroll)) {
-				int exp = 2+3*Dungeon.hero.pointsInTalent(Talent.ARIS_T1_3);
-
-				if (exp > 0) {
-					if (Dungeon.hero.sprite != null) Dungeon.hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(exp), FloatingText.EXPERIENCE);
-					Dungeon.hero.earnExp(exp, Talent.class);
-				}
-			}
 		}
 
 		levelKnown = true;
