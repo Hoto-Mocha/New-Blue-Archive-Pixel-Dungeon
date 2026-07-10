@@ -66,12 +66,7 @@ public class VIPMembership extends ArmorAbility {
 
         @Override
         public int icon() {
-            return BuffIndicator.UPGRADE;
-        }
-
-        @Override
-        public void tintIcon(Image icon) {
-            icon.hardlight(0xE2A865);
+            return BuffIndicator.VIP;
         }
 
         @Override
