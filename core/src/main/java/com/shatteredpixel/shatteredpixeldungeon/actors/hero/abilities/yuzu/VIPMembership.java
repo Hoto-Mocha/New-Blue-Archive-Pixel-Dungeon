@@ -2,7 +2,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -21,7 +20,7 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 
-public class VVIPMembership extends ArmorAbility {
+public class VIPMembership extends ArmorAbility {
     {
         baseChargeUse = 50f;
     }
@@ -33,7 +32,7 @@ public class VVIPMembership extends ArmorAbility {
 
     @Override
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
-        if (hero.buff(VVIPBuff.class) != null) {
+        if (hero.buff(VIPBuff.class) != null) {
             GLog.w(Messages.get(this, "already_active"));
             return;
         }
@@ -43,7 +42,7 @@ public class VVIPMembership extends ArmorAbility {
         if (Dungeon.level.heroFOV[hero.pos]){
             new Flare(6, 32).color(0xFFFF00, true).show(hero.sprite, 2f);
         }
-        Buff.affect(hero, VVIPBuff.class, VVIPBuff.DURATION);
+        Buff.affect(hero, VIPBuff.class, VIPBuff.DURATION);
         Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
         hero.sprite.operate(hero.pos);
         hero.spendAndNext(1);
@@ -58,7 +57,11 @@ public class VVIPMembership extends ArmorAbility {
         return new Talent[]{Talent.YUZU_ARMOR3_1, Talent.YUZU_ARMOR3_2, Talent.YUZU_ARMOR3_3, Talent.HEROIC_ENERGY};
     }
 
-    public static class VVIPBuff extends FlavourBuff {
+    public static class VIPBuff extends FlavourBuff {
+        {
+            announced = true;
+        }
+
         public static final float DURATION = 10f;
 
         @Override
