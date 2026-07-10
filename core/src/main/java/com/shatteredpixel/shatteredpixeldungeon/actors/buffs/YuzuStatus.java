@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
@@ -108,7 +109,7 @@ public class YuzuStatus extends Buff {
                 }
 
                 public boolean act() {
-                    Buff.affect(hero, UZQMode.class);
+                    Buff.affect(hero, UZQMode.class).set(1);
                     return super.act();
                 }
             }.attachTo(hero);
@@ -259,7 +260,9 @@ public class YuzuStatus extends Buff {
 
     public static class SerialCritBuff extends Buff {}
 
-    public static class UZQMode extends Buff {
+    public static class UZQMode extends CounterBuff {
+        float maxCount = 1;
+
         @Override
         public int icon() {
             return BuffIndicator.HASTE;
@@ -268,6 +271,52 @@ public class YuzuStatus extends Buff {
         @Override
         public void tintIcon(Image icon) {
             icon.hardlight(0x00AAFF);
+        }
+
+        @Override
+        public String iconTextDisplay() {
+            return Messages.decimalFormat("#", count());
+        }
+
+        @Override
+        public float iconFadePercent() {
+            return Math.max(0, (maxCount - count()) / maxCount);
+        }
+
+        @Override
+        public void countUp(float inc) {
+            super.countUp(inc);
+            if (count() > maxCount) maxCount = count();
+        }
+
+        @Override
+        public void countDown(float inc) {
+            super.countDown(inc);
+            if (count() <= 0) detach();
+        }
+
+        public void set(int amount) {
+            float inc = Math.max(0, amount - count());
+            countUp(inc);
+        }
+
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc", Messages.decimalFormat("#", count()));
+        }
+
+        private static final String MAX_COUNT = "maxCount";
+
+        @Override
+        public void storeInBundle(Bundle bundle) {
+            super.storeInBundle(bundle);
+            bundle.put(MAX_COUNT, maxCount);
+        }
+
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+            maxCount = bundle.getFloat(MAX_COUNT);
         }
     }
 
