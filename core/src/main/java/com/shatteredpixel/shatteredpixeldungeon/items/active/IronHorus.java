@@ -7,8 +7,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArmorBreak;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
@@ -35,16 +33,15 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.BArray;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class IronHorus extends Item {
@@ -472,23 +469,43 @@ public class IronHorus extends Item {
 
                     Dungeon.hero.busy();
                     Sample.INSTANCE.play(Assets.Sounds.MISS);
+                    final int heroFirstPos = Dungeon.hero.pos;
                     Dungeon.hero.sprite.jump(Dungeon.hero.pos, target, 0, 0.05f, new Callback() {
                         @Override
                         public void call() {
+                            boolean pushedEnemy = true;
                             Char ch = Actor.findChar(target);
                             if (ch != null) {
                                 int prevPos = ch.pos;
+                                //호시노의 위치에서 대상의 위치 방향으로 직선 경로를 만든 뒤, 대상의 한칸 뒤 타일 방향으로 경로 생성
                                 Ballistica trajectory = new Ballistica(ch.pos, path.path.get(path.dist + 1), Ballistica.MAGIC_BOLT);
-                                if ((trajectory.dist == 1 && Actor.findChar(trajectory.collisionPos) != null) || trajectory.collisionPos == prevPos) {
-                                    ArrayList<Integer> candidates = new ArrayList<>();
-                                    for (int n : PathFinder.NEIGHBOURS8) {
-                                        if (Dungeon.level.passable[prevPos+n] && Actor.findChar( prevPos+n ) == null) {
-                                            candidates.add( prevPos+n );
-                                        }
+
+                                //대상이 그 방향으로 밀려날 수 있다면 candidates는 비어있음. 그렇지 않다면 대상 주변 8방향 중 비어있는 타일이 밀려날 방향 후보가 됨. 만약 8방향 모두 비어있지 않다면 비어있음.
+                                ArrayList<Integer> candidates = pushCandidates(trajectory, prevPos);
+
+                                //대상이 움직이지 못하거나, 또는 대상이 그 방향으로 밀려날 수 없는데 다른 방향으로도 밀려날 공간이 없는 경우
+                                if (Char.hasProp(ch, Char.Property.IMMOVABLE) || (isUnableToPushEnemy(trajectory, prevPos) && candidates.isEmpty())) {
+
+                                    //그렇다면 호시노가 원래 위치로 밀려난다.
+                                    Actor.add(new Pushing(Dungeon.hero, target, heroFirstPos));
+
+                                    //이후 호시노의 위치를 원래 target이 아닌 호시노가 있던 위치로 설정하기 위해 pushedEnemy를 false로 설정
+                                    pushedEnemy = false;
+
+                                //대상을 밀어낼 수 있는 경우
+                                } else {
+
+                                    //만약 대상이 그 방향으로 못 밀려나서 다른 8방향 중 한 방향으로 밀려나야 하는 경우
+                                    if (!candidates.isEmpty()) {
+
+                                        //후보 타일 중 하나를 랜덤하게 선택하여 그 방향으로 경로를 재설정
+                                        trajectory = new Ballistica(ch.pos, Random.element( candidates ), Ballistica.MAGIC_BOLT);
                                     }
-                                    trajectory = new Ballistica(ch.pos, Random.element( candidates ), Ballistica.MAGIC_BOLT);
+
+                                    //이제 경로대로 적을 밀어낸다.
+                                    WandOfBlastWave.throwChar(ch, trajectory, 5-distance, false, true, Dungeon.hero);
                                 }
-                                WandOfBlastWave.throwChar(ch, trajectory, 5-distance, false, true, Dungeon.hero);
+
                                 int damage = dr;
                                 if (Dungeon.hero.hasTalent(Talent.HOSHINO_EX1_2)) {
                                     damage = Math.round(damage*(1+0.5f*Dungeon.hero.pointsInTalent(Talent.HOSHINO_EX1_2)));
@@ -516,7 +533,11 @@ public class IronHorus extends Item {
                             if (Dungeon.level.map[Dungeon.hero.pos] == Terrain.OPEN_DOOR) {
                                 Door.leave( Dungeon.hero.pos );
                             }
-                            Dungeon.hero.pos = target;
+                            if (pushedEnemy) {
+                                Dungeon.hero.pos = target;
+                            } else {
+                                Dungeon.hero.pos = heroFirstPos;
+                            }
                             Dungeon.level.occupyCell(Dungeon.hero);
                             Dungeon.hero.next();
                             Dungeon.observe();
@@ -544,5 +565,21 @@ public class IronHorus extends Item {
                 return Messages.get(SpiritBow.class, "prompt");
             }
         };
+
+        private static boolean isUnableToPushEnemy(Ballistica trajectory, int prevPos) {
+            return (trajectory.dist == 1 && Actor.findChar(trajectory.collisionPos) != null) || trajectory.collisionPos == prevPos;
+        }
+
+        private static ArrayList<Integer> pushCandidates(Ballistica trajectory, int prevPos) {
+            ArrayList<Integer> candidates = new ArrayList<>();
+            if (isUnableToPushEnemy(trajectory, prevPos)) {
+                for (int i : PathFinder.NEIGHBOURS8) {
+                    if (BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null)[prevPos +i] && Actor.findChar( prevPos +i ) == null) {
+                        candidates.add( prevPos +i );
+                    }
+                }
+            }
+            return candidates;
+        }
     }
 }

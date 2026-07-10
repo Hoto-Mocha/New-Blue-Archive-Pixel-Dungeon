@@ -15,6 +15,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Fox;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
@@ -415,8 +416,9 @@ public class Teleporter extends Item {
 //                }
 
 //                if (Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class) != null) Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class).detach();
-                new Gold(100000).doPickUp(Dungeon.hero, Dungeon.hero.pos);
+//                new Gold(100000).doPickUp(Dungeon.hero, Dungeon.hero.pos);
             }
+            if (Dungeon.hero.buff(IronHorus.TacticalShieldCooldown.class) != null) Dungeon.hero.buff(IronHorus.TacticalShieldCooldown.class).detach();
         }
         @Override
         public String prompt() {
