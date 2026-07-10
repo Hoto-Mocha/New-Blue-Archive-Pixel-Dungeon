@@ -1803,7 +1803,7 @@ public enum Talent {
 			hero.buff(RabbitSquadBuff.class).attack(enemy);
 		}
 
-		if (hero.buff(SupportDrone.class) != null) {
+		if (hero.buff(SupportDrone.class) != null && hero.belongings.attackingWeapon() instanceof Gun.Bullet) {
 			hero.buff(SupportDrone.class).attackProc(enemy);
 		}
 
