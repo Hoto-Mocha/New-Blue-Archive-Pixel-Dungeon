@@ -49,6 +49,7 @@ public class SR_SP extends SR {
     @Override
     public void reload() {
         doUnequip(Dungeon.hero, false, false);
+        Dungeon.hero.belongings.weapon = originalGun;
     }
 
     @Override
