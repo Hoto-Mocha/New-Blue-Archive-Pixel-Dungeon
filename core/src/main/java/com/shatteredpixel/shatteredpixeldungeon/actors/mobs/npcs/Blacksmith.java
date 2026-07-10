@@ -130,7 +130,12 @@ public class Blacksmith extends NPC {
 			
 		} else if (!Quest.completed) {
 
-			((BlacksmithSprite)sprite).swarm();
+			((BlacksmithSprite)sprite).swarm(Dungeon.hero.pos, new Callback() {
+				@Override
+				public void call() {
+					sprite.idle();
+				}
+			});
 			String msg = Messages.get(this, "reminder") + "\n\n";
 			switch (Quest.type){
 				case Quest.CRYSTAL: msg += Messages.get(Blacksmith.this, "reminder_crystal"); break;

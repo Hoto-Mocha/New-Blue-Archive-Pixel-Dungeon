@@ -29,6 +29,7 @@ import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
+import com.watabou.utils.Callback;
 
 public class BlacksmithSprite extends MobSprite {
 
@@ -76,7 +77,9 @@ public class BlacksmithSprite extends MobSprite {
 		}
 	}
 
-	public void swarm() {
+	public void swarm(int cell, Callback callback) {
+		animCallback = callback;
+		turnTo( ch.pos, cell );
 		play( swarm );
 	}
 
@@ -84,12 +87,12 @@ public class BlacksmithSprite extends MobSprite {
 	public void onComplete( Animation anim ) {
 		super.onComplete( anim );
 		
-		if (visible && emitter != null && anim == idle) {
-			emitter.burst( Speck.factory( Speck.FORGE ), 3 );
-			if (!Music.INSTANCE.paused()) {
-				float volume = 0.2f / (Dungeon.level.distance(ch.pos, Dungeon.hero.pos));
-				Sample.INSTANCE.play(Assets.Sounds.EVOKE, volume, volume, 0.8f);
-			}
-		}
+//		if (visible && emitter != null && anim == idle) {
+//			emitter.burst( Speck.factory( Speck.FORGE ), 3 );
+//			if (!Music.INSTANCE.paused()) {
+//				float volume = 0.2f / (Dungeon.level.distance(ch.pos, Dungeon.hero.pos));
+//				Sample.INSTANCE.play(Assets.Sounds.EVOKE, volume, volume, 0.8f);
+//			}
+//		}
 	}
 }
