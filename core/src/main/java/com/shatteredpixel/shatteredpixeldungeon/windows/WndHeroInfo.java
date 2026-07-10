@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.VIPMembership;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops.RandomConsumable;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -249,8 +250,8 @@ public class WndHeroInfo extends WndTabbed {
 				case YUZU:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.LAPTOP),
 							new TalentIcon(Talent.YUZU_T1_2),
-							new HeroIcon(RandomConsumable.INSTANCE),
-							new ItemSprite(ItemSpriteSheet.SR_TIER_1),
+							new HeroIcon(new VIPMembership()),
+							new ItemSprite(ItemSpriteSheet.GL_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 
