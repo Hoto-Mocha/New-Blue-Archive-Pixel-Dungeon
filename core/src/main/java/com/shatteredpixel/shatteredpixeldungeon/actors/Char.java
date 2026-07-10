@@ -147,6 +147,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Kineti
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocking;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sickle;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.ShockingDart;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -418,6 +419,10 @@ public abstract class Char extends Actor {
 			
 			if (this instanceof Hero){
 				Hero h = (Hero)this;
+				if (h.belongings.attackingWeapon() instanceof Gun.Bullet) {
+					dr = Math.round(dr * ((Gun.Bullet) h.belongings.attackingWeapon()).whatBullet().armorFactor());
+				}
+
 				if (h.belongings.attackingWeapon() instanceof MissileWeapon
 						&& h.subClass == HeroSubClass.SNIPER
 						&& !Dungeon.level.adjacent(h.pos, enemy.pos)){

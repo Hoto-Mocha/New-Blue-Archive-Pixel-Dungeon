@@ -69,6 +69,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Vampir
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RunicBlade;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Scimitar;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -548,6 +549,10 @@ abstract public class Weapon extends KindOfWeapon {
 			Berserk rage = attacker.buff(Berserk.class);
 			if (rage != null) {
 				multi = rage.enchantFactor(multi);
+			}
+
+			if (attacker instanceof Hero && ((Hero) attacker).belongings.attackingWeapon() instanceof Gun.Bullet) {
+				multi *= ((Gun.Bullet) ((Hero) attacker).belongings.attackingWeapon()).whatEnchant().enchantFactor();
 			}
 
 			if (attacker.buff(RunicBlade.RunicSlashTracker.class) != null){
