@@ -269,11 +269,13 @@ public class HeroSelectScene extends PixelScene {
 
 			int count = 0;
 			int totalCount = 0;
-			final int NEW_LINE_COUNT = 3;
+			int btnNum = heroBtns.size();
+			int spacing = 1;
+			final int MAX_BUTTONS = 3;
 			for (StyledButton button : heroBtns){
 				button.setRect(curX, curY, btnWidth, btnHeight);
 				align(button);
-				curX += btnWidth+1;
+				curX += btnWidth+spacing;
 				count++;
 				totalCount++;
 //				if (count >= (1+heroBtns.size())/2){
@@ -284,21 +286,22 @@ public class HeroSelectScene extends PixelScene {
 //					}
 //					count = 0;
 //				}
-				if (count >= NEW_LINE_COUNT){ //버튼 3개마다 줄바꿈
-					curX -= btnWidth*count + count;
-					curY += btnHeight+1;
+				if (count >= MAX_BUTTONS){ //버튼 3개마다 줄바꿈
+					curX -= btnWidth*count + count*spacing;
+					curY += btnHeight+spacing;
+					//버튼 배열을 사선으로 만드는 코드
+//					if (heroBtns.size()%MAX_BUTTONS != 0){
+//						curX += btnWidth/4f;
+//					}
 					count = 0;
 				}
-				if ((heroBtns.size() - totalCount+1) / NEW_LINE_COUNT == 0) {
-					//한 줄의 나열해야 하는 버튼의 홀수 짝수 여부와 남은 버튼의 홀수 짝수 여부가 다르다면
-					//버튼 하나를 절반으로 쪼개서 그 너비를 더함. 가운데 정렬을 위함
-					curX += (heroBtns.size() - totalCount) % 2 != NEW_LINE_COUNT % 2 ? btnWidth/2f : 0;
-
-					//한 줄의 나열해야 하는 버튼의 홀수 짝수 여부와 남은 버튼의 홀수 짝수 여부가 다르다면 나열할 버튼 개수에 1개를 더함
-					//위에서 버튼 하나를 절반으로 쪼개서 더했기 때문
-					boolean roundUp = NEW_LINE_COUNT % 2 != (heroBtns.size() - totalCount) % 2;
-					int emptyCells = (heroBtns.size() - totalCount) + (roundUp ? 1 : 0);
-					curX += btnWidth*emptyCells+emptyCells;
+				//마지막 줄 버튼 가운데 정렬 코드
+				if (totalCount >= MAX_BUTTONS*(btnNum/MAX_BUTTONS) && count == 0) {
+					//한 줄에 비어 있어야 할 버튼의 수만큼 반복
+					//예시: 7개면 2번, 8개면 1번, 9개면 0번 반복
+					for (int i = 0; i < 1+btnNum/MAX_BUTTONS-btnNum%MAX_BUTTONS; i++) {
+						curX += (btnWidth+spacing)/2f;
+					}
 				}
 			}
 
