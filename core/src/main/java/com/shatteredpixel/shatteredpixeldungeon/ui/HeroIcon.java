@@ -188,7 +188,9 @@ public class HeroIcon extends Image {
 	public static final int FIGHTER_CONSOLE	= 128 + 99;
 	public static final int FANTASY_CONSOLE = 128 + 100;
 	public static final int SANDBOX_CONSOLE	= 128 + 101;
-	public static final int SHOP_15			= 128 + 102;
+	public static final int SHOP_11			= 128 + 102;
+	public static final int SHOP_12			= 128 + 103;
+	public static final int SHOP_13			= 128 + 104;
 
 	public static final int FIGHTER_WEAK_ATK= 128 + 112;
 	public static final int FIGHTER_STROING_ATK= 128 + 113;

@@ -2,7 +2,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun;
 
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
-import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -14,7 +13,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.NoticeTracker;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Snipe;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SwiftMovement;
@@ -26,6 +24,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Wir
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.AntiMaterialRifle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.HPBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops.InfiniteAmmo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -98,10 +97,7 @@ import com.watabou.utils.Random;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Gun extends MeleeWeapon {
@@ -507,7 +503,9 @@ public class Gun extends MeleeWeapon {
     }
 
     public void useRound() {
-        round--;
+        if (hero.buff(InfiniteAmmo.InfiniteAmmoBuff.class) == null) {
+            round--;
+        }
         if (hero.hasTalent(Talent.NOA_T1_4) && round == 0) {
             Buff.affect(hero, Barrier.class).setShield(1+hero.pointsInTalent(Talent.NOA_T1_4));
         }

@@ -87,7 +87,13 @@ public abstract class YuzuShopContent {
                 contents.add(BuySandboxConsole.INSTANCE);
             }
         } else if (tier == 4) {
-            if (yuzu.buff(VVIPMembership.VVIPBuff.class) != null) {
+            if (yuzu.hasTalent(Talent.YUZU_ARMOR3_1)) {
+                contents.add(Invulnerable.INSTANCE);
+            }
+            if (yuzu.hasTalent(Talent.YUZU_ARMOR3_2)) {
+                contents.add(InfiniteAmmo.INSTANCE);
+            }
+            if (yuzu.hasTalent(Talent.YUZU_ARMOR3_3)) {
                 contents.add(Invulnerable.INSTANCE);
             }
         }
