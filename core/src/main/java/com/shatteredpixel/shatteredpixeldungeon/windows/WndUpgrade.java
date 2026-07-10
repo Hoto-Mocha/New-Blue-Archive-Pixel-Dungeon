@@ -37,6 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Greatshield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Tomahawk;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
@@ -202,6 +203,14 @@ public class WndUpgrade extends Window {
 			bottom = fillFields(Messages.get(this, "damage"),
 					aug.damageFactor(((Weapon) toUpgrade).min(levelFrom)) + "-" + aug.damageFactor(((Weapon) toUpgrade).max(levelFrom)),
 					aug.damageFactor(((Weapon) toUpgrade).min(levelTo)) + "-" + aug.damageFactor(((Weapon) toUpgrade).max(levelTo)),
+					bottom);
+		}
+
+		//bullet damage
+		if (toUpgrade instanceof Gun){
+			bottom = fillFields(Messages.get(this, "bullet"),
+					((Gun) toUpgrade).bulletMin(levelFrom) + "-" + ((Gun) toUpgrade).bulletMax(levelFrom),
+					((Gun) toUpgrade).bulletMin(levelTo) + "-" + ((Gun) toUpgrade).bulletMax(levelTo),
 					bottom);
 		}
 

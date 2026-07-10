@@ -602,7 +602,7 @@ public class Gun extends MeleeWeapon {
 
     }
 
-    protected int bulletMin(int lvl) {
+    public int bulletMin(int lvl) {
         if (hero != null) {
             int damage = tier() + lvl + RingOfSharpshooting.levelDamageBonus(hero);
 
@@ -617,7 +617,7 @@ public class Gun extends MeleeWeapon {
 
     }
 
-    protected int bulletMin() {
+    public int bulletMin() {
         if (hero != null) {
             return bulletMin(this.buffedLvl());
         }
@@ -629,7 +629,7 @@ public class Gun extends MeleeWeapon {
         return 0;
     }
 
-    protected int bulletMax(int lvl) {
+    public int bulletMax(int lvl) {
         if (hero != null) {
             int damage = baseBulletMax(lvl+RingOfSharpshooting.levelDamageBonus(hero));
 
@@ -643,7 +643,7 @@ public class Gun extends MeleeWeapon {
         }
     }
 
-    protected int bulletMax() {
+    public int bulletMax() {
         if (hero != null) {
             return bulletMax(this.buffedLvl());
         }
