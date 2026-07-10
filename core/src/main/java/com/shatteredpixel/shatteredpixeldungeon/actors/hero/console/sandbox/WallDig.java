@@ -59,7 +59,12 @@ public class WallDig extends SandboxConsoleContent {
 
     @Override
     public boolean canBuild(int target) {
-        return Dungeon.level.solid[target];
+        return Dungeon.level.solid[target]
+                && target < Dungeon.level.map.length
+                && target % Dungeon.level.width() != 1                          //왼쪽 벽
+                && target % Dungeon.level.width() != Dungeon.level.width()-1    //오른쪽 벽
+                && target > Dungeon.level.width()                               //위쪽 벽
+                && target < Dungeon.level.map.length-Dungeon.level.width();      //아래쪽 벽
     }
 
     @Override
