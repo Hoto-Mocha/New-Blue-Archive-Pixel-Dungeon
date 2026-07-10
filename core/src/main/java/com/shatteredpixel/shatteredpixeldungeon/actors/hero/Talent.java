@@ -1501,7 +1501,7 @@ public enum Talent {
 			}
 		}
 		if (hero.hasTalent(Talent.HOSHINO_T2_2)) {
-			int distance = 4+2*hero.pointsInTalent(Talent.HOSHINO_T2_2);
+			int distance = 4+4*hero.pointsInTalent(Talent.HOSHINO_T2_2);
 
 			StoneOfClairvoyance.mapping(pos, (int)Math.ceil(distance*factor));
 		}
@@ -1516,6 +1516,7 @@ public enum Talent {
 		}
 		if (hero.hasTalent(Talent.YUZU_T2_2)) {
 			int distance = 4+4*hero.pointsInTalent(Talent.YUZU_T2_2);
+
 			StoneOfClairvoyance.mapping(pos, (int)Math.ceil(distance*factor));
 		}
 	}
