@@ -69,7 +69,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.En
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.HeroicLeap;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Shockwave;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.Cabinet;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.Missile;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.VVIPMembership;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.PVP;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.ConversionKit;
@@ -521,7 +521,7 @@ public enum HeroClass {
 			case MIYU:
 				return new ArmorAbility[]{new Flashbang(), new HPBullet(), new AntiMaterialRifle()};
 			case YUZU:
-				return new ArmorAbility[]{new PVP(), new Cabinet(), new Missile()};
+				return new ArmorAbility[]{new PVP(), new Cabinet(), new VVIPMembership()};
 
 			case WARRIOR:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
