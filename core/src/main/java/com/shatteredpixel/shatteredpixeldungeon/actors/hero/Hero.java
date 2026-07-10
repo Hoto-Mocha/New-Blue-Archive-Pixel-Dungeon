@@ -645,7 +645,7 @@ public class Hero extends Char {
 		}
 
 		if (buff(YuzuStatus.UZQMode.class) != null) {
-			buff(YuzuStatus.UZQMode.class).detach();
+			buff(YuzuStatus.UZQMode.class).countDown(1);
 			return INFINITE_EVASION;
 		}
 
