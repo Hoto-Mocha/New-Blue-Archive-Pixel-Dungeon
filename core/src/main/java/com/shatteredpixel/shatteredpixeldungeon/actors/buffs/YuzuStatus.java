@@ -254,6 +254,11 @@ public class YuzuStatus extends Buff {
                 countDown(1);
             }
         }
+
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc", Messages.decimalFormat("#", count()));
+        }
     }
 
     public static class PayToWinBuff extends Buff {}
