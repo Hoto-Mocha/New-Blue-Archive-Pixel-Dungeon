@@ -376,7 +376,7 @@ public class HeroSelectScene extends PixelScene {
 					curY -= HeroBtn.HEIGHT;
 					count = 0;
 				}
-				if (totalCount == halfCount) {
+				if (totalCount == halfCount && heroBtns.size() % 2 == 1) {
 					curX += (btnWidth)/2f;
 				}
 			}
