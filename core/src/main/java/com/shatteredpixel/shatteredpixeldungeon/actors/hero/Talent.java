@@ -1340,7 +1340,7 @@ public enum Talent {
 			Buff.affect(hero, Healing.class).setHeal(2+3*hero.pointsInTalent(Talent.NOA_T2_1), 0, 1);
 		}
 		if (hero.hasTalent(Talent.MIYU_T2_1)) {
-			Buff.affect(hero, Invisibility.class, 2+3*hero.pointsInTalent(Talent.MIYU_T2_1));
+			Buff.affect(hero, Invisibility.class, 1+2*hero.pointsInTalent(Talent.MIYU_T2_1));
 		}
 		if (hero.hasTalent(Talent.YUZU_T1_1)) {
 			Buff.affect(hero, YuzuStatus.CertainCritBuff.class).countUp(1+hero.pointsInTalent(Talent.YUZU_T1_1));
