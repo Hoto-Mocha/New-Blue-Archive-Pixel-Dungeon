@@ -651,9 +651,10 @@ public class Gun extends MeleeWeapon {
     }
 
     public int bulletDamage() {
-        int damage = Hero.heroDamageIntRange(bulletMin(), bulletMax());
-
-        damage = augment.damageFactor(damage);  //증강에 따라 변화하는 효과
+        int damage = Hero.heroDamageIntRange(augment.damageFactor(bulletMin()), augment.damageFactor(bulletMax()));
+//        GLog.i("탄환 피해량: "+augment.damageFactor(bulletMin())+"~"+augment.damageFactor(bulletMax()));
+//        GLog.i("\n피해량 결과: "+damage);
+//        GLog.i("\n");
 
         if (hero.hasTalent(Talent.NONOMI_T1_3)) {
             if (hero.pointsInTalent(Talent.NONOMI_T1_3) == 2) {
