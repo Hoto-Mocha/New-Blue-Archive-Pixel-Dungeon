@@ -539,7 +539,7 @@ public class IronHorus extends Item {
                                 Dungeon.hero.pos = heroFirstPos;
                             }
                             Dungeon.level.occupyCell(Dungeon.hero);
-                            Dungeon.hero.next();
+                            Dungeon.hero.spendAndNext(1f);
                             Dungeon.observe();
                             GameScene.updateFog();
 
