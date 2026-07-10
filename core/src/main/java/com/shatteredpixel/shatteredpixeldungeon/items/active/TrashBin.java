@@ -17,6 +17,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
@@ -77,6 +78,7 @@ public class TrashBin extends Item {
 						if (t == Terrain.EMPTY || t == Terrain.EMPTY_DECO || t == Terrain.EMBERS
 								|| t == Terrain.GRASS) {
 							Level.set(cell, Terrain.FURROWED_GRASS);
+							GameScene.updateMap(cell);
 							CellEmitter.get(cell).burst(LeafParticle.LEVEL_SPECIFIC, 4);
 							if (Dungeon.level.heroFOV[cell]) Dungeon.observe();
 						}
@@ -92,6 +94,7 @@ public class TrashBin extends Item {
 									Level.set(cell, Terrain.HIGH_GRASS);
 									break;
 							}
+							GameScene.updateMap(cell);
 							CellEmitter.get(cell).burst(LeafParticle.LEVEL_SPECIFIC, 4);
 							if (Dungeon.level.heroFOV[cell]) Dungeon.observe();
 						}
