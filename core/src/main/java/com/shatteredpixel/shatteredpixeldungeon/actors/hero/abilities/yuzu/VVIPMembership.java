@@ -15,8 +15,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops.Invulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 
 public class VVIPMembership extends ArmorAbility {
@@ -27,16 +29,6 @@ public class VVIPMembership extends ArmorAbility {
     @Override
     public int icon() {
         return HeroIcon.YUZU_3;
-    }
-
-    @Override
-    public String targetingPrompt() {
-        return Messages.get(this, "prompt");
-    }
-
-    @Override
-    public int targetedPos(Char user, int dst) {
-        return dst;
     }
 
     @Override
@@ -68,6 +60,16 @@ public class VVIPMembership extends ArmorAbility {
 
     public static class VVIPBuff extends FlavourBuff {
         public static final float DURATION = 10f;
+
+        @Override
+        public int icon() {
+            return BuffIndicator.UPGRADE;
+        }
+
+        @Override
+        public void tintIcon(Image icon) {
+            icon.hardlight(0xE2A865);
+        }
 
         @Override
         public float iconFadePercent() {

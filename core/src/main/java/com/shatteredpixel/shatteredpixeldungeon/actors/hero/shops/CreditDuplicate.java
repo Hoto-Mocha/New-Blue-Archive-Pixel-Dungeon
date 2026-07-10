@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.yuzu.VVIPMembership;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
@@ -28,5 +29,10 @@ public class CreditDuplicate extends YuzuShopContent {
     @Override
     public String desc() {
         return Messages.get(this, "desc", 50*(1+Dungeon.hero.pointsInTalent(Talent.YUZU_ARMOR3_3))) + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
+    }
+
+    @Override
+    public boolean canSelect(Hero hero) {
+        return super.canSelect(hero) && hero.buff(VVIPMembership.VVIPBuff.class) != null;
     }
 }
