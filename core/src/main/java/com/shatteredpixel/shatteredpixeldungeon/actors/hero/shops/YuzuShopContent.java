@@ -97,7 +97,7 @@ public abstract class YuzuShopContent {
                 contents.add(InfiniteAmmo.INSTANCE);
             }
             if (yuzu.hasTalent(Talent.YUZU_ARMOR3_3)) {
-                contents.add(Invulnerable.INSTANCE);
+                contents.add(CreditDuplicate.INSTANCE);
             }
         }
 
