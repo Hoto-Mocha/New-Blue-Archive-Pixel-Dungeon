@@ -26,7 +26,7 @@ public class Console extends Item {
     }
 
     public void showWindow(Hero hero) {
-        GameScene.show(new WndYuzuConsole(this, hero));
+        GameScene.show(new WndYuzuConsole(this, hero, false));
     }
 
     @Override

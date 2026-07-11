@@ -27,10 +27,6 @@ public abstract class FantasyConsoleContent extends YuzuConsoleContent {
         Buff.affect(hero, FantasyConsoleBuff.class).countDown(countUse());
     }
 
-    public int countUse() {
-        return 1;
-    }
-
     public int min(Hero hero) {
         return 5*hero.pointsInTalent(Talent.YUZU_EX1_2)+hero.lvl/3;
     }

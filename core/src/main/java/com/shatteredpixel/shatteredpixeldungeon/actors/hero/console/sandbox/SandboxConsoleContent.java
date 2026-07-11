@@ -1,8 +1,10 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.YuzuConsoleContent;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.watabou.noosa.Image;
 
 public abstract class SandboxConsoleContent extends YuzuConsoleContent {
@@ -22,12 +24,13 @@ public abstract class SandboxConsoleContent extends YuzuConsoleContent {
     }
 
     @Override
-    public void onContentExecuted(Hero hero) {
-        Buff.affect(hero, SandboxConsoleBuff.class).countDown(countUse());
+    public String desc() {
+        return Messages.get(this, "desc") + "\n\n" + Messages.get(this, "token_cost", countUse());
     }
 
-    public int countUse() {
-        return 1;
+    @Override
+    public void onContentExecuted(Hero hero) {
+        Buff.affect(hero, SandboxConsoleBuff.class).countDown(countUse());
     }
 
     public boolean canBuild(int target) {

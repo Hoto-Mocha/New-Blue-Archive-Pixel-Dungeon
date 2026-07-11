@@ -24,7 +24,7 @@ public class FighterConsole extends Console {
         }
         Buff.affect(hero, FighterConsoleContent.FighterConsoleBuff.class).set();
         BuffIndicator.refreshHero();
-        GameScene.show(new WndYuzuFighterConsole(this, hero));
+        GameScene.show(new WndYuzuFighterConsole(this, hero, false));
         detach(hero.belongings.backpack);
     }
 

@@ -24,8 +24,9 @@ public abstract class FighterConsoleContent extends YuzuConsoleContent {
         return hero.buff(FighterConsoleBuff.class) != null && hero.buff(FighterConsoleBuff.class).count() >=0;
     }
 
-    public void onContentSelect(Console console, Hero hero) {
-        if (!hideWindow()) GameScene.show(new WndYuzuFighterConsole(console, hero));
+    @Override
+    public void onContentSelect(Console console, Hero hero, boolean info) {
+        if (!hideWindow()) GameScene.show(new WndYuzuFighterConsole(console, hero, info));
     }
 
     @Override

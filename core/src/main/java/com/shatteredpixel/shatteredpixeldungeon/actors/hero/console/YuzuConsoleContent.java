@@ -67,16 +67,31 @@ public abstract class YuzuConsoleContent {
         return enhanced;
     }
 
+    public String name(){
+        return Messages.get(this, "name");
+    }
+
+    public String desc() {
+        if (isEnhanced(Dungeon.hero)) {
+            return Messages.get(this, "desc_enhanced") + "\n\n" + Messages.get(this, "token_cost", countUse());
+        }
+        return Messages.get(this, "desc") + "\n\n" + Messages.get(this, "token_cost", countUse());
+    }
+
     public int icon(){
         return HeroIcon.NONE;
     }
 
-    public void onContentSelect(Console console, Hero hero) { //버튼을 눌렀을 때 작동
-        if (!hideWindow()) GameScene.show(new WndYuzuConsole(console, hero));
+    public void onContentSelect(Console console, Hero hero, boolean info) { //버튼을 눌렀을 때 작동
+        if (!hideWindow()) GameScene.show(new WndYuzuConsole(console, hero, info));
     }
 
     public void onContentExecuted(Hero hero) { //컨텐츠 내용을 성공적으로 실행했을 때 작동
         //no nothing by default
+    }
+
+    public int countUse() {
+        return 1;
     }
 
     public boolean hideWindow() {

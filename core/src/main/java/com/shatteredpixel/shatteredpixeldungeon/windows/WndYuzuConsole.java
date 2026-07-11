@@ -7,11 +7,16 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.YuzuConsoleContent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.console.Console;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
+import com.shatteredpixel.shatteredpixeldungeon.ui.RightClickMenu;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.watabou.input.PointerEvent;
+import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
+import com.watabou.utils.PointF;
 
 import java.util.ArrayList;
 
@@ -21,17 +26,16 @@ public class WndYuzuConsole extends Window {
 
 	public static int BTN_SIZE = 20;
 
-	public WndYuzuConsole(Console console, Hero yuzu){
+	public WndYuzuConsole(Console console, Hero yuzu, boolean info){
 		ArrayList<YuzuConsoleContent> contents = YuzuConsoleContent.getContentList(yuzu, console);
 
 		ArrayList<IconButton> contentBtns = new ArrayList<>();
 
 		for (YuzuConsoleContent content : contents) {
-			IconButton contentBtn = new ConsoleButton(content, yuzu, console);
+			IconButton contentBtn = new ConsoleButton(content, yuzu, console, info);
 			add(contentBtn);
 			contentBtns.add(contentBtn);
 		}
-		int top = 0;
 
 		int left = 2 + (WIDTH - contentBtns.size() * (BTN_SIZE + 4)) / 2;
 		for (IconButton btn : contentBtns) {
@@ -39,7 +43,7 @@ public class WndYuzuConsole extends Window {
 			left += btn.width() + 4;
 		}
 
-		resize(WIDTH, top + BTN_SIZE);
+		resize(WIDTH, BTN_SIZE);
 
 		//if we are on mobile, offset the window down to just above the toolbar
 		if (SPDSettings.interfaceSize() != 2){
@@ -53,15 +57,17 @@ public class WndYuzuConsole extends Window {
 		YuzuConsoleContent content;
 		Hero yuzu;
 		Console console;
+		boolean info;
 
 		NinePatch bg;
 
-		public ConsoleButton(YuzuConsoleContent content, Hero yuzu, Console console){
+		public ConsoleButton(YuzuConsoleContent content, Hero yuzu, Console console, boolean info){
 			super(new HeroIcon(content));
 
 			this.content = content;
 			this.yuzu = yuzu;
 			this.console = console;
+			this.info = info;
 
 			if (!content.canSelect(yuzu)){
 				icon.alpha( 0.3f );
@@ -83,6 +89,8 @@ public class WndYuzuConsole extends Window {
 			super.onPointerUp();
 			if (!content.canSelect(Dungeon.hero)){
 				icon.alpha( 0.3f );
+			} else if (content.isEnhanced(yuzu)) {
+				icon.brightness(1.5f);
 			}
 		}
 
@@ -99,17 +107,32 @@ public class WndYuzuConsole extends Window {
 
 		@Override
 		protected void onClick() {
-			if (!content.canSelect(Dungeon.hero)) {
-				return;
+			if (info){
+				GameScene.show(new WndTitledMessage(new HeroIcon(content), Messages.titleCase(content.name()), content.desc()));
 			} else {
-				executeContent();
+				if (!content.canSelect(Dungeon.hero)) {
+					return;
+				} else {
+					executeContent();
+				}
 			}
+		}
+
+		@Override
+		protected boolean onLongClick() {
+			GameScene.show(new WndTitledMessage(new HeroIcon(content), Messages.titleCase(content.name()), content.desc()));
+			return true;
+		}
+
+		@Override
+		protected void onRightClick() {
+			GameScene.show(new WndTitledMessage(new HeroIcon(content), Messages.titleCase(content.name()), content.desc()));
 		}
 
 		public void executeContent() {
 			hide();
 			content.onSelect(Dungeon.hero);
-			content.onContentSelect(console, Dungeon.hero);
+			content.onContentSelect(console, Dungeon.hero, info);
 			Item.updateQuickslot();
 		}
 	}

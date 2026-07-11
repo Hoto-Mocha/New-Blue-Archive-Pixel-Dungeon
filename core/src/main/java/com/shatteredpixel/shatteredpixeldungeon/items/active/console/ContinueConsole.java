@@ -17,15 +17,15 @@ public class ContinueConsole extends Console {
     @Override
     public void showWindow(Hero hero) {
         if (hero.buff(FighterConsoleContent.FighterConsoleBuff.class) != null) {
-            GameScene.show(new WndYuzuFighterConsole(new FighterConsole(), hero));
+            GameScene.show(new WndYuzuFighterConsole(new FighterConsole(), hero, false));
             detach(hero.belongings.backpack);
             return;
         } else if (hero.buff(FantasyConsoleContent.FantasyConsoleBuff.class) != null) {
-            GameScene.show(new WndYuzuConsole(new FantasyConsole(), hero));
+            GameScene.show(new WndYuzuConsole(new FantasyConsole(), hero, false));
             detach(hero.belongings.backpack);
             return;
         } else if (hero.buff(SandboxConsoleContent.SandboxConsoleBuff.class) != null) {
-            GameScene.show(new WndYuzuConsole(new SandboxConsole(), hero));
+            GameScene.show(new WndYuzuConsole(new SandboxConsole(), hero, false));
             detach(hero.belongings.backpack);
             return;
         }
