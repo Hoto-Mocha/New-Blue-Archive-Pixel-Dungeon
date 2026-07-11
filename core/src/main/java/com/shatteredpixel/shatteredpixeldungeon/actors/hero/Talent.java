@@ -1985,6 +1985,25 @@ public enum Talent {
 
 	public static class AmbushShotTracker extends Buff {}
 
+	public static class SafetyTriggerCooldown extends FlavourBuff {
+		public static final float DURATION = 10f;
+
+		@Override
+		public int icon() {
+			return BuffIndicator.TIME;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(0xE2A865);
+		}
+
+		@Override
+		public float iconFadePercent() {
+			return Math.max(0, (DURATION-visualcooldown())/DURATION);
+		}
+	}
+
 	//new buff here
 
 	public static final int MAX_TALENT_TIERS = 4;
