@@ -1094,7 +1094,9 @@ public abstract class Char extends Actor {
 		if (sprite != null) {
 			String dmgText = Integer.toString(dmg + shielded);
 			if (hero.buff(YuzuStatus.CriticalTracker.class) != null) {
-				dmgText += "!";
+				if (src instanceof Hero) {
+					dmgText += "!";
+				}
 				hero.buff(YuzuStatus.CriticalTracker.class).detach();
 			}
 			//defaults to normal damage icon if no other ones apply
