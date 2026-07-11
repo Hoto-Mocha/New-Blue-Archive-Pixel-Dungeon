@@ -17,6 +17,7 @@ public class Laptop extends Item {
         levelKnown = true;
         bones = false;
         defaultAction = AC_USE;
+        unique = true;
     }
 
     @Override
