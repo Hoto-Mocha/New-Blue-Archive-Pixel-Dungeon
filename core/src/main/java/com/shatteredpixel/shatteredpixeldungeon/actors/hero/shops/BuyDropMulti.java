@@ -46,6 +46,6 @@ public class BuyDropMulti extends YuzuShopContent {
 
     @Override
     public int creditUse(Hero hero) {
-        return 1000*(1+(int)((YuzuStatus.yuzuDropMulti(hero)-1)/YuzuStatus.DROP_MULTI_INCREMENT));
+        return 1000*(1+YuzuStatus.yuzuStatusCount(hero, YuzuStatus.DROP_MULTI));
     }
 }

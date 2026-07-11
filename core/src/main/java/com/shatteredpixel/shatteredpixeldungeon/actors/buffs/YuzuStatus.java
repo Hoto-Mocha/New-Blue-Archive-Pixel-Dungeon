@@ -135,6 +135,26 @@ public class YuzuStatus extends Buff {
         return SEARCH_CHANCE_INCREMENT * searchChanceCount;
     }
 
+    public int getCritChanceCount() {
+        return critChanceCount;
+    }
+
+    public int getCritDmgCount() {
+        return critDmgCount;
+    }
+
+    public int getCreditMultiCount() {
+        return creditMultiCount;
+    }
+
+    public int getDropMultiCount() {
+        return dropMultiCount;
+    }
+
+    public int getSearchChanceCount() {
+        return searchChanceCount;
+    }
+
     //스테이터스 구매
     public void buyStat(String key) {
         switch (key) {
@@ -219,6 +239,25 @@ public class YuzuStatus extends Buff {
     public static float yuzuSearchChanceBonus(Hero hero) {
         if (hero.buff(YuzuStatus.class) == null) return 0f;
         else return hero.buff(YuzuStatus.class).searchChanceBonus();
+    }
+
+    public static int yuzuStatusCount(Hero hero, String key) {
+        YuzuStatus b = hero.buff(YuzuStatus.class);
+        if (b == null) return 0;
+        switch (key) {
+            case CRIT_CHANCE:
+                return b.getCritChanceCount();
+            case CRIT_DMG:
+                return b.getCritDmgCount();
+            case CREDIT_MULTI:
+                return b.getCreditMultiCount();
+            case DROP_MULTI:
+                return b.getDropMultiCount();
+            case SEARCH_CHANCE:
+                return b.getSearchChanceCount();
+            default:
+                return 0;
+        }
     }
 
     public static class CertainCritBuff extends CounterBuff {

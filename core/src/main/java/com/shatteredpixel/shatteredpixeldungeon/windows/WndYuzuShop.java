@@ -208,6 +208,7 @@ public class WndYuzuShop extends Window {
 
 		public void executeContent() {
 			hide();
+			content.beforeContentSelect(Dungeon.hero);
 			content.onSelect(Dungeon.hero);
 			content.onContentSelect(laptop, Dungeon.hero, info);
 			Item.updateQuickslot();

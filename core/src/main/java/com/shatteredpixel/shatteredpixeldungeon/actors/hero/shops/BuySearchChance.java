@@ -45,6 +45,6 @@ public class BuySearchChance extends YuzuShopContent {
 
     @Override
     public int creditUse(Hero hero) {
-        return 1000*(1+(int)((YuzuStatus.yuzuSearchChanceBonus(hero))/YuzuStatus.SEARCH_CHANCE_INCREMENT));
+        return 1000*(1+YuzuStatus.yuzuStatusCount(hero, YuzuStatus.SEARCH_CHANCE));
     }
 }

@@ -45,8 +45,11 @@ public abstract class YuzuShopContent {
         return HeroIcon.NONE;
     }
 
-    public void onContentSelect(Laptop laptop, Hero hero, boolean info) {
+    public void beforeContentSelect(Hero hero) {
         Dungeon.gold -= creditUse(hero);
+    }
+
+    public void onContentSelect(Laptop laptop, Hero hero, boolean info) {
         if (hero.hasTalent(Talent.YUZU_T2_5)) {
             Item i = new Gold(Math.round(creditUse(hero)*0.05f*hero.pointsInTalent(Talent.YUZU_T2_5)));
             hero.spend(-i.pickupDelay()); //골드 획득에 턴 소모를 제거

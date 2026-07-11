@@ -47,6 +47,6 @@ public class BuyCritDmgMulti extends YuzuShopContent {
 
     @Override
     public int creditUse(Hero hero) {
-        return 1000*(1+(int)((YuzuStatus.yuzuCritDmgMulti(hero)-YuzuStatus.yuzuBaseCritDmgMulti(hero))/YuzuStatus.CRIT_DMG_INCREMENT));
+        return 1000*(1+YuzuStatus.yuzuStatusCount(hero, YuzuStatus.CRIT_DMG));
     }
 }

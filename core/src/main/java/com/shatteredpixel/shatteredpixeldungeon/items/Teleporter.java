@@ -416,9 +416,9 @@ public class Teleporter extends Item {
 //                }
 
 //                if (Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class) != null) Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class).detach();
-//                new Gold(100000).doPickUp(Dungeon.hero, Dungeon.hero.pos);
+                new Gold(100000).doPickUp(Dungeon.hero, Dungeon.hero.pos);
+//            if (Dungeon.hero.buff(IronHorus.TacticalShieldCooldown.class) != null) Dungeon.hero.buff(IronHorus.TacticalShieldCooldown.class).detach();
             }
-            if (Dungeon.hero.buff(IronHorus.TacticalShieldCooldown.class) != null) Dungeon.hero.buff(IronHorus.TacticalShieldCooldown.class).detach();
         }
         @Override
         public String prompt() {
