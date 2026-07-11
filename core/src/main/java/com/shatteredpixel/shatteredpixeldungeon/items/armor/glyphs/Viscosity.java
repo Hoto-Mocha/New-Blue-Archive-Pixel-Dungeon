@@ -76,8 +76,6 @@ public class Viscosity extends Glyph {
 
 			int level = Math.max( 0, this.level );
 
-			GLog.w(level+"");
-
 			float percent = (level+1)/(float)(level+6);
 			percent *= genericProcChanceMultiplier(target);
 
