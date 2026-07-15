@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
@@ -1917,6 +1918,12 @@ public enum Talent {
 
 		if (hero.hasTalent(Talent.YUZU_T2_3)) {
 			Viscosity.applyViscosity(hero, 1+2*hero.pointsInTalent(Talent.YUZU_T2_3));
+		}
+
+		if (hero.hasTalent(Talent.IZUNA_T1_3)) {
+			if (Random.Float() < 0.5f) {
+				Buff.affect(enemy, Bleeding.class).set(Random.IntRange(1, hero.pointsInTalent(Talent.IZUNA_T1_3)));
+			}
 		}
 
 		return damage;
