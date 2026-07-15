@@ -1129,6 +1129,12 @@ public abstract class Mob extends Char {
 								bestChance = Float.POSITIVE_INFINITY;
 							}
 						}
+						if ((ch instanceof Hero)
+								&& Dungeon.hero.hasTalent(Talent.IZUNA_T2_4)){
+							if (distance(ch) >= 4 - Dungeon.hero.pointsInTalent(Talent.IZUNA_T2_4)) {
+								bestChance = Float.POSITIVE_INFINITY;
+							}
+						}
 						//flying characters are naturally stealthy
 						if (ch.flying && distance(ch) >= 2){
 							bestChance = Float.POSITIVE_INFINITY;
