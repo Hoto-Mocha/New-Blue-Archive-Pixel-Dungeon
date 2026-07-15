@@ -23,7 +23,7 @@ public class AssassinsKunai extends QuickWeapon {
     }
 
     public float assassinationMax(int lvl) {
-        return (1+lvl)/(2f+lvl);
+        return (1+lvl)/(3f+lvl);
     }
 
 
@@ -33,6 +33,12 @@ public class AssassinsKunai extends QuickWeapon {
 
     public int assassinationMax(Mob enemy, int lvl) {
         return Math.round(enemy.HT*assassinationMax(lvl));
+    }
+
+    @Override
+    public int max(int lvl) {
+        return  4*(tier+1) +
+                lvl*(tier+1);
     }
 
     @Override
