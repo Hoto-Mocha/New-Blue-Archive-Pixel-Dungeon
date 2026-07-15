@@ -257,15 +257,15 @@ public class Assets {
 		public static final String HUNTRESS = "splashes/huntress.jpg";
 		public static final String DUELIST  = "splashes/duelist.jpg";
 		public static final String CLERIC   = "splashes/cleric.jpg";
-		public static final String ARIS		= "splashes/aris.jpg";
-		public static final String NONOMI	= "splashes/nonomi.jpg";
-		public static final String MIYAKO	= "splashes/miyako.jpg";
-		public static final String HOSHINO	= "splashes/hoshino.jpg";
-		public static final String SHIROKO	= "splashes/shiroko.jpg";
-		public static final String NOA		= "splashes/noa.jpg";
-		public static final String MIYU		= "splashes/miyu.jpg";
-		public static final String YUZU		= "splashes/yuzu.jpg";
-		public static final String IZUNA	= "splashes/izuna.jpg";
+		public static final String ARIS		= "splashes/aris.png";
+		public static final String NONOMI	= "splashes/nonomi.png";
+		public static final String MIYAKO	= "splashes/miyako.png";
+		public static final String HOSHINO	= "splashes/hoshino.png";
+		public static final String SHIROKO	= "splashes/shiroko.png";
+		public static final String NOA		= "splashes/noa.png";
+		public static final String MIYU		= "splashes/miyu.png";
+		public static final String YUZU		= "splashes/yuzu.png";
+		public static final String IZUNA	= "splashes/izuna.png";
 
 		public static final String SEWERS   = "splashes/sewers.jpg";
 		public static final String PRISON   = "splashes/prison.jpg";
