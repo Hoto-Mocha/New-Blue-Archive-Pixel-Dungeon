@@ -58,6 +58,7 @@ public class QuickWeapon extends MeleeWeapon {
                     if (!hero.canAttack(ch)) {
                         GLog.w(Messages.get(QuickWeapon.class, "cannot_reach"));
                     } else {
+                        Invisibility.dispel();
                         hero.busy();
                         hero.curAction = new HeroAction.Attack( ch ); //영웅이 대상을 공격함
                         Buff.affect(hero, QuickWeaponTracker.class).setWeapon(herosWeapon); //공격 후 영웅의 무기를 원래대로 되돌리도록 지연시키는 버프
