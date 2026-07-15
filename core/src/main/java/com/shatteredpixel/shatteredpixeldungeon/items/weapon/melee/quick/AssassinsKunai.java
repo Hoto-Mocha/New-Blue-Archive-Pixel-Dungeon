@@ -28,11 +28,20 @@ public class AssassinsKunai extends QuickWeapon {
 
 
     public int assassinationMin(Mob enemy, int lvl) {
-        return Math.round(enemy.HT*assassinationMin(lvl));
+        int dmg = Math.round(enemy.HT*assassinationMin(lvl));
+        if (Char.hasProp(enemy, Char.Property.BOSS) || Char.hasProp(enemy, Char.Property.MINIBOSS)) {
+            dmg = dmg/3;
+        }
+        return dmg;
     }
 
+
     public int assassinationMax(Mob enemy, int lvl) {
-        return Math.round(enemy.HT*assassinationMax(lvl));
+        int dmg = Math.round(enemy.HT*assassinationMax(lvl));
+        if (Char.hasProp(enemy, Char.Property.BOSS) || Char.hasProp(enemy, Char.Property.MINIBOSS)) {
+            dmg = dmg/3;
+        }
+        return dmg;
     }
 
     @Override
