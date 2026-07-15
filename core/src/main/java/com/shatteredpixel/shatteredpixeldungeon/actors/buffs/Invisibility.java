@@ -53,6 +53,9 @@ public class Invisibility extends FlavourBuff {
 			if (target instanceof Hero && ((Hero) target).hasTalent(Talent.PROTECTIVE_SHADOWS)){
 				Buff.affect(target, Talent.ProtectiveShadowsTracker.class);
 			}
+			if (target instanceof Hero && ((Hero) target).hasTalent(Talent.IZUNA_T1_4)){
+				Buff.affect(target, Talent.ShadowHideTracker.class);
+			}
 			return true;
 		} else {
 			return false;

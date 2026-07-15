@@ -338,7 +338,7 @@ public class NinjaCape extends Artifact {
 			if (super.attachTo( target )) {
 				target.invisible++;
 				if (target instanceof Hero && ((Hero) target).hasTalent(Talent.IZUNA_T1_4)){
-					Buff.affect(target, Talent.ProtectiveShadowsTracker.class);
+					Buff.affect(target, Talent.ShadowHideTracker.class);
 				}
 				return true;
 			} else {
