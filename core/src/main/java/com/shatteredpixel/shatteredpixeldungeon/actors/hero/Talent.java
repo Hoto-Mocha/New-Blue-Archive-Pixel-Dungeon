@@ -1616,6 +1616,10 @@ public enum Talent {
 
 			StoneOfClairvoyance.mapping(pos, (int)Math.ceil(distance*factor));
 		}
+		if (hero.hasTalent(Talent.IZUNA_T2_2)) {
+			int barrierInc = 5+5*hero.pointsInTalent(Talent.IZUNA_T2_2);
+			Buff.affect(hero, Barrier.class).setShield((int)Math.ceil(barrierInc*factor));
+		}
 	}
 
 	public static void onRunestoneUsed( Hero hero, int pos, Class<?extends Item> cls ){
