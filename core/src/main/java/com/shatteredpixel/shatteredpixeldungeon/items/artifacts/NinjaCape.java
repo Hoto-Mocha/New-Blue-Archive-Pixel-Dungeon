@@ -115,11 +115,14 @@ public class NinjaCape extends Artifact {
 				int maxBlinkDistance = 2;
 				PathFinder.buildDistanceMap(hero.pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null), maxBlinkDistance);
 
-				if ( PathFinder.distance[target] == Integer.MAX_VALUE ||
-						!Dungeon.level.heroFOV[target] ||
+				if (!Dungeon.level.heroFOV[target] ||
 						(target != hero.pos && Actor.findChar( target ) != null)) {
+					hero.yellW("cape_fov");
+					return;
+				}
 
-					GLog.w( Messages.get(this, "fov") );
+				if (PathFinder.distance[target] == Integer.MAX_VALUE) {
+					hero.yellW("cape_distance");
 					return;
 				}
 
@@ -131,17 +134,17 @@ public class NinjaCape extends Artifact {
 				GameScene.updateFog();
 
 				hero.spend( 1f );
-				hero.busy();
 				Sample.INSTANCE.play(Assets.Sounds.MELD);
 				activeBuff = activeBuff();
 				activeBuff.attachTo(hero);
 				Talent.onArtifactUsed(Dungeon.hero);
+				hero.next();
 			}
 		}
 
 		@Override
 		public String prompt() {
-			return Messages.get(this, "prompt");
+			return Messages.get(NinjaCape.class, "prompt");
 		}
 	};
 
