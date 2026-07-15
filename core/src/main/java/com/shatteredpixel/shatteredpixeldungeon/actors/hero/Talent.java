@@ -1287,15 +1287,9 @@ public enum Talent {
 		if (talent == NONOMI_T3_1 && hero.pointsInTalent(NONOMI_T3_1) == 1) {
 			new MG_SP().identify().collect();
 		}
-		if (talent == NONOMI_T3_1) {
-			Item.updateQuickslot();
-		}
-
-		if (talent == NONOMI_EX1_1) {
-			Item.updateQuickslot();
-		}
-
-		if (talent == MIYAKO_T2_2) {
+		if (talent == NONOMI_T3_1 || talent == NONOMI_EX1_1
+				|| talent == MIYAKO_T2_2
+				|| talent == IZUNA_T1_1) {
 			Item.updateQuickslot();
 		}
 

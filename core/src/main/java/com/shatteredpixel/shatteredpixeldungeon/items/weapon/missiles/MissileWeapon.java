@@ -455,6 +455,9 @@ abstract public class MissileWeapon extends Weapon {
 		if (holster) {
 			usages *= MagicalHolster.HOLSTER_DURABILITY_FACTOR;
 		}
+		if (Dungeon.hero != null && Dungeon.hero.hasTalent(Talent.IZUNA_T1_1)) {
+			usages += 1+2*Dungeon.hero.pointsInTalent(Talent.IZUNA_T1_1);
+		}
 
 		//+50% durability on speed aug, -33% durability on damage aug
 		usages /= augment.delayFactor(1f);
