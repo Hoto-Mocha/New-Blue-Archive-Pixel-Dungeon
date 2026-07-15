@@ -2938,6 +2938,9 @@ public class Hero extends Char {
 		if (hasTalent(Talent.YUZU_EX1_1)) {
 			AvantGardeKunBuff.repairRobot(this, pointsInTalent(Talent.YUZU_EX1_1));
 		}
+		if (hasTalent(Talent.IZUNA_T2_5) && !Dungeon.level.adjacent(pos, mob.pos)) {
+			Buff.affect(this, GreaterHaste.class).set(1+2*pointsInTalent(Talent.IZUNA_T2_5));
+		}
 	}
 
 	@Override
