@@ -825,20 +825,24 @@ public class ItemSpriteSheet {
 	public static final int FIGHTER_CONSOLE	= UNIQUE_ITEM+10;
 	public static final int FANTASY_CONSOLE	= UNIQUE_ITEM+11;
 	public static final int SNADBOX_CONSOLE	= UNIQUE_ITEM+12;
+	public static final int ASSASSIN_KUNAI	= UNIQUE_ITEM+13;
+	public static final int NINJA_CAPE		= UNIQUE_ITEM+14;
 	static {
-		assignItemRect(SUPER_NOVA, 	16, 16);
-		assignItemRect(CLAYMORE, 	13, 13);
-		assignItemRect(GRENADE, 	11, 11);
-		assignItemRect(IRON_HORUS, 	14, 14);
-		assignItemRect(BICYCLE, 	16, 16);
-		assignItemRect(CONVERSION_KIT, 	12, 13);
-		assignItemRect(TRASH_BIN, 	16, 16);
+		assignItemRect(SUPER_NOVA, 			16, 16);
+		assignItemRect(CLAYMORE, 			13, 13);
+		assignItemRect(GRENADE, 			11, 11);
+		assignItemRect(IRON_HORUS, 			14, 14);
+		assignItemRect(BICYCLE, 			16, 16);
+		assignItemRect(CONVERSION_KIT, 		12, 13);
+		assignItemRect(TRASH_BIN, 			16, 16);
 		assignItemRect(FLASHBANG_GRENADE, 	13, 13);
-		assignItemRect(LAPTOP, 	14, 14);
+		assignItemRect(LAPTOP, 				14, 14);
 		assignItemRect(CONTINUE_CONSOLE, 	15, 15);
 		assignItemRect(FIGHTER_CONSOLE, 	15, 15);
 		assignItemRect(FANTASY_CONSOLE, 	15, 15);
 		assignItemRect(SNADBOX_CONSOLE, 	15, 15);
+		assignItemRect(ASSASSIN_KUNAI, 		15, 15);
+		assignItemRect(NINJA_CAPE, 			16, 15);
 	}
 
 	private static final int NEW_ARMOR 	= 								xy(1, 34);

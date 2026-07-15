@@ -132,6 +132,8 @@ public class HeroIcon extends Image {
 	public static final int CAMOUFLAGE	 	= 128+13;
 	public static final int AVANT_GARDE_KUN = 128+14;
 	public static final int GAME_START		= 128+15;
+	public static final int SHADOW_IMAGE	= 128+16;
+	public static final int CHASE			= 128+17;
 
 	//new armor abilities
 	public static final int ARIS_1			= 128+24;
@@ -158,6 +160,9 @@ public class HeroIcon extends Image {
 	public static final int YUZU_1			= 128+45;
 	public static final int YUZU_2			= 128+46;
 	public static final int YUZU_3			= 128+47;
+	public static final int IZUNA_1			= 128+48;
+	public static final int IZUNA_2			= 128+49;
+	public static final int IZUNA_3			= 128+50;
 
 	//new action indicator visuals
   	public static final int CHARGE						= 128+64;

@@ -683,6 +683,48 @@ public enum Talent {
 	YUZU_ARMOR3_2(24, 7, 4),
 	YUZU_ARMOR3_3(25, 7, 4),
 
+	//Izuna T1
+	IZUNA_T1_1(0, 8, 2),
+	IZUNA_T1_2(1, 8, 2),
+	IZUNA_T1_3(2, 8, 2),
+	IZUNA_T1_4(3, 8, 2),
+
+	//Izuna T2
+	IZUNA_T2_1(4, 8, 2),
+	IZUNA_T2_2(5, 8, 2),
+	IZUNA_T2_3(6, 8, 2),
+	IZUNA_T2_4(7, 8, 2),
+	IZUNA_T2_5(8, 8, 2),
+
+	//Izuna T3
+	IZUNA_T3_1(9, 8, 3),
+	IZUNA_T3_2(10, 8, 3),
+
+	//Shadow Image T3
+	IZUNA_EX1_1(11, 8, 3),
+	IZUNA_EX1_2(12, 8, 3),
+	IZUNA_EX1_3(13, 8, 3),
+
+	//Chase T3
+	IZUNA_EX2_1(14, 8, 3),
+	IZUNA_EX2_2(15, 8, 3),
+	IZUNA_EX2_3(16, 8, 3),
+
+	//Armor Ability 1 T4
+	IZUNA_ARMOR1_1(17, 8, 4),
+	IZUNA_ARMOR1_2(18, 8, 4),
+	IZUNA_ARMOR1_3(19, 8, 4),
+
+	//Armor Ability 2 T4
+	IZUNA_ARMOR2_1(20, 8, 4),
+	IZUNA_ARMOR2_2(21, 8, 4),
+	IZUNA_ARMOR2_3(22, 8, 4),
+
+	//Armor Ability 3 T4
+	IZUNA_ARMOR3_1(23, 8, 4),
+	IZUNA_ARMOR3_2(24, 8, 4),
+	IZUNA_ARMOR3_3(25, 8, 4),
+
 	//universal T4
 	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one
 	//Ratmogrify T4
@@ -969,9 +1011,9 @@ public enum Talent {
 				case YUZU:
 					y = 7;
 					break;
-//				case IZUNA:
-//					y = 8;
-//					break;
+				case IZUNA:
+					y = 8;
+					break;
 			}
 			if (Ratmogrify.useRatroicEnergy){
 				y = 9;
@@ -2049,6 +2091,9 @@ public enum Talent {
 			case YUZU:
 				Collections.addAll(tierTalents, YUZU_T1_1, YUZU_T1_2, YUZU_T1_3, YUZU_T1_4);
 				break;
+			case IZUNA:
+				Collections.addAll(tierTalents, IZUNA_T1_1, IZUNA_T1_2, IZUNA_T1_3, IZUNA_T1_4);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HEARTY_MEAL, VETERANS_INTUITION, PROVOKED_ANGER, IRON_WILL);
 				break;
@@ -2102,6 +2147,9 @@ public enum Talent {
 			case YUZU:
 				Collections.addAll(tierTalents, YUZU_T2_1, YUZU_T2_2, YUZU_T2_3, YUZU_T2_4, YUZU_T2_5);
 				break;
+			case IZUNA:
+				Collections.addAll(tierTalents, IZUNA_T2_1, IZUNA_T2_2, IZUNA_T2_3, IZUNA_T2_4, IZUNA_T2_5);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, IRON_STOMACH, LIQUID_WILLPOWER, RUNIC_TRANSFERENCE, LETHAL_MOMENTUM, IMPROVISED_PROJECTILES);
 				break;
@@ -2154,6 +2202,9 @@ public enum Talent {
 				break;
 			case YUZU:
 				Collections.addAll(tierTalents, YUZU_T3_1, YUZU_T3_2);
+				break;
+			case IZUNA:
+				Collections.addAll(tierTalents, IZUNA_T3_1, IZUNA_T3_2);
 				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HOLD_FAST, STRONGMAN);
@@ -2248,6 +2299,12 @@ public enum Talent {
 				break;
 			case GAME_START:
 				Collections.addAll(tierTalents, YUZU_EX2_1, YUZU_EX2_2, YUZU_EX2_3);
+				break;
+			case SHADOW_IMAGE:
+				Collections.addAll(tierTalents, IZUNA_EX1_1, IZUNA_EX1_2, IZUNA_EX1_3);
+				break;
+			case CHASE:
+				Collections.addAll(tierTalents, IZUNA_EX2_1, IZUNA_EX2_2, IZUNA_EX2_3);
 				break;
 			case BERSERKER:
 				Collections.addAll(tierTalents, ENDLESS_RAGE, DEATHLESS_FURY, ENRAGED_CATALYST);

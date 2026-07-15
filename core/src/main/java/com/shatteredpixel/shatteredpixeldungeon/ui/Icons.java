@@ -497,6 +497,8 @@ public enum Icons {
 				return new ItemSprite(ItemSpriteSheet.TRASH_BIN);
 			case YUZU:
 				return new ItemSprite(ItemSpriteSheet.LAPTOP);
+			case IZUNA:
+				return new ItemSprite(ItemSpriteSheet.ASSASSIN_KUNAI);
 			case WARRIOR:
 				return new ItemSprite(ItemSpriteSheet.SEAL);
 			case MAGE:

@@ -44,6 +44,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Sp
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpectralBlades;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.Blink;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.SmokeSpread;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.ThrowingThunder;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.ElementalBlast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WarpBeacon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WildMagic;
@@ -145,6 +148,7 @@ public enum HeroClass {
 	NOA(HeroSubClass.DOUBLE_BARREL, HeroSubClass.CONVERSATION),
 	MIYU(HeroSubClass.TELESCOPE, HeroSubClass.CAMOUFLAGE),
 	YUZU(HeroSubClass.AVANT_GARDE_KUN, HeroSubClass.GAME_START),
+	IZUNA(HeroSubClass.SHADOW_IMAGE, HeroSubClass.CHASE),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
@@ -225,6 +229,10 @@ public enum HeroClass {
 
 			case YUZU:
 				initYuzu( hero );
+				break;
+
+			case IZUNA:
+				initIzuna( hero );
 				break;
 
 
@@ -399,6 +407,15 @@ public enum HeroClass {
 		new ScrollOfRage().identify();
 	}
 
+	private static void initIzuna(Hero hero) {
+		SMG_T1 smgT1 = new SMG_T1();
+		(hero.belongings.weapon = smgT1).identify();
+		Dungeon.quickslot.setSlot(0, smgT1);
+
+		new PotionOfHealing().identify();
+		new ScrollOfRage().identify();
+	}
+
 	private static void initWarrior( Hero hero ) {
 		(hero.belongings.weapon = new WornShortsword()).identify();
 		ThrowingStone stones = new ThrowingStone();
@@ -522,6 +539,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new Flashbang(), new HPBullet(), new AntiMaterialRifle()};
 			case YUZU:
 				return new ArmorAbility[]{new PVP(), new Cabinet(), new VIPMembership()};
+			case IZUNA:
+				return new ArmorAbility[]{new SmokeSpread(), new Blink(), new ThrowingThunder()};
 
 			case WARRIOR:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
@@ -556,6 +575,8 @@ public enum HeroClass {
 				return Assets.Sprites.MIYU;
 			case YUZU:
 				return Assets.Sprites.YUZU;
+			case IZUNA:
+				return Assets.Sprites.IZUNA;
 			case WARRIOR:
 				return Assets.Sprites.WARRIOR;
 			case MAGE:
@@ -589,6 +610,8 @@ public enum HeroClass {
 				return Assets.Splashes.MIYU;
 			case YUZU:
 				return Assets.Splashes.YUZU;
+			case IZUNA:
+				return Assets.Splashes.IZUNA;
 			case WARRIOR:
 				return Assets.Splashes.WARRIOR;
 			case MAGE:

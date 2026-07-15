@@ -86,6 +86,9 @@ public class WndHeroInfo extends WndTabbed {
 			case YUZU:
 				tabIcon = new ItemSprite(ItemSpriteSheet.LAPTOP, null);
 				break;
+			case IZUNA:
+				tabIcon = new ItemSprite(ItemSpriteSheet.ASSASSIN_KUNAI, null);
+				break;
 			case WARRIOR:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SEAL, null);
 				break;
@@ -252,6 +255,13 @@ public class WndHeroInfo extends WndTabbed {
 							new TalentIcon(Talent.YUZU_T1_2),
 							new HeroIcon(new VIPMembership()),
 							new ItemSprite(ItemSpriteSheet.GL_TIER_1),
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+					break;
+				case IZUNA:
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.NINJA_CAPE),
+							new ItemSprite(ItemSpriteSheet.MISSILE_HOLDER),
+							new ItemSprite(ItemSpriteSheet.ASSASSIN_KUNAI),
+							new ItemSprite(ItemSpriteSheet.SMG_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 

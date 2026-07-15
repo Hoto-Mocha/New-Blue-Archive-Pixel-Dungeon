@@ -130,6 +130,9 @@ abstract public class MissileWeapon extends Weapon {
 		if (masteryPotionBonus){
 			req -= 2;
 		}
+		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.IZUNA) {
+			req -= 1;
+		}
 		return req;
 	}
 

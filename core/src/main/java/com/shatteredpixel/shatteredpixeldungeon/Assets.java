@@ -265,6 +265,7 @@ public class Assets {
 		public static final String NOA		= "splashes/noa.jpg";
 		public static final String MIYU		= "splashes/miyu.jpg";
 		public static final String YUZU		= "splashes/yuzu.jpg";
+		public static final String IZUNA	= "splashes/izuna.jpg";
 
 		public static final String SEWERS   = "splashes/sewers.jpg";
 		public static final String PRISON   = "splashes/prison.jpg";
@@ -298,6 +299,7 @@ public class Assets {
 		public static final String NOA	 	= "sprites/noa.png";
 		public static final String MIYU	 	= "sprites/miyu.png";
 		public static final String YUZU	 	= "sprites/yuzu.png";
+		public static final String IZUNA	= "sprites/izuna.png";
 		public static final String AVATARS  = "sprites/avatars.png";
 		public static final String PET      = "sprites/pet.png";
 		public static final String AMULET   = "sprites/amulet.png";
