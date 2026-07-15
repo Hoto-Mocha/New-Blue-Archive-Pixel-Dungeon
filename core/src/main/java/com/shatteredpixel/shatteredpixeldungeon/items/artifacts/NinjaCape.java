@@ -7,10 +7,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -206,7 +204,7 @@ public class NinjaCape extends Artifact {
 
 	@Override
 	protected ArtifactBuff activeBuff( ) {
-		return new cloakStealth();
+		return new capeStealth();
 	}
 	
 	@Override
@@ -252,7 +250,7 @@ public class NinjaCape extends Artifact {
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		if (bundle.contains(BUFF)){
-			activeBuff = new cloakStealth();
+			activeBuff = new capeStealth();
 			activeBuff.restoreFromBundle(bundle.getBundle(BUFF));
 		}
 	}
@@ -302,7 +300,7 @@ public class NinjaCape extends Artifact {
 
 	}
 
-	public class cloakStealth extends ArtifactBuff{
+	public class capeStealth extends ArtifactBuff{
 		
 		{
 			type = buffType.POSITIVE;
