@@ -1344,6 +1344,10 @@ public enum Talent {
 			//3/5 turns of recharging
 			artifactChargeTurns += 1 + 2*hero.pointsInTalent(MYSTICAL_MEAL);
 		}
+		if (hero.hasTalent(IZUNA_T2_1)){
+			//3/5 turns of recharging
+			artifactChargeTurns += 1 + 2*hero.pointsInTalent(IZUNA_T2_1);
+		}
 		if (hero.hasTalent(INVIGORATING_MEAL)){
 			//effectively 1/2 turns of haste
 			Buff.prolong( hero, Haste.class, 0.67f+hero.pointsInTalent(INVIGORATING_MEAL));

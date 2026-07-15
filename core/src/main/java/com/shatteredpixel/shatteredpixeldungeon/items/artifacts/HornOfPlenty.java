@@ -156,6 +156,7 @@ public class HornOfPlenty extends Artifact {
 				|| Dungeon.hero.hasTalent(Talent.NOA_T2_1)
 				|| Dungeon.hero.hasTalent(Talent.MIYU_T2_1)
 				|| Dungeon.hero.hasTalent(Talent.YUZU_T2_1)
+				|| Dungeon.hero.hasTalent(Talent.IZUNA_T2_1)
 		){
 			hero.spend(Food.TIME_TO_EAT - 2);
 		} else {
