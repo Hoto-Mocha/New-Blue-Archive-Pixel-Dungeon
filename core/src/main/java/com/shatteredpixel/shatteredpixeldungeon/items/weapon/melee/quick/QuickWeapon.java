@@ -52,13 +52,11 @@ public class QuickWeapon extends MeleeWeapon {
                 Char ch = Actor.findChar(target);
                 Hero hero = curUser;
                 if (ch != null && ch.alignment == Char.Alignment.ENEMY) {
-                    KindOfWeapon herosWeapon = hero.belongings.weapon; //기존에 사용하던 무기를 저장
-                    hero.belongings.weapon = QuickWeapon.this; //공격에 사용할 무기를 이 무기로 변경
-
                     if (!hero.canAttack(ch)) {
                         GLog.w(Messages.get(QuickWeapon.class, "cannot_reach"));
                     } else {
-                        Invisibility.dispel();
+                        KindOfWeapon herosWeapon = hero.belongings.weapon; //기존에 사용하던 무기를 저장
+                        hero.belongings.weapon = QuickWeapon.this; //공격에 사용할 무기를 이 무기로 변경
                         hero.busy();
                         hero.curAction = new HeroAction.Attack( ch ); //영웅이 대상을 공격함
                         Buff.affect(hero, QuickWeaponTracker.class).setWeapon(herosWeapon); //공격 후 영웅의 무기를 원래대로 되돌리도록 지연시키는 버프
