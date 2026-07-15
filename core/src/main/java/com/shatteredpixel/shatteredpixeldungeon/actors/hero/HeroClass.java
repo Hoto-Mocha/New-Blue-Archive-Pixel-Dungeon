@@ -131,6 +131,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.quick.AssassinsKunai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
@@ -410,7 +411,17 @@ public enum HeroClass {
 	private static void initIzuna(Hero hero) {
 		SMG_T1 smgT1 = new SMG_T1();
 		(hero.belongings.weapon = smgT1).identify();
+
+		AssassinsKunai kunai = new AssassinsKunai();
+		kunai.identify().collect();
+
+		ThrowingKnife knives = new ThrowingKnife();
+		knives.identify().collect();
+
 		Dungeon.quickslot.setSlot(0, smgT1);
+		Dungeon.quickslot.setSlot(1, kunai);
+		Dungeon.quickslot.setSlot(2, knives);
+
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();

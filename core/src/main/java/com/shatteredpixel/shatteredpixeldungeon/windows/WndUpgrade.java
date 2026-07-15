@@ -38,6 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.quick.AssassinsKunai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Tomahawk;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
@@ -211,6 +212,14 @@ public class WndUpgrade extends Window {
 			bottom = fillFields(Messages.get(this, "bullet"),
 					((Gun) toUpgrade).bulletMin(levelFrom) + "-" + ((Gun) toUpgrade).bulletMax(levelFrom),
 					((Gun) toUpgrade).bulletMin(levelTo) + "-" + ((Gun) toUpgrade).bulletMax(levelTo),
+					bottom);
+		}
+
+		//assassin's kunai
+		if (toUpgrade instanceof AssassinsKunai){
+			bottom = fillFields(Messages.get(this, "assassination_damage"),
+					Messages.decimalFormat("#", ((AssassinsKunai) toUpgrade).assassinationMin(levelFrom)*100) + "%-" + Messages.decimalFormat("#", ((AssassinsKunai) toUpgrade).assassinationMax(levelFrom)*100) + "%",
+					Messages.decimalFormat("#", ((AssassinsKunai) toUpgrade).assassinationMin(levelTo)*100) + "%-" + Messages.decimalFormat("#", ((AssassinsKunai) toUpgrade).assassinationMax(levelTo)*100) + "%",
 					bottom);
 		}
 
