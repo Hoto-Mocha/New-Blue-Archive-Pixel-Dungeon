@@ -66,6 +66,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.EnergyParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
@@ -1956,6 +1957,17 @@ public enum Talent {
 		if (cause == hero) {
 			hero.onEnemyKill(mob);
 		}
+	}
+
+	public static float speedBoost(Hero hero){
+		float speedFactor = 1f;
+
+		if (hero.hasTalent(Talent.IZUNA_T2_3) && Dungeon.level.water[hero.pos]) {
+			speedFactor += 0.5f*hero.pointsInTalent(Talent.IZUNA_T2_3);
+			hero.sprite.emitter().startDelayed(Speck.factory(Speck.BLUE_LIGHT), 0.02f, 1+hero.pointsInTalent(Talent.IZUNA_T2_3), 0.05f);
+		}
+
+		return speedFactor;
 	}
 
 	public static class FirstAidCooldown extends FlavourBuff {

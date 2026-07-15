@@ -819,6 +819,7 @@ public class Hero extends Char {
 		float speed = super.speed();
 
 		speed *= RingOfHaste.speedMultiplier(this);
+		speed *= Talent.speedBoost(this);
 		
 		if (belongings.armor() != null) {
 			speed = belongings.armor().speedFactor(this, speed);
