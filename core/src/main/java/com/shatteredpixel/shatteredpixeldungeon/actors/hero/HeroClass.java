@@ -92,6 +92,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
@@ -412,6 +413,10 @@ public enum HeroClass {
 		SMG_T1 smgT1 = new SMG_T1();
 		(hero.belongings.weapon = smgT1).identify();
 
+		NinjaCape cape = new NinjaCape();
+		(hero.belongings.artifact = cape).identify();
+		hero.belongings.artifact.activate( hero );
+
 		AssassinsKunai kunai = new AssassinsKunai();
 		kunai.identify().collect();
 
@@ -419,8 +424,9 @@ public enum HeroClass {
 		knives.identify().collect();
 
 		Dungeon.quickslot.setSlot(0, smgT1);
-		Dungeon.quickslot.setSlot(1, kunai);
-		Dungeon.quickslot.setSlot(2, knives);
+		Dungeon.quickslot.setSlot(1, cape);
+		Dungeon.quickslot.setSlot(2, kunai);
+		Dungeon.quickslot.setSlot(3, knives);
 
 
 		new PotionOfHealing().identify();

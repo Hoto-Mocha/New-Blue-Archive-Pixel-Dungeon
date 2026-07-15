@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
@@ -69,6 +70,8 @@ public class LostBackpack extends Item {
 					}
 				} else if (i instanceof MagesStaff){
 					((MagesStaff) i).applyWandChargeBuff(hero);
+				} else if ( i instanceof NinjaCape && hero.hasTalent(Talent.IZUNA_T3_2)){
+					((NinjaCape) i).activate(hero);
 				}
 			}
 		}

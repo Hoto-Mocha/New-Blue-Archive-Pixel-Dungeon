@@ -123,6 +123,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
@@ -2828,6 +2829,8 @@ public class Hero extends Char {
 				}
 			} else if (i instanceof MagesStaff && i.keptThroughLostInventory()){
 				((MagesStaff) i).applyWandChargeBuff(this);
+			} else if (i instanceof NinjaCape && i.keptThroughLostInventory() && hasTalent(Talent.IZUNA_T3_2)) {
+				((NinjaCape) i).activate(this);
 			}
 		}
 

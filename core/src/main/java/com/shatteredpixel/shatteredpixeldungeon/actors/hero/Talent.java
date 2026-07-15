@@ -80,6 +80,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.EmptyScroll;
@@ -1092,6 +1093,16 @@ public enum Talent {
 				if (item instanceof CloakOfShadows){
 					if (!hero.belongings.lostInventory() || item.keptThroughLostInventory()) {
 						((CloakOfShadows) item).activate(Dungeon.hero);
+					}
+				}
+			}
+		}
+
+		if (talent == IZUNA_T3_2 && hero.heroClass == HeroClass.IZUNA){
+			for (Item item : Dungeon.hero.belongings.backpack){
+				if (item instanceof NinjaCape){
+					if (!hero.belongings.lostInventory() || item.keptThroughLostInventory()) {
+						((NinjaCape) item).activate(Dungeon.hero);
 					}
 				}
 			}
