@@ -316,6 +316,12 @@ abstract public class MissileWeapon extends Weapon {
 			availableUsesToID =  Math.max(usesLeftToID, 0);
 		}
 
+		//instant ID with the right talent
+		if (attacker == Dungeon.hero && Dungeon.hero.pointsInTalent(Talent.IZUNA_T1_2) == 2){
+			usesLeftToID = Math.min(usesLeftToID, 0);
+			availableUsesToID =  Math.max(usesLeftToID, 0);
+		}
+
 		int result = super.proc(attacker, defender, damage);
 
 		//handle ID progress over parent/child
