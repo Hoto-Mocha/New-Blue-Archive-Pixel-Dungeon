@@ -1,12 +1,14 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.quick;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 
 public class AssassinsKunai extends QuickWeapon {
     {
@@ -68,6 +70,13 @@ public class AssassinsKunai extends QuickWeapon {
     public int proc(Char attacker, Char defender, int damage) {
         if (defender instanceof Mob && ((Mob) defender).surprisedBy(attacker)) {
             defender.sprite.emitter().burst( ShadowParticle.UP, 5 );
+            if (defender.HP - damage <= 0) {
+                NinjaCape cape = Dungeon.hero.belongings.getItem(NinjaCape.class);
+                if (cape != null) {
+                    cape.directCharge(1);
+                    ScrollOfRecharging.charge(Dungeon.hero);
+                }
+            }
         }
         return super.proc(attacker, defender, damage);
     }
