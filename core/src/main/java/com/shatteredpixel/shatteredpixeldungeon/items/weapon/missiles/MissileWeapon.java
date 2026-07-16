@@ -45,6 +45,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Explosive;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projecting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.quick.AssassinsKunai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -146,8 +147,9 @@ abstract public class MissileWeapon extends Weapon {
 		} else {
 			lvl = super.buffedLvl();
 		}
-		if (Dungeon.hero != null && Dungeon.hero.hasTalent(Talent.IZUNA_EX2_3)) {
-			lvl += Math.max(0, 2*Dungeon.hero.pointsInTalent(Talent.IZUNA_EX2_3)-lvl);
+		if (Dungeon.hero != null && Dungeon.hero.hasTalent(Talent.IZUNA_EX2_3) && Dungeon.hero.belongings.getItem(AssassinsKunai.class) != null) {
+			int lvlBonus = Math.min(Dungeon.hero.belongings.getItem(AssassinsKunai.class).buffedLvl(), 2*Dungeon.hero.pointsInTalent(Talent.IZUNA_EX2_3));
+			lvl += Math.max(0, lvlBonus-lvl);
 		}
 		return lvl;
 	}
