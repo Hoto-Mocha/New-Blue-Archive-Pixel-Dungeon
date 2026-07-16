@@ -81,12 +81,6 @@ public class Blink extends ArmorAbility {
             Buff.prolong(hero, PerfectAssassination.class, hero.pointsInTalent(Talent.IZUNA_ARMOR2_3)-1);
         }
 
-        if (hero.buff(SerialBlinkTracker.class) != null) {
-            hero.buff(SerialBlinkTracker.class).detach();
-        } else if (hero.hasTalent(Talent.IZUNA_ARMOR2_3)) {
-            Buff.prolong(hero, SerialBlinkTracker.class, SerialBlinkTracker.DURATION-1);
-        }
-
         CellEmitter.get( hero.pos ).burst( Speck.factory( Speck.WOOL ), 10 );
         ScrollOfTeleportation.appear( hero, target );
         Sample.INSTANCE.play( Assets.Sounds.PUFF );
@@ -96,6 +90,12 @@ public class Blink extends ArmorAbility {
 
         armor.charge -= chargeUse( hero );
         armor.updateQuickslot();
+
+        if (hero.buff(SerialBlinkTracker.class) != null) {
+            hero.buff(SerialBlinkTracker.class).detach();
+        } else if (hero.hasTalent(Talent.IZUNA_ARMOR2_3)) {
+            Buff.prolong(hero, SerialBlinkTracker.class, SerialBlinkTracker.DURATION-1);
+        }
     }
 
     @Override
