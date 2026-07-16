@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AvantGardeKunBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BankRobber;
@@ -38,6 +39,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T3;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -128,6 +130,12 @@ public class TengusMask extends Item {
 		}
 		if (way == HeroSubClass.BANK_ROBBER) {
 			Buff.affect(curUser, BankRobber.class);
+		}
+		if (way == HeroSubClass.DOUBLE_BARREL) {
+			Item item = new HG_T3();
+			if (item.identify().collect()) {
+				Dungeon.level.drop(item, curUser.pos).sprite.drop();
+			}
 		}
 		if (way == HeroSubClass.CONVERSATION) {
 			Buff.affect(curUser, Conversation.class);
