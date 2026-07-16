@@ -181,6 +181,10 @@ public class NinjaCape extends Artifact {
 				Talent.onArtifactUsed(Dungeon.hero);
 				hero.next();
 			}
+
+			if (hero.hasTalent(Talent.IZUNA_EX2_1) && hero.buff(Talent.InstantThrowCooldown.class) == null) {
+				Buff.affect(hero, Talent.InstantThrowTracker.class, 1f);
+			}
 		}
 
 		@Override

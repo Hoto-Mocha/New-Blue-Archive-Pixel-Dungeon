@@ -295,6 +295,10 @@ abstract public class MissileWeapon extends Weapon {
 
 			}
 		}
+
+		if (curUser.buff(Talent.InstantThrowTracker.class) != null) {
+			curUser.buff(Talent.InstantThrowTracker.class).detach();
+		}
 	}
 
 	@Override
@@ -409,6 +413,9 @@ abstract public class MissileWeapon extends Weapon {
 	
 	@Override
 	public float castDelay(Char user, int cell) {
+		if (user.buff(Talent.InstantThrowTracker.class) != null) {
+			return 0;
+		}
 		if (Actor.findChar(cell) != null && Actor.findChar(cell) != user){
 			return delayFactor( user );
 		} else {

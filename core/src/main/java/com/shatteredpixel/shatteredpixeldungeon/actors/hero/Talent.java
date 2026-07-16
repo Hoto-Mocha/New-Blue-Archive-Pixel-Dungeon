@@ -2123,6 +2123,50 @@ public enum Talent {
 		}
 	}
 
+	public static class InstantThrowTracker extends FlavourBuff {
+		@Override
+		public int icon() {
+			return BuffIndicator.THROWN_WEP;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(0xFDA082);
+		}
+
+		@Override
+		public void detach() {
+			Buff.affect(target, InstantThrowCooldown.class, 20f-5f*Dungeon.hero.pointsInTalent(Talent.IZUNA_EX2_1));
+			super.detach();
+		}
+
+		@Override
+		public String iconTextDisplay() {
+			return "";
+		}
+	}
+
+	public static class InstantThrowCooldown extends FlavourBuff {
+
+		public static int DURATION = 15;
+
+		@Override
+		public int icon() {
+			return BuffIndicator.TIME;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(0xFDA082);
+		}
+
+		@Override
+		public float iconFadePercent() {
+			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+		}
+
+	}
+
 	//new buff here
 
 	public static final int MAX_TALENT_TIERS = 4;
