@@ -827,6 +827,7 @@ public class ItemSpriteSheet {
 	public static final int SNADBOX_CONSOLE	= UNIQUE_ITEM+12;
 	public static final int ASSASSIN_KUNAI	= UNIQUE_ITEM+13;
 	public static final int NINJA_CAPE		= UNIQUE_ITEM+14;
+	public static final int THUNDERBOLT		= UNIQUE_ITEM+15;
 	static {
 		assignItemRect(SUPER_NOVA, 			16, 16);
 		assignItemRect(CLAYMORE, 			13, 13);
@@ -843,6 +844,7 @@ public class ItemSpriteSheet {
 		assignItemRect(SNADBOX_CONSOLE, 	15, 15);
 		assignItemRect(ASSASSIN_KUNAI, 		15, 15);
 		assignItemRect(NINJA_CAPE, 			16, 15);
+		assignItemRect(THUNDERBOLT, 		13, 13);
 	}
 
 	private static final int NEW_ARMOR 	= 								xy(1, 34);
