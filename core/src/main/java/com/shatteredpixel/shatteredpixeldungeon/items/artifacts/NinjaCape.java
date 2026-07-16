@@ -490,7 +490,7 @@ public class NinjaCape extends Artifact {
 			alignment = Alignment.ALLY;
 
 			HT = 10;
-			if (Dungeon.hero != null) HT *= Dungeon.hero.pointsInTalent(Talent.IZUNA_EX1_1);
+			if (Dungeon.hero != null) HT *= 1+Dungeon.hero.pointsInTalent(Talent.IZUNA_EX1_1);
 			HP = HT;
 		}
 
@@ -554,7 +554,7 @@ public class NinjaCape extends Artifact {
 
 		@Override
 		public int blood() {
-			return 0xFF966400;
+			return 0xFFFFFFFF;
 		}
 
 	}
