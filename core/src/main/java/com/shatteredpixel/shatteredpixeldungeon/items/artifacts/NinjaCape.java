@@ -131,12 +131,12 @@ public class NinjaCape extends Artifact {
 
 				if ((!Dungeon.level.heroFOV[target] && hero.pointsInTalent(Talent.IZUNA_EX1_3) < 2)
 						|| !(Dungeon.level.visited[target] || Dungeon.level.mapped[target])) {
-					hero.yellW("cape_fov");
+					hero.yellW("fov");
 					return;
 				}
 
 				if (target != hero.pos && Actor.findChar( target ) != null) {
-					hero.yellW("cape_enemy");
+					hero.yellW("enemy");
 					return;
 				}
 
@@ -148,7 +148,7 @@ public class NinjaCape extends Artifact {
 				}
 
 				if (Dungeon.level.distance(hero.pos, target) > maxBlinkDistance || !Objects.equals(path.collisionPos, target)) {
-					hero.yellW("cape_distance");
+					hero.yellW("distance");
 					return;
 				}
 

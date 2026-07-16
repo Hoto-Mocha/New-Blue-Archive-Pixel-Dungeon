@@ -83,6 +83,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Ch
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.ShieldParry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.Blink;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.GPSRoute;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
@@ -2976,6 +2977,10 @@ public class Hero extends Char {
 					return super.act();
 				}
 			}.attachTo(this);
+		}
+		if (Dungeon.hero.buff(Blink.PerfectAssassination.class) != null) {
+			Dungeon.hero.buff(Blink.PerfectAssassination.class).detach();
+			Buff.affect(Dungeon.hero, Talent.LethalMomentumTracker.class, 0f);
 		}
 	}
 
