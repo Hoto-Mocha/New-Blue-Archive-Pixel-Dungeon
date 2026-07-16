@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AvantGardeKunBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
@@ -65,7 +66,8 @@ public class ChaliceOfBlood extends Artifact {
 				&& level() < levelCap
 				&& !cursed
 				&& !hero.isInvulnerable(getClass())
-				&& hero.buff(MagicImmune.class) == null)
+				&& hero.buff(MagicImmune.class) == null
+				&& hero.buff(AvantGardeKunBuff.OnBoard.class) == null)
 			actions.add(AC_PRICK);
 		return actions;
 	}
