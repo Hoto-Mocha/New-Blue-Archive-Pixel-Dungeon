@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -44,6 +45,7 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class NinjaCape extends Artifact {
 
@@ -123,15 +125,29 @@ public class NinjaCape extends Artifact {
 					return;
 				}
 				int maxBlinkDistance = 2;
-				PathFinder.buildDistanceMap(hero.pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null), maxBlinkDistance);
+				if (hero.hasTalent(Talent.IZUNA_EX1_3)) {
+					maxBlinkDistance += 1;
+				}
 
-				if (!Dungeon.level.heroFOV[target] ||
-						(target != hero.pos && Actor.findChar( target ) != null)) {
+				if ((!Dungeon.level.heroFOV[target] && hero.pointsInTalent(Talent.IZUNA_EX1_3) < 2)
+						|| !(Dungeon.level.visited[target] || Dungeon.level.mapped[target])) {
 					hero.yellW("cape_fov");
 					return;
 				}
 
-				if (PathFinder.distance[target] == Integer.MAX_VALUE) {
+				if (target != hero.pos && Actor.findChar( target ) != null) {
+					hero.yellW("cape_enemy");
+					return;
+				}
+
+				Ballistica path;
+				if (hero.pointsInTalent(Talent.IZUNA_EX1_3) >= 2) {
+					path = new Ballistica(hero.pos, target, Ballistica.STOP_TARGET);
+				} else {
+					path = new Ballistica(hero.pos, target, Ballistica.DASH);
+				}
+
+				if (Dungeon.level.distance(hero.pos, target) > maxBlinkDistance || !Objects.equals(path.collisionPos, target)) {
 					hero.yellW("cape_distance");
 					return;
 				}
@@ -156,7 +172,9 @@ public class NinjaCape extends Artifact {
 				Dungeon.observe();
 				GameScene.updateFog();
 
-				hero.spend( 1f );
+				if (hero.pointsInTalent(Talent.IZUNA_EX1_3) < 3) {
+					hero.spend( 1f );
+				}
 				Sample.INSTANCE.play(Assets.Sounds.MELD);
 				activeBuff = activeBuff();
 				activeBuff.attachTo(hero);
