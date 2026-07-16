@@ -56,7 +56,7 @@ public enum HeroSubClass {
 	AVANT_GARDE_KUN(HeroIcon.AVANT_GARDE_KUN),
 	GAME_START(HeroIcon.GAME_START),
 
-	SHADOW_IMAGE(HeroIcon.SHADOW_IMAGE),
+	SWITCHING(HeroIcon.SWITCHING),
 	CHASE(HeroIcon.CHASE),
 
 

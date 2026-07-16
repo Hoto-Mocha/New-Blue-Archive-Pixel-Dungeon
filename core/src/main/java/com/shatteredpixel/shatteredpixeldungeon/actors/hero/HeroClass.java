@@ -150,7 +150,7 @@ public enum HeroClass {
 	NOA(HeroSubClass.DOUBLE_BARREL, HeroSubClass.CONVERSATION),
 	MIYU(HeroSubClass.TELESCOPE, HeroSubClass.CAMOUFLAGE),
 	YUZU(HeroSubClass.AVANT_GARDE_KUN, HeroSubClass.GAME_START),
-	IZUNA(HeroSubClass.SHADOW_IMAGE, HeroSubClass.CHASE),
+	IZUNA(HeroSubClass.SWITCHING, HeroSubClass.CHASE),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),

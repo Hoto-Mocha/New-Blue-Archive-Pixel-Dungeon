@@ -5,11 +5,19 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -23,13 +31,16 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.BArray;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -122,6 +133,19 @@ public class NinjaCape extends Artifact {
 				if (PathFinder.distance[target] == Integer.MAX_VALUE) {
 					hero.yellW("cape_distance");
 					return;
+				}
+
+				if (Dungeon.hero.subClass == HeroSubClass.SWITCHING) {
+					for (Char ch : Actor.chars()){
+						if (ch instanceof FoxDoll){
+							ch.die(null);
+						}
+					}
+
+					FoxDoll n = new FoxDoll();
+					n.pos = hero.pos;
+					GameScene.add(n);
+					Dungeon.level.occupyCell(n);
 				}
 
 				CellEmitter.get( hero.pos ).burst( Speck.factory( Speck.WOOL ), 10 );
@@ -272,6 +296,9 @@ public class NinjaCape extends Artifact {
 					float chargeToGain = (1f / turnsToCharge);
 					if (!isEquipped(Dungeon.hero)){
 						chargeToGain *= 0.75f*Dungeon.hero.pointsInTalent(Talent.IZUNA_T3_2)/3f;
+					}
+					if (Dungeon.hero.subClass == HeroSubClass.SWITCHING) {
+						chargeToGain *= 1.5f;
 					}
 					partialCharge += chargeToGain;
 				}
@@ -427,5 +454,76 @@ public class NinjaCape extends Artifact {
 			
 			turnsToCost = bundle.getInt( TURNSTOCOST );
 		}
+	}
+
+	public static class FoxDoll extends NPC {
+
+		{
+			spriteClass = FoxDollSprite.class;
+			defenseSkill = 0;
+
+			properties.add(Property.INORGANIC); //wood is organic, but this is accurate for game logic
+
+			alignment = Alignment.ALLY;
+
+			HT = 10;
+			if (Dungeon.hero != null) HT *= Dungeon.hero.pointsInTalent(Talent.IZUNA_EX1_1);
+			HP = HT;
+		}
+
+		@Override
+		public int drRoll() {
+			int dr = super.drRoll();
+
+			dr += Random.NormalIntRange(1+Dungeon.hero.pointsInTalent(Talent.IZUNA_EX1_1),
+					3*(1+Dungeon.hero.pointsInTalent(Talent.IZUNA_EX1_1)));
+
+			return dr;
+		}
+
+		{
+			immunities.add( Dread.class );
+			immunities.add( Terror.class );
+			immunities.add( Amok.class );
+			immunities.add( Charm.class );
+			immunities.add( Sleep.class );
+			immunities.add( AllyBuff.class );
+		}
+
+	}
+
+	public static class FoxDollSprite extends MobSprite {
+
+		public FoxDollSprite(){
+			super();
+
+			texture( Assets.Sprites.FOX_DOLL );
+
+			TextureFilm frames = new TextureFilm( texture, 13, 14 );
+
+			idle = new Animation( 0, true );
+			idle.frames( frames, 0 );
+
+			run = idle.clone();
+			attack = idle.clone();
+			zap = attack.clone();
+
+			die = new Animation( 12, false );
+			die.frames( frames, 1, 2, 3, 4 );
+
+			play( idle );
+
+		}
+
+		@Override
+		public void showAlert() {
+			//do nothing
+		}
+
+		@Override
+		public int blood() {
+			return 0xFF966400;
+		}
+
 	}
 }

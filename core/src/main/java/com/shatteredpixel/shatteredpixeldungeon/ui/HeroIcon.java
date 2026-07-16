@@ -132,7 +132,7 @@ public class HeroIcon extends Image {
 	public static final int CAMOUFLAGE	 	= 128+13;
 	public static final int AVANT_GARDE_KUN = 128+14;
 	public static final int GAME_START		= 128+15;
-	public static final int SHADOW_IMAGE	= 128+16;
+	public static final int SWITCHING		= 128+16;
 	public static final int CHASE			= 128+17;
 
 	//new armor abilities

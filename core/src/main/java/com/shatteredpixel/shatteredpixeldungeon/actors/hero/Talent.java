@@ -2377,7 +2377,7 @@ public enum Talent {
 			case GAME_START:
 				Collections.addAll(tierTalents, YUZU_EX2_1, YUZU_EX2_2, YUZU_EX2_3);
 				break;
-			case SHADOW_IMAGE:
+			case SWITCHING:
 				Collections.addAll(tierTalents, IZUNA_EX1_1, IZUNA_EX1_2, IZUNA_EX1_3);
 				break;
 			case CHASE:
