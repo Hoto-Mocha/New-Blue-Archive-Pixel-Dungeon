@@ -46,6 +46,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Berserk;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChaseMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
@@ -1684,6 +1685,25 @@ public class Hero extends Char {
 				});
 			}
 			break;
+			case CHASE:
+				if (wep instanceof MissileWeapon && !(wep instanceof Gun.Bullet) && enemy != this) {
+					Actor.add(new Actor() {
+
+						{
+							actPriority = VFX_PRIO;
+						}
+
+						@Override
+						protected boolean act() {
+							if (enemy.isAlive()) {
+								Buff.prolong(Hero.this, ChaseMark.class, ChaseMark.DURATION+wep.buffedLvl()).set(enemy);
+							}
+							Actor.remove(this);
+							return true;
+						}
+					});
+				}
+				break;
 		default:
 		}
 		
