@@ -90,6 +90,7 @@ public class Thunder extends FantasyConsoleContent {
             hero.sprite.parent.addToFront( new ThunderBolt( arcs, null ) );
             Sample.INSTANCE.play(Assets.Sounds.ROCKS, 1.2f, 0.5f);
             Sample.INSTANCE.play( Assets.Sounds.BLAST );
+            sprite.centerEmitter().burst( SparkParticle.FACTORY, 5 );
         }
     }
 }
