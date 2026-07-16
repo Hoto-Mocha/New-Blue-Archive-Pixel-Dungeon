@@ -126,6 +126,8 @@ public class ChaseMark extends FlavourBuff implements ActionIndicator.Action {
             Dungeon.hero.curAction = new HeroAction.Attack( enemy );
             Dungeon.hero.next();
 
+            Buff.affect(Dungeon.hero, ChaseTracker.class);
+
             detach();
         }
     }
@@ -143,5 +145,17 @@ public class ChaseMark extends FlavourBuff implements ActionIndicator.Action {
         super.restoreFromBundle(bundle);
         enemyID = bundle.getInt(ENEMY_ID);
         ActionIndicator.setAction(this);
+    }
+
+    public static class ChaseTracker extends Buff {
+        {
+            actPriority = HERO_PRIO-1;
+        }
+
+        @Override
+        public boolean act() {
+            detach();
+            return true;
+        }
     }
 }

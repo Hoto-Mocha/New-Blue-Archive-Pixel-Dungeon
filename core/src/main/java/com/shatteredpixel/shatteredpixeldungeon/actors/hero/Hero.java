@@ -50,8 +50,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChaseMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Foresight;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HeroDisguise;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HoldFast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
@@ -2960,6 +2963,19 @@ public class Hero extends Char {
 		}
 		if (hasTalent(Talent.IZUNA_T2_5) && !Dungeon.level.adjacent(pos, mob.pos)) {
 			Buff.affect(this, GreaterHaste.class).set(1+2*pointsInTalent(Talent.IZUNA_T2_5));
+		}
+		if (hasTalent(Talent.IZUNA_EX2_2) && buff(ChaseMark.ChaseTracker.class) != null) {
+			new FlavourBuff() {
+				{
+					actPriority = VFX_PRIO;
+				}
+
+				public boolean act() {
+					Buff.affect(target, Invisibility.class, pointsInTalent(Talent.IZUNA_EX2_2));
+					Buff.affect(target, Haste.class, pointsInTalent(Talent.IZUNA_EX2_2));
+					return super.act();
+				}
+			}.attachTo(this);
 		}
 	}
 
