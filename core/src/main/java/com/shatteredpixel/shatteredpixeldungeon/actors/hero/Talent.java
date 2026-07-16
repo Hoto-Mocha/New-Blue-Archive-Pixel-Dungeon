@@ -1291,7 +1291,7 @@ public enum Talent {
 		}
 		if (talent == NONOMI_T3_1 || talent == NONOMI_EX1_1
 				|| talent == MIYAKO_T2_2
-				|| talent == IZUNA_T1_1) {
+				|| talent == IZUNA_T1_1 || talent == IZUNA_EX2_3) {
 			Item.updateQuickslot();
 		}
 

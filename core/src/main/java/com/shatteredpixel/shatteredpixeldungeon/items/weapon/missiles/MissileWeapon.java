@@ -140,11 +140,16 @@ abstract public class MissileWeapon extends Weapon {
 
 	//use the parent item if this has been thrown from a parent
 	public int buffedLvl(){
+		int lvl;
 		if (parent != null) {
-			return parent.buffedLvl();
+			lvl = parent.buffedLvl();
 		} else {
-			return super.buffedLvl();
+			lvl = super.buffedLvl();
 		}
+		if (Dungeon.hero != null && Dungeon.hero.hasTalent(Talent.IZUNA_EX2_3)) {
+			lvl += Math.max(0, 2*Dungeon.hero.pointsInTalent(Talent.IZUNA_EX2_3)-lvl);
+		}
+		return lvl;
 	}
 
 	public Item upgrade( boolean enchant ) {
