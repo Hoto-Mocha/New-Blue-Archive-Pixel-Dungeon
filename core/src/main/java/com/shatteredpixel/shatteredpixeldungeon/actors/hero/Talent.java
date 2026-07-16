@@ -1953,9 +1953,8 @@ public enum Talent {
 	}
 
 	public static void onKill(Object cause, Mob mob) {
-		Hero hero = Dungeon.hero;
-		if (cause == hero) {
-			hero.onEnemyKill(mob);
+		if (cause instanceof Hero || cause instanceof Weapon || cause instanceof Weapon.Enchantment) {
+			Dungeon.hero.onEnemyKill(mob);
 		}
 	}
 
