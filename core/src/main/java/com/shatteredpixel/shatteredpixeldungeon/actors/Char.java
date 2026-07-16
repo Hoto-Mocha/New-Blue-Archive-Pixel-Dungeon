@@ -991,6 +991,13 @@ public abstract class Char extends Actor {
 		if (alignment != Alignment.ALLY && this.buff(DeathMark.DeathMarkTracker.class) != null){
 			damage *= 1.25f;
 		}
+		if (hero.subClass == HeroSubClass.CONVERSATION) {
+			int debuffs = 0;
+			for (Buff b : buffs()) {
+				if (b.type == Buff.buffType.NEGATIVE) debuffs++;
+			}
+			damage *= 1+0.1f*debuffs;
+		}
 
 		if (buff(Sickle.HarvestBleedTracker.class) != null){
 			buff(Sickle.HarvestBleedTracker.class).detach();
