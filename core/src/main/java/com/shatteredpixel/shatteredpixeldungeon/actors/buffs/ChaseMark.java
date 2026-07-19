@@ -111,7 +111,7 @@ public class ChaseMark extends FlavourBuff implements ActionIndicator.Action {
             }
 
             if (dest == -1 || PathFinder.distance[dest] == Integer.MAX_VALUE){
-                Dungeon.hero.yellW("too_far");
+                Dungeon.hero.yellW("distance");
                 return;
             }
 
