@@ -70,6 +70,10 @@ public class ScrollOfTransmutation extends InventoryScroll {
 
 	@Override
 	protected boolean usableOnItem(Item item) {
+		//특정 아이템에 한해 변환 불가능 우선 적용
+		if (!item.transmutable()) {
+			return false;
+		}
 		//all melee weapons, except pickaxe when in a mining level
 		if (item instanceof MeleeWeapon){
 			return !(item instanceof Pickaxe && Dungeon.level instanceof MiningLevel);

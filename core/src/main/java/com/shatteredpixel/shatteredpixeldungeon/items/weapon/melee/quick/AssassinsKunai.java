@@ -80,4 +80,9 @@ public class AssassinsKunai extends QuickWeapon {
         }
         return super.proc(attacker, defender, damage);
     }
+
+    @Override
+    public boolean transmutable() {
+        return false;
+    }
 }
