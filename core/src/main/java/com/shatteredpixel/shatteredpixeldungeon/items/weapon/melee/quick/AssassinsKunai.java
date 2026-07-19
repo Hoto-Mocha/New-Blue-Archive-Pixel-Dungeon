@@ -21,11 +21,11 @@ public class AssassinsKunai extends QuickWeapon {
     }
 
     public float assassinationMin(int lvl) {
-        return (1+lvl)/(10f+lvl);
+        return augment.damageFactor((6 + lvl)/(20f + lvl));
     }
 
     public float assassinationMax(int lvl) {
-        return (1+lvl)/(3f+lvl);
+        return augment.damageFactor((4 + lvl)/(8f + lvl));
     }
 
 
