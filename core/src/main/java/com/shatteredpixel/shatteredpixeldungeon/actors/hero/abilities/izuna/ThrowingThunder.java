@@ -57,7 +57,7 @@ public class ThrowingThunder extends ArmorAbility {
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
         if (target == null) return;
         Ballistica aim = new Ballistica(hero.pos, target, Ballistica.PROJECTILE);
-        if (aim.collisionPos == hero.pos) {
+        if (aim.collisionPos == hero.pos || target == hero.pos) {
             hero.yellW("cannot_self");
             return;
         }
