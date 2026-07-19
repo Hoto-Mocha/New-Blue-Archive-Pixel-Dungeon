@@ -53,7 +53,7 @@ public class QuickWeapon extends MeleeWeapon {
                 Char ch = Actor.findChar(target);
                 Hero hero = curUser;
                 if (ch != null && ch.alignment == Char.Alignment.ENEMY) {
-                    if (!hero.canAttack(ch)) {
+                    if (!canReach(hero, target)) {
                         GLog.w(Messages.get(QuickWeapon.class, "cannot_reach"));
                     } else {
                         KindOfWeapon herosWeapon = hero.belongings.weapon; //기존에 사용하던 무기를 저장
