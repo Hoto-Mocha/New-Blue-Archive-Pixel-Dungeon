@@ -76,7 +76,7 @@ public class QuickWeapon extends MeleeWeapon {
 
     public static class QuickWeaponTracker extends Buff {
         {
-            actPriority = HERO_PRIO-1; //영웅이 행동한 직후 작동
+            actPriority = VFX_PRIO;
         }
 
         KindOfWeapon weapon;
