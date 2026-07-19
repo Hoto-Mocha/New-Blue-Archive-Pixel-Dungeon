@@ -57,6 +57,10 @@ public class ChaseMark extends FlavourBuff implements ActionIndicator.Action {
         enemyID = enemy.id();
     }
 
+    public int getEnemyID() {
+        return enemyID;
+    }
+
     @Override
     public String actionName() {
         return Messages.get(this, "action_name");

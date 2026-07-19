@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChaseMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Conversation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
@@ -1955,6 +1956,9 @@ public enum Talent {
 	public static void onKill(Object cause, Mob mob) {
 		if (cause instanceof Hero || cause instanceof Weapon || cause instanceof Weapon.Enchantment) {
 			Dungeon.hero.onEnemyKill(mob);
+		}
+		if (Dungeon.hero.buff(ChaseMark.class) != null && Dungeon.hero.buff(ChaseMark.class).getEnemyID() == mob.id()) {
+			Dungeon.hero.buff(ChaseMark.class).detach();
 		}
 	}
 
