@@ -338,6 +338,10 @@ public class GunSmithingTool extends Item {
             if (!(curItem instanceof GunSmithingTool)){
                 return;
             }
+
+            if (item != null && itemSelectable(item)) {
+                GameScene.show(new WndModSelect((Gun)item));
+            }
         }
     };
 

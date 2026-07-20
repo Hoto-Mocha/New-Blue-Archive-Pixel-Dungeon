@@ -165,7 +165,7 @@ public class Gun extends MeleeWeapon {
 
     public enum BulletMod {
         NORMAL_BULLET(1, 1),
-        AP_BULLET(0, 0.8f),
+        AP_BULLET(0, 0.85f),
         HP_BULLET(2, 1.3f);
 
         private final float armorMulti;
@@ -198,8 +198,8 @@ public class Gun extends MeleeWeapon {
 
     public enum EnchantMod {
         NORMAL_ENCHANT(1, 1),
-        AMP_ENCHANT(2, 0.75f),
-        SUP_ENCHANT(0.5f, 1.25f);
+        AMP_ENCHANT(2, 0.85f),
+        SUP_ENCHANT(0.5f, 1.1f);
 
         private final float enchantMulti;
         private final float dmgMulti;
