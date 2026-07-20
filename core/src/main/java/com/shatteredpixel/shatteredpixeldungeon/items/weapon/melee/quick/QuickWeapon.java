@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroAction;
@@ -14,6 +15,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
@@ -55,6 +57,8 @@ public class QuickWeapon extends MeleeWeapon {
                 if (ch != null && ch.alignment == Char.Alignment.ENEMY) {
                     if (!canReach(hero, target)) {
                         GLog.w(Messages.get(QuickWeapon.class, "cannot_reach"));
+                    } else if (hero.isCharmedBy(ch)) {
+                        GLog.w( Messages.get(Charm.class, "cant_attack"));
                     } else {
                         KindOfWeapon herosWeapon = hero.belongings.weapon; //기존에 사용하던 무기를 저장
                         hero.belongings.weapon = QuickWeapon.this; //공격에 사용할 무기를 이 무기로 변경
@@ -76,7 +80,12 @@ public class QuickWeapon extends MeleeWeapon {
 
     public static class QuickWeaponTracker extends Buff {
         {
-            actPriority = VFX_PRIO;
+            actPriority = HERO_PRIO-1;
+        }
+
+        @Override
+        public int icon() {
+            return BuffIndicator.TIME;
         }
 
         KindOfWeapon weapon;
