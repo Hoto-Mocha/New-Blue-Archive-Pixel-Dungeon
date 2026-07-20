@@ -1,9 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -322,17 +320,17 @@ public class GunSmithingTool extends Item {
         }
     };
 
-//    public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {
-//
-//        {
-//            inputs =  new Class[]{StoneOfAugmentation.class, LiquidMetal.class};
-//            inQuantity = new int[]{1, 20};
-//
-//            cost = 3;
-//
-//            output = GunSmithingTool.class;
-//            outQuantity = 1;
-//        }
-//
-//    }
+    public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {
+
+        {
+            inputs =  new Class[]{StoneOfAugmentation.class};
+            inQuantity = new int[]{1};
+
+            cost = 4;
+
+            output = GunSmithingTool.class;
+            outQuantity = 1;
+        }
+
+    }
 }

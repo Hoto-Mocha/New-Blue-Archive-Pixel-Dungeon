@@ -194,7 +194,8 @@ public abstract class Recipe {
 		new SummonElemental.Recipe(),
 		new StewedMeat.oneMeat(),
 		new TrinketCatalyst.Recipe(),
-		new Trinket.UpgradeTrinket()
+		new Trinket.UpgradeTrinket(),
+		new GunSmithingTool.Recipe()
 	};
 	
 	private static Recipe[] twoIngredientRecipes = new Recipe[]{
