@@ -978,11 +978,11 @@ public class ItemSpriteSheet {
 	public static final int SG_TIER_4 = SG+3;
 	public static final int SG_TIER_5 = SG+4;
 	static{
-		assignItemRect(SG_TIER_1,	12, 13);
-		assignItemRect(SG_TIER_2,	14, 15);
-		assignItemRect(SG_TIER_3,	14, 16);
+		assignItemRect(SG_TIER_1,	10, 14);
+		assignItemRect(SG_TIER_2,	12, 13);
+		assignItemRect(SG_TIER_3,	14, 15);
 		assignItemRect(SG_TIER_4,	14, 16);
-		assignItemRect(SG_TIER_5, 	15, 16);
+		assignItemRect(SG_TIER_5,	15, 16);
 	}
 
 	private static final int SMG  =                                   xy(9, 40);  //8 slots
