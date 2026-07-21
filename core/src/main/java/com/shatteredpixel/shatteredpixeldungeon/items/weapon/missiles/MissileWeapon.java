@@ -238,7 +238,11 @@ abstract public class MissileWeapon extends Weapon {
 				return 0.5f;
 			}
 		} else {
-			return 1.5f;
+			if (this instanceof Gun.Bullet) {
+				return 1f;
+			} else {
+				return 1.5f;
+			}
 		}
 	}
 
