@@ -15,6 +15,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -510,8 +511,8 @@ public class NinjaCape extends Artifact {
 
 		@Override
 		public int defenseProc( Char enemy, int damage ) {
-			if (Dungeon.hero.hasTalent(Talent.IZUNA_EX1_2) && Random.Float() < Dungeon.hero.pointsInTalent(Talent.IZUNA_EX1_2)/3f) {
-				Buff.affect(Dungeon.hero, GreaterHaste.class).set(2);
+			if (Dungeon.hero.hasTalent(Talent.IZUNA_EX1_2)) {
+				Buff.affect(enemy, Vulnerable.class, Dungeon.hero.pointsInTalent(Talent.IZUNA_EX1_2));
 			}
 
 			return super.defenseProc(enemy, damage);
