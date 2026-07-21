@@ -602,9 +602,13 @@ public class Gun extends MeleeWeapon {
 
     }
 
+    protected int baseBulletMin(int lvl) {
+        return tier() + lvl;
+    }
+
     public int bulletMin(int lvl) {
         if (hero != null) {
-            int damage = tier() + lvl + RingOfSharpshooting.levelDamageBonus(hero);
+            int damage = baseBulletMin(lvl) + RingOfSharpshooting.levelDamageBonus(hero);
 
             if (hero.buff(Talent.IntimidateBonusDamageBuff.class) != null) {
                 damage += hero.buff(Talent.IntimidateBonusDamageBuff.class).dmgBonus();
@@ -612,7 +616,7 @@ public class Gun extends MeleeWeapon {
 
             return damage;
         } else {
-            return tier() + lvl;
+            return baseBulletMin(lvl);
         }
 
     }

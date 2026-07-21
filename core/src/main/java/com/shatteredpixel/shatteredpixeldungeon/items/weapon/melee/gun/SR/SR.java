@@ -24,6 +24,11 @@ public class SR extends Gun {
     }
 
     @Override
+    protected int baseBulletMin(int lvl) {
+        return super.baseBulletMin(lvl)*2;
+    }
+
+    @Override
     public int baseBulletMax(int lvl) {
         return 4 * (tier()+2) +
                 lvl * (tier()+2);
