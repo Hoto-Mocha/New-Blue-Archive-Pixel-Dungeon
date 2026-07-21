@@ -176,8 +176,9 @@ public class NinjaCape extends Artifact {
 				GameScene.updateFog();
 
 				if (hero.pointsInTalent(Talent.IZUNA_EX1_3) < 3) {
-					hero.spend( 1f );
+					Buff.affect(hero, GreaterHaste.class).set(2);
 				}
+				hero.spend( 1f );
 				Sample.INSTANCE.play(Assets.Sounds.MELD);
 				activeBuff = activeBuff();
 				activeBuff.attachTo(hero);
