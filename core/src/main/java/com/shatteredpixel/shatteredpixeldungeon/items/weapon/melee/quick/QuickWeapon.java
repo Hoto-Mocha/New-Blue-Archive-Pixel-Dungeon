@@ -83,11 +83,6 @@ public class QuickWeapon extends MeleeWeapon {
             actPriority = HERO_PRIO-1;
         }
 
-        @Override
-        public int icon() {
-            return BuffIndicator.TIME;
-        }
-
         KindOfWeapon weapon;
 
         public void setWeapon(KindOfWeapon weapon) {
