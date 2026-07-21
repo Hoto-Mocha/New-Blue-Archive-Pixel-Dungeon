@@ -39,9 +39,7 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.BArray;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -127,6 +125,11 @@ public class NinjaCape extends Artifact {
 				int maxBlinkDistance = 2;
 				if (hero.hasTalent(Talent.IZUNA_EX1_3)) {
 					maxBlinkDistance += 1;
+				}
+
+				if (Dungeon.level.solid[target] && !Dungeon.level.passable[target]) {
+					hero.yellW("solid");
+					return;
 				}
 
 				if ((!Dungeon.level.heroFOV[target] && hero.pointsInTalent(Talent.IZUNA_EX1_3) < 2)
