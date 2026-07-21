@@ -46,7 +46,11 @@ public class SG extends Gun {
 
         @Override
         protected float adjacentAccFactor(Char owner, Char target) {
-            return 3f;
+            if (Dungeon.level.adjacent( owner.pos, target.pos )) {
+                return super.adjacentAccFactor(owner, target) * 3f;
+            } else {
+                return super.adjacentAccFactor(owner, target);
+            }
         }
     }
 }

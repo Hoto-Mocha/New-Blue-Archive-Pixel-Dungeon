@@ -1090,19 +1090,24 @@ public class Gun extends MeleeWeapon {
 
         @Override
         protected float adjacentAccFactor(Char owner, Char target) {
-            float ACC = super.adjacentAccFactor(owner, target);
-            if (owner instanceof Hero) {
-                Hero hero = (Hero) owner;
-                if (hero.buff(WireHook.PointBlankShot.class) != null) {
-                    ACC *= 3f;
-                }
-                if (hero.hasTalent(Talent.HOSHINO_T3_2)) {
-                    ACC *= 1+0.5f*((Hero)owner).pointsInTalent(Talent.HOSHINO_T3_2);
-                }
-                if (hero.pointsInTalent(Talent.NOA_EX1_3) >= 2 && isSpecialShot()) {
-                    return Char.INFINITE_ACCURACY;
+            float ACC = 1f;
+            if (Dungeon.level.adjacent( owner.pos, target.pos )) {
+                ACC *= 0.5f;
+
+                if (owner instanceof Hero){
+                    Hero hero = (Hero) owner;
+                    if (hero.buff(WireHook.PointBlankShot.class) != null) {
+                        ACC *= 3f;
+                    }
+                    if (hero.hasTalent(Talent.HOSHINO_T3_2)) {
+                        ACC *= 1+0.5f*((Hero)owner).pointsInTalent(Talent.HOSHINO_T3_2);
+                    }
+                    if (hero.pointsInTalent(Talent.NOA_EX1_3) >= 2 && isSpecialShot()) {
+                        return Char.INFINITE_ACCURACY;
+                    }
                 }
             }
+
             return ACC;
         }
 
