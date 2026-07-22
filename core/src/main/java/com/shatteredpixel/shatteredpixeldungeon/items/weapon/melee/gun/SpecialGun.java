@@ -23,6 +23,7 @@ public class SpecialGun extends Gun {
             validIngredients.put(AR_T3.class, UniqueIdea.class);
             validIngredients.put(AR_T4.class, UniqueIdea.class);
             validIngredients.put(AR_T5.class, UniqueIdea.class);
+            validIngredients.put(UniqueIdea.class, UniqueIdea.class);
 
         }
 
