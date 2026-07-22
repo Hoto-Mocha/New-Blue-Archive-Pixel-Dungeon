@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Blandfruit;
@@ -58,6 +59,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.spells.WildEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.Trinket;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.TrinketCatalyst;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.watabou.utils.Reflection;
 
@@ -211,7 +214,8 @@ public abstract class Recipe {
 		new CurseInfusion.Recipe(),
 		new ReclaimTrap.Recipe(),
 		new WildEnergy.Recipe(),
-		new StewedMeat.twoMeat()
+		new StewedMeat.twoMeat(),
+		new SpecialGun.Recipe()
 	};
 	
 	private static Recipe[] threeIngredientRecipes = new Recipe[]{
@@ -259,7 +263,7 @@ public abstract class Recipe {
 		//only upgradeable thrown weapons and wands allowed among equipment items
 		if (item instanceof EquipableItem){
 			return item.cursedKnown && !item.cursed &&
-					item instanceof MissileWeapon && item.isUpgradable();
+					(item instanceof MissileWeapon || (item instanceof Gun && item.isIdentified() && !item.isEquipped(Dungeon.hero))) && item.isUpgradable();
 		} else if (item instanceof Wand) {
 			return item.cursedKnown && !item.cursed;
 		} else {
