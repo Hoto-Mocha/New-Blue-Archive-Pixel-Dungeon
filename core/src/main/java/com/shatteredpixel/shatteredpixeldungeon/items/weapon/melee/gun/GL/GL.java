@@ -47,7 +47,7 @@ public class GL extends Gun {
 
         @Override
         public boolean isSimilar(Item item) {
-            return item instanceof GL;
+            return super.isSimilar(item) && item instanceof GL;
         }
     }
 

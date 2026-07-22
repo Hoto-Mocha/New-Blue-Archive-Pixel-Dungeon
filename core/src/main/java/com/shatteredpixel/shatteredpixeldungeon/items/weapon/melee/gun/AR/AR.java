@@ -46,7 +46,7 @@ public class AR extends Gun {
 
         @Override
         public boolean isSimilar(Item item) {
-            return item instanceof AR;
+            return super.isSimilar(item) && item instanceof AR;
         }
     }
 }

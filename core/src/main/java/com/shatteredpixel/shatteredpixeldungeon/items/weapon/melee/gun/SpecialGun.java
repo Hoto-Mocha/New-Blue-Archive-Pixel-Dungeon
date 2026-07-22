@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class SpecialGun extends Gun {
-    public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
+public interface SpecialGun {
+    class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
         public static final LinkedHashMap<Class<?extends Gun>, Class<?extends Gun>> validIngredients = new LinkedHashMap<>();
         static {
             validIngredients.put(AR_T1.class, UniqueIdea.class);
@@ -23,7 +23,6 @@ public class SpecialGun extends Gun {
             validIngredients.put(AR_T3.class, UniqueIdea.class);
             validIngredients.put(AR_T4.class, UniqueIdea.class);
             validIngredients.put(AR_T5.class, UniqueIdea.class);
-            validIngredients.put(UniqueIdea.class, UniqueIdea.class);
 
         }
 
