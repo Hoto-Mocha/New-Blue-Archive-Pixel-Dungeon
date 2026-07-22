@@ -20,6 +20,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Piety;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.ShootingStar;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T3;
@@ -54,6 +60,12 @@ public interface SpecialGun {
             validIngredients.put(HG_T4.class, Piety.class);
             validIngredients.put(HG_T5.class, Piety.class);
 
+            validIngredients.put(SG_T1.class, ShootingStar.class);
+            validIngredients.put(SG_T2.class, ShootingStar.class);
+            validIngredients.put(SG_T3.class, ShootingStar.class);
+            validIngredients.put(SG_T4.class, ShootingStar.class);
+            validIngredients.put(SG_T5.class, ShootingStar.class);
+
             validIngredients.put(SMG_T1.class, TwinDragon.class);
             validIngredients.put(SMG_T2.class, TwinDragon.class);
             validIngredients.put(SMG_T3.class, TwinDragon.class);
@@ -67,6 +79,7 @@ public interface SpecialGun {
             gunCosts.put(UniqueIdea.class, 8);
             gunCosts.put(FunnyFirework.class, 8);
             gunCosts.put(Piety.class, 8);
+            gunCosts.put(ShootingStar.class, 8);
             gunCosts.put(TwinDragon.class, 8);
         }
 
