@@ -143,7 +143,7 @@ public interface SpecialGun {
             for (Item i : ingredients){
                 i.quantity(i.quantity()-1);
                 if (validIngredients.containsKey(i.getClass())){
-                    result = Reflection.newInstance(validIngredients.get(i.getClass()));
+                    result = brewGun(i);
                 }
             }
 
@@ -158,10 +158,37 @@ public interface SpecialGun {
         public Item sampleOutput(ArrayList<Item> ingredients) {
             for (Item i : ingredients){
                 if (validIngredients.containsKey(i.getClass())){
-                    return Reflection.newInstance(validIngredients.get(i.getClass()));
+                    return brewGun(i);
                 }
             }
             return null;
+        }
+
+        public Gun brewGun(Item item) {
+            if (!(item instanceof Gun)) return null;
+
+            Gun n = Reflection.newInstance(validIngredients.get(item.getClass()));
+            if (n == null) return null;
+
+            Gun g = (Gun)item;
+            n.identify().upgrade(g.level());
+
+            if (g.checkKit() != null) {
+                //만약 키트가 강화되어 있다면 키트에 의해 추가로 증가한 강화수치를 1 감소시킴
+                if (g.checkKit().level() > 0) {
+                    n.degrade(g.checkKit().level());
+                }
+                n.affixKit(g.checkKit());
+            }
+            n.barrelMod = g.barrelMod;
+            n.magazineMod = g.magazineMod;
+            n.bulletMod = g.bulletMod;
+            n.weightMod = g.weightMod;
+            n.attachMod = g.attachMod;
+            n.enchantMod = g.enchantMod;
+            n.inscribeMod = g.inscribeMod;
+
+            return n;
         }
     }
 }
