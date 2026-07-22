@@ -54,6 +54,7 @@ public interface SpecialGun {
         static {
             gunCosts.put(UniqueIdea.class, 8);
             gunCosts.put(FunnyFirework.class, 8);
+            gunCosts.put(Piety.class, 8);
         }
 
         @Override

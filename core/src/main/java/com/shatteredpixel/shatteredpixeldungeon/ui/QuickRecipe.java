@@ -71,6 +71,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.UniqueIdea;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.FunnyFirework;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Piety;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -363,6 +365,9 @@ public class QuickRecipe extends Component {
 				result.add(new QuickRecipe( new SpecialGun.Recipe(),
 						new ArrayList<Item>(Arrays.asList(new GL.PlaceHolder(), new GunSmithingTool())),
 						new FunnyFirework()));
+				result.add(new QuickRecipe( new SpecialGun.Recipe(),
+						new ArrayList<Item>(Arrays.asList(new HG.PlaceHolder(), new GunSmithingTool())),
+						new Piety()));
 				return result;
 			case 7:
 				result.add(new QuickRecipe(new UnstableBrew.Recipe(), new ArrayList<>(Arrays.asList(new Potion.PlaceHolder(), new  Plant.Seed.PlaceHolder())), new UnstableBrew()));
