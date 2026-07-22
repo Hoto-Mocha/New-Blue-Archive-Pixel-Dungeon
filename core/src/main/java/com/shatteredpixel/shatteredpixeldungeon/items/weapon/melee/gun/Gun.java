@@ -115,6 +115,7 @@ public class Gun extends MeleeWeapon {
     protected float shootingSpeed = 1f; //발사 시 소모하는 턴의 배율. 낮을수록 빠르다
     protected float shootingAccuracy = 1f; //발사 시 탄환 정확성의 배율. 높을 수록 정확하다.
     protected boolean explode = false; //탄환 폭발 여부
+    protected boolean selfHarm = true; //탄환 폭발의 자가 피해 여부
     protected boolean spread = false; //산탄 여부. 멀리 떨어지면 탄환 위력이 감소한다.
     public static final String TXT_STATUS = "%d/%d";
 
@@ -257,6 +258,7 @@ public class Gun extends MeleeWeapon {
     private static final String SHOOTING_SPEED = "shootingSpeed";
     private static final String SHOOTING_ACCURACY = "shootingAccuracy";
     private static final String EXPLODE = "explode";
+    private static final String SELF_HARM = "selfHarm";
     private static final String SPREAD = "spread";
     private static final String RIOT = "riot";
     private static final String SHOOTALL = "shootAll";
@@ -278,6 +280,7 @@ public class Gun extends MeleeWeapon {
         bundle.put(SHOOTING_SPEED, shootingSpeed);
         bundle.put(SHOOTING_ACCURACY, shootingAccuracy);
         bundle.put(EXPLODE, explode);
+        bundle.put(SELF_HARM, selfHarm);
         bundle.put(SPREAD, spread);
         bundle.put(BARREL_MOD, barrelMod);
         bundle.put(MAGAZINE_MOD, magazineMod);
@@ -299,6 +302,7 @@ public class Gun extends MeleeWeapon {
         shootingSpeed = bundle.getFloat(SHOOTING_SPEED);
         shootingAccuracy = bundle.getFloat(SHOOTING_ACCURACY);
         explode = bundle.getBoolean(EXPLODE);
+        selfHarm = bundle.getBoolean(SELF_HARM);
         spread = bundle.getBoolean(SPREAD);
         barrelMod = bundle.getEnum(BARREL_MOD, BarrelMod.class);
         magazineMod = bundle.getEnum(MAGAZINE_MOD, MagazineMod.class);
@@ -1223,7 +1227,9 @@ public class Gun extends MeleeWeapon {
                     }
                     Char ch = Actor.findChar(c);
                     if (ch != null && !targets.contains(ch)) {
-                        targets.add(ch);
+                        if (!(ch instanceof Hero && !selfHarm)) {
+                            targets.add(ch);
+                        }
                     }
                 }
             }
