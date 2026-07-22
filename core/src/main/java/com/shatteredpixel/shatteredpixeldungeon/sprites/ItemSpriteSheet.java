@@ -968,7 +968,7 @@ public class ItemSpriteSheet {
 		assignItemRect(MG_TIER_3,	16, 15);
 		assignItemRect(MG_TIER_4,	13, 15);
 		assignItemRect(MG_TIER_5, 	16, 15);
-		assignItemRect(MG_SPECIAL, 	14, 16);
+		assignItemRect(MG_SPECIAL, 	16, 14);
 	}
 
 	private static final int SG  =                                   xy(1, 40);  //8 slots
