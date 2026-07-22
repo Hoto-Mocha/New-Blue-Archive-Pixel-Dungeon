@@ -1015,7 +1015,7 @@ public class ItemSpriteSheet {
 		assignItemRect(SR_SPECIAL, 	15, 16);
 	}
 
-	private static final int GUN_PLACEHOLDERS = 					xy(8, 41); //8 slots
+	private static final int GUN_PLACEHOLDERS = 					xy(9, 41); //8 slots
 	public static final int AR_PLACEHOLDER = GUN_PLACEHOLDERS+0;
 	public static final int GL_PLACEHOLDER = GUN_PLACEHOLDERS+1;
 	public static final int HG_PLACEHOLDER = GUN_PLACEHOLDERS+2;
