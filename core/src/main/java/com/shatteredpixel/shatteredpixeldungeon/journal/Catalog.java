@@ -200,6 +200,7 @@ public enum Catalog {
 		GUNS.addItems(Generator.Category.GUN_T3.classes);
 		GUNS.addItems(Generator.Category.GUN_T4.classes);
 		GUNS.addItems(Generator.Category.GUN_T5.classes);
+		GUNS.addItems(Generator.Category.GUN_SP.classes);
 
 		ARMOR.addItems(Generator.Category.ARMOR.classes);
 
