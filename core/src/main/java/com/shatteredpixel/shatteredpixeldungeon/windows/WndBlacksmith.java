@@ -36,6 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
@@ -164,6 +165,15 @@ public class WndBlacksmith extends Window {
 		};
 		smith.enable(Blacksmith.Quest.favor >= 2000);
 		buttons.add(smith);
+
+		RedButton inscribe = new RedButton(Messages.get(this, "inscribe", 2000), 6){
+			@Override
+			protected void onClick() {
+				GameScene.show(new WndInscribe(troll, WndBlacksmith.this));
+			}
+		};
+		inscribe.enable(Blacksmith.Quest.favor >= 2000);
+		buttons.add(inscribe);
 
 		RedButton cashOut = new RedButton(Messages.get(this, "cashout"), 6){
 			@Override
@@ -551,6 +561,119 @@ public class WndBlacksmith extends Window {
 				resize(width, (int)btnCancel.bottom());
 			}
 		}
+
+	}
+
+	protected static class WndInscribe extends Window {
+
+		private static final int WIDTH		= 120;
+
+		private static final int BTN_SIZE	= 32;
+		private static final float GAP		= 2;
+		private static final float BTN_GAP	= 5;
+
+		private ItemButton btnPressed;
+
+		private ItemButton btnItem;
+		private RedButton btnInscribe;
+
+		public WndInscribe( Blacksmith troll, Window wndParent ) {
+			super();
+
+			IconTitle titlebar = new IconTitle();
+			titlebar.icon( troll.sprite() );
+			titlebar.label( Messages.titleCase( troll.name() ) );
+			titlebar.setRect( 0, 0, WIDTH, 0 );
+			add( titlebar );
+
+			RenderedTextBlock message = PixelScene.renderTextBlock( Messages.get(this, "message"), 6 );
+			message.maxWidth( WIDTH);
+			message.setPos(0, titlebar.bottom() + GAP);
+			add( message );
+
+			btnItem = new ItemButton() {
+				@Override
+				protected void onClick() {
+					btnPressed = btnItem;
+					GameScene.selectItem( itemSelector );
+				}
+			};
+			btnItem.setRect( (WIDTH - BTN_SIZE) / 2f, message.top() + message.height() + BTN_GAP, BTN_SIZE, BTN_SIZE );
+			add(btnItem);
+
+			btnInscribe = new RedButton( Messages.get(this, "inscribe") ) {
+				@Override
+				protected void onClick() {
+
+					Item item = btnItem.item();
+
+					if (item instanceof Gun) {
+						Sample.INSTANCE.play( Assets.Sounds.EVOKE );
+						ScrollOfUpgrade.upgrade( Dungeon.hero );
+						Item.evoke( Dungeon.hero );
+
+						Gun gun = (Gun) item;
+						gun.inscribeMod = Gun.InscribeMod.INSCRIBED;
+
+						Item.updateQuickslot();
+
+						Blacksmith.Quest.favor -= 2000;
+						Blacksmith.Quest.inscribes++;
+
+						if (!Blacksmith.Quest.rewardsAvailable()){
+							Notes.remove( Notes.Landmark.TROLL );
+						}
+					}
+
+					hide();
+					if (wndParent != null){
+						wndParent.hide();
+					}
+				}
+			};
+			btnInscribe.enable( false );
+			btnInscribe.setRect( 0, btnItem.bottom() + BTN_GAP, WIDTH, 20 );
+			add(btnInscribe);
+
+			resize( WIDTH, (int) btnInscribe.bottom() );
+		}
+
+		protected WndBag.ItemSelector itemSelector = new WndBag.ItemSelector() {
+
+			@Override
+			public String textPrompt() {
+				return Messages.get(WndInscribe.class, "prompt");
+			}
+
+			@Override
+			public Class<?extends Bag> preferredBag(){
+				return Belongings.Backpack.class;
+			}
+
+			@Override
+			public boolean itemSelectable(Item item) {
+				return item.isIdentified() && !item.cursed && item instanceof Gun;
+			}
+
+			@Override
+			public void onSelect( Item item ) {
+				if (item != null && btnPressed.parent != null) {
+					btnPressed.item(item);
+
+					Item item1 = btnItem.item();
+
+					if (item1 == null) {
+						btnInscribe.enable(false);
+
+					} else if (!(item1 instanceof Gun)) {
+						btnInscribe.enable(false);
+
+					} else {
+						btnInscribe.enable(true);
+					}
+				}
+			}
+		};
 
 	}
 

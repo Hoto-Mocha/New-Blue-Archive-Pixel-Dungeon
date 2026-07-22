@@ -218,6 +218,7 @@ public class Blacksmith extends NPC {
 		public static int hardens;
 		public static int upgrades;
 		public static int smiths;
+		public static int inscribes;
 
 		//pre-generate these so they are consistent between seeds
 		public static ArrayList<Item> smithRewards;
@@ -240,6 +241,7 @@ public class Blacksmith extends NPC {
 			hardens     = 0;
 			upgrades    = 0;
 			smiths      = 0;
+			inscribes   = 0;
 
 			smithRewards = null;
 			smithEnchant = null;
@@ -264,6 +266,7 @@ public class Blacksmith extends NPC {
 		private static final String HARDENS	    = "hardens";
 		private static final String UPGRADES	= "upgrades";
 		private static final String SMITHS	    = "smiths";
+		private static final String INSCRIBES	= "inscribes";
 		private static final String SMITH_REWARDS = "smith_rewards";
 		private static final String ENCHANT		= "enchant";
 		private static final String GLYPH		= "glyph";
@@ -289,6 +292,7 @@ public class Blacksmith extends NPC {
 				node.put( HARDENS, hardens );
 				node.put( UPGRADES, upgrades );
 				node.put( SMITHS, smiths );
+				node.put( INSCRIBES, inscribes );
 
 				if (smithRewards != null) {
 					node.put( SMITH_REWARDS, smithRewards );
@@ -334,6 +338,7 @@ public class Blacksmith extends NPC {
 				hardens = node.getInt( HARDENS );
 				upgrades = node.getInt( UPGRADES );
 				smiths = node.getInt( SMITHS );
+				inscribes = node.getInt( INSCRIBES );
 
 				if (node.contains( SMITH_REWARDS )){
 					smithRewards = new ArrayList<>((Collection<Item>) ((Collection<?>) node.getCollection( SMITH_REWARDS )));
