@@ -38,6 +38,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.TwinDragon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.JusticeIncarnate;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T5;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
@@ -84,6 +90,12 @@ public interface SpecialGun {
             validIngredients.put(SMG_T4.class, TwinDragon.class);
             validIngredients.put(SMG_T5.class, TwinDragon.class);
 
+            validIngredients.put(SR_T1.class, JusticeIncarnate.class);
+            validIngredients.put(SR_T2.class, JusticeIncarnate.class);
+            validIngredients.put(SR_T3.class, JusticeIncarnate.class);
+            validIngredients.put(SR_T4.class, JusticeIncarnate.class);
+            validIngredients.put(SR_T5.class, JusticeIncarnate.class);
+
         }
 
         private static final HashMap<Class<?extends Gun>, Integer> gunCosts = new HashMap<>();
@@ -94,6 +106,7 @@ public interface SpecialGun {
             gunCosts.put(Mulligan.class, 8);
             gunCosts.put(ShootingStar.class, 8);
             gunCosts.put(TwinDragon.class, 8);
+            gunCosts.put(JusticeIncarnate.class, 8);
         }
 
         @Override
