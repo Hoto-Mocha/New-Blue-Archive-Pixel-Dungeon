@@ -40,4 +40,10 @@ public class MG extends Gun {
         }
     }
 
+    public static class PlaceHolder extends Gun.PlaceHolder {
+        {
+            image = ItemSpriteSheet.MG_PLACEHOLDER;
+        }
+    }
+
 }

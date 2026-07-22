@@ -83,6 +83,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
@@ -1345,5 +1346,22 @@ public class Gun extends MeleeWeapon {
         }
 
         return new AR_T1(); //만약 아무것도 반환하지 않을 경우 기본적으로 1티어 AR을 반환함
+    }
+
+    public static class PlaceHolder extends Gun {
+        @Override
+        public boolean isSimilar(Item item) {
+            return item instanceof Gun;
+        }
+
+        @Override
+        public String status() {
+            return null;
+        }
+
+        @Override
+        public String info() {
+            return "";
+        }
     }
 }

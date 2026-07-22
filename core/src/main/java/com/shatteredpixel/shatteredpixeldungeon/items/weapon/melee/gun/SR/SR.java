@@ -44,4 +44,10 @@ public class SR extends Gun {
             image = ItemSpriteSheet.SNIPER_BULLET;
         }
     }
+
+    public static class PlaceHolder extends Gun.PlaceHolder {
+        {
+            image = ItemSpriteSheet.SR_PLACEHOLDER;
+        }
+    }
 }
