@@ -8,6 +8,18 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.UniqueIdea;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.FunnyFirework;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T1;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T2;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T3;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T4;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Piety;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
@@ -26,11 +38,18 @@ public interface SpecialGun {
             validIngredients.put(AR_T4.class, UniqueIdea.class);
             validIngredients.put(AR_T5.class, UniqueIdea.class);
 
+            validIngredients.put(GL_T1.class, FunnyFirework.class);
+            validIngredients.put(GL_T2.class, FunnyFirework.class);
+            validIngredients.put(GL_T3.class, FunnyFirework.class);
+            validIngredients.put(GL_T4.class, FunnyFirework.class);
+            validIngredients.put(GL_T5.class, FunnyFirework.class);
+
         }
 
         private static final HashMap<Class<?extends Gun>, Integer> gunCosts = new HashMap<>();
         static {
             gunCosts.put(UniqueIdea.class, 8);
+            gunCosts.put(FunnyFirework.class, 8);
         }
 
         @Override
