@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
@@ -43,6 +44,11 @@ public class SMG extends Gun {
     public static class PlaceHolder extends Gun.PlaceHolder {
         {
             image = ItemSpriteSheet.SMG_PLACEHOLDER;
+        }
+
+        @Override
+        public boolean isSimilar(Item item) {
+            return item instanceof SMG;
         }
     }
 
