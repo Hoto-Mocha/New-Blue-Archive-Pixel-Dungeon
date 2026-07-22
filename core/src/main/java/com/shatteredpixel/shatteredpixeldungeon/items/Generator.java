@@ -187,6 +187,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.UniqueIdea;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.FunnyFirework;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T3;
@@ -597,13 +598,14 @@ public class Generator {
 					MG_SP.class,
 					SR_SP.class,
 					UniqueIdea.class,
+					FunnyFirework.class,
 					Piety.class,
 					Mulligan.class,
 					ShootingStar.class,
 					TwinDragon.class,
 					JusticeIncarnate.class
 			};
-			GUN_SP.defaultProbs = new float[]{ 0, 0, 0, 0, 0, 0, 0, 0 };
+			GUN_SP.defaultProbs = new float[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			GUN_SP.probs = GUN_SP.defaultProbs.clone();
 			
 			//see Generator.randomArmor
