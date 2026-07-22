@@ -55,6 +55,13 @@ public class AntiMaterialRifle extends ArmorAbility {
         sr.augment              = gun.augment;
         sr.enchantHardened      = gun.enchantHardened;
         sr.keptThoughLostInvent = gun.keptThoughLostInvent;
+        sr.barrelMod = gun.barrelMod;
+        sr.magazineMod = gun.magazineMod;
+        sr.bulletMod = gun.bulletMod;
+        sr.weightMod = gun.weightMod;
+        sr.attachMod = gun.attachMod;
+        sr.enchantMod = gun.enchantMod;
+        sr.inscribeMod = gun.inscribeMod;
         sr.set(gun);
         if (hero.hasTalent(Talent.MIYU_ARMOR3_3)) {
             switch (hero.pointsInTalent(Talent.MIYU_ARMOR3_3)) {
