@@ -45,6 +45,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.UniqueIdea;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T2;
@@ -703,6 +704,10 @@ public class Gun extends MeleeWeapon {
         //DecimalFormat("#.##")은 .format()에 들어가는 매개변수(실수)를 "#.##"형식으로 표시하는데 사용된다.
         //가령 5.55555가 .format()안에 들어가서 .format(5.55555)라면, new DecimalFormat("#.##").format(5.55555)는 5.55라는 String 타입의 값을 반환한다.
 
+        if (this instanceof SpecialGun) {
+            info += "\n\n" + ((SpecialGun)this).specialDesc();
+        }
+
         boolean isModded = false;
         boolean[] whatModded = {false, false, false, false, false, false, false};
 
@@ -1326,7 +1331,7 @@ public class Gun extends MeleeWeapon {
                 MG_T1::new, MG_T2::new, MG_T3::new, MG_T4::new, MG_T5::new
         });
         gunMap.put(AR.class, new Supplier[]{
-                AR_T1::new, AR_T2::new, AR_T3::new, AR_T4::new, AR_T5::new
+                AR_T1::new, AR_T2::new, AR_T3::new, AR_T4::new, AR_T5::new, UniqueIdea::new
         });
         gunMap.put(GL.class, new Supplier[]{
                 GL_T1::new, GL_T2::new, GL_T3::new, GL_T4::new, GL_T5::new
@@ -1351,7 +1356,7 @@ public class Gun extends MeleeWeapon {
     public static class PlaceHolder extends Gun {
         @Override
         public boolean isSimilar(Item item) {
-            return item instanceof Gun;
+            return !(item instanceof SpecialGun);
         }
 
         @Override

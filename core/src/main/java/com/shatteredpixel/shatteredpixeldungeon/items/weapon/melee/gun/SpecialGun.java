@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public interface SpecialGun {
+    String specialDesc();
+
     class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
         public static final LinkedHashMap<Class<?extends Gun>, Class<?extends Gun>> validIngredients = new LinkedHashMap<>();
         static {
