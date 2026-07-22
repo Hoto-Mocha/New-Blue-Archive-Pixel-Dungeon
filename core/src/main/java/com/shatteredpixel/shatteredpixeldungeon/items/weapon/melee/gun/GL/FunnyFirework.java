@@ -37,7 +37,7 @@ public class FunnyFirework extends GL implements SpecialGun {
             super.onShoot(shootAll, useRound);
 
             if (Dungeon.level.viewDistance < 6 ){
-                GameScene.flash(0x60FFFFFF);
+//                GameScene.flash(0x60FFFFFF);
                 if (Dungeon.isChallenged(Challenges.DARKNESS)){
                     Buff.prolong( curUser, Light.class, 2f + buffedLvl());
                 } else {
