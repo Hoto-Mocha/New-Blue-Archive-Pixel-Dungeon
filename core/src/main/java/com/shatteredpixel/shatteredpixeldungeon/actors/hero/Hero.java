@@ -1061,7 +1061,7 @@ public class Hero extends Char {
 			Barkskin.conditionallyAppend(this, (lvl*pointsInTalent(Talent.BARKSKIN))/2, 1 );
 		}
 
-		if (hasTalent(Talent.NONOMI_T3_2) && belongings.weapon instanceof Gun) {
+		if (hasTalent(Talent.NONOMI_T3_2) && belongings.weapon instanceof Gun && ((Gun)belongings.weapon).round() < ((Gun)belongings.weapon).maxRound()) {
 			if (Random.Float() < 0.05f * pointsInTalent(Talent.NONOMI_T3_2)) ((Gun)belongings.weapon).manualReload();
 		}
 
