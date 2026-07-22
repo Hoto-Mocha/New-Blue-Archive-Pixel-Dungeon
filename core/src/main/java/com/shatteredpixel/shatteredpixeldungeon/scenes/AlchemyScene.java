@@ -38,6 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.TrinketCatalyst;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
@@ -798,7 +799,16 @@ public class AlchemyScene extends PixelScene {
 		int curslot = 0;
 		for (Item finding : toFind){
 			int needed = finding.quantity();
-			ArrayList<Item> found = inventory.getAllSimilar(finding);
+			ArrayList<Item> found = new ArrayList<>();
+			if (finding instanceof MeleeWeapon) {
+				for (Item i : inventory.getAllSimilar(finding)) {
+					if (!i.isEquipped(Dungeon.hero)){
+						found.add(i);
+					}
+				}
+			} else {
+				found = inventory.getAllSimilar(finding);
+			}
 			while (!found.isEmpty() && needed > 0){
 				Item detached;
 				if (finding instanceof LiquidMetal || finding instanceof MissileWeapon) {
