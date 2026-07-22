@@ -277,6 +277,13 @@ public class ScrollOfTransmutation extends InventoryScroll {
 				}
 				((Gun) n).affixKit(((Gun) w).checkKit());
 			}
+			((Gun) n).barrelMod = ((Gun) w).barrelMod;
+			((Gun) n).magazineMod = ((Gun) w).magazineMod;
+			((Gun) n).bulletMod = ((Gun) w).bulletMod;
+			((Gun) n).weightMod = ((Gun) w).weightMod;
+			((Gun) n).attachMod = ((Gun) w).attachMod;
+			((Gun) n).enchantMod = ((Gun) w).enchantMod;
+			((Gun) n).inscribeMod = ((Gun) w).inscribeMod;
 		}
 
 		//technically a new set, ensure old one is destroyed (except for darts)
