@@ -7,7 +7,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
@@ -17,11 +16,6 @@ public class FunnyFirework extends GL implements SpecialGun {
         image = ItemSpriteSheet.FUNNY_FIREWORK;
         tier = 4;
         selfHarm = false;
-    }
-
-    @Override
-    public String specialDesc() {
-        return Messages.get(this, "special_desc");
     }
 
     @Override

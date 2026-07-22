@@ -708,10 +708,6 @@ public class Gun extends MeleeWeapon {
         //DecimalFormat("#.##")은 .format()에 들어가는 매개변수(실수)를 "#.##"형식으로 표시하는데 사용된다.
         //가령 5.55555가 .format()안에 들어가서 .format(5.55555)라면, new DecimalFormat("#.##").format(5.55555)는 5.55라는 String 타입의 값을 반환한다.
 
-        if (this instanceof SpecialGun) {
-            info += "\n\n" + ((SpecialGun)this).specialDesc();
-        }
-
         boolean isModded = false;
         boolean[] whatModded = {false, false, false, false, false, false, false};
 

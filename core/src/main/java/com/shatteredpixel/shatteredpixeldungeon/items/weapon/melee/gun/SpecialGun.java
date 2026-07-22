@@ -27,8 +27,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public interface SpecialGun {
-    String specialDesc();
-
     class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
         public static final LinkedHashMap<Class<?extends Gun>, Class<?extends Gun>> validIngredients = new LinkedHashMap<>();
         static {
@@ -43,6 +41,12 @@ public interface SpecialGun {
             validIngredients.put(GL_T3.class, FunnyFirework.class);
             validIngredients.put(GL_T4.class, FunnyFirework.class);
             validIngredients.put(GL_T5.class, FunnyFirework.class);
+
+            validIngredients.put(HG_T1.class, Piety.class);
+            validIngredients.put(HG_T2.class, Piety.class);
+            validIngredients.put(HG_T3.class, Piety.class);
+            validIngredients.put(HG_T4.class, Piety.class);
+            validIngredients.put(HG_T5.class, Piety.class);
 
         }
 
