@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Random;
 
 public class Piety extends HG implements SpecialGun {
     {
@@ -54,6 +55,11 @@ public class Piety extends HG implements SpecialGun {
                 Sample.INSTANCE.play(Assets.Sounds.BURNING);
             }
             return super.proc(attacker, defender, damage);
+        }
+
+        @Override
+        public void throwSound() {
+            Sample.INSTANCE.play( Assets.Sounds.HIT_CRUSH, 1, Random.Float(0.25f, 0.5f) ); //더 낮은 음
         }
     }
 }
