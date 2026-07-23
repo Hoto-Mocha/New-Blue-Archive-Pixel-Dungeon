@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Sandbag;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
@@ -158,6 +159,9 @@ public class LastLevel extends Level {
 	
 	@Override
 	protected void createMobs() {
+		Sandbag sandbag = new Sandbag();
+		sandbag.pos = AMULET_POS-2*width();
+		mobs.add( sandbag );
 	}
 
 	public Actor addRespawner() {
