@@ -750,25 +750,25 @@ public class Gun extends MeleeWeapon {
             }
             if (whatModded[1]) {
                 info += Messages.get(GunSmithingTool.WndMod.class, magazineMod.name());
-                if (whatModded[2] || whatModded[3] || whatModded[4] || whatModded[5]) { //이 개조 이후에 추가로 개조된 것이 있는지를 확인
+                if (whatModded[2] || whatModded[3] || whatModded[4] || whatModded[5] || whatModded[6]) { //이 개조 이후에 추가로 개조된 것이 있는지를 확인
                     info += ", ";
                 }
             }
             if (whatModded[2]) {
                 info += Messages.get(GunSmithingTool.WndMod.class, bulletMod.name());
-                if (whatModded[3] || whatModded[4] || whatModded[5]) { //이 개조 이후에 추가로 개조된 것이 있는지를 확인
+                if (whatModded[3] || whatModded[4] || whatModded[5] || whatModded[6]) { //이 개조 이후에 추가로 개조된 것이 있는지를 확인
                     info += ", ";
                 }
             }
             if (whatModded[3]) {
                 info += Messages.get(GunSmithingTool.WndMod.class, weightMod.name());
-                if (whatModded[4] || whatModded[5]) { //이 개조 이후에 추가로 개조된 것이 있는지를 확인
+                if (whatModded[4] || whatModded[5] || whatModded[6]) { //이 개조 이후에 추가로 개조된 것이 있는지를 확인
                     info += ", ";
                 }
             }
             if (whatModded[4]) {
                 info += Messages.get(GunSmithingTool.WndMod.class, attachMod.name());
-                if (whatModded[5]) { //이 개조 이후에 추가로 개조된 것이 있는지를 확인
+                if (whatModded[5] || whatModded[6]) { //이 개조 이후에 추가로 개조된 것이 있는지를 확인
                     info += ", ";
                 }
             }
