@@ -171,8 +171,8 @@ public interface SpecialGun {
             if (n == null) return null;
 
             Gun g = (Gun)item;
-            n.identify().upgrade(g.level());
-
+            int level = Math.min((g.checkKit() != null && g.checkKit().level() > 0) ? 3:2, g.level());
+            n.identify().upgrade(level);
             if (g.checkKit() != null) {
                 //만약 키트가 강화되어 있다면 키트에 의해 추가로 증가한 강화수치를 1 감소시킴
                 if (g.checkKit().level() > 0) {
@@ -180,6 +180,8 @@ public interface SpecialGun {
                 }
                 n.affixKit(g.checkKit());
             }
+
+
             n.barrelMod = g.barrelMod;
             n.magazineMod = g.magazineMod;
             n.bulletMod = g.bulletMod;
