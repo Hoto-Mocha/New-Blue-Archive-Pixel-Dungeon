@@ -33,11 +33,12 @@ public class JusticeIncarnate extends SR implements SpecialGun {
     public class JusticeIncarnateBullet extends SRBullet {
         @Override
         public int proc(Char attacker, Char defender, int damage) {
+            int finalDmg = super.proc(attacker, defender, damage);
             if (Random.Float() < (3f+buffedLvl())/(15f+buffedLvl())) {
-                defender.damage(damage, new Bless());
+                defender.damage(finalDmg, new Bless());
                 CellEmitter.heroCenter(defender.pos).burst(JusticeParticle.factory(), 1);
             }
-            return super.proc(attacker, defender, damage);
+            return finalDmg;
         }
     }
 }
