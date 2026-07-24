@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
@@ -1310,6 +1311,10 @@ public enum Talent {
 	public static class NatureBerriesDropped extends CounterBuff{{revivePersists = true;}};
 	public static class HardTackDropped extends CounterBuff{{revivePersists = true;}};
 	public static void onFoodEaten( Hero hero, float foodVal, Item foodSource ){
+		if (hero.buff(Bleeding.class) != null && Dungeon.isChallenged(Challenges.NUTRITION_LACK)) {
+			hero.buff(Bleeding.class).recover();
+		}
+
 		if (hero.hasTalent(HEARTY_MEAL)){
 			//4/6 HP healed, when hero is below 33% health (with a little rounding up)
 			if (hero.HP/(float)hero.HT < 0.334f) {

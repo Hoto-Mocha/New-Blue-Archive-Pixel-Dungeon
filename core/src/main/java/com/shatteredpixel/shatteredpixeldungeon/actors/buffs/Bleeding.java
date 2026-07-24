@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
+import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Sacrificial;
@@ -76,6 +77,12 @@ public class Bleeding extends Buff {
 		if (this.level < level) {
 			this.level = Math.max(this.level, level);
 			this.source = source;
+		}
+	}
+
+	public void recover() {
+		if (source == Challenges.class) {
+			detach();
 		}
 	}
 
