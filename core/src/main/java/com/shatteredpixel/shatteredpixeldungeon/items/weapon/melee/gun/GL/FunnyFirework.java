@@ -26,7 +26,7 @@ public class FunnyFirework extends GL implements SpecialGun {
     public class FunnyFireworkBullet extends GLBullet {
         @Override
         public int proc(Char attacker, Char defender, int damage) {
-            if (!defender.isImmune(Blindness.class)) {
+            if (!defender.isImmune(Blindness.class) && defender.isAlive()) {
                 Buff.affect(defender, Blindness.class, 2f);
             }
             return super.proc(attacker, defender, damage);
