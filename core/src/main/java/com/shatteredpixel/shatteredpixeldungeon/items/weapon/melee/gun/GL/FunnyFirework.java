@@ -19,6 +19,12 @@ public class FunnyFirework extends GL implements SpecialGun {
     }
 
     @Override
+    public int baseBulletMax(int lvl) {
+        return 4 * (tier() + 1) +
+                lvl * (tier() + 1);
+    }
+
+    @Override
     public Bullet knockBullet(){
         return new FunnyFireworkBullet();
     }
@@ -27,7 +33,7 @@ public class FunnyFirework extends GL implements SpecialGun {
         @Override
         public int proc(Char attacker, Char defender, int damage) {
             if (!defender.isImmune(Blindness.class) && defender.isAlive()) {
-                Buff.affect(defender, Blindness.class, 2f);
+                Buff.prolong(defender, Blindness.class, 2f);
             }
             return super.proc(attacker, defender, damage);
         }
