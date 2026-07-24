@@ -80,6 +80,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfCha
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfSirensSong;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfTalentReset;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.WondrousResin;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.BurningTrap;
@@ -354,7 +355,7 @@ public class CursedWand {
 		public boolean valid(Item origin, Char user, Ballistica bolt, boolean positiveOnly) {
 			//we have this limit atm because some wands are coded to depend on their fx logic
 			// and chaos elementals trigger the effect directly, with no FX first
-			return super.valid(origin, user, bolt, positiveOnly) && user instanceof Hero;
+			return super.valid(origin, user, bolt, positiveOnly) && user instanceof Hero && !(origin instanceof Gun);
 		}
 
 		@Override
