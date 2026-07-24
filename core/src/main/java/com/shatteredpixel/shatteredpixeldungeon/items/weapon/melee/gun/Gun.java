@@ -628,9 +628,6 @@ public class Gun extends MeleeWeapon {
     }
 
     public int bulletMin() {
-        if (hero != null) {
-            return bulletMin(this.buffedLvl());
-        }
         return bulletMin(this.buffedLvl());
     }
 
