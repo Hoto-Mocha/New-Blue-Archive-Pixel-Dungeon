@@ -5,6 +5,9 @@
  * Shattered Pixel Dungeon
  * Copyright (C) 2014-2026 Evan Debenham
  *
+ * Blue Archive Pixel Dungeon
+ * Copyright (C) 2023-2026 Hoto-Mocha
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -22,6 +25,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blizzard;
@@ -80,6 +84,7 @@ public class ChaoticCenser extends Trinket {
 	}
 
 	public static int averageTurnsUntilGas(int level){
+		if (Dungeon.isChallenged(Challenges.CHAOTIC_SCENT)) level = 9;
 		if (level <= -1){
 			return -1;
 		} else {
@@ -151,6 +156,7 @@ public class ChaoticCenser extends Trinket {
 
 	private static boolean produceGas( Char target ){
 		int level = trinketLevel(ChaoticCenser.class);
+		if (Dungeon.isChallenged(Challenges.CHAOTIC_SCENT)) level = 3;
 
 		if (level < 0 || level > 3){
 			return false;
