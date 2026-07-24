@@ -194,7 +194,7 @@ public class HeroSelectScene extends PixelScene {
 
 		for (HeroClass cl : HeroClass.values()){
 			//skip the original classes
-			if (cl == HeroClass.WARRIOR || cl == HeroClass.MAGE || cl == HeroClass.ROGUE || cl == HeroClass.HUNTRESS || cl == HeroClass.DUELIST || cl == HeroClass.CLERIC) continue;
+			if (cl == HeroClass.WARRIOR) break;
 			HeroBtn button = new HeroBtn(cl);
 			add(button);
 			heroBtns.add(button);
@@ -731,6 +731,26 @@ public class HeroSelectScene extends PixelScene {
 			if (!SPDSettings.customSeed().isEmpty()) seedButton.icon().hardlight(1f, 1.5f, 0.67f);;
 			buttons.add(seedButton);
 			add(seedButton);
+
+			StyledButton btnSeedTest = new StyledButton(Chrome.Type.BLANK, Messages.get(HeroSelectScene.class, "seed_find"), 6){
+				@Override
+				protected void onClick() {
+					ShatteredPixelDungeon.switchScene( SeedFindScene.class );
+				}
+			};
+			btnSeedTest.icon(Icons.get(Icons.MAGNIFY));
+			add(btnSeedTest);
+			buttons.add(btnSeedTest);
+
+			StyledButton btnSeedAnalysis = new StyledButton(Chrome.Type.BLANK, Messages.get(HeroSelectScene.class, "seed_analysis"), 6){
+				@Override
+				protected void onClick() {
+					ShatteredPixelDungeon.switchScene( SeedAnalysisScene.class );
+				}
+			};
+			btnSeedAnalysis.icon(Icons.get(Icons.NEWS));
+			add(btnSeedAnalysis);
+			buttons.add(btnSeedAnalysis);
 
 			StyledButton dailyButton = new StyledButton(Chrome.Type.BLANK, Messages.get(HeroSelectScene.class, "daily"), 6){
 
