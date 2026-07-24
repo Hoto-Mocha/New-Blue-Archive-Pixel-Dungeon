@@ -37,9 +37,10 @@ public class Challenges {
 	public static final int CHAMPION_ENEMIES	= 128;
 	public static final int STRONGER_BOSSES 	= 256;
 	public static final int CHAOTIC_SCENT	 	= 512;
+	public static final int ANGRY_ENEMIES	 	= 1024;
 
-	public static final int MAX_VALUE           = 1023;
-	public static final int MAX_CHALS           = 10;
+	public static final int MAX_VALUE           = 2047;
+	public static final int MAX_CHALS           = 11;
 
 	public static final String[] NAME_IDS = {
 			"champion_enemies",
@@ -51,11 +52,12 @@ public class Challenges {
 			"swarm_intelligence",
 			"darkness",
 			"no_scrolls",
-			"chaotic_scent"
+			"chaotic_scent",
+			"angry_enemies"
 	};
 
 	public static final int[] MASKS = {
-			CHAMPION_ENEMIES, STRONGER_BOSSES, NO_FOOD, NO_ARMOR, NO_HEALING, NO_HERBALISM, SWARM_INTELLIGENCE, DARKNESS, NO_SCROLLS, CHAOTIC_SCENT
+			CHAMPION_ENEMIES, STRONGER_BOSSES, NO_FOOD, NO_ARMOR, NO_HEALING, NO_HERBALISM, SWARM_INTELLIGENCE, DARKNESS, NO_SCROLLS, CHAOTIC_SCENT, ANGRY_ENEMIES
 	};
 
 	public static int activeChallenges(){

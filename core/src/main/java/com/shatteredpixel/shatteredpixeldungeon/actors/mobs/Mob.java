@@ -1168,6 +1168,9 @@ public abstract class Mob extends Char {
 		}
 
 		protected void awaken( boolean enemyInFOV ){
+			if (Dungeon.isChallenged(Challenges.ANGRY_ENEMIES) && alignment == Alignment.ENEMY) {
+				Buff.affect(Mob.this, Adrenaline.class, 10f);
+			}
 			if (enemyInFOV) {
 				enemySeen = true;
 				notice();
