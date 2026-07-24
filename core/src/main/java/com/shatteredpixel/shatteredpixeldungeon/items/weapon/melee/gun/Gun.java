@@ -697,7 +697,7 @@ public class Gun extends MeleeWeapon {
         //근접 무기의 설명을 모두 가져옴, 여기에서 할 것은 근접 무기의 설명에 추가로 생기는 문장을 더하는 것
         if (levelKnown) { //감정되어 있을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_desc",
-                    shotPerShoot(), augment.damageFactor(bulletMin(Dungeon.hero != null ? buffedLvl()+RingOfSharpshooting.levelDamageBonus(hero) : buffedLvl())), augment.damageFactor(bulletMax(Dungeon.hero != null ? buffedLvl()+RingOfSharpshooting.levelDamageBonus(hero) : buffedLvl())), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
+                    shotPerShoot(), augment.damageFactor(bulletMin(buffedLvl())), augment.damageFactor(bulletMax(buffedLvl())), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
         } else { //감정되어 있지 않을 때
             info += "\n\n" + Messages.get(Gun.class, "gun_typical_desc",
                     shotPerShoot(), augment.damageFactor(bulletMin(0)), augment.damageFactor(bulletMax(0)), round, maxRound(), new DecimalFormat("#.##").format(reloadTime()));
