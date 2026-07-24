@@ -6,14 +6,20 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGu
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.Tweener;
-import com.watabou.utils.Random;
 
 public class TwinDragon extends SMG implements SpecialGun {
     {
         image = ItemSpriteSheet.TWIN_DRAGON;
-        tier = 3;
+        tier = 4;
         shotPerShoot = 6;
         shootingAccuracy = 0.5f;
+    }
+
+
+    @Override
+    public int baseBulletMax(int lvl) {
+        return 2 * (tier()) +
+                Math.round(0.5f * lvl * (tier()-1)); //3티어 성능
     }
 
     @Override
