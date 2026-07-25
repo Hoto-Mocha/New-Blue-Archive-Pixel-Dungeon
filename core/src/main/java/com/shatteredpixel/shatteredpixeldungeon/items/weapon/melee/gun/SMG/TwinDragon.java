@@ -2,10 +2,13 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.Tweener;
+
+import java.util.ArrayList;
 
 public class TwinDragon extends SMG implements SpecialGun {
     {
@@ -41,6 +44,25 @@ public class TwinDragon extends SMG implements SpecialGun {
                     }
                 });
             }
+        }
+    }
+
+    public static class Recipe extends BaseRecipe {
+
+        @Override
+        public ArrayList<Class<? extends Gun>> ingredients() {
+            ArrayList<Class<? extends Gun>> result = new ArrayList<>();
+            result.add(SMG_T1.class);
+            result.add(SMG_T2.class);
+            result.add(SMG_T3.class);
+            result.add(SMG_T4.class);
+            result.add(SMG_T5.class);
+            return result;
+        }
+
+        @Override
+        public Class<? extends Gun> result() {
+            return TwinDragon.class;
         }
     }
 }
