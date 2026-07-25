@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
@@ -38,6 +39,11 @@ public class GL extends Gun {
         {
             image = ItemSpriteSheet.GRENADE_RED;
         }
+    }
+
+    @Override
+    public PlaceHolder getPlaceHolder() {
+        return new PlaceHolder();
     }
 
     public static class PlaceHolder extends Gun.PlaceHolder {

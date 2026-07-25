@@ -68,6 +68,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MT.FancyL
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.ShootingStar;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.TwinDragon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.JusticeIncarnate;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.watabou.utils.Reflection;
 
@@ -221,15 +222,7 @@ public abstract class Recipe {
 		new CurseInfusion.Recipe(),
 		new ReclaimTrap.Recipe(),
 		new WildEnergy.Recipe(),
-		new StewedMeat.twoMeat(),
-		new UniqueIdea.Recipe(),
-		new FunnyFirework.Recipe(),
-		new Piety.Recipe(),
-		new Mulligan.Recipe(),
-		new FancyLight.Recipe(),
-		new ShootingStar.Recipe(),
-		new TwinDragon.Recipe(),
-		new JusticeIncarnate.Recipe()
+		new StewedMeat.twoMeat()
 	};
 	
 	private static Recipe[] threeIngredientRecipes = new Recipe[]{
@@ -257,6 +250,11 @@ public abstract class Recipe {
 			
 		} else if (ingredients.size() == 2){
 			for (Recipe recipe : twoIngredientRecipes){
+				if (recipe.testIngredients(ingredients)){
+					result.add(recipe);
+				}
+			}
+			for (Recipe recipe : SpecialGun.gunRecipes){
 				if (recipe.testIngredients(ingredients)){
 					result.add(recipe);
 				}

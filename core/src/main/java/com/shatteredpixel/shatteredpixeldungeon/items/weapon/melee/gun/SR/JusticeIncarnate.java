@@ -9,8 +9,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGu
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
-import java.util.ArrayList;
-
 public class JusticeIncarnate extends SR implements SpecialGun {
     {
         image = ItemSpriteSheet.JUSTICE_INCARNATE;
@@ -48,14 +46,8 @@ public class JusticeIncarnate extends SR implements SpecialGun {
     public static class Recipe extends BaseRecipe {
 
         @Override
-        public ArrayList<Class<? extends Gun>> ingredients() {
-            ArrayList<Class<? extends Gun>> result = new ArrayList<>();
-            result.add(SR_T1.class);
-            result.add(SR_T2.class);
-            result.add(SR_T3.class);
-            result.add(SR_T4.class);
-            result.add(SR_T5.class);
-            return result;
+        public Class<? extends Gun> ingredients() {
+            return SR.class;
         }
 
         @Override

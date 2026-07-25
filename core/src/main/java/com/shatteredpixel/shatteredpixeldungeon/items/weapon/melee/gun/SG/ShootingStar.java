@@ -6,17 +6,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T1;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T2;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T3;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T4;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR_T5;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.UniqueIdea;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-
-import java.util.ArrayList;
 
 public class ShootingStar extends SG implements SpecialGun {
     {
@@ -57,14 +49,8 @@ public class ShootingStar extends SG implements SpecialGun {
     public static class Recipe extends BaseRecipe {
 
         @Override
-        public ArrayList<Class<? extends Gun>> ingredients() {
-            ArrayList<Class<? extends Gun>> result = new ArrayList<>();
-            result.add(SG_T1.class);
-            result.add(SG_T2.class);
-            result.add(SG_T3.class);
-            result.add(SG_T4.class);
-            result.add(SG_T5.class);
-            return result;
+        public Class<? extends Gun> ingredients() {
+            return SG.class;
         }
 
         @Override

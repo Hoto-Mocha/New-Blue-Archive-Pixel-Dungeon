@@ -82,6 +82,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.TwinDragon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.JusticeIncarnate;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
@@ -367,30 +368,7 @@ public class QuickRecipe extends Component {
 				result.add(null);
 				result.add(new QuickRecipe( new GunSmithingTool.Recipe()));
 				result.add(null);
-				result.add(new QuickRecipe( new UniqueIdea.Recipe(),
-						new ArrayList<Item>(Arrays.asList(new AR.PlaceHolder(), new GunSmithingTool())),
-						new UniqueIdea()));
-				result.add(new QuickRecipe( new FunnyFirework.Recipe(),
-						new ArrayList<Item>(Arrays.asList(new GL.PlaceHolder(), new GunSmithingTool())),
-						new FunnyFirework()));
-				result.add(new QuickRecipe( new FancyLight.Recipe(),
-						new ArrayList<Item>(Arrays.asList(new GL.PlaceHolder(), new GunSmithingTool())),
-						new FancyLight()));
-				result.add(new QuickRecipe( new Piety.Recipe(),
-						new ArrayList<Item>(Arrays.asList(new HG.PlaceHolder(), new GunSmithingTool())),
-						new Piety()));
-				result.add(new QuickRecipe( new Mulligan.Recipe(),
-						new ArrayList<Item>(Arrays.asList(new MG.PlaceHolder(), new GunSmithingTool())),
-						new Mulligan()));
-				result.add(new QuickRecipe( new ShootingStar.Recipe(),
-						new ArrayList<Item>(Arrays.asList(new SG.PlaceHolder(), new GunSmithingTool())),
-						new ShootingStar()));
-				result.add(new QuickRecipe( new TwinDragon.Recipe(),
-						new ArrayList<Item>(Arrays.asList(new SMG.PlaceHolder(), new GunSmithingTool())),
-						new TwinDragon()));
-				result.add(new QuickRecipe( new JusticeIncarnate.Recipe(),
-						new ArrayList<Item>(Arrays.asList(new SR.PlaceHolder(), new GunSmithingTool())),
-						new JusticeIncarnate()));
+				result.addAll(SpecialGun.quickRecipes());
 				return result;
 			case 7:
 				result.add(new QuickRecipe(new UnstableBrew.Recipe(), new ArrayList<>(Arrays.asList(new Potion.PlaceHolder(), new  Plant.Seed.PlaceHolder())), new UnstableBrew()));

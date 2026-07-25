@@ -3,18 +3,29 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.GunSmithingTool;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.UniqueIdea;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.FunnyFirework;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Piety;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.Mulligan;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MT.FancyLight;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.ShootingStar;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.TwinDragon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.JusticeIncarnate;
+import com.shatteredpixel.shatteredpixeldungeon.ui.QuickRecipe;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public interface SpecialGun {
     abstract class BaseRecipe extends Recipe {
-        public abstract ArrayList<Class<? extends Gun>> ingredients();
+        public abstract Class<? extends Gun> ingredients();
 
         public abstract Class<? extends Gun> result();
 
         public boolean isIngredient(Item item) {
-            return ingredients().contains(item.getClass());
+            return ingredients().isInstance(item) && !(item instanceof SpecialGun);
         }
 
         @Override
@@ -95,5 +106,26 @@ public interface SpecialGun {
 
             return n;
         }
+    }
+
+    Recipe[] gunRecipes = new Recipe[]{
+        new UniqueIdea.Recipe(),
+        new FunnyFirework.Recipe(),
+        new Piety.Recipe(),
+        new Mulligan.Recipe(),
+        new FancyLight.Recipe(),
+        new ShootingStar.Recipe(),
+        new TwinDragon.Recipe(),
+        new JusticeIncarnate.Recipe()
+    };
+
+    static ArrayList<QuickRecipe> quickRecipes() {
+        ArrayList<QuickRecipe> result = new ArrayList<>();
+        for (Recipe recipe : gunRecipes){
+            result.add(new QuickRecipe( recipe,
+                    new ArrayList<Item>(Arrays.asList(Reflection.newInstance(((BaseRecipe)recipe).ingredients()).getPlaceHolder(), new GunSmithingTool())),
+                    Reflection.newInstance(((BaseRecipe)recipe).result())));
+        }
+        return result;
     }
 }

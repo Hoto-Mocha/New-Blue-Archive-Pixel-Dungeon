@@ -4,8 +4,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-import java.util.ArrayList;
-
 public class UniqueIdea extends AR implements SpecialGun {
     {
         image = ItemSpriteSheet.UNIQUE_IDEA;
@@ -21,14 +19,8 @@ public class UniqueIdea extends AR implements SpecialGun {
     public static class Recipe extends BaseRecipe {
 
         @Override
-        public ArrayList<Class<? extends Gun>> ingredients() {
-            ArrayList<Class<? extends Gun>> result = new ArrayList<>();
-            result.add(AR_T1.class);
-            result.add(AR_T2.class);
-            result.add(AR_T3.class);
-            result.add(AR_T4.class);
-            result.add(AR_T5.class);
-            return result;
+        public Class<? extends Gun> ingredients() {
+            return AR.class;
         }
 
         @Override

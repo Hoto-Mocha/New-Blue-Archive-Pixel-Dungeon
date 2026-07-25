@@ -8,8 +8,6 @@ import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
-import java.util.ArrayList;
-
 public class Mulligan extends MG implements SpecialGun {
     {
         image = ItemSpriteSheet.MULLIGAN;
@@ -40,14 +38,8 @@ public class Mulligan extends MG implements SpecialGun {
     public static class Recipe extends BaseRecipe {
 
         @Override
-        public ArrayList<Class<? extends Gun>> ingredients() {
-            ArrayList<Class<? extends Gun>> result = new ArrayList<>();
-            result.add(MG_T1.class);
-            result.add(MG_T2.class);
-            result.add(MG_T3.class);
-            result.add(MG_T4.class);
-            result.add(MG_T5.class);
-            return result;
+        public Class<? extends Gun> ingredients() {
+            return MG.class;
         }
 
         @Override

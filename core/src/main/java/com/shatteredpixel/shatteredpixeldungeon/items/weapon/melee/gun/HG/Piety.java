@@ -11,8 +11,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
-import java.util.ArrayList;
-
 public class Piety extends HG implements SpecialGun {
     {
         image = ItemSpriteSheet.PIETY;
@@ -69,14 +67,8 @@ public class Piety extends HG implements SpecialGun {
     public static class Recipe extends BaseRecipe {
 
         @Override
-        public ArrayList<Class<? extends Gun>> ingredients() {
-            ArrayList<Class<? extends Gun>> result = new ArrayList<>();
-            result.add(HG_T1.class);
-            result.add(HG_T2.class);
-            result.add(HG_T3.class);
-            result.add(HG_T4.class);
-            result.add(HG_T5.class);
-            return result;
+        public Class<? extends Gun> ingredients() {
+            return HG.class;
         }
 
         @Override

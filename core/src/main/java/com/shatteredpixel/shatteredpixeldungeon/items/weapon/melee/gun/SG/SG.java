@@ -55,6 +55,11 @@ public class SG extends Gun {
         }
     }
 
+    @Override
+    public PlaceHolder getPlaceHolder() {
+        return new PlaceHolder();
+    }
+
     public static class PlaceHolder extends Gun.PlaceHolder {
         {
             image = ItemSpriteSheet.SG_PLACEHOLDER;

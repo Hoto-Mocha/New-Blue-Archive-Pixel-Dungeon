@@ -10,8 +10,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-import java.util.ArrayList;
-
 public class FunnyFirework extends GL implements SpecialGun {
 
     {
@@ -58,14 +56,8 @@ public class FunnyFirework extends GL implements SpecialGun {
     public static class Recipe extends BaseRecipe {
 
         @Override
-        public ArrayList<Class<? extends Gun>> ingredients() {
-            ArrayList<Class<? extends Gun>> result = new ArrayList<>();
-            result.add(GL_T1.class);
-            result.add(GL_T2.class);
-            result.add(GL_T3.class);
-            result.add(GL_T4.class);
-            result.add(GL_T5.class);
-            return result;
+        public Class<? extends Gun> ingredients() {
+            return GL.class;
         }
 
         @Override
