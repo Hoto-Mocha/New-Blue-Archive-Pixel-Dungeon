@@ -1041,6 +1041,7 @@ public class ItemSpriteSheet {
 	public static final int MULLIGAN			= SPECIAL_GUNS+4;
 	public static final int UNIQUE_IDEA			= SPECIAL_GUNS+5;
 	public static final int FUNNY_FIREWORK		= SPECIAL_GUNS+6;
+	public static final int FACNY_LIGHT			= SPECIAL_GUNS+7;
 	static {
 		assignItemRect(PIETY, 				12, 15);
 		assignItemRect(SHOOTING_STAR, 		14, 15);
@@ -1049,6 +1050,7 @@ public class ItemSpriteSheet {
 		assignItemRect(MULLIGAN, 			14, 16);
 		assignItemRect(UNIQUE_IDEA, 		15, 16);
 		assignItemRect(FUNNY_FIREWORK, 		10, 13);
+		assignItemRect(FACNY_LIGHT, 		15, 15);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite

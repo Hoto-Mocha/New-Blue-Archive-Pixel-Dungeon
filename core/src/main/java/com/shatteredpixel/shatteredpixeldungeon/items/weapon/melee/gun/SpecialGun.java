@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.Mulligan;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MT.FancyLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T3;
@@ -96,6 +97,8 @@ public interface SpecialGun {
             validIngredients.put(SR_T4.class, JusticeIncarnate.class);
             validIngredients.put(SR_T5.class, JusticeIncarnate.class);
 
+            validIngredients.put(FunnyFirework.class, FancyLight.class);
+
         }
 
         private static final HashMap<Class<?extends Gun>, Integer> gunCosts = new HashMap<>();
@@ -107,6 +110,11 @@ public interface SpecialGun {
             gunCosts.put(ShootingStar.class, 8);
             gunCosts.put(TwinDragon.class, 8);
             gunCosts.put(JusticeIncarnate.class, 8);
+            gunCosts.put(FancyLight.class, 8);
+        }
+
+        public boolean isIngredient(Item item) {
+            return validIngredients.containsKey(item.getClass());
         }
 
         @Override
@@ -118,7 +126,7 @@ public interface SpecialGun {
                 if (!i.isIdentified()) return false;
                 if (i.getClass().equals(GunSmithingTool.class)){
                     tool = true;
-                } else if (validIngredients.containsKey(i.getClass())){
+                } else if (isIngredient(i)){
                     gun = true;
                 }
             }
@@ -129,7 +137,7 @@ public interface SpecialGun {
         @Override
         public int cost(ArrayList<Item> ingredients) {
             for (Item i : ingredients){
-                if (validIngredients.containsKey(i.getClass())){
+                if (isIngredient(i)){
                     return (gunCosts.get(validIngredients.get(i.getClass())));
                 }
             }
@@ -142,7 +150,7 @@ public interface SpecialGun {
 
             for (Item i : ingredients){
                 i.quantity(i.quantity()-1);
-                if (validIngredients.containsKey(i.getClass())){
+                if (isIngredient(i)){
                     result = brewGun(i);
                 }
             }
@@ -157,7 +165,7 @@ public interface SpecialGun {
         @Override
         public Item sampleOutput(ArrayList<Item> ingredients) {
             for (Item i : ingredients){
-                if (validIngredients.containsKey(i.getClass())){
+                if (isIngredient(i)){
                     return brewGun(i);
                 }
             }

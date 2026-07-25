@@ -75,6 +75,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Piety;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.Mulligan;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MT.FancyLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.ShootingStar;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
@@ -373,6 +374,9 @@ public class QuickRecipe extends Component {
 				result.add(new QuickRecipe( new SpecialGun.Recipe(),
 						new ArrayList<Item>(Arrays.asList(new GL.PlaceHolder(), new GunSmithingTool())),
 						new FunnyFirework()));
+				result.add(new QuickRecipe( new SpecialGun.Recipe(),
+						new ArrayList<Item>(Arrays.asList(new GL.PlaceHolder(), new GunSmithingTool())),
+						new FancyLight()));
 				result.add(new QuickRecipe( new SpecialGun.Recipe(),
 						new ArrayList<Item>(Arrays.asList(new HG.PlaceHolder(), new GunSmithingTool())),
 						new Piety()));

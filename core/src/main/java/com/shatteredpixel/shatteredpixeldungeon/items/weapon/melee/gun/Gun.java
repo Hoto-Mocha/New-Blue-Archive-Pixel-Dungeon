@@ -117,6 +117,8 @@ public class Gun extends MeleeWeapon {
     protected boolean explode = false; //탄환 폭발 여부
     protected boolean selfHarm = true; //탄환 폭발의 자가 피해 여부
     protected boolean spread = false; //산탄 여부. 멀리 떨어지면 탄환 위력이 감소한다.
+    protected boolean quickUse = false; //장착하지 않고도 사용할 수 있는지 여부
+    protected boolean ignoreWall = false; //탄도가 벽을 무시하는지 여부
     public static final String TXT_STATUS = "%d/%d";
 
     ConversionKit kit;
@@ -260,8 +262,8 @@ public class Gun extends MeleeWeapon {
     private static final String EXPLODE = "explode";
     private static final String SELF_HARM = "selfHarm";
     private static final String SPREAD = "spread";
-    private static final String RIOT = "riot";
-    private static final String SHOOTALL = "shootAll";
+    private static final String QUICK_USE = "quickUse";
+    private static final String IGNORE_WALL = "ignoreWall";
     private static final String BARREL_MOD = "barrelMod";
     private static final String MAGAZINE_MOD = "magazineMod";
     private static final String BULLET_MOD = "bulletMod";
@@ -282,6 +284,8 @@ public class Gun extends MeleeWeapon {
         bundle.put(EXPLODE, explode);
         bundle.put(SELF_HARM, selfHarm);
         bundle.put(SPREAD, spread);
+        bundle.put(QUICK_USE, quickUse);
+        bundle.put(IGNORE_WALL, ignoreWall);
         bundle.put(BARREL_MOD, barrelMod);
         bundle.put(MAGAZINE_MOD, magazineMod);
         bundle.put(BULLET_MOD, bulletMod);
@@ -304,6 +308,8 @@ public class Gun extends MeleeWeapon {
         explode = bundle.getBoolean(EXPLODE);
         selfHarm = bundle.getBoolean(SELF_HARM);
         spread = bundle.getBoolean(SPREAD);
+        quickUse = bundle.getBoolean(QUICK_USE);
+        ignoreWall = bundle.getBoolean(IGNORE_WALL);
         barrelMod = bundle.getEnum(BARREL_MOD, BarrelMod.class);
         magazineMod = bundle.getEnum(MAGAZINE_MOD, MagazineMod.class);
         bulletMod = bundle.getEnum(BULLET_MOD, BulletMod.class);
@@ -317,7 +323,7 @@ public class Gun extends MeleeWeapon {
     @Override
     public ArrayList<String> actions(Hero hero) {
         ArrayList<String> actions = super.actions(hero);
-        if (isEquipped( hero )) {
+        if (isEquipped( hero ) || quickUse) {
             actions.add(AC_SHOOT);
             actions.add(AC_RELOAD);
         }
@@ -348,7 +354,7 @@ public class Gun extends MeleeWeapon {
                     return;
                 }
             }
-            if (!isEquipped( hero )) {
+            if (!isEquipped( hero ) && !quickUse) {
                 usesTargeting = false;
                 GLog.w(Messages.get(this, "not_equipped"));
             } else {
@@ -1267,7 +1273,7 @@ public class Gun extends MeleeWeapon {
 
         @Override
         public int throwPos(Hero user, int dst) {
-            if (ignoreWall) {
+            if (ignoreWall || Gun.this.ignoreWall) {
                 return dst;
             } else {
                 return super.throwPos(user, dst);
