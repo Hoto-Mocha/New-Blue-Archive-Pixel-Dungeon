@@ -304,7 +304,7 @@ abstract public class MissileWeapon extends Weapon {
 		}
 
 		if (curUser.buff(Talent.InstantThrowTracker.class) != null) {
-			curUser.buff(Talent.InstantThrowTracker.class).detach();
+			curUser.buff(Talent.InstantThrowTracker.class).onThrow();
 		}
 	}
 

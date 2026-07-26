@@ -2142,10 +2142,9 @@ public enum Talent {
 			icon.hardlight(0xFDA082);
 		}
 
-		@Override
-		public void detach() {
-			Buff.affect(target, InstantThrowCooldown.class, 20f-5f*Dungeon.hero.pointsInTalent(Talent.IZUNA_EX2_1));
-			super.detach();
+		public void onThrow() {
+			Buff.affect(target, InstantThrowCooldown.class, 20f-5f*Dungeon.hero.pointsInTalent(Talent.IZUNA_EX2_1)-1);
+			detach();
 		}
 
 		@Override
