@@ -176,7 +176,7 @@ public class NinjaCape extends Artifact {
 				Dungeon.observe();
 				GameScene.updateFog();
 
-				if (hero.pointsInTalent(Talent.IZUNA_EX1_3) < 3) {
+				if (hero.pointsInTalent(Talent.IZUNA_EX1_3) >= 3) {
 					Buff.affect(hero, GreaterHaste.class).set(2);
 				}
 				hero.spend( 1f );
