@@ -1033,24 +1033,40 @@ public class ItemSpriteSheet {
 		assignItemRect(SR_PLACEHOLDER, 	15, 16);
 	}
 
-	private static final int SPECIAL_GUNS = 						xy(1, 42); //16 slots
-	public static final int PIETY 				= SPECIAL_GUNS+0;
-	public static final int SHOOTING_STAR 		= SPECIAL_GUNS+1;
-	public static final int JUSTICE_INCARNATE	= SPECIAL_GUNS+2;
-	public static final int TWIN_DRAGON			= SPECIAL_GUNS+3;
-	public static final int MULLIGAN			= SPECIAL_GUNS+4;
-	public static final int UNIQUE_IDEA			= SPECIAL_GUNS+5;
-	public static final int FUNNY_FIREWORK		= SPECIAL_GUNS+6;
-	public static final int FACNY_LIGHT			= SPECIAL_GUNS+7;
+	private static final int SPECIAL_GUNS = 						xy(1, 42); //8 slots
+	public static final int UNIQUE_IDEA			= SPECIAL_GUNS+0;
+	public static final int FUNNY_FIREWORK		= SPECIAL_GUNS+1;
+	public static final int PIETY 				= SPECIAL_GUNS+2;
+	public static final int MULLIGAN			= SPECIAL_GUNS+3;
+	public static final int SHOOTING_STAR 		= SPECIAL_GUNS+4;
+	public static final int TWIN_DRAGON			= SPECIAL_GUNS+5;
+	public static final int JUSTICE_INCARNATE	= SPECIAL_GUNS+6;
 	static {
-		assignItemRect(PIETY, 				12, 15);
-		assignItemRect(SHOOTING_STAR, 		14, 15);
-		assignItemRect(JUSTICE_INCARNATE, 	15, 16);
-		assignItemRect(TWIN_DRAGON, 		15, 16);
-		assignItemRect(MULLIGAN, 			14, 16);
 		assignItemRect(UNIQUE_IDEA, 		15, 16);
 		assignItemRect(FUNNY_FIREWORK, 		10, 13);
+		assignItemRect(PIETY, 				12, 15);
+		assignItemRect(MULLIGAN, 			14, 16);
+		assignItemRect(SHOOTING_STAR, 		14, 15);
+		assignItemRect(TWIN_DRAGON, 		15, 16);
+		assignItemRect(JUSTICE_INCARNATE, 	15, 16);
+	}
+
+	private static final int SPECIAL_GUNS2 = 						xy(9, 42); //8 slots
+	public static final int TACTICAL_THERAPY	= SPECIAL_GUNS2 +0;
+	public static final int FACNY_LIGHT			= SPECIAL_GUNS2 +1;
+
+
+
+
+	public static final int WINE_RED_ADMIRE		= SPECIAL_GUNS2 +6;
+	static {
+		assignItemRect(TACTICAL_THERAPY,	15, 16);
 		assignItemRect(FACNY_LIGHT, 		15, 15);
+
+
+
+
+		assignItemRect(WINE_RED_ADMIRE, 	15, 16);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite
