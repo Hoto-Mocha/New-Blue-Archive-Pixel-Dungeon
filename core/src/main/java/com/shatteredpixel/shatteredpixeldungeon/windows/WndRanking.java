@@ -48,6 +48,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ItemSlot;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
+import com.shatteredpixel.shatteredpixeldungeon.ui.ScrollPane;
 import com.shatteredpixel.shatteredpixeldungeon.ui.TalentButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.TalentsPane;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
@@ -56,6 +57,7 @@ import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Component;
 import com.watabou.utils.DeviceCompat;
@@ -443,10 +445,11 @@ public class WndRanking extends WndTabbed {
 
 			float pos = 0;
 
+			Component listContent = new Component();
+			listContent.setPos(0, 0);
+
 			for (int i=0; i < Challenges.NAME_IDS.length; i++) {
-
 				final String challenge = Challenges.NAME_IDS[i];
-
 				CheckBox cb = new CheckBox( Messages.titleCase(Messages.get(Challenges.class, challenge)) );
 				cb.checked( (Dungeon.challenges & Challenges.MASKS[i]) != 0 );
 				cb.active = false;
@@ -455,8 +458,7 @@ public class WndRanking extends WndTabbed {
 					pos += 1;
 				}
 				cb.setRect( 0, pos, WIDTH-16, 15 );
-
-				add( cb );
+				listContent.add( cb );
 
 				IconButton info = new IconButton(Icons.get(Icons.INFO)){
 					@Override
@@ -468,10 +470,54 @@ public class WndRanking extends WndTabbed {
 					}
 				};
 				info.setRect(cb.right(), pos, 16, 15);
-				add(info);
+				listContent.add(info);
 
 				pos = cb.bottom();
 			}
+
+			listContent.setSize( WIDTH, pos );
+
+			float paneHeight = Math.min(pos, HEIGHT);
+
+			ScrollPane pane = new ScrollPane( listContent ) {
+				@Override
+				protected void createChildren() {
+					super.createChildren();
+					controller.blockLevel = PointerArea.NEVER_BLOCK;
+				}
+			};
+			add( pane );
+			pane.setRect( 0, 0, WIDTH, paneHeight );
+
+//			for (int i=0; i < Challenges.NAME_IDS.length; i++) {
+//
+//				final String challenge = Challenges.NAME_IDS[i];
+//
+//				CheckBox cb = new CheckBox( Messages.titleCase(Messages.get(Challenges.class, challenge)) );
+//				cb.checked( (Dungeon.challenges & Challenges.MASKS[i]) != 0 );
+//				cb.active = false;
+//
+//				if (i > 0) {
+//					pos += 1;
+//				}
+//				cb.setRect( 0, pos, WIDTH-16, 15 );
+//
+//				add( cb );
+//
+//				IconButton info = new IconButton(Icons.get(Icons.INFO)){
+//					@Override
+//					protected void onClick() {
+//						super.onClick();
+//						ShatteredPixelDungeon.scene().add(
+//								new WndMessage(Messages.get(Challenges.class, challenge+"_desc"))
+//						);
+//					}
+//				};
+//				info.setRect(cb.right(), pos, 16, 15);
+//				add(info);
+//
+//				pos = cb.bottom();
+//			}
 		}
 
 	}
