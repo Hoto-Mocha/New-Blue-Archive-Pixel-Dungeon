@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -49,7 +50,7 @@ public class MTET extends SG implements SpecialGun { //Multipurpose Tactical Enf
                     int burnDamage = Random.NormalIntRange( 1, 3 + Dungeon.scalingDepth()/4 );
                     burnDamage = Math.round(burnDamage * 0.67f * powerMulti);
                     if (burnDamage > 0) {
-                        defender.damage(burnDamage, this);
+                        defender.damage(burnDamage, new Blazing());
                     }
                 }
 
