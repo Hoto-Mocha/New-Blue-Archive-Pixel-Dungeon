@@ -1056,7 +1056,7 @@ public class ItemSpriteSheet {
 	public static final int FACNY_LIGHT			= SPECIAL_GUNS2 +1;
 
 
-	public static final int SPAS				= SPECIAL_GUNS2+4;
+	public static final int MTET = SPECIAL_GUNS2+4;
 
 	public static final int WINE_RED_ADMIRE		= SPECIAL_GUNS2 +6;
 	static {
@@ -1064,7 +1064,7 @@ public class ItemSpriteSheet {
 		assignItemRect(FACNY_LIGHT, 		15, 15);
 
 
-		assignItemRect(SPAS, 				13, 16);
+		assignItemRect(MTET, 				13, 16);
 
 		assignItemRect(WINE_RED_ADMIRE, 	15, 16);
 	}
