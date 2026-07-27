@@ -95,7 +95,7 @@ public interface SpecialGun {
                 n.affixKit(g.checkKit());
             }
 
-
+            n.enchantment = g.enchantment;
             n.barrelMod = g.barrelMod;
             n.magazineMod = g.magazineMod;
             n.bulletMod = g.bulletMod;
