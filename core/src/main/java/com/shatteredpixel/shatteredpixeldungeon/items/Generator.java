@@ -229,6 +229,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.WineRedAdmire;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Bolas;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.FishingSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ForceCube;
@@ -609,9 +610,13 @@ public class Generator {
 					JusticeIncarnate.class,
 					TacticalTherapy.class,
 					FancyLight.class,
-					MTET.class
+
+
+					MTET.class,
+
+					WineRedAdmire.class,
 			};
-			GUN_SP.defaultProbs = new float[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			GUN_SP.defaultProbs = new float[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			GUN_SP.probs = GUN_SP.defaultProbs.clone();
 			
 			//see Generator.randomArmor
