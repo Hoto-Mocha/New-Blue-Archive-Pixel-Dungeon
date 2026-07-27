@@ -10,7 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGu
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
-public class MTET extends SG { //Multipurpose Tactical Enforcement Tool
+public class MTET extends SG implements SpecialGun { //Multipurpose Tactical Enforcement Tool
     {
         tier = 4;
         image = ItemSpriteSheet.MTET;

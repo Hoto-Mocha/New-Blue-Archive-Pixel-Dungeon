@@ -7,7 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-public class WineRedAdmire extends SR {
+public class WineRedAdmire extends SR implements SpecialGun {
     {
         tier = 5;
         image = ItemSpriteSheet.WINE_RED_ADMIRE;

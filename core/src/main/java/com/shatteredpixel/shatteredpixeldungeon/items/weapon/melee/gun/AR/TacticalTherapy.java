@@ -5,7 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-public class TacticalTherapy extends AR {
+public class TacticalTherapy extends AR implements SpecialGun {
     {
         image = ItemSpriteSheet.TACTICAL_THERAPY;
         tier = 3;
