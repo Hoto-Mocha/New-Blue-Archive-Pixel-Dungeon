@@ -27,7 +27,7 @@ public class MTET extends SG { //Multipurpose Tactical Enforcement Tool
         return new MTETBullet();
     }
 
-    public class MTETBullet extends Bullet {
+    public class MTETBullet extends SGBullet {
         @Override
         public int proc(Char attacker, Char defender, int damage) {
             float procChance = (buffedLvl()+1f)/(buffedLvl()+3f);

@@ -16,7 +16,7 @@ public class TacticalTherapy extends AR {
         return new TacticalTherapyBullet();
     }
 
-    public class TacticalTherapyBullet extends Bullet {
+    public class TacticalTherapyBullet extends ARBullet {
         @Override
         public int proc(Char attacker, Char defender, int damage) {
             int dmg = super.proc(attacker, defender, damage);
