@@ -11,6 +11,7 @@ public class AR extends Gun {
     {
         max_round = 4;
         round = max_round;
+        shootingAccuracy = 1.2f;
     }
 
     @Override
