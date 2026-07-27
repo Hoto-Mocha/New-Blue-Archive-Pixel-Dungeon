@@ -17,6 +17,11 @@ public class MTET extends SG { //Multipurpose Tactical Enforcement Tool
     }
 
     @Override
+    protected int baseBulletMin(int lvl) {
+        return tier() - 1 + lvl;
+    }
+
+    @Override
     public int baseBulletMax(int lvl) {
         return  (tier()+2) +
                 Math.round(0.5f * lvl * (tier()-1)); //3티어 성능
