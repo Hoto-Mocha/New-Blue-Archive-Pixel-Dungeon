@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Crossbow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MT.FancyLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Bolas;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.FishingSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.HeavyBoomerang;
@@ -183,14 +184,16 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 				|| item instanceof TenguSprite.TenguShuriken){
 			speed *= 1.5f;
 		}
-		if (item instanceof Gun.Bullet
-		 || item instanceof YukinoSprite.YukinoShot
+		if (item instanceof Gun.Bullet) {
+			speed *= ((Gun.Bullet) item).projectileSpeed();
+		}
+		if (item instanceof YukinoSprite.YukinoShot
 		 || item instanceof NikoSprite.NikoShot
 		 || item instanceof OtogiSprite.OtogiShot
 		 || item instanceof PenetrationShot.PenetrationBullet
 		 || item instanceof HologramSprite.HologramShot) {
-			speed *= 3f;
-		}
+            speed *= 3f;
+        }
 		
 		PosTweener tweener = new PosTweener( this, to, d.length() / speed );
 		tweener.listener = this;

@@ -995,6 +995,10 @@ public class Gun extends MeleeWeapon {
             return Gun.this.proc(attacker, defender, damage);
         }
 
+        public float projectileSpeed() {
+            return 3f;
+        }
+
         @Override
         public Item split(int amount) {
             return this;
