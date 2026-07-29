@@ -3,7 +3,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.GunSmithingTool;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.TacticalTherapy;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.UniqueIdea;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.FunnyFirework;
@@ -12,6 +11,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.Mullig
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MT.FancyLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.MTET;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.ShootingStar;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.BeyondTheLumination;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.TwinDragon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.JusticeIncarnate;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.WineRedAdmire;
@@ -121,6 +121,7 @@ public interface SpecialGun {
         new ShootingStar.Recipe(),
         new MTET.Recipe(),
         new TwinDragon.Recipe(),
+        new BeyondTheLumination.Recipe(),
         new JusticeIncarnate.Recipe(),
         new WineRedAdmire.Recipe()
     };

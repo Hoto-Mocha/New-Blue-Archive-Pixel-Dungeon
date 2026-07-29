@@ -216,6 +216,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T5;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.ShootingStar;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.BeyondTheLumination;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T3;
@@ -613,10 +614,10 @@ public class Generator {
 
 
 					MTET.class,
-
+					BeyondTheLumination.class,
 					WineRedAdmire.class,
 			};
-			GUN_SP.defaultProbs = new float[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			GUN_SP.defaultProbs = new float[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			GUN_SP.probs = GUN_SP.defaultProbs.clone();
 			
 			//see Generator.randomArmor

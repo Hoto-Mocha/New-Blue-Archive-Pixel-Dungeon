@@ -1052,21 +1052,21 @@ public class ItemSpriteSheet {
 	}
 
 	private static final int SPECIAL_GUNS2 = 						xy(9, 42); //8 slots
-	public static final int TACTICAL_THERAPY	= SPECIAL_GUNS2 +0;
-	public static final int FACNY_LIGHT			= SPECIAL_GUNS2 +1;
+	public static final int TACTICAL_THERAPY		= SPECIAL_GUNS2 +0;
+	public static final int FACNY_LIGHT				= SPECIAL_GUNS2 +1;
 
 
-	public static final int MTET = SPECIAL_GUNS2+4;
-
-	public static final int WINE_RED_ADMIRE		= SPECIAL_GUNS2 +6;
+	public static final int MTET 					= SPECIAL_GUNS2 +4;
+	public static final int BEYOND_THE_LUMINATION = SPECIAL_GUNS2 +5;
+	public static final int WINE_RED_ADMIRE			= SPECIAL_GUNS2 +6;
 	static {
-		assignItemRect(TACTICAL_THERAPY,	15, 16);
-		assignItemRect(FACNY_LIGHT, 		15, 15);
+		assignItemRect(TACTICAL_THERAPY,		15, 16);
+		assignItemRect(FACNY_LIGHT, 			15, 15);
 
 
-		assignItemRect(MTET, 				13, 16);
-
-		assignItemRect(WINE_RED_ADMIRE, 	15, 16);
+		assignItemRect(MTET, 					13, 16);
+		assignItemRect(BEYOND_THE_LUMINATION,	16, 16);
+		assignItemRect(WINE_RED_ADMIRE, 		15, 16);
 	}
 
 	//for smaller 8x8 icons that often accompany an item sprite

@@ -38,6 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.BeyondTheLumination;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.quick.AssassinsKunai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Tomahawk;
@@ -213,6 +214,14 @@ public class WndUpgrade extends Window {
 					((Gun) toUpgrade).bulletMin(levelFrom) + "-" + ((Gun) toUpgrade).bulletMax(levelFrom),
 					((Gun) toUpgrade).bulletMin(levelTo) + "-" + ((Gun) toUpgrade).bulletMax(levelTo),
 					bottom);
+
+			//gun blocking
+			if (toUpgrade instanceof BeyondTheLumination){
+				bottom = fillFields(Messages.get(this, "blocking"),
+						0 + "-" + ((BeyondTheLumination) toUpgrade).DRMax(levelFrom),
+						0 + "-" + ((BeyondTheLumination) toUpgrade).DRMax(levelTo),
+						bottom);
+			}
 		}
 
 		//assassin's kunai
