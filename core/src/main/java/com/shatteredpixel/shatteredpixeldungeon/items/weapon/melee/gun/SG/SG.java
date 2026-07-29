@@ -11,6 +11,7 @@ public class SG extends Gun {
     {
         max_round = 2;
         round = max_round;
+        adjacentShootingAccuracy = 1.5f;
         shotPerShoot = 5;
         spread = true;
     }
@@ -43,15 +44,6 @@ public class SG extends Gun {
     public class SGBullet extends Bullet {
         {
             image = ItemSpriteSheet.TRIPLE_BULLET;
-        }
-
-        @Override
-        protected float adjacentAccFactor(Char owner, Char target) {
-            if (Dungeon.level.adjacent( owner.pos, target.pos )) {
-                return super.adjacentAccFactor(owner, target) * 3f;
-            } else {
-                return super.adjacentAccFactor(owner, target);
-            }
         }
     }
 

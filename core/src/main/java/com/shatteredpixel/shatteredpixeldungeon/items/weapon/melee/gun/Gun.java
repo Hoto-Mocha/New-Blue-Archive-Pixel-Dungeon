@@ -114,6 +114,7 @@ public class Gun extends MeleeWeapon {
     protected int shotPerShoot = 1; //발사 당 탄환의 개수
     protected float shootingSpeed = 1f; //발사 시 소모하는 턴의 배율. 낮을수록 빠르다
     protected float shootingAccuracy = 1f; //발사 시 탄환 정확성의 배율. 높을 수록 정확하다.
+    protected float adjacentShootingAccuracy = 0.5f; //근거리 발사 시 탄환 정확성의 배율. 높을 수록 정확하다.
     protected boolean explode = false; //탄환 폭발 여부
     protected boolean selfHarm = true; //탄환 폭발의 자가 피해 여부
     protected boolean spread = false; //산탄 여부. 멀리 떨어지면 탄환 위력이 감소한다.
@@ -259,6 +260,7 @@ public class Gun extends MeleeWeapon {
     private static final String SHOT_PER_SHOOT = "shotPerShoot";
     private static final String SHOOTING_SPEED = "shootingSpeed";
     private static final String SHOOTING_ACCURACY = "shootingAccuracy";
+    private static final String ADJACENT_SHOOTING_ACCURACY = "adjacentShootingAccuracy";
     private static final String EXPLODE = "explode";
     private static final String SELF_HARM = "selfHarm";
     private static final String SPREAD = "spread";
@@ -281,6 +283,7 @@ public class Gun extends MeleeWeapon {
         bundle.put(SHOT_PER_SHOOT, shotPerShoot);
         bundle.put(SHOOTING_SPEED, shootingSpeed);
         bundle.put(SHOOTING_ACCURACY, shootingAccuracy);
+        bundle.put(ADJACENT_SHOOTING_ACCURACY, adjacentShootingAccuracy);
         bundle.put(EXPLODE, explode);
         bundle.put(SELF_HARM, selfHarm);
         bundle.put(SPREAD, spread);
@@ -305,6 +308,7 @@ public class Gun extends MeleeWeapon {
         shotPerShoot = bundle.getInt(SHOT_PER_SHOOT);
         shootingSpeed = bundle.getFloat(SHOOTING_SPEED);
         shootingAccuracy = bundle.getFloat(SHOOTING_ACCURACY);
+        adjacentShootingAccuracy = bundle.getFloat(ADJACENT_SHOOTING_ACCURACY);
         explode = bundle.getBoolean(EXPLODE);
         selfHarm = bundle.getBoolean(SELF_HARM);
         spread = bundle.getBoolean(SPREAD);
@@ -1103,9 +1107,9 @@ public class Gun extends MeleeWeapon {
 
         @Override
         protected float adjacentAccFactor(Char owner, Char target) {
-            float ACC = 1f;
+            float ACC = shootingAccuracy;
             if (Dungeon.level.adjacent( owner.pos, target.pos )) {
-                ACC *= 0.5f;
+                ACC *= adjacentShootingAccuracy;
 
                 if (owner instanceof Hero){
                     Hero hero = (Hero) owner;
