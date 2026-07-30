@@ -747,6 +747,11 @@ public class CursedWand {
 	public static class InterFloorTeleport extends CursedEffect {
 
 		@Override
+		public boolean valid(Item origin, Char user, Ballistica bolt, boolean positiveOnly) {
+			return !(origin instanceof Gun);
+		}
+
+		@Override
 		public void FX(Item origin, Char user, Ballistica bolt, Callback callback) {
 			callback.call(); //no vfx
 		}
