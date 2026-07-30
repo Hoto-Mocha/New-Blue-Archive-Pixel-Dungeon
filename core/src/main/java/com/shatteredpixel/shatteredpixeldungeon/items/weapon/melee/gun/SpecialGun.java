@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.TacticalTherapy;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.UniqueIdea;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.FunnyFirework;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Chistka;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Piety;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.Mulligan;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.TrickOrTrick;
@@ -117,6 +118,7 @@ public interface SpecialGun {
         new TacticalTherapy.Recipe(),
         new FunnyFirework.Recipe(),
         new Piety.Recipe(),
+        new Chistka.Recipe(),
         new Mulligan.Recipe(),
         new TrickOrTrick.Recipe(),
         new FancyLight.Recipe(),

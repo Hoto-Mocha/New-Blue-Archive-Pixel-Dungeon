@@ -38,6 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Chistka;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.BeyondTheLumination;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.quick.AssassinsKunai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
@@ -220,6 +221,14 @@ public class WndUpgrade extends Window {
 				bottom = fillFields(Messages.get(this, "blocking"),
 						0 + "-" + ((BeyondTheLumination) toUpgrade).DRMax(levelFrom),
 						0 + "-" + ((BeyondTheLumination) toUpgrade).DRMax(levelTo),
+						bottom);
+			}
+
+			//purge chance
+			if (toUpgrade instanceof Chistka) {
+				bottom = fillFields(Messages.get(this, "purge"),
+						Messages.decimalFormat("#", ((Chistka) toUpgrade).purgeChance(levelFrom)*100)+"%",
+						Messages.decimalFormat("#", ((Chistka) toUpgrade).purgeChance(levelTo)*100)+"%",
 						bottom);
 			}
 		}
