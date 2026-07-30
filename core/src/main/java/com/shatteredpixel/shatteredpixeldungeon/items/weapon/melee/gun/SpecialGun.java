@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.Unique
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.FunnyFirework;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Piety;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.Mulligan;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.TrickOrTrick;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MT.FancyLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.MTET;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.ShootingStar;
@@ -117,6 +118,7 @@ public interface SpecialGun {
         new FunnyFirework.Recipe(),
         new Piety.Recipe(),
         new Mulligan.Recipe(),
+        new TrickOrTrick.Recipe(),
         new FancyLight.Recipe(),
         new ShootingStar.Recipe(),
         new MTET.Recipe(),
