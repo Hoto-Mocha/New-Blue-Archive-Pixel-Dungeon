@@ -30,7 +30,7 @@ public class TrickOrTrick extends MG implements SpecialGun {
 
         @Override
         public Class<? extends Gun> result() {
-            return Mulligan.class;
+            return TrickOrTrick.class;
         }
     }
 }

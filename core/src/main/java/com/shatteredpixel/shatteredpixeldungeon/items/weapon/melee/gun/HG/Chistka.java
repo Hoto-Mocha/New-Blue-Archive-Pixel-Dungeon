@@ -78,7 +78,7 @@ public class Chistka extends HG implements SpecialGun {
 
         @Override
         public Class<? extends Gun> result() {
-            return Piety.class;
+            return Chistka.class;
         }
     }
 }
