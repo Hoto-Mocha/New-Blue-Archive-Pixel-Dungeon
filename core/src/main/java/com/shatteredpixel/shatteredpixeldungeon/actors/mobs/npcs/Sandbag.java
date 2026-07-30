@@ -37,6 +37,11 @@ public class Sandbag extends NPC {
 	}
 
 	@Override
+	public boolean heroShouldInteract() {
+		return false;
+	}
+
+	@Override
 	public boolean interact(Char c) {
 		return true;
 	}
