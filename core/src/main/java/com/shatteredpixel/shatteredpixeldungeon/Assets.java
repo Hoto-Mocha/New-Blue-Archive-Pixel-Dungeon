@@ -268,7 +268,7 @@ public class Assets {
 		public static final String IZUNA	= "splashes/izuna.png";
 
 		public static final String SEWERS   = "splashes/sewers.png";
-		public static final String PRISON   = "splashes/prison.jpg";
+		public static final String PRISON   = "splashes/prison.png";
 		public static final String CAVES    = "splashes/caves.jpg";
 		public static final String CITY     = "splashes/city.jpg";
 		public static final String HALLS    = "splashes/halls.jpg";
