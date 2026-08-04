@@ -281,7 +281,8 @@ public class IronHorus extends Item {
         public boolean act() {
             if (target instanceof Hero) {
                 ironHorus = ((Hero)target).belongings.getItem(IronHorus.class);
-                if (gun == null || !gun.isSimilar(((Hero)target).belongings.weapon())) {
+                if (((Hero)target).belongings.weapon() == null || gun == null
+                        || (((Hero)target).belongings.weapon() != null && !gun.isSimilar(((Hero)target).belongings.weapon()))) {
                     detach();
                 }
             }
