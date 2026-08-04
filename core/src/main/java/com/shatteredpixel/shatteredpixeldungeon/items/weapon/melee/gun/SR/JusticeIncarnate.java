@@ -36,7 +36,7 @@ public class JusticeIncarnate extends SR implements SpecialGun {
         public int proc(Char attacker, Char defender, int damage) {
             int finalDmg = super.proc(attacker, defender, damage);
             if (Random.Float() < (3f+buffedLvl())/(30f+buffedLvl())) {
-                defender.damage(finalDmg, new Bless());
+                defender.damage(finalDmg, this);
                 CellEmitter.heroCenter(defender.pos).burst(JusticeParticle.factory(), 1);
             }
             return finalDmg;

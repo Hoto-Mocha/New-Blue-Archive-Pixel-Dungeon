@@ -48,7 +48,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.YuzuStatus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Daze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
@@ -82,6 +81,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Weakness;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.YuzuStatus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
@@ -148,6 +148,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocki
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sickle;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.JusticeIncarnate;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.ShockingDart;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -1150,7 +1151,7 @@ public abstract class Char extends Actor {
 			if (src instanceof Viscosity.DeferedDamage)                 icon = FloatingText.DEFERRED;
 			if (src instanceof Corruption)                              icon = FloatingText.CORRUPTION;
 			if (src instanceof AscensionChallenge)                      icon = FloatingText.AMULET;
-			if (src instanceof Bless)                      				icon = FloatingText.EXPERIENCE;
+			if (src instanceof JusticeIncarnate.JusticeIncarnateBullet) icon = FloatingText.EXPERIENCE;
 
 			if ((icon == FloatingText.PHYS_DMG || icon == FloatingText.PHYS_DMG_NO_BLOCK) && hitMissIcon != -1){
 				if (icon == FloatingText.PHYS_DMG_NO_BLOCK) hitMissIcon += 18; //extra row
