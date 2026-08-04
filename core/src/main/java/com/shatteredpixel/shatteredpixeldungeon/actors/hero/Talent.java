@@ -85,6 +85,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
+import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.EmptyScroll;
@@ -1959,7 +1960,7 @@ public enum Talent {
 	}
 
 	public static void onKill(Object cause, Mob mob) {
-		if (cause instanceof Hero || cause instanceof Weapon || cause instanceof Weapon.Enchantment) {
+		if (cause instanceof Hero || cause instanceof Weapon || cause instanceof Weapon.Enchantment || cause instanceof Bomb) {
 			Dungeon.hero.onEnemyKill(mob);
 		}
 		if (Dungeon.hero.buff(ChaseMark.class) != null && Dungeon.hero.buff(ChaseMark.class).getEnemyID() == mob.id()) {
