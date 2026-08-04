@@ -36,7 +36,7 @@ public class WineRedAdmire extends SR implements SpecialGun {
             if (Random.Float() < (2f+buffedLvl())/(20f+buffedLvl())) {
                 for (int i : PathFinder.NEIGHBOURS4) {
                     int c = cell+i;
-                    new Bomb().explode(c);
+                    new Bomb.ConjuredBomb().explode(c);
                 }
             }
         }
