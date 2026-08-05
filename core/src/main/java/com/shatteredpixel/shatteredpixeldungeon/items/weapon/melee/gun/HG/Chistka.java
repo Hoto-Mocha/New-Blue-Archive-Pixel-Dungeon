@@ -1,9 +1,12 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
@@ -11,6 +14,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
+import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -44,12 +48,20 @@ public class Chistka extends HG implements SpecialGun {
 
         if (ch instanceof Mob){
             ((Mob) ch).EXP = 0;
+            ((Mob) ch).rollToDropLoot();
         }
         if (Dungeon.level.heroFOV[ch.pos]) {
             CellEmitter.get( ch.pos ).burst( Speck.factory( Speck.WOOL ), 6 );
             Sample.INSTANCE.play( Assets.Sounds.PUFF );
         }
         ch.destroy();
+
+        Statistics.enemiesSlain++;
+        Badges.validateMonstersSlain();
+        Statistics.qualifiedForNoKilling = false;
+
+        AscensionChallenge.processEnemyKill(ch);
+
         ch.sprite.killAndErase();
         Dungeon.level.mobs.remove(ch);
 
