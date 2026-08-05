@@ -61,8 +61,11 @@ If you have Shattered Pixel Dungeon on Steam, you can play BAPD via following in
 >- **Bicycle**(Shiroko)
 >- **Conversion Kit**(Noa)
 >- **Trash Bin**(Miyu)
+>- **Laptop**(Yuzu)
+>- **Assassin Kunai**(Izuna)
 
 - Special Guns
+
 Special guns can be crafted with alchemy.
 >- Unique Idea - AR(Momoi)
 >- Tactical Therapy - AR(Serina)
