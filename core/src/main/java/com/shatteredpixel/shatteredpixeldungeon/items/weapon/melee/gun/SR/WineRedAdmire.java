@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
@@ -11,6 +12,10 @@ public class WineRedAdmire extends SR implements SpecialGun {
     {
         tier = 5;
         image = ItemSpriteSheet.WINE_RED_ADMIRE;
+    }
+
+    public float explosionChance(int lvl) {
+        return Math.min(1, (2f+lvl)/(20f+lvl));
     }
 
     @Override
@@ -33,12 +38,19 @@ public class WineRedAdmire extends SR implements SpecialGun {
         @Override
         protected void onThrow(int cell) {
             super.onThrow(cell);
-            if (Random.Float() < (2f+buffedLvl())/(20f+buffedLvl())) {
+            if (Dungeon.level.distance(Dungeon.hero.pos, cell) > 2 && Random.Float() < explosionChance(buffedLvl())) {
                 for (int i : PathFinder.NEIGHBOURS4) {
                     int c = cell+i;
-                    new Bomb.ConjuredBomb().explode(c);
+                    if (!Dungeon.level.solid[c] || Dungeon.level.passable[c]) new WineRedAdmireBomb().explode(c);
                 }
             }
+        }
+    }
+
+    public static class WineRedAdmireBomb extends Bomb.ConjuredBomb {
+        @Override
+        public boolean destroyItem() {
+            return false;
         }
     }
 

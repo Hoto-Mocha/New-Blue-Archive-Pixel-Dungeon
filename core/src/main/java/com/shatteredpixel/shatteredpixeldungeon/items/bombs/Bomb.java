@@ -99,6 +99,10 @@ public class Bomb extends Item {
 		return true;
 	}
 
+	public boolean destroyItem() {
+		return true;
+	}
+
 	protected int explosionRange(){
 		return 1;
 	}
@@ -194,7 +198,7 @@ public class Bomb extends Item {
 
 				//destroys items / triggers bombs caught in the blast.
 				Heap heap = Dungeon.level.heaps.get(i);
-				if (heap != null) {
+				if (heap != null && destroyItem()) {
 					heap.explode();
 				}
 			}
