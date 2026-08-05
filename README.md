@@ -85,6 +85,7 @@ Special guns can be crafted with alchemy.
 - New appearance of several NPCs(Shopkeeper, Blacksmith)
 - New splash arts for region 1, 2, 3
 - New appearance of region 1, 2, 3
+- [Seedfinder](https://github.com/Llyias/shpd-seedFinder-kr) from Llyias
 
 # Shattered Pixel Dungeon
 
