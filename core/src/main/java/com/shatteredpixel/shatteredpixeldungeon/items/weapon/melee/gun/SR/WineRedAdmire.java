@@ -15,7 +15,7 @@ public class WineRedAdmire extends SR implements SpecialGun {
     }
 
     public float explosionChance(int lvl) {
-        return Math.min(1, (2f+lvl)/(20f+lvl));
+        return (2f+lvl)/(20f+lvl);
     }
 
     @Override

@@ -15,6 +15,10 @@ public class JusticeIncarnate extends SR implements SpecialGun {
         tier = 5;
     }
 
+    public float justiceChance(int lvl) {
+        return (3f+lvl)/(30f+lvl);
+    }
+
     @Override
     protected int baseBulletMin(int lvl) {
         return (tier() - 1 + lvl)*2;
@@ -35,7 +39,7 @@ public class JusticeIncarnate extends SR implements SpecialGun {
         @Override
         public int proc(Char attacker, Char defender, int damage) {
             int finalDmg = super.proc(attacker, defender, damage);
-            if (Random.Float() < (3f+buffedLvl())/(30f+buffedLvl())) {
+            if (Random.Float() < justiceChance(buffedLvl())) {
                 defender.damage(finalDmg, this);
                 CellEmitter.heroCenter(defender.pos).burst(JusticeParticle.factory(), 1);
             }

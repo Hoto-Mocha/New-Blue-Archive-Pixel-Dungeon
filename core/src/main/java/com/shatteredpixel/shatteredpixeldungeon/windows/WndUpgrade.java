@@ -40,6 +40,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Chistka;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.BeyondTheLumination;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.JusticeIncarnate;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.WineRedAdmire;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.quick.AssassinsKunai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Tomahawk;
@@ -229,6 +231,20 @@ public class WndUpgrade extends Window {
 				bottom = fillFields(Messages.get(this, "purge"),
 						Messages.decimalFormat("#", ((Chistka) toUpgrade).purgeChance(levelFrom)*100)+"%",
 						Messages.decimalFormat("#", ((Chistka) toUpgrade).purgeChance(levelTo)*100)+"%",
+						bottom);
+			}
+
+			if (toUpgrade instanceof JusticeIncarnate) {
+				bottom = fillFields(Messages.get(this, "justice"),
+						Messages.decimalFormat("#", ((JusticeIncarnate) toUpgrade).justiceChance(levelFrom)*100)+"%",
+						Messages.decimalFormat("#", ((JusticeIncarnate) toUpgrade).justiceChance(levelTo)*100)+"%",
+						bottom);
+			}
+
+			if (toUpgrade instanceof WineRedAdmire) {
+				bottom = fillFields(Messages.get(this, "explosion"),
+						Messages.decimalFormat("#", ((WineRedAdmire) toUpgrade).explosionChance(levelFrom)*100)+"%",
+						Messages.decimalFormat("#", ((WineRedAdmire) toUpgrade).explosionChance(levelTo)*100)+"%",
 						bottom);
 			}
 		}
