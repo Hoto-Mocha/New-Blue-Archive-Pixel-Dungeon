@@ -1107,9 +1107,9 @@ public class Gun extends MeleeWeapon {
 
         @Override
         protected float adjacentAccFactor(Char owner, Char target) {
-            float ACC = shootingAccuracy;
+            float ACC;
             if (Dungeon.level.adjacent( owner.pos, target.pos )) {
-                ACC *= adjacentShootingAccuracy;
+                ACC = adjacentShootingAccuracy;
 
                 if (owner instanceof Hero){
                     Hero hero = (Hero) owner;
@@ -1123,6 +1123,8 @@ public class Gun extends MeleeWeapon {
                         return Char.INFINITE_ACCURACY;
                     }
                 }
+            } else {
+                ACC = 1;
             }
 
             return ACC;
