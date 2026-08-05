@@ -32,6 +32,7 @@ public class Chistka extends HG implements SpecialGun {
 
     public boolean purge(Hero hero, int cell) {
         Char ch = Actor.findChar(cell);
+        if (!Dungeon.level.heroFOV[cell]) return false;
         if (Random.Float() >= purgeChance(buffedLvl())) return false;
         if (ch == null) return false;
         if (ch instanceof NPC) return false;
