@@ -27,7 +27,7 @@ public class Chistka extends HG implements SpecialGun {
     }
 
     public float purgeChance(int lvl) {
-        return (2f+lvl)/100f;
+        return Math.min(1, (2f+lvl)/100f);
     }
 
     public boolean purge(Hero hero, int cell) {
