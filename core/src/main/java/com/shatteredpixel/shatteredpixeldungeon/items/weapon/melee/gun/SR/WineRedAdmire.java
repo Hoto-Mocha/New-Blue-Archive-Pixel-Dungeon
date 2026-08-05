@@ -48,6 +48,11 @@ public class WineRedAdmire extends SR implements SpecialGun {
     }
 
     public static class WineRedAdmireBomb extends Bomb.ConjuredBomb {
+
+        {
+            maxDamage = 8 + 2*Dungeon.scalingDepth();
+        }
+
         @Override
         public boolean destroyItem() {
             return false;
