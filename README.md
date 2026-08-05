@@ -32,7 +32,7 @@ If you have Shattered Pixel Dungeon on Steam, you can play BAPD via following in
 
 # Contents
 
-- 7 of characters with unique abilities and special items(and adding continuously)
+- 9 of characters with unique abilities and special items(and adding continuously)
 >- **Aris** - Difficulty: **Special**
 >- **Nonomi** - Difficulty: **Easy**
 >- **Miyako** - Difficulty: **Normal**
@@ -40,6 +40,8 @@ If you have Shattered Pixel Dungeon on Steam, you can play BAPD via following in
 >- **Shiroko** - Difficulty: **Normal**
 >- **Noa** - Difficulty: **Normal**
 >- **Miyu** - Difficulty: **Hard**
+>- **Yuzu** - Difficulty: **Normal**
+>- **Izuna** - Difficulty: **Normal**
 
 - Guns
 >- **AR**(Assult Rifle)
@@ -49,6 +51,7 @@ If you have Shattered Pixel Dungeon on Steam, you can play BAPD via following in
 >- **SG**(Shotgun)
 >- **SMG**(SubMachine Gun)
 >- **SR**(Sniper Rifle)
+>- **MT**(Mortar)
 
 - Special Items
 >- **Emblem**(Aris)
@@ -59,7 +62,26 @@ If you have Shattered Pixel Dungeon on Steam, you can play BAPD via following in
 >- **Conversion Kit**(Noa)
 >- **Trash Bin**(Miyu)
 
-- New appearance of Cave level and NPCs(Shopkeeper, Blacksmith)
+- Special Guns
+Special guns can be crafted with alchemy.
+>- Unique Idea - AR(Momoi)
+>- Tactical Therapy - AR(Serina)
+>- Funny Firework - GL(Kaede)
+>- Fancy Light - MT(Hibiki)
+>- Piety - HG(Mari)
+>- Chistka - HG(Cherino)
+>- Mulli<gun> - MG(Koyuki)
+>- Trick or Trick - MG(Mutsuki)
+>- Shooting Star - SG(Reisa)
+>- Multipurpose Tactical Enforcement Tool - SG(Eimi)
+>- Twin Dragon - SMG(Neru)
+>- Beyond the Lumination - SMG(Natsu)
+>- Justice Incarnate - SR(Mashiro)
+>- Wine Red Admire - SR(Aru)
+
+- New appearance of several NPCs(Shopkeeper, Blacksmith)
+- New splash arts for region 1, 2, 3
+- New appearance of region 1, 2, 3
 
 # Shattered Pixel Dungeon
 
