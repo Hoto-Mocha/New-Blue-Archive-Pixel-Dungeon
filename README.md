@@ -6,6 +6,8 @@ This project currently supports only Korean language now. There's no plan to tra
 
 **This project uses AI for making character splash arts.**
 
+[Join the translation work](https://app.transifex.com/rearranged-pixel-dungeon/blue-archive-pixel-dungeon/dashboard/)
+
 # How to Play
 
 You can play this game by installing **[version-name]-android.apk** for **Android** users, or directly running **[version-name]-desktop.jar** via JRE for PC users.
