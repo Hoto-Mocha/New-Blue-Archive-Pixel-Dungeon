@@ -446,7 +446,7 @@ public class Gun extends MeleeWeapon {
             Buff.affect(hero, Barrier.class).setShield((int)reloadTime() + Math.max(0, hero.pointsInTalent(Talent.NONOMI_T1_4)-1)); //reload time + 0 or 1, depends on talent level
         }
 
-        IronHorus.detachBuff(hero);
+        IronHorus.onReload(hero);
 
         if (hero.subClass == HeroSubClass.SWIFT_MOVEMENT) {
             Buff.affect(hero, SwiftMovement.class);

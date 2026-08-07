@@ -163,6 +163,12 @@ public class IronHorus extends Item {
         }
     }
 
+    public static void onReload(Hero hero) { //재장전할 때에는 가벼운 방패 효과만 제거
+        if (hero.buff(LightTacticalShieldBuff.class) != null) {
+            hero.buff(LightTacticalShieldBuff.class).detach();
+        }
+    }
+
     public static int drRoll(Hero hero) {
         if (hasBuff(hero)) {
             if (hero.buff(TacticalShieldBuff.class) != null) {
