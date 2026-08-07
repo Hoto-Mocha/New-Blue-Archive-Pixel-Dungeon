@@ -4,6 +4,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
@@ -11,6 +13,8 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
+import com.watabou.utils.Random;
 
 public class ShootAllBuff extends Buff implements ActionIndicator.Action {
     {
@@ -71,9 +75,14 @@ public class ShootAllBuff extends Buff implements ActionIndicator.Action {
     @Override
     public void doAction() {
         Hero hero = Dungeon.hero;
+        hero.busy();
         shootAll = !shootAll;
-        hero.sprite.operate(hero.pos);
-        hero.spendAndNext(0);
+        hero.sprite.operate(hero.pos, new Callback() {
+            @Override
+            public void call() {
+                hero.next();
+            }
+        });
         Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
         ActionIndicator.refresh();
     }
