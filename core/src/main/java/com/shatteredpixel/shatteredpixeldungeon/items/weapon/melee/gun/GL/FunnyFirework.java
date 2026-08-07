@@ -15,7 +15,7 @@ public class FunnyFirework extends GL implements SpecialGun {
     {
         image = ItemSpriteSheet.FUNNY_FIREWORK;
         tier = 4;
-        selfHarm = false;
+//        selfHarm = false;
     }
 
     @Override
