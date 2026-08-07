@@ -1130,6 +1130,10 @@ public enum Talent {
 			Buff.affect(hero, Talent.ProtectiveShadowsTracker.class);
 		}
 
+		if (talent == NONOMI_T3_2 && hero.buff(AutoReloadBuff.class) == null) {
+			Buff.affect(hero, AutoReloadBuff.class);
+		}
+
 		if (talent == IZUNA_T1_4 && hero.invisible > 0){
 			Buff.affect(hero, Talent.ShadowHideTracker.class);
 		}
@@ -2046,8 +2050,29 @@ public enum Talent {
 		}
 	}
 
-	public static class PushingTracker extends Buff {};
-	public static class ConfusionTracker extends Buff{};
+	public static class AutoReloadBuff extends Buff {
+		{
+			revivePersists = true;
+		}
+
+		@Override
+		public boolean act() {
+			Hero hero = Dungeon.hero;
+			if (hero == null || target != Dungeon.hero) {
+				detach();
+				return true;
+			}
+
+			if (hero.hasTalent(Talent.NONOMI_T3_2) && hero.belongings.weapon instanceof Gun && ((Gun)hero.belongings.weapon).round() < ((Gun)hero.belongings.weapon).maxRound()) {
+				if (Random.Float() < 0.05f * hero.pointsInTalent(Talent.NONOMI_T3_2)) ((Gun)hero.belongings.weapon).manualReload();
+			}
+			spend(TICK);
+			return true;
+		}
+	}
+
+	public static class PushingTracker extends Buff {}
+	public static class ConfusionTracker extends Buff{}
 
 	public static class IntimidateBonusDamageBuff extends Buff {
 		public int left;

@@ -54,7 +54,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Foresight;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HeroDisguise;
@@ -93,13 +92,13 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HallowedGroun
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWard;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Smite;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Kurumi;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Monk;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Snake;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Kurumi;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Niko;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Otogi;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Snake;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.fox.Yukino;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CheckedCell;
@@ -1065,8 +1064,8 @@ public class Hero extends Char {
 			Barkskin.conditionallyAppend(this, (lvl*pointsInTalent(Talent.BARKSKIN))/2, 1 );
 		}
 
-		if (hasTalent(Talent.NONOMI_T3_2) && belongings.weapon instanceof Gun && ((Gun)belongings.weapon).round() < ((Gun)belongings.weapon).maxRound()) {
-			if (Random.Float() < 0.05f * pointsInTalent(Talent.NONOMI_T3_2)) ((Gun)belongings.weapon).manualReload();
+		if (hasTalent(Talent.NONOMI_T3_2) && buff(Talent.AutoReloadBuff.class) == null) {
+			Buff.affect(this, Talent.AutoReloadBuff.class);
 		}
 
 		if (buff(NoticeTracker.class) != null) Item.updateQuickslot();
