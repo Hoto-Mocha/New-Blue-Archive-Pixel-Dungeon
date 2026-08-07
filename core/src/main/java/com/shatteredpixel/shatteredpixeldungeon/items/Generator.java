@@ -194,6 +194,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.SpringPunch;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Chistka;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG_T1;
@@ -612,14 +613,15 @@ public class Generator {
 					TwinDragon.class,
 					JusticeIncarnate.class,
 					TacticalTherapy.class,
-					FancyLight.class,
+					SpringPunch.class,
 					Chistka.class,
 					TrickOrTrick.class,
 					MTET.class,
 					BeyondTheLumination.class,
 					WineRedAdmire.class,
+					FancyLight.class,
 			};
-			GUN_SP.defaultProbs = new float[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			GUN_SP.defaultProbs = new float[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			GUN_SP.probs = GUN_SP.defaultProbs.clone();
 			
 			//see Generator.randomArmor

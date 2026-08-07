@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.TacticalTherapy;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.UniqueIdea;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.FunnyFirework;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.SpringPunch;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Chistka;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.Piety;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.Mulligan;
@@ -121,13 +122,14 @@ public interface SpecialGun {
         new Chistka.Recipe(),
         new Mulligan.Recipe(),
         new TrickOrTrick.Recipe(),
-        new FancyLight.Recipe(),
+        new SpringPunch.Recipe(),
         new ShootingStar.Recipe(),
         new MTET.Recipe(),
         new TwinDragon.Recipe(),
         new BeyondTheLumination.Recipe(),
         new JusticeIncarnate.Recipe(),
-        new WineRedAdmire.Recipe()
+        new WineRedAdmire.Recipe(),
+        new FancyLight.Recipe()
     };
 
     static ArrayList<QuickRecipe> quickRecipes() {
