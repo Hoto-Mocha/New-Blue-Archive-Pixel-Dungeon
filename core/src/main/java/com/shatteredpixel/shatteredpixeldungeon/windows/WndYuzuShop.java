@@ -186,7 +186,9 @@ public class WndYuzuShop extends Window {
 							//do nothing
 							break;
 						case 0:
-							executeContent();
+							if (content.canSelect(Dungeon.hero)) {
+								executeContent();
+							}
 							break;
 						case 1:
 							GameScene.show(new WndTitledMessage(new HeroIcon(content), Messages.titleCase(content.name()), content.desc()));
