@@ -63,7 +63,7 @@ public class SpringPunch extends GL implements SpecialGun {
                             && bulletPath.path.size() > bulletPath.dist+1 && ch.pos == bulletPath.collisionPos) {
                         strength = buffedLvl() + 3;
                         trajectory = new Ballistica(ch.pos, bulletPath.path.get(bulletPath.dist + 1), Ballistica.MAGIC_BOLT);
-                        WandOfBlastWave.throwChar(ch, trajectory, strength, false, true, this);
+                        WandOfBlastWave.throwChar(ch, trajectory, strength, false, ch.alignment == Char.Alignment.ENEMY, this);
                     }
                 }
 
@@ -75,7 +75,7 @@ public class SpringPunch extends GL implements SpecialGun {
                         if ((ch.isAlive() || ch.flying || !Dungeon.level.pit[ch.pos]) && ch.pos == bulletPath.collisionPos + i) {
                             strength = Math.round(1.5f + buffedLvl() / 2f);
                             trajectory = new Ballistica(ch.pos, ch.pos + i, Ballistica.MAGIC_BOLT);
-                            WandOfBlastWave.throwChar(ch, trajectory, strength, false, true, this);
+                            WandOfBlastWave.throwChar(ch, trajectory, strength, false, ch.alignment == Char.Alignment.ENEMY, this);
                         }
                     }
                 }
