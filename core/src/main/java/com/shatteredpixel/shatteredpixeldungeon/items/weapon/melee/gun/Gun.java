@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AlliedEnemyTracker;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AvantGardeKunBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
@@ -692,6 +693,16 @@ public class Gun extends MeleeWeapon {
 
     @Override
     public int proc(Char attacker, Char defender, int damage) {
+        //다중 타격 총기가 아군이 된 적에게 추가로 피해를 입히는 경우를 방지
+        //적이 아군이 아닐 때 버프 부여
+        if (defender.alignment == Char.Alignment.ENEMY && defender.buff(AlliedEnemyTracker.class) == null) {
+            Buff.affect(defender, AlliedEnemyTracker.class);
+        }
+        //적이 아군인데 앞서 부여한 버프가 있다면 이전에 적이었던 것이 되므로 피해를 0으로 만들고 명중 시 효과를 발동시키지 않음
+        if (defender.alignment == Char.Alignment.ALLY && defender.buff(AlliedEnemyTracker.class) != null) {
+            return 0;
+        }
+
         if (this.attachMod == AttachMod.FLASH_ATTACH) {
             if (Random.Int(10) > 5+Dungeon.level.distance(attacker.pos, defender.pos)-1) {
                 Buff.prolong(defender, Blindness.class, 2f);
