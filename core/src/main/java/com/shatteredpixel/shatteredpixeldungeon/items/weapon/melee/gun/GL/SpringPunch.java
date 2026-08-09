@@ -52,6 +52,9 @@ public class SpringPunch extends GL implements SpecialGun {
                     break;
                 }
             }
+            if (curUser.STR() < this.STRReq()) {
+                throwChar = false;
+            }
             if (throwChar) {
                 //타격 지점 중앙에 대한 날려 보내기 코드
                 Ballistica bulletPath = new Ballistica(curUser.pos, cell, Ballistica.STOP_TARGET);
