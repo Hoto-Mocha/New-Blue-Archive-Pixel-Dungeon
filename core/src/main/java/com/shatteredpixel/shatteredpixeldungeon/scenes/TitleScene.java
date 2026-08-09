@@ -115,11 +115,11 @@ public class TitleScene extends PixelScene {
 		align(title);
 
 		if (landscape()){
-			placeTorch(title.x + 0, title.y + 60);
-			placeTorch(title.x + title.width - 0, title.y + 60);
+			leftFB = placeTorch(title.x + 0, title.y + 60);
+			rightFB = placeTorch(title.x + title.width - 0, title.y + 60);
 		} else {
-			placeTorch(title.x + 16, title.y + 90);
-			placeTorch(title.x + title.width - 16, title.y + 90);
+			leftFB = placeTorch(title.x + 16, title.y + 90);
+			rightFB = placeTorch(title.x + title.width - 16, title.y + 90);
 		}
 
 		signs = new Image(BannerSprites.get( landscape() ? BannerSprites.Type.TITLE_GLOW_LAND : BannerSprites.Type.TITLE_GLOW_PORT)){
