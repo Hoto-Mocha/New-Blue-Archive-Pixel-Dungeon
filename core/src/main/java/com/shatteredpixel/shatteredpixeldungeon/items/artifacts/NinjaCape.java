@@ -86,8 +86,9 @@ public class NinjaCape extends Artifact {
 		if (hero.buff(MagicImmune.class) != null) return;
 
 		if (action.equals( AC_STEALTH )) {
-
+			usesTargeting = false;
 			if (activeBuff == null){
+				usesTargeting = true;
 				if (!isEquipped(hero) && !hero.hasTalent(Talent.IZUNA_T3_2)) GLog.i( Messages.get(Artifact.class, "need_to_equip") );
 				else if (cursed)       GLog.i( Messages.get(this, "cursed") );
 				else if (charge <= 0)  GLog.i( Messages.get(this, "no_charge") );
@@ -111,13 +112,7 @@ public class NinjaCape extends Artifact {
 			if (hero == null) return;
 
 			if (target == hero.pos) {
-				hero.spend( 1f );
-				hero.busy();
-				Sample.INSTANCE.play(Assets.Sounds.MELD);
-				activeBuff = activeBuff();
-				activeBuff.attachTo(hero);
-				Talent.onArtifactUsed(Dungeon.hero);
-				hero.sprite.operate(hero.pos);
+				cloakOwnPos(hero);
 			} else {
 				if (hero.rooted){
 					PixelScene.shake( 1, 1f );
@@ -140,7 +135,7 @@ public class NinjaCape extends Artifact {
 				}
 
 				if (target != hero.pos && Actor.findChar( target ) != null) {
-					hero.yellW("enemy");
+					cloakOwnPos(hero);
 					return;
 				}
 
@@ -197,6 +192,16 @@ public class NinjaCape extends Artifact {
 			return Messages.get(NinjaCape.class, "prompt");
 		}
 	};
+
+	public void cloakOwnPos(Hero hero) {
+		hero.spend( 1f );
+		hero.busy();
+		Sample.INSTANCE.play(Assets.Sounds.MELD);
+		activeBuff = activeBuff();
+		activeBuff.attachTo(hero);
+		Talent.onArtifactUsed(Dungeon.hero);
+		hero.sprite.operate(hero.pos);
+	}
 
 	@Override
 	public void activate(Char ch){
