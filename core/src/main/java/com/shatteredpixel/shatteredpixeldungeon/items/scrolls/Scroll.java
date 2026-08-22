@@ -221,7 +221,7 @@ public abstract class Scroll extends Item {
 				updateQuickslot();
 			}
 
-			if (Dungeon.hero.hasTalent(Talent.ARIS_T1_3)) {
+			if (Dungeon.hero.hasTalent(Talent.ARIS_T1_3) && Dungeon.hero.isAlive()) {
 				int exp = 2+3*Dungeon.hero.pointsInTalent(Talent.ARIS_T1_3);
 
 				if (exp > 0) {
