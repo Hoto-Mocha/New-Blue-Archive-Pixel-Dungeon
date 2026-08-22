@@ -1065,7 +1065,7 @@ public class WndSettings extends WndTabbed {
 
 			txtLangInfo = PixelScene.renderTextBlock(6);
 			String info = "_" + Messages.titleCase(currLang.nativeName()) + "_ - ";
-			if (currLang == Languages.ENGLISH) info += "This is the source language, written by the developer.";
+			if (currLang == Languages.KOREAN) info += "이 언어는 기본 언어로, 개발자에 의해 작성됩니다.";
 			else if (currLang.status() == Languages.Status.O_COMPLETE) info += Messages.get(this, "completed");
 			else if (currLang.status() == Languages.Status.__UNREVIEW) info += Messages.get(this, "unreviewed");
 			else if (currLang.status() == Languages.Status.X_UNFINISH) info += Messages.get(this, "unfinished");
@@ -1123,7 +1123,7 @@ public class WndSettings extends WndTabbed {
 			txtTranifex.text(Messages.get(this, "transifex"));
 			add(txtTranifex);
 
-			if (currLang != Languages.ENGLISH) {
+			if (currLang != Languages.KOREAN) {
 				String credText = Messages.titleCase(Messages.get(this, "credits"));
 				btnCredits = new RedButton(credText, credText.length() > 9 ? 6 : 9) {
 					@Override
