@@ -1753,7 +1753,7 @@ public class Hero extends Char {
 
 		damage = Talent.onDefenseProc(this, enemy, damage);
 
-		if (Dungeon.isChallenged(Challenges.NUTRITION_LACK) && buff(Hunger.class).isStarving() && Random.Float() < 0.2f) {
+		if (Dungeon.isChallenged(Challenges.NUTRITION_LACK) && buff(Hunger.class) != null && buff(Hunger.class).isStarving() && Random.Float() < 0.2f) {
 			Buff.affect(this, Bleeding.class).set(1+(int)(lvl/10), Challenges.class);
 		}
 
