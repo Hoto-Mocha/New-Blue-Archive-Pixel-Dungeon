@@ -20,7 +20,10 @@ public class Farming extends SandboxConsoleContent {
 
     @Override
     public boolean canBuild(int target) {
-        return Dungeon.level.passable[target] && !Dungeon.level.avoid[target] && Dungeon.level.map[target] != Terrain.OPEN_DOOR;
+        return super.canBuild(target)
+                && Dungeon.level.passable[target]
+                && !Dungeon.level.avoid[target]
+                && Dungeon.level.map[target] != Terrain.OPEN_DOOR;
     }
 
     @Override

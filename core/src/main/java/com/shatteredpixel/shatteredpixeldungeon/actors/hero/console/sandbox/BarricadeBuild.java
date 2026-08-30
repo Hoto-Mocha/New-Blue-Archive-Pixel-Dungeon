@@ -21,7 +21,8 @@ public class BarricadeBuild extends SandboxConsoleContent {
 
     @Override
     public boolean canBuild(int target) {
-        return Dungeon.level.map[target] == Terrain.DOOR || (Dungeon.level.passable[target] && !Dungeon.level.avoid[target]);
+        return super.canBuild(target)
+                && (Dungeon.level.map[target] == Terrain.DOOR || (Dungeon.level.passable[target] && !Dungeon.level.avoid[target]));
     }
 
     @Override
@@ -30,7 +31,7 @@ public class BarricadeBuild extends SandboxConsoleContent {
             hero.yellW("need_to_be_adjacent");
             return false;
         }
-        if (target == hero.pos && Dungeon.level.map[target] == Terrain.OPEN_DOOR) {
+        if ((target == hero.pos && Dungeon.level.map[target] == Terrain.OPEN_DOOR) || !canBuild(target)) {
             hero.yellW("cannot_do");
             return false;
         }

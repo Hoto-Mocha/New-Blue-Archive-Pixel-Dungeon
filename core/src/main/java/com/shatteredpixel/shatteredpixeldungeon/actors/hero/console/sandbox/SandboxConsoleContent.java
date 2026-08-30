@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.YuzuConsoleContent;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.watabou.noosa.Image;
 
@@ -34,7 +35,9 @@ public abstract class SandboxConsoleContent extends YuzuConsoleContent {
     }
 
     public boolean canBuild(int target) {
-        return false;
+        return Dungeon.level.map[target] != Terrain.ENTRANCE
+                && Dungeon.level.map[target] != Terrain.ENTRANCE_SP
+                && Dungeon.level.map[target] != Terrain.EXIT;
     }
 
     //판타지 콘솔 버프
