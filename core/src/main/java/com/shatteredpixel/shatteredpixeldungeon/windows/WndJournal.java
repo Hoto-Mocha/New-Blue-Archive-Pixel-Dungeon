@@ -853,7 +853,7 @@ public class WndJournal extends WndTabbed {
 				@Override
 				public boolean onClick(float x, float y) {
 					if (inside(x, y)) {
-						if (Dungeon.hero != null && (DeviceCompat.isDebug() || SPDSettings.customSeed().contains("test"))) {
+						if (Dungeon.hero != null && (DeviceCompat.isDebug() || Dungeon.customSeedText.contains("test"))) {
 							if (Item.class.isAssignableFrom(itemClass)) {
 								Item item = (Item) Reflection.newInstance(itemClass);
 								if (item != null) {

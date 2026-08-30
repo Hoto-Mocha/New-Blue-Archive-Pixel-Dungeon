@@ -182,7 +182,7 @@ public enum HeroClass {
 		Waterskin waterskin = new Waterskin();
 		waterskin.collect();
 
-		if (DeviceCompat.isDebug() || SPDSettings.customSeed().contains("test")) {
+		if (DeviceCompat.isDebug() || Dungeon.customSeedText.contains("test")) {
 			new RingOfMight().identify().upgrade(10).collect();
 			new RingOfEnergy().identify().upgrade(10).collect();
 			new RingOfHaste().identify().upgrade(100).collect();
