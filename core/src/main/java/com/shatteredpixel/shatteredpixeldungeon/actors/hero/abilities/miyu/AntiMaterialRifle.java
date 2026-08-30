@@ -45,7 +45,15 @@ public class AntiMaterialRifle extends ArmorAbility {
 
         Gun gun = (Gun) hero.belongings.weapon();
         SR_SP sr = new SR_SP();
-        sr.upgrade(gun.level());
+        int level;
+        if (gun.curseInfusionBonus) {
+            gun.curseInfusionBonus = false;
+            level = gun.level();
+            gun.curseInfusionBonus = true;
+        } else {
+            level = gun.level();
+        }
+        sr.upgrade(level);
         sr.enchantment          = gun.enchantment;
         sr.curseInfusionBonus   = gun.curseInfusionBonus;
         sr.masteryPotionBonus   = gun.masteryPotionBonus;
