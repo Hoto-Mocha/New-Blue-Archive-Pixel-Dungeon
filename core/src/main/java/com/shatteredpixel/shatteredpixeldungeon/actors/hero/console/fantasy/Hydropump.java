@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.WaterOfAwareness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.WaterOfHealth;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.WellWater;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -18,6 +19,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.Game;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -67,6 +69,7 @@ public class Hydropump extends FantasyConsoleContent {
                 Class<? extends WellWater> waterClass = (Class<? extends WellWater>) Random.element( WATERS );
                 Blob b = WellWater.seed(cell+i, 1, waterClass, Dungeon.level);
                 Notes.add( b.landmark() );
+                GameScene.add(b);
                 GameScene.updateMap( cell+i );
             }
         }
