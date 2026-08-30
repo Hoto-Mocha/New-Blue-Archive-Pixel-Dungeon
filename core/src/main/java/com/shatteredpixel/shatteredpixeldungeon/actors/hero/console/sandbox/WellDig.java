@@ -50,6 +50,10 @@ public class WellDig extends SandboxConsoleContent {
 
     @Override
     public boolean canBuild(int target) {
-        return Dungeon.level.passable[target] && !Dungeon.level.avoid[target] && Dungeon.level.map[target] != Terrain.OPEN_DOOR;
+        return Dungeon.level.passable[target] && !Dungeon.level.avoid[target]
+                && Dungeon.level.map[target] != Terrain.OPEN_DOOR
+                && Dungeon.level.map[target] != Terrain.ENTRANCE
+                && Dungeon.level.map[target] != Terrain.ENTRANCE_SP
+                && Dungeon.level.map[target] != Terrain.EXIT;
     }
 }
