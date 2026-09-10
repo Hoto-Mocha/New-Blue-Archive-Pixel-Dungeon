@@ -446,7 +446,7 @@ public class SeedFinder {
 			if (Imp.Quest.reward != null) {
 				ArrayList<Item> rewards = new ArrayList<>();
 				rewards.add(Imp.Quest.reward.identify());
-				Imp.Quest.complete();
+				Imp.Quest.complete(0);
 
 				addTextQuest(appendCaption(Messages.get(this, "imp_reward")), rewards, builder);
 			}

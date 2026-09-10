@@ -137,7 +137,6 @@ public enum Icons {
 	PURIGRO,
 	ARCNOR,
 	ALASTAIR,
-	ARCNOR,
 
 	//new icons
 	DISCORD,

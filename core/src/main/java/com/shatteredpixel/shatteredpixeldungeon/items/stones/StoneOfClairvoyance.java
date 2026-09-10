@@ -96,21 +96,21 @@ public class StoneOfClairvoyance extends Runestone {
 		int left, right;
 		int curr;
 		boolean noticed = false;
-		for (int y = Math.max(0, c.y - distance); y <= Math.min(Dungeon.level.height()-1, c.y + distance); y++) {
+		for (int y = Math.max(0, c.y - distance); y <= Math.min(Dungeon.level.height() - 1, c.y + distance); y++) {
 			if (rounding[Math.abs(c.y - y)] < Math.abs(c.y - y)) {
 				left = c.x - rounding[Math.abs(c.y - y)];
 			} else {
 				left = distance;
-				while (rounding[left] < rounding[Math.abs(c.y - y)]){
+				while (rounding[left] < rounding[Math.abs(c.y - y)]) {
 					left--;
 				}
 				left = c.x - left;
 			}
-			right = Math.min(Dungeon.level.width()-1, c.x + c.x - left);
+			right = Math.min(Dungeon.level.width() - 1, c.x + c.x - left);
 			left = Math.max(0, left);
-			for (curr = left + y * Dungeon.level.width(); curr <= right + y * Dungeon.level.width(); curr++){
+			for (curr = left + y * Dungeon.level.width(); curr <= right + y * Dungeon.level.width(); curr++) {
 
-				GameScene.effectOverFog( new CheckedCell( curr, cell ) );
+				GameScene.checkedCell(curr, cell);
 				Dungeon.level.mapped[curr] = true;
 
 				if (Dungeon.level.secret[curr]) {
@@ -127,11 +127,10 @@ public class StoneOfClairvoyance extends Runestone {
 		}
 
 		if (noticed) {
-			Sample.INSTANCE.play( Assets.Sounds.SECRET );
+			Sample.INSTANCE.play(Assets.Sounds.SECRET);
 		}
 
-		Sample.INSTANCE.play( Assets.Sounds.TELEPORT );
+		Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 		GameScene.updateFog();
 	}
-	
 }

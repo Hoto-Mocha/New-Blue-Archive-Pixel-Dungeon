@@ -1003,7 +1003,7 @@ public abstract class Char extends Actor {
 		if (alignment != Alignment.ALLY && this.buff(DeathMark.DeathMarkTracker.class) != null){
 			damage *= 1.25f;
 		}
-		if (hero.subClass == HeroSubClass.CONVERSATION) {
+		if (Dungeon.hero.subClass == HeroSubClass.CONVERSATION) {
 			int debuffs = 0;
 			for (Buff b : buffs()) {
 				if (b.type == Buff.buffType.NEGATIVE) debuffs++;
@@ -1136,11 +1136,11 @@ public abstract class Char extends Actor {
 		
 		if (sprite != null) {
 			String dmgText = Integer.toString(dmg + shielded);
-			if (hero.buff(YuzuStatus.CriticalTracker.class) != null) {
+			if (Dungeon.hero.buff(YuzuStatus.CriticalTracker.class) != null) {
 				if (src instanceof Hero) {
 					dmgText += "!";
 				}
-				hero.buff(YuzuStatus.CriticalTracker.class).detach();
+				Dungeon.hero.buff(YuzuStatus.CriticalTracker.class).detach();
 			}
 			//defaults to normal damage icon if no other ones apply
 			int                                                         icon = FloatingText.PHYS_DMG;

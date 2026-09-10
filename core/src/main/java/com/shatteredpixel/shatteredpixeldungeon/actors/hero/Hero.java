@@ -689,8 +689,8 @@ public class Hero extends Char {
 			}
 		}
 
-		if (hero.hasTalent(Talent.SHIROKO_EX1_2) && hero.buff(Bicycle.BicycleBuff.class) != null) {
-			evasion *= Math.max(1, 1+(hero.speed()-1)*hero.pointsInTalent(Talent.SHIROKO_EX1_2)/6f);
+		if (this.hasTalent(Talent.SHIROKO_EX1_2) && this.buff(Bicycle.BicycleBuff.class) != null) {
+			evasion *= Math.max(1, 1+(this.speed()-1)*this.pointsInTalent(Talent.SHIROKO_EX1_2)/6f);
 		}
 
 		return Math.max(1, Math.round(evasion));
@@ -1719,7 +1719,7 @@ public class Hero extends Char {
 			}
 			break;
 		case DOUBLE_BARREL:
-			if (((wep instanceof Gun.Bullet && !((Gun.Bullet) wep).isSpecialShot()) || (hasTalent(Talent.NOA_EX1_3) && !(wep instanceof Gun.Bullet))) && enemy != this && hero.buff(DoubleBarrelMark.class) == null) {
+			if (((wep instanceof Gun.Bullet && !((Gun.Bullet) wep).isSpecialShot()) || (hasTalent(Talent.NOA_EX1_3) && !(wep instanceof Gun.Bullet))) && enemy != this && this.buff(DoubleBarrelMark.class) == null) {
 				Actor.add(new Actor() {
 
 					{
