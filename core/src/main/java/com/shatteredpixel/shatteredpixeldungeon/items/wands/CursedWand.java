@@ -70,6 +70,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.PitfallParticl
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.PoisonParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
@@ -353,9 +354,8 @@ public class CursedWand {
 
 		@Override
 		public boolean valid(Item origin, Char user, Ballistica bolt, boolean positiveOnly) {
-			//we have this limit atm because some wands are coded to depend on their fx logic
-			// and chaos elementals trigger the effect directly, with no FX first
-			return super.valid(origin, user, bolt, positiveOnly) && user instanceof Hero && !(origin instanceof Gun);
+			//only trigger this one if cursed zap fx are coming from a wand
+			return super.valid(origin, user, bolt, positiveOnly) && origin instanceof Wand;
 		}
 
 		@Override
@@ -1170,7 +1170,12 @@ public class CursedWand {
 			if (origin == null || user != Dungeon.hero || !Dungeon.hero.belongings.contains(origin)){
 				return false;
 			}
-			origin.detach(Dungeon.hero.belongings.backpack);
+			if (origin.isEquipped(Dungeon.hero) && origin instanceof EquipableItem){
+				origin.cursed = false;
+				((EquipableItem) origin).doUnequip(Dungeon.hero, false);
+			} else {
+				origin.detach(Dungeon.hero.belongings.backpack);
+			}
 			Item result;
 			do {
 				result = Generator.randomUsingDefaults(Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR,

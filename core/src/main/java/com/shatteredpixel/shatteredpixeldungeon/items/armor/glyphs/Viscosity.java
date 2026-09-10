@@ -104,7 +104,7 @@ public class Viscosity extends Glyph {
 		}
 	};
 	
-	public static class DeferedDamage extends Buff {
+	public static class DeferedDamage extends Buff implements Buff.DOTbuff {
 		
 		{
 			type = buffType.NEGATIVE;
@@ -133,6 +133,7 @@ public class Viscosity extends Glyph {
 				postpone(TICK);
 			}
 			this.damage += damage;
+			if (target != null) target.needsIncomingDOTUpdate = true;
 		}
 		
 		@Override
@@ -170,13 +171,25 @@ public class Viscosity extends Glyph {
 				detach();
 				
 			}
-			
+
+			target.needsIncomingDOTUpdate = true;
 			return true;
+		}
+
+		@Override
+		public void detach() {
+			target.needsIncomingDOTUpdate = true;
+			super.detach();
 		}
 
 		@Override
 		public String desc() {
 			return Messages.get(this, "desc", damage);
+		}
+
+		@Override
+		public int totalIncomingDMG() {
+			return damage;
 		}
 	}
 }
