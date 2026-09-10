@@ -88,7 +88,7 @@ public class AboutScene extends PixelScene {
 				"ShatteredPixel.com",
 				"https://ShatteredPixel.com");
 		if (landscape()){
-			shpx.setRect((w - fullWidth)/2f - 6, arranged.bottom() + 26, 120, 0);
+			shpx.setRect((w - fullWidth)/2f - 6, arranged.bottom() + 6, 120, 0);
 		} else {
 			shpx.setRect((w - fullWidth)/2f, arranged.bottom() + 6, 120, 0);
 		}
@@ -102,7 +102,7 @@ public class AboutScene extends PixelScene {
 				"https://www.alekskomitov.com/");
 		aleks.setSize(colWidth/2f, 0);
 		if (landscape()){
-			aleks.setPos(shpx.right(), insets.top+6);
+			aleks.setPos(shpx.right(), shpx.top()+6);
 		} else {
 			aleks.setPos(w/2f - colWidth/2f, shpx.bottom()+6);
 		}
