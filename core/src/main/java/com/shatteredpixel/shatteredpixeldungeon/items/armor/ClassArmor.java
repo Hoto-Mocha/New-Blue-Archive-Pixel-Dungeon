@@ -127,6 +127,9 @@ abstract public class ClassArmor extends Armor {
 			case IZUNA:
 				classArmor = new IzunaArmor();
 				break;
+			case MIKA:
+				classArmor = new MikaArmor();
+				break;
 			case WARRIOR:
 				classArmor = new WarriorArmor();
 				break;

@@ -50,6 +50,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.Thro
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.ElementalBlast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WarpBeacon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WildMagic;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.PerfectDeception;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.RollCakeThrow;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.SuperMeteor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.CloseAirSupport;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Helicopter;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.WireHook;
@@ -151,6 +154,7 @@ public enum HeroClass {
 	MIYU(HeroSubClass.TELESCOPE, HeroSubClass.CAMOUFLAGE),
 	YUZU(HeroSubClass.AVANT_GARDE_KUN, HeroSubClass.GAME_START),
 	IZUNA(HeroSubClass.SWITCHING, HeroSubClass.CHASE),
+	MIKA(HeroSubClass.CALL_OF_STAR, HeroSubClass.LITTLE_ANGRY),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
@@ -235,6 +239,10 @@ public enum HeroClass {
 
 			case IZUNA:
 				initIzuna( hero );
+				break;
+
+			case MIKA:
+				initMika( hero );
 				break;
 
 
@@ -433,6 +441,16 @@ public enum HeroClass {
 		new ScrollOfRage().identify();
 	}
 
+	private static void initMika(Hero hero) {
+		SMG_T1 smgT1 = new SMG_T1();
+		(hero.belongings.weapon = smgT1).identify();
+
+		Dungeon.quickslot.setSlot(0, smgT1);
+
+		new PotionOfHealing().identify();
+		new ScrollOfRage().identify();
+	}
+
 	private static void initWarrior( Hero hero ) {
 		(hero.belongings.weapon = new WornShortsword()).identify();
 		ThrowingStone stones = new ThrowingStone();
@@ -558,6 +576,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new PVP(), new Cabinet(), new VIPMembership()};
 			case IZUNA:
 				return new ArmorAbility[]{new SmokeSpread(), new Blink(), new ThrowingThunder()};
+			case MIKA:
+				return new ArmorAbility[]{new RollCakeThrow(), new SuperMeteor(), new PerfectDeception()};
 
 			case WARRIOR:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
@@ -594,6 +614,8 @@ public enum HeroClass {
 				return Assets.Sprites.YUZU;
 			case IZUNA:
 				return Assets.Sprites.IZUNA;
+			case MIKA:
+				return Assets.Sprites.MIKA;
 			case WARRIOR:
 				return Assets.Sprites.WARRIOR;
 			case MAGE:
@@ -629,6 +651,8 @@ public enum HeroClass {
 				return Assets.Splashes.YUZU;
 			case IZUNA:
 				return Assets.Splashes.IZUNA;
+			case MIKA:
+				return Assets.Splashes.MIKA;
 			case WARRIOR:
 				return Assets.Splashes.WARRIOR;
 			case MAGE:

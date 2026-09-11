@@ -731,6 +731,48 @@ public enum Talent {
 	IZUNA_ARMOR3_2(24, 8, 4),
 	IZUNA_ARMOR3_3(25, 8, 4),
 
+	//Mika T1
+	MIKA_T1_1(0, 9, 2),
+	MIKA_T1_2(1, 9, 2),
+	MIKA_T1_3(2, 9, 2),
+	MIKA_T1_4(3, 9, 2),
+
+	//Mika T2
+	MIKA_T2_1(4, 9, 2),
+	MIKA_T2_2(5, 9, 2),
+	MIKA_T2_3(6, 9, 2),
+	MIKA_T2_4(7, 9, 2),
+	MIKA_T2_5(8, 9, 2),
+
+	//Mika T3
+	MIKA_T3_1(9, 9, 3),
+	MIKA_T3_2(10, 9, 3),
+
+	//Call of Star T3
+	MIKA_EX1_1(11, 9, 3),
+	MIKA_EX1_2(12, 9, 3),
+	MIKA_EX1_3(13, 9, 3),
+
+	//Little Angry T3
+	MIKA_EX2_1(14, 9, 3),
+	MIKA_EX2_2(15, 9, 3),
+	MIKA_EX2_3(16, 9, 3),
+
+	//Armor Ability 1 T4
+	MIKA_ARMOR1_1(17, 9, 4),
+	MIKA_ARMOR1_2(18, 9, 4),
+	MIKA_ARMOR1_3(19, 9, 4),
+
+	//Armor Ability 2 T4
+	MIKA_ARMOR2_1(20, 9, 4),
+	MIKA_ARMOR2_2(21, 9, 4),
+	MIKA_ARMOR2_3(22, 9, 4),
+
+	//Armor Ability 3 T4
+	MIKA_ARMOR3_1(23, 9, 4),
+	MIKA_ARMOR3_2(24, 9, 4),
+	MIKA_ARMOR3_3(25, 9, 4),
+
 	//universal T4
 	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one
 	//Ratmogrify T4
@@ -1057,9 +1099,12 @@ public enum Talent {
 				case IZUNA:
 					y = 8;
 					break;
+				case MIKA:
+					y = 9;
+					break;
 			}
 			if (Ratmogrify.useRatroicEnergy){
-				y = 9;
+				y = 11;
 			}
 			return x+TALENT_NUMBER*y;
 		} else {
@@ -2251,6 +2296,9 @@ public enum Talent {
 			case IZUNA:
 				Collections.addAll(tierTalents, IZUNA_T1_1, IZUNA_T1_2, IZUNA_T1_3, IZUNA_T1_4);
 				break;
+			case MIKA:
+				Collections.addAll(tierTalents, MIKA_T1_1, MIKA_T1_2, MIKA_T1_3, MIKA_T1_4);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HEARTY_MEAL, VETERANS_INTUITION, PROVOKED_ANGER, IRON_WILL);
 				break;
@@ -2307,6 +2355,9 @@ public enum Talent {
 			case IZUNA:
 				Collections.addAll(tierTalents, IZUNA_T2_1, IZUNA_T2_2, IZUNA_T2_3, IZUNA_T2_4, IZUNA_T2_5);
 				break;
+			case MIKA:
+				Collections.addAll(tierTalents, MIKA_T2_1, MIKA_T2_2, MIKA_T2_3, MIKA_T2_4, MIKA_T2_5);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, IRON_STOMACH, LIQUID_WILLPOWER, RUNIC_TRANSFERENCE, LETHAL_MOMENTUM, IMPROVISED_PROJECTILES);
 				break;
@@ -2362,6 +2413,9 @@ public enum Talent {
 				break;
 			case IZUNA:
 				Collections.addAll(tierTalents, IZUNA_T3_1, IZUNA_T3_2);
+				break;
+			case MIKA:
+				Collections.addAll(tierTalents, MIKA_T3_1, MIKA_T3_2);
 				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HOLD_FAST, STRONGMAN);
@@ -2462,6 +2516,12 @@ public enum Talent {
 				break;
 			case CHASE:
 				Collections.addAll(tierTalents, IZUNA_EX2_1, IZUNA_EX2_2, IZUNA_EX2_3);
+				break;
+			case CALL_OF_STAR:
+				Collections.addAll(tierTalents, MIKA_EX1_1, MIKA_EX1_2, MIKA_EX1_3);
+				break;
+			case LITTLE_ANGRY:
+				Collections.addAll(tierTalents, MIKA_EX2_1, MIKA_EX2_2, MIKA_EX2_3);
 				break;
 			case BERSERKER:
 				Collections.addAll(tierTalents, ENDLESS_RAGE, DEATHLESS_FURY, ENRAGED_CATALYST);

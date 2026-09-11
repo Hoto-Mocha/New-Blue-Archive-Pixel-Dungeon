@@ -59,6 +59,9 @@ public enum HeroSubClass {
 	SWITCHING(HeroIcon.SWITCHING),
 	CHASE(HeroIcon.CHASE),
 
+	CALL_OF_STAR(HeroIcon.CALL_OF_STAR),
+	LITTLE_ANGRY(HeroIcon.LITTLE_ANGRY),
+
 
 
 	BERSERKER(HeroIcon.BERSERKER),

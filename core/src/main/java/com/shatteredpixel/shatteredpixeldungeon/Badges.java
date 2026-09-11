@@ -73,6 +73,7 @@ public class Badges {
 		MASTERY_MIYU,
 		MASTERY_YUZU,
 		MASTERY_IZUNA,
+		MASTERY_MIKA,
 
 //		MASTERY_WARRIOR,
 //		MASTERY_MAGE,
@@ -140,6 +141,7 @@ public class Badges {
 		BOSS_SLAIN_1_MIYU,
 		BOSS_SLAIN_1_YUZU,
 		BOSS_SLAIN_1_IZUNA,
+		BOSS_SLAIN_1_MIKA,
 //		BOSS_SLAIN_1_WARRIOR,
 //		BOSS_SLAIN_1_MAGE,
 //		BOSS_SLAIN_1_ROGUE,
@@ -198,6 +200,7 @@ public class Badges {
 		VICTORY_MIYU,
 		VICTORY_YUZU,
 		VICTORY_IZUNA,
+		VICTORY_MIKA,
 //		VICTORY_WARRIOR,
 //		VICTORY_MAGE,
 //		VICTORY_ROGUE,
@@ -224,6 +227,8 @@ public class Badges {
 		BOSS_SLAIN_3_GAME_START,
 		BOSS_SLAIN_3_SWITCHING,
 		BOSS_SLAIN_3_CHASE,
+		BOSS_SLAIN_3_CALL_OF_STAR,
+		BOSS_SLAIN_3_LITTLE_ANGRY,
 //		BOSS_SLAIN_3_GLADIATOR,
 //		BOSS_SLAIN_3_BERSERKER,
 //		BOSS_SLAIN_3_WARLOCK,
@@ -855,6 +860,7 @@ public class Badges {
 		firstBossClassBadges.put(HeroClass.MIYU, Badge.BOSS_SLAIN_1_MIYU);
 		firstBossClassBadges.put(HeroClass.YUZU, Badge.BOSS_SLAIN_1_YUZU);
 		firstBossClassBadges.put(HeroClass.IZUNA, Badge.BOSS_SLAIN_1_IZUNA);
+		firstBossClassBadges.put(HeroClass.MIKA, Badge.BOSS_SLAIN_1_MIKA);
 //		firstBossClassBadges.put(HeroClass.WARRIOR, Badge.BOSS_SLAIN_1_WARRIOR);
 //		firstBossClassBadges.put(HeroClass.MAGE, Badge.BOSS_SLAIN_1_MAGE);
 //		firstBossClassBadges.put(HeroClass.ROGUE, Badge.BOSS_SLAIN_1_ROGUE);
@@ -874,6 +880,7 @@ public class Badges {
 		victoryClassBadges.put(HeroClass.MIYU, Badge.VICTORY_MIYU);
 		victoryClassBadges.put(HeroClass.YUZU, Badge.VICTORY_YUZU);
 		victoryClassBadges.put(HeroClass.IZUNA, Badge.VICTORY_IZUNA);
+		victoryClassBadges.put(HeroClass.MIKA, Badge.VICTORY_MIKA);
 //		victoryClassBadges.put(HeroClass.WARRIOR, Badge.VICTORY_WARRIOR);
 //		victoryClassBadges.put(HeroClass.MAGE, Badge.VICTORY_MAGE);
 //		victoryClassBadges.put(HeroClass.ROGUE, Badge.VICTORY_ROGUE);
@@ -902,6 +909,8 @@ public class Badges {
 		thirdBossSubclassBadges.put(HeroSubClass.GAME_START, Badge.BOSS_SLAIN_3_GAME_START);
 		thirdBossSubclassBadges.put(HeroSubClass.SWITCHING, Badge.BOSS_SLAIN_3_SWITCHING);
 		thirdBossSubclassBadges.put(HeroSubClass.CHASE, Badge.BOSS_SLAIN_3_CHASE);
+		thirdBossSubclassBadges.put(HeroSubClass.CALL_OF_STAR, Badge.BOSS_SLAIN_3_SWITCHING);
+		thirdBossSubclassBadges.put(HeroSubClass.LITTLE_ANGRY, Badge.BOSS_SLAIN_3_CHASE);
 //		thirdBossSubclassBadges.put(HeroSubClass.BERSERKER, Badge.BOSS_SLAIN_3_BERSERKER);
 //		thirdBossSubclassBadges.put(HeroSubClass.GLADIATOR, Badge.BOSS_SLAIN_3_GLADIATOR);
 //		thirdBossSubclassBadges.put(HeroSubClass.BATTLEMAGE, Badge.BOSS_SLAIN_3_BATTLEMAGE);
@@ -1044,6 +1053,9 @@ public class Badges {
 				break;
 			case IZUNA:
 				badge = Badge.MASTERY_IZUNA;
+				break;
+			case MIKA:
+				badge = Badge.MASTERY_MIKA;
 				break;
 //			case WARRIOR:
 //				badge = Badge.MASTERY_WARRIOR;

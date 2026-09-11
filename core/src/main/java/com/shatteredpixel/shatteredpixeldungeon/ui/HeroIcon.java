@@ -134,6 +134,8 @@ public class HeroIcon extends Image {
 	public static final int GAME_START		= 128+15;
 	public static final int SWITCHING		= 128+16;
 	public static final int CHASE			= 128+17;
+	public static final int CALL_OF_STAR	= 128+18;
+	public static final int LITTLE_ANGRY	= 128+19;
 
 	//new armor abilities
 	public static final int ARIS_1			= 128+24;
