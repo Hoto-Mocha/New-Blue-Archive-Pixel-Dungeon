@@ -270,7 +270,6 @@ public class WndHeroInfo extends WndTabbed {
 				case MIKA:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SCRUNCHIE),
 							new ItemSprite(ItemSpriteSheet.SMG_PLACEHOLDER),
-							new ItemSprite(ItemSpriteSheet.ASSASSIN_KUNAI),
 							new ItemSprite(ItemSpriteSheet.SMG_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
