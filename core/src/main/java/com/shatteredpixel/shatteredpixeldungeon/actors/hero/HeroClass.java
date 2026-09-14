@@ -96,6 +96,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolki
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Scrunchie;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
@@ -445,7 +446,12 @@ public enum HeroClass {
 		SMG_T1 smgT1 = new SMG_T1();
 		(hero.belongings.weapon = smgT1).identify();
 
+		Scrunchie scrunchie = new Scrunchie();
+		(hero.belongings.artifact = scrunchie).identify();
+		hero.belongings.artifact.activate( hero );
+
 		Dungeon.quickslot.setSlot(0, smgT1);
+		Dungeon.quickslot.setSlot(1, scrunchie);
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
