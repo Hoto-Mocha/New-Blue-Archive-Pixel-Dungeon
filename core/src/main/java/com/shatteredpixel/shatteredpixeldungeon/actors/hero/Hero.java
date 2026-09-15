@@ -319,6 +319,10 @@ public class Hero extends Char {
 			strBonus += (int)Math.floor(STR * (0.03f + 0.05f*pointsInTalent(Talent.STRONGMAN)));
 		}
 
+		if (hasTalent(Talent.MIKA_T3_1)){
+			strBonus += (int)Math.floor(STR * (0.03f + 0.05f*pointsInTalent(Talent.MIKA_T3_1)));
+		}
+
 		return STR + strBonus;
 	}
 
