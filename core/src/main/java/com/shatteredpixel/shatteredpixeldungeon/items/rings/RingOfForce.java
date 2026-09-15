@@ -99,9 +99,15 @@ public class RingOfForce extends Ring {
 				// lvl*((4+2*tier)/8) scaling, +50% dmg
 				dmg += Math.round(3+tier+(level*((4+2*tier)/8f)));
 			}
+			if (hero.heroClass == HeroClass.MIKA) {
+				dmg += Hero.heroDamageIntRange(hero.STR(), 2*(hero.STR()+hero.lvl));
+			}
 			return dmg;
 		} else {
 			//attack without any ring of force influence
+			if (hero.heroClass == HeroClass.MIKA) {
+				return Hero.heroDamageIntRange(hero.STR(), 2*(hero.STR()+hero.lvl));
+			}
 			return Hero.heroDamageIntRange(1, Math.max(hero.STR()-8, 1));
 		}
 	}
@@ -110,20 +116,32 @@ public class RingOfForce extends Ring {
 	private static int min(int lvl, float tier){
 		if (lvl <= 0) tier = 1; //tier is forced to 1 if cursed
 
-		return Math.max( 0, Math.round(
+		int dmg = Math.max( 0, Math.round(
 				tier +  //base
-				lvl     //level scaling
+						lvl     //level scaling
 		));
+
+		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.MIKA) {
+			dmg += Dungeon.hero.STR();
+		}
+
+		return dmg;
 	}
 
 	//same as equivalent tier weapon
 	private static int max(int lvl, float tier){
 		if (lvl <= 0) tier = 1; //tier is forced to 1 if cursed
 
-		return Math.max( 0, Math.round(
+		int dmg = Math.max( 0, Math.round(
 				5*(tier+1) +    //base
-				lvl*(tier+1)    //level scaling
+						lvl*(tier+1)    //level scaling
 		));
+
+		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.MIKA) {
+			dmg += 2*(Dungeon.hero.STR()+Dungeon.hero.lvl);
+		}
+
+		return dmg;
 	}
 
 	@Override
