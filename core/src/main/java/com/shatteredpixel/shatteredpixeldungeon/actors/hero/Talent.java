@@ -2336,6 +2336,8 @@ public enum Talent {
 		}
 	}
 
+	public static class CharmTracker extends Buff {}
+
 	//new buff here
 
 	public static final int MAX_TALENT_TIERS = 4;

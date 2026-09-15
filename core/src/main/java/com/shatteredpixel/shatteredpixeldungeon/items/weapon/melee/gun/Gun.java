@@ -12,6 +12,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AvantGardeKunBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.NoticeTracker;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
@@ -1011,6 +1014,23 @@ public class Gun extends MeleeWeapon {
 
                 if (hero.hasTalent(Talent.NOA_T3_1) && hero.buff(Talent.PerfectPrecisionTracker.class) == null) {
                     Buff.affect(hero, Talent.PerfectPrecisionTracker.class, hero.cooldown()+4f);
+                }
+
+                if (hero.hasTalent(Talent.MIKA_T2_5) && !defender.isImmune(Charm.class) && defender.buff(Talent.CharmTracker.class) == null) {
+                    new FlavourBuff() {
+                        {
+                            actPriority = VFX_PRIO;
+                        }
+
+                        public boolean act() {
+                            Charm charm = Buff.affect(defender, Charm.class, 5f*hero.pointsInTalent(Talent.MIKA_T2_5));
+                            charm.object = curUser.id();
+                            charm.ignoreHeroAllies = true;
+                            defender.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 3 );
+                            return super.act();
+                        }
+                    }.attachTo(defender);
+                    Buff.affect(defender, Talent.CharmTracker.class);
                 }
             }
 
