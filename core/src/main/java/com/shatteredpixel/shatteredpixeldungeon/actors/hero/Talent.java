@@ -86,6 +86,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Scrunchie;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.RollCake;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
@@ -1204,6 +1205,16 @@ public enum Talent {
 				if (item instanceof NinjaCape){
 					if (!hero.belongings.lostInventory() || item.keptThroughLostInventory()) {
 						((NinjaCape) item).activate(Dungeon.hero);
+					}
+				}
+			}
+		}
+
+		if (talent == MIKA_T3_2 && hero.heroClass == HeroClass.MIKA){
+			for (Item item : Dungeon.hero.belongings.backpack){
+				if (item instanceof Scrunchie){
+					if (!hero.belongings.lostInventory() || item.keptThroughLostInventory()) {
+						((Scrunchie) item).activate(Dungeon.hero);
 					}
 				}
 			}

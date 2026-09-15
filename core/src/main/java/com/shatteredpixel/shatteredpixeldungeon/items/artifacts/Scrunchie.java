@@ -14,6 +14,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
@@ -53,7 +54,7 @@ public class Scrunchie extends Artifact {
     @Override
     public ArrayList<String> actions(Hero hero) {
         ArrayList<String> actions = super.actions(hero);
-        if (isEquipped(hero)
+        if ((isEquipped( hero ) || hero.hasTalent(Talent.MIKA_T3_2))
                 && hero.buff(MagicImmune.class) == null
                 && !cursed) {
             actions.add(AC_USE);
@@ -71,23 +72,43 @@ public class Scrunchie extends Artifact {
 
             curUser = hero;
 
-            if (!isEquipped( hero )) {
-                GLog.i( Messages.get(Artifact.class, "need_to_equip") );
-
-            } else if (cursed) {
-                GLog.w( Messages.get(this, "cursed") );
-
-            } else if (charge < 1) {
-                GLog.w( Messages.get(this, "no_charge") );
-
-            } else {
+            if (!isEquipped( hero ) && !hero.hasTalent(Talent.MIKA_T3_2)) GLog.i( Messages.get(Artifact.class, "need_to_equip") );
+            else if (cursed) GLog.w( Messages.get(this, "cursed") );
+            else if (charge < 1) GLog.w( Messages.get(this, "no_charge") );
+            else {
                 usesTargeting = true;
                 GameScene.selectCell(targeter);
-
             }
 
         }
     }
+
+    @Override
+    public boolean doUnequip(Hero hero, boolean collect, boolean single) {
+        if (super.doUnequip(hero, collect, single)){
+            if (collect && hero.hasTalent(Talent.MIKA_T3_2)){
+                activate(hero);
+            }
+
+            return true;
+        } else
+            return false;
+    }
+
+    @Override
+    public boolean collect( Bag container ) {
+        if (super.collect(container)){
+            if (container.owner instanceof Hero
+                    && passiveBuff == null
+                    && ((Hero) container.owner).hasTalent(Talent.MIKA_T3_2)){
+                activate((Hero) container.owner);
+            }
+            return true;
+        } else{
+            return false;
+        }
+    }
+
 
     public CellSelector.Listener targeter = new CellSelector.Listener(){
 
@@ -189,6 +210,7 @@ public class Scrunchie extends Artifact {
     @Override
     public void charge(Hero target, float amount) {
         if (charge < chargeCap && !cursed && target.buff(MagicImmune.class) == null){
+            if (!isEquipped(target)) amount *= 0.75f*target.pointsInTalent(Talent.MIKA_T3_2)/3f;
             partialCharge += 0.133f*amount;
             while (partialCharge >= 1){
                 partialCharge--;
@@ -237,6 +259,9 @@ public class Scrunchie extends Artifact {
                 //60 turns to charge at full, 20 turns to charge at 0/8
                 float chargeGain = 1 / (60f - (chargeCap - charge)*5f);
                 chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
+                if (!isEquipped(Dungeon.hero)){
+                    chargeGain *= 0.75f*Dungeon.hero.pointsInTalent(Talent.MIKA_T3_2)/3f;
+                }
                 partialCharge += chargeGain;
 
                 while (partialCharge >= 1) {

@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Scrunchie;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -76,7 +77,8 @@ public class WndQuickBag extends Window {
 					&& !i.isEquipped(Dungeon.hero)
 					&& (!(i instanceof CloakOfShadows) || !Dungeon.hero.hasTalent(Talent.LIGHT_CLOAK))
 					&& (!(i instanceof HolyTome) || !Dungeon.hero.hasTalent(Talent.LIGHT_READING))
-					&& (!(i instanceof NinjaCape) || !Dungeon.hero.hasTalent(Talent.IZUNA_T3_2))){
+					&& (!(i instanceof NinjaCape) || !Dungeon.hero.hasTalent(Talent.IZUNA_T3_2))
+					&& (!(i instanceof Scrunchie) || !Dungeon.hero.hasTalent(Talent.MIKA_T3_2))){
 				continue;
 			}
 			items.add(i);
