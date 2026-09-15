@@ -2838,4 +2838,24 @@ public enum Talent {
 		public void tintIcon(Image icon) { icon.hardlight(1f, 1f, 0.0f); }
 		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 5)); }
 	};
+
+	public static boolean hasFoodTalent(Hero hero) {
+		if (hero == null) return false;
+		return hero.hasTalent(Talent.IRON_STOMACH)
+				|| hero.hasTalent(Talent.ENERGIZING_MEAL)
+				|| hero.hasTalent(Talent.MYSTICAL_MEAL)
+				|| hero.hasTalent(Talent.INVIGORATING_MEAL)
+				|| hero.hasTalent(Talent.FOCUSED_MEAL)
+				|| hero.hasTalent(Talent.ENLIGHTENING_MEAL)
+				|| hero.hasTalent(Talent.ARIS_T2_1)
+				|| hero.hasTalent(Talent.NONOMI_T2_1)
+				|| hero.hasTalent(Talent.MIYAKO_T2_1)
+				|| hero.hasTalent(Talent.HOSHINO_T2_1)
+				|| hero.hasTalent(Talent.SHIROKO_T2_1)
+				|| hero.hasTalent(Talent.NOA_T2_1)
+				|| hero.hasTalent(Talent.MIYU_T2_1)
+				|| hero.hasTalent(Talent.YUZU_T2_1)
+				|| hero.hasTalent(Talent.IZUNA_T2_1)
+				|| hero.hasTalent(Talent.MIKA_T2_1);
+	}
 }
