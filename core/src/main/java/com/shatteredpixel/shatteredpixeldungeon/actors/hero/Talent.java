@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
@@ -2017,6 +2018,10 @@ public enum Talent {
 			if (Random.Float() < 0.5f) {
 				Buff.affect(enemy, Bleeding.class).set(Random.IntRange(1, hero.pointsInTalent(Talent.IZUNA_T1_3)));
 			}
+		}
+
+		if (hero.hasTalent(Talent.MIKA_T1_3)) {
+			Buff.prolong(hero, Adrenaline.class, 1+2*hero.pointsInTalent(Talent.MIKA_T1_3));
 		}
 
 		return damage;
