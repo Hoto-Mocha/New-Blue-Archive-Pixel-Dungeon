@@ -16,6 +16,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
+import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -80,6 +81,7 @@ public class Scrunchie extends Artifact {
                 GLog.w( Messages.get(this, "no_charge") );
 
             } else {
+                usesTargeting = true;
                 GameScene.selectCell(targeter);
 
             }
@@ -110,6 +112,7 @@ public class Scrunchie extends Artifact {
                     return;
                 }
 
+                curUser.busy();
                 curUser.sprite.attack(target, new Callback() {
                     @Override
                     public void call() {
@@ -130,6 +133,7 @@ public class Scrunchie extends Artifact {
                     return;
                 }
 
+                curUser.busy();
                 curUser.sprite.attack(target, new Callback() {
                     @Override
                     public void call() {
@@ -157,6 +161,8 @@ public class Scrunchie extends Artifact {
             }
 
             charge--;
+            gainExp(1);
+            usesTargeting = false;
             updateQuickslot();
         }
 
@@ -184,6 +190,21 @@ public class Scrunchie extends Artifact {
             }
             updateQuickslot();
         }
+    }
+
+    public void gainExp( int xpGain ){
+        if (level() == levelCap){
+            return;
+        }
+
+        exp += xpGain;
+        if (exp > 8+2*level()){
+            exp -= 8+2*level();
+            upgrade();
+            GLog.p(Messages.get(this, "levelup"));
+            Catalog.countUse(Scrunchie.class);
+        }
+
     }
 
     @Override
