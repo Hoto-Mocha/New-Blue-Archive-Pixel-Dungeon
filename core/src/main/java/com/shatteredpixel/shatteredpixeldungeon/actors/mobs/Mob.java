@@ -1026,6 +1026,12 @@ public abstract class Mob extends Char {
 					Buff.affect(Dungeon.hero, Talent.LethalHasteCooldown.class, 100f);
 					Buff.affect(Dungeon.hero, GreaterHaste.class).set(2 + 2*Dungeon.hero.pointsInTalent(Talent.LETHAL_HASTE));
 				}
+				if (Dungeon.hero.hasTalent(Talent.MIKA_T2_4)) {
+					Buff.affect(Dungeon.hero, Talent.LethalMomentumTracker.class, 0f);
+					if (Dungeon.hero.pointsInTalent(Talent.MIKA_T2_4) >= 2) {
+						Buff.affect(Dungeon.hero, GreaterHaste.class).set(3);
+					}
+				}
 			}
 
 			if (cause == Dungeon.hero && Dungeon.level.heroFOV[pos]) {
