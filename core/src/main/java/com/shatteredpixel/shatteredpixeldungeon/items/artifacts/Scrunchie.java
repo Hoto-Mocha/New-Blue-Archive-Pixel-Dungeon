@@ -141,7 +141,7 @@ public class Scrunchie extends Artifact {
                         if (curUser.hasTalent(Talent.MIKA_T2_3)) {
                             throwPower += 1+curUser.pointsInTalent(Talent.MIKA_T2_3);
                         }
-                        curUser.attack(ch, 1.5f, 0, Char.INFINITE_ACCURACY);
+                        curUser.attack(ch, 1.2f, 0, Char.INFINITE_ACCURACY);
                         Elastic.pushEnemy(curUser, ch, null, throwPower);
                         curUser.spendAndNext(curUser.attackDelay());
                     }
