@@ -1341,6 +1341,19 @@ public enum Talent {
 			}
 		}
 
+		if (talent == MIKA_T1_2 && !ShardOfOblivion.passiveIDDisabled()) {
+			if (hero.pointsInTalent(MIKA_T1_2) == 1) {
+				if (hero.belongings.armor != null)  {
+					hero.belongings.armor.identify();
+				}
+			}
+			if (hero.pointsInTalent(MIKA_T1_2) == 2) {
+				for (Item i : hero.belongings.getAllItems(Armor.class)) {
+					i.identify();
+				}
+			}
+		}
+
 		if (talent == NONOMI_T3_1 && hero.pointsInTalent(NONOMI_T3_1) == 1) {
 			new MG_SP().identify().collect();
 		}
@@ -1771,6 +1784,9 @@ public enum Talent {
 		if (hero.hasTalent(YUZU_T1_2) && (item instanceof GL)){
 			identify = true;
 		}
+		if (hero.hasTalent(MIKA_T1_2) && (item instanceof Armor)) {
+			identify = true;
+		}
 
 		if (identify) {
 			if (ShardOfOblivion.passiveIDDisabled()) {
@@ -1819,6 +1835,10 @@ public enum Talent {
 		}
 
 		if (hero.pointsInTalent(YUZU_T1_2) == 2 && (item instanceof GL)){
+			identify = true;
+		}
+
+		if (hero.pointsInTalent(MIKA_T1_2) == 2 && (item instanceof Armor)){
 			identify = true;
 		}
 
