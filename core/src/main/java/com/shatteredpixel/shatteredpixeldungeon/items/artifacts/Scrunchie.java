@@ -10,6 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Weakness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -143,6 +144,10 @@ public class Scrunchie extends Artifact {
                         curUser.spendAndNext(1);
                         curUser.sprite.idle();
                         Dungeon.observe();
+
+                        if (curUser.hasTalent(Talent.MIKA_T1_1)) {
+                            Buff.prolong(curUser, Talent.DestructionInstinct.class, Talent.DestructionInstinct.DURATION);
+                        }
                     }
                 });
             }

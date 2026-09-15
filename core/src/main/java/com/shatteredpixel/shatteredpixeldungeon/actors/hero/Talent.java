@@ -1970,6 +1970,11 @@ public enum Talent {
 
 		if (hero.buff(TakingAimTracker.class) != null) hero.buff(TakingAimTracker.class).detach();
 
+		if (hero.buff(DestructionInstinct.class) != null) {
+			dmg += 2+3*hero.pointsInTalent(Talent.MIKA_T1_1);
+			hero.buff(DestructionInstinct.class).detach();
+		}
+
 		return dmg;
 	}
 
@@ -2239,6 +2244,27 @@ public enum Talent {
 		@Override
 		public void tintIcon(Image icon) {
 			icon.hardlight(0xFDA082);
+		}
+
+		@Override
+		public float iconFadePercent() {
+			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+		}
+
+	}
+
+	public static class DestructionInstinct extends FlavourBuff {
+
+		public static float DURATION = 5f;
+
+		@Override
+		public int icon() {
+			return BuffIndicator.UPGRADE;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(1f, 0, 0);
 		}
 
 		@Override
