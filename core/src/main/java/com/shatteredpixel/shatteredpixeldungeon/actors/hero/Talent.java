@@ -118,6 +118,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWea
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
@@ -1514,6 +1515,9 @@ public enum Talent {
 		}
 		if (hero.hasTalent(Talent.YUZU_T2_1)) {
 			PotionOfCleansing.cleanseDebuff(hero, hero.pointsInTalent(Talent.YUZU_T2_1) == 2 ? 2 : 0);
+		}
+		if (hero.hasTalent(Talent.MIKA_T2_1)) {
+			Buff.affect(hero, Swiftthistle.TimeBubble.class).reset(1+2*hero.pointsInTalent(Talent.MIKA_T2_1));
 		}
 	}
 
