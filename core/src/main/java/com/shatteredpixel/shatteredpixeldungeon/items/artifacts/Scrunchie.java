@@ -125,11 +125,17 @@ public class Scrunchie extends Artifact {
                         curUser.spendAndNext(curUser.attackDelay());
                     }
                 });
-            }
-
-            if (Dungeon.level.solid[target]) {
+            } else if (target > 0 && Dungeon.level.solid[target] && target < Dungeon.level.map.length) {
                 if (Dungeon.depth % 5 == 0 || Dungeon.depth == 26) {
                     GLog.w(Messages.get(Scrunchie.class, "cannot_do_boss"));
+                    return;
+                }
+
+                if (target % Dungeon.level.width() == 1                          //왼쪽 벽
+                        || target % Dungeon.level.width() == Dungeon.level.width()-1    //오른쪽 벽
+                        || target <= Dungeon.level.width()                               //위쪽 벽
+                        || target >= Dungeon.level.map.length-Dungeon.level.width()){    //아래쪽 벽
+                    GLog.w(Messages.get(Scrunchie.class, "cannot_do_border"));
                     return;
                 }
 
@@ -158,6 +164,9 @@ public class Scrunchie extends Artifact {
                         }
                     }
                 });
+            } else {
+                GLog.w(Messages.get(Scrunchie.class, "invalid_target"));
+                return;
             }
 
             charge--;
