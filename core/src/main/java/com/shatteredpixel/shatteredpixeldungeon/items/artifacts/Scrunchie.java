@@ -113,8 +113,12 @@ public class Scrunchie extends Artifact {
                 curUser.sprite.attack(target, new Callback() {
                     @Override
                     public void call() {
+                        int throwPower = 3+Scrunchie.this.level();
+                        if (curUser.hasTalent(Talent.MIKA_T2_3)) {
+                            throwPower += 1+curUser.pointsInTalent(Talent.MIKA_T2_3);
+                        }
                         curUser.attack(ch, 1.2f, 0, Char.INFINITE_ACCURACY);
-                        Elastic.pushEnemy(curUser, ch, null, 3+Scrunchie.this.level());
+                        Elastic.pushEnemy(curUser, ch, null, throwPower);
                         curUser.spendAndNext(curUser.attackDelay());
                     }
                 });
