@@ -87,6 +87,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
+import com.shatteredpixel.shatteredpixeldungeon.items.food.RollCake;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.EmptyScroll;
@@ -1518,6 +1519,12 @@ public enum Talent {
 		}
 		if (hero.hasTalent(Talent.MIKA_T2_1)) {
 			Buff.affect(hero, Swiftthistle.TimeBubble.class).reset(1+2*hero.pointsInTalent(Talent.MIKA_T2_1));
+		}
+		if (hero.hasTalent(Talent.MIKA_T2_2)) {
+			if (Random.Float() < 0.1f+0.1f*hero.pointsInTalent(Talent.MIKA_T2_2)) {
+				Item rollCake = new RollCake();
+				Dungeon.level.drop(rollCake, hero.pos).sprite.drop();
+			}
 		}
 	}
 
