@@ -2024,6 +2024,13 @@ public enum Talent {
 			Buff.prolong(hero, Adrenaline.class, 1+2*hero.pointsInTalent(Talent.MIKA_T1_3));
 		}
 
+		if (hero.hasTalent(Talent.MIKA_T1_4)
+				&& hero.buff(PitifulGirlCooldown.class) == null
+				&& hero.HP < hero.HT*0.05f*hero.pointsInTalent(Talent.MIKA_T1_4)) {
+			Buff.affect(hero, Barrier.class).setShield(10);
+			Buff.affect(hero, PitifulGirlCooldown.class, PitifulGirlCooldown.DURATION);
+		}
+
 		return damage;
 	}
 
@@ -2297,6 +2304,25 @@ public enum Talent {
 			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
 		}
 
+	}
+
+	public static class PitifulGirlCooldown extends FlavourBuff {
+		public static final float DURATION = 100f;
+
+		@Override
+		public int icon() {
+			return BuffIndicator.TIME;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(0xC2A8CF);
+		}
+
+		@Override
+		public float iconFadePercent() {
+			return Math.max(0, (DURATION-visualcooldown())/DURATION);
+		}
 	}
 
 	//new buff here
