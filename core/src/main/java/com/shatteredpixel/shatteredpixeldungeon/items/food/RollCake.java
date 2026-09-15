@@ -51,6 +51,7 @@ public class RollCake extends Food {
     }
 
     private void affectChar(Char ch) {
+        ch.heal(10);
         Buff.affect(ch, Slow.class, Slow.DURATION*2);
     }
 
