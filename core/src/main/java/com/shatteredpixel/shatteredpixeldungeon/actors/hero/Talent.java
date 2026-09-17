@@ -35,6 +35,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CallOfStar;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChaseMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Conversation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
@@ -2017,6 +2018,10 @@ public enum Talent {
 		if (hero.buff(DestructionInstinct.class) != null) {
 			dmg += 2+3*hero.pointsInTalent(Talent.MIKA_T1_1);
 			hero.buff(DestructionInstinct.class).detach();
+		}
+
+		if (hero.subClass == HeroSubClass.CALL_OF_STAR && hero.buff(CallOfStar.CallOfStarCooldown.class) == null) {
+			Buff.affect(hero, CallOfStar.class).onHit(hero.belongings.attackingWeapon());
 		}
 
 		return dmg;

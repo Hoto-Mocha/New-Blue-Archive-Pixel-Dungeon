@@ -144,7 +144,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
                 } else if (hero.hasTalent(Talent.YUZU_EX1_3)
                         && Dungeon.level.solid[target]
                         && target < Dungeon.level.map.length
-                        && target % Dungeon.level.width() != 1                          //왼쪽 벽
+                        && target % Dungeon.level.width() != 0                          //왼쪽 벽
                         && target % Dungeon.level.width() != Dungeon.level.width()-1    //오른쪽 벽
                         && target > Dungeon.level.width()                               //위쪽 벽
                         && target < Dungeon.level.map.length-Dungeon.level.width()      //아래쪽 벽

@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CallOfStar;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.AntiMaterialRifle;
@@ -418,15 +419,21 @@ public class Teleporter extends Item {
 //                }
 
 //                if (Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class) != null) Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class).detach();
-                new Gold(100000).doPickUp(Dungeon.hero, Dungeon.hero.pos);
-//            if (Dungeon.hero.buff(IronHorus.TacticalShieldCooldown.class) != null) Dungeon.hero.buff(IronHorus.TacticalShieldCooldown.class).detach();
-                if (Dungeon.level.passable[target] && Actor.findChar(target) == null) {
-                    Mob mob = new Sandbag();
-                    mob.pos = target;
-                    GameScene.add(mob);
-                    ScrollOfTeleportation.appear(mob, mob.pos);
-                    Dungeon.level.occupyCell(mob);
+
+//                new Gold(100000).doPickUp(Dungeon.hero, Dungeon.hero.pos);
+
+//                if (Dungeon.level.passable[target] && Actor.findChar(target) == null) {
+//                    Mob mob = new Sandbag();
+//                    mob.pos = target;
+//                    GameScene.add(mob);
+//                    ScrollOfTeleportation.appear(mob, mob.pos);
+//                    Dungeon.level.occupyCell(mob);
+//                }
+
+                if (curUser.buff(CallOfStar.CallOfStarCooldown.class) != null) {
+                    curUser.buff(CallOfStar.CallOfStarCooldown.class).detach();
                 }
+                Buff.affect(curUser, CallOfStar.class).onHit(100);
             }
         }
         @Override
