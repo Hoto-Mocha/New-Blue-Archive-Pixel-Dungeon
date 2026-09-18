@@ -2031,6 +2031,9 @@ public enum Talent {
 			if (enemy.buff(Paralysis.class) != null && enemy.buff(WandOfBlastWave.BWaveOnHitTracker.class) == null){
 				enemy.buff(Paralysis.class).detach();
 				int bonusDmg = Hero.heroDamageIntRange(hero.lvl + hero.STR()*2, 2*(hero.lvl + hero.STR()*2));
+				if (hero.hasTalent(Talent.MIKA_EX2_2)) {
+					bonusDmg = Math.round(bonusDmg*(1+(hero.pointsInTalent(Talent.MIKA_EX2_2)/6f)*((hero.HT-hero.HP)/(float)hero.HT)));
+				}
 				enemy.damage(bonusDmg, LittleAngry.class);
 				WandOfBlastWave.BlastWave.blast(enemy.pos);
 				Sample.INSTANCE.play( Assets.Sounds.BLAST );
