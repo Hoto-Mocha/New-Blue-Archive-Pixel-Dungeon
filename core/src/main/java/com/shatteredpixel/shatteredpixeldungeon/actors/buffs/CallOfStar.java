@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.MeteorParticle;
@@ -45,9 +46,13 @@ import java.util.ArrayList;
 
 public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
 
+    public int maxCount(Hero hero) {
+        return 100*(50*hero.pointsInTalent(Talent.MIKA_EX1_3)/3);
+    }
+
     public void onHit(int amount) {
-        if (count() + amount >= 100) {
-            amount = 100 - (int)count();
+        if (count() + amount >= maxCount(Dungeon.hero)) {
+            amount = maxCount(Dungeon.hero) - (int)count();
         }
         countUp(amount);
         ActionIndicator.refresh();
@@ -138,7 +143,6 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
                 public void call() {
                     meteorFall(cell, 1+(int)Math.ceil(count()/10f));
                     hero.spendAndNext(1);
-                    Buff.affect(hero, CallOfStarCooldown.class, count()*2);
                     detach();
                 }
             }, Math.max(2, (int)count()/2)), 1);
@@ -217,6 +221,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
         }
         Dungeon.observe();
 
+        int killCount = 0;
         for (Char ch : affectedChars) {
             if (ch.alignment == Char.Alignment.ENEMY) {
                 int dmg = Math.round(Dungeon.hero.STR()*0.2f*count());
@@ -225,8 +230,18 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
                 if (dmg > 0) {
                     ch.damage(dmg, this);
                 }
+
+                if (ch.isAlive() && ((Hero) target).hasTalent(Talent.MIKA_EX1_2)) {
+                    Buff.affect(ch, Paralysis.class, 2*((Hero) target).pointsInTalent(Talent.MIKA_EX1_2));
+                }
+
+                if (!ch.isAlive()) {
+                    killCount++;
+                }
             }
         }
+
+        Buff.affect(target, CallOfStarCooldown.class, cooldown(count(), killCount, (Hero) target));
 
         Sample.INSTANCE.play(Assets.Sounds.BLAST);
         if (count() > 33) {
@@ -236,6 +251,12 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
             }
         }
         PixelScene.shake( count()/20f, count()/50f );
+    }
+
+    private float cooldown(float count, int killCount, Hero hero) {
+        float reductionRate = 1-0.1f*hero.pointsInTalent(Talent.MIKA_EX1_1)*killCount;
+        reductionRate = Math.max(reductionRate, 0);
+        return count*2*reductionRate;
     }
 
     public static boolean isWallBreakable(int depth, int cell) {
