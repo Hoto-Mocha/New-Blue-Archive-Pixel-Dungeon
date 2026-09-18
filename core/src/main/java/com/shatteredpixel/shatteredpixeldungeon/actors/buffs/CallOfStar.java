@@ -33,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.Visual;
@@ -241,7 +240,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
             }
         }
 
-        Buff.affect(target, CallOfStarCooldown.class, cooldown(count(), killCount, (Hero) target));
+        Buff.affect(target, CallOfStarCooldown.class, cooldownTime(count(), killCount, (Hero) target));
 
         Sample.INSTANCE.play(Assets.Sounds.BLAST);
         if (count() > 33) {
@@ -253,7 +252,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
         PixelScene.shake( count()/20f, count()/50f );
     }
 
-    private float cooldown(float count, int killCount, Hero hero) {
+    private float cooldownTime(float count, int killCount, Hero hero) {
         float reductionRate = 1-0.1f*hero.pointsInTalent(Talent.MIKA_EX1_1)*killCount;
         reductionRate = Math.max(reductionRate, 0);
         return count*2*reductionRate;

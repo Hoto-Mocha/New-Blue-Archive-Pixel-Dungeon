@@ -45,8 +45,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LittleAngry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.NoticeTracker;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitSquadBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
@@ -102,6 +104,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfClairvoyance
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
@@ -2022,6 +2025,19 @@ public enum Talent {
 
 		if (hero.subClass == HeroSubClass.CALL_OF_STAR && hero.buff(CallOfStar.CallOfStarCooldown.class) == null) {
 			Buff.affect(hero, CallOfStar.class).onHit(hero.belongings.attackingWeapon());
+		}
+
+		if (hero.subClass == HeroSubClass.LITTLE_ANGRY) {
+			if (enemy.buff(Paralysis.class) != null && enemy.buff(WandOfBlastWave.BWaveOnHitTracker.class) == null){
+				enemy.buff(Paralysis.class).detach();
+				int bonusDmg = Hero.heroDamageIntRange(hero.lvl + hero.STR()*2, 2*(hero.lvl + hero.STR()*2));
+				enemy.damage(bonusDmg, LittleAngry.class);
+				WandOfBlastWave.BlastWave.blast(enemy.pos);
+				Sample.INSTANCE.play( Assets.Sounds.BLAST );
+
+				//brief immunity, to prevent stacking absurd damage with it with things like para gas
+				Buff.prolong(enemy, WandOfBlastWave.BWaveOnHitTracker.class, 3f);
+			}
 		}
 
 		return dmg;

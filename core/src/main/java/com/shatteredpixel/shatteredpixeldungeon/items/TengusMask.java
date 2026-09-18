@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AvantGardeKunBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BankRobber;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Conversation;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LittleAngry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitSquadBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
@@ -145,6 +146,9 @@ public class TengusMask extends Item {
 		}
 		if (way == HeroSubClass.AVANT_GARDE_KUN) {
 			Buff.affect(curUser, AvantGardeKunBuff.class);
+		}
+		if (way == HeroSubClass.LITTLE_ANGRY) {
+			Buff.affect(curUser, LittleAngry.class);
 		}
 
 		((HeroSprite)curUser.sprite).updateArmor();

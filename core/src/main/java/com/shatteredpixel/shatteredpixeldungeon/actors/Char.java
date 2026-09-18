@@ -59,6 +59,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invulnerability;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LittleAngry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
@@ -1170,6 +1171,10 @@ public abstract class Char extends Actor {
 			//special case for shiroko armor ability
 			if (src == Dungeon.hero
 					&& Dungeon.hero.buff(PenetrationShot.IgnoreArmor.class) != null){
+				icon = FloatingText.PHYS_DMG_NO_BLOCK;
+			}
+
+			if (src == LittleAngry.class){
 				icon = FloatingText.PHYS_DMG_NO_BLOCK;
 			}
 
