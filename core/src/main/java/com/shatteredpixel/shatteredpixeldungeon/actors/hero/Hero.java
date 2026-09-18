@@ -3033,9 +3033,9 @@ public class Hero extends Char {
 				}
 			}.attachTo(this);
 		}
-		if (Dungeon.hero.buff(Blink.PerfectAssassination.class) != null) {
-			Dungeon.hero.buff(Blink.PerfectAssassination.class).detach();
-			Buff.affect(Dungeon.hero, Talent.LethalMomentumTracker.class, 0f);
+		if (buff(Blink.PerfectAssassination.class) != null) {
+			buff(Blink.PerfectAssassination.class).detach();
+			Buff.affect(this, Talent.LethalMomentumTracker.class, 0f);
 		}
 	}
 
