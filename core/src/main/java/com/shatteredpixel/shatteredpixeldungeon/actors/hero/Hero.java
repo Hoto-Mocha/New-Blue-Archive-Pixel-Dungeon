@@ -189,6 +189,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -3036,6 +3037,10 @@ public class Hero extends Char {
 		if (buff(Blink.PerfectAssassination.class) != null) {
 			buff(Blink.PerfectAssassination.class).detach();
 			Buff.affect(this, Talent.LethalMomentumTracker.class, 0f);
+		}
+
+		if (hasTalent(Talent.MIKA_EX2_3)) {
+			Buff.affect(this, Sungrass.Health.class).boost(pointsInTalent(Talent.MIKA_EX2_3));
 		}
 	}
 
