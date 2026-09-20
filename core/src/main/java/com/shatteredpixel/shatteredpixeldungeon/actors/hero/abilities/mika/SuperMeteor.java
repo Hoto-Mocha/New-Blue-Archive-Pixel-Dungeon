@@ -60,7 +60,7 @@ public class SuperMeteor extends ArmorAbility {
             hero.yellW("out_of_sight");
             return;
         }
-        if (!Dungeon.level.passable[target]) {
+        if (!Dungeon.level.passable[target] && !Dungeon.level.pit[target]) {
             hero.yellW("invalid");
             return;
         }
@@ -111,7 +111,7 @@ public class SuperMeteor extends ArmorAbility {
         public void set(int pos) {
             this.duration = 10;
             this.pos = pos;
-            this.left = 0;
+            this.left = 5-Dungeon.hero.pointsInTalent(Talent.MIKA_ARMOR2_2);
         }
 
         @Override

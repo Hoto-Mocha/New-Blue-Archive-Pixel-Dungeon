@@ -73,7 +73,7 @@ public class LittleAngry extends Buff implements ActionIndicator.Action {
                 return;
             }
 
-            if (!Dungeon.level.passable[cell]) {
+            if (!Dungeon.level.passable[cell] && !Dungeon.level.pit[cell]) {
                 hero.yellW("invalid");
                 return;
             }

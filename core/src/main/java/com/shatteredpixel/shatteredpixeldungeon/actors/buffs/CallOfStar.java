@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.Visual;
@@ -46,14 +47,15 @@ import java.util.ArrayList;
 public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
 
     public int maxCount(Hero hero) {
-        return 100*(50*hero.pointsInTalent(Talent.MIKA_EX1_3)/3);
+        return 100+(50*hero.pointsInTalent(Talent.MIKA_EX1_3)/3);
     }
 
     public void onHit(int amount) {
-        if (count() + amount >= maxCount(Dungeon.hero)) {
-            amount = maxCount(Dungeon.hero) - (int)count();
-        }
         countUp(amount);
+        if (count() > maxCount((Hero)target)) {
+            int diff = (int)count() - maxCount((Hero)target);
+            countDown(diff);
+        }
         ActionIndicator.refresh();
     }
 

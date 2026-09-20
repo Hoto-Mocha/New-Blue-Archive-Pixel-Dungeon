@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -19,6 +20,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
@@ -34,15 +36,15 @@ public class PerfectDeception extends ArmorAbility {
 
     @Override
     public String targetingPrompt() {
-        if (Dungeon.hero != null && Dungeon.hero.buff(DeceptionBuff.class) == null) return null;
-        else return Messages.get(this, "prompt");
+        if (Dungeon.hero != null && Dungeon.hero.buff(DeceptionBuff.class) != null && Dungeon.hero.hasTalent(Talent.MIKA_ARMOR3_3)) return Messages.get(this, "prompt");
+        else return null;
     }
 
     @Override
     public float chargeUse(Hero hero) {
         float chargeUse = super.chargeUse(hero);
 
-        if (hero.buff(DeceptionBuff.class) != null) {
+        if (hero.buff(DeceptionBuff.class) != null && hero.hasTalent(Talent.MIKA_ARMOR3_3)) {
             chargeUse *= (float) Math.pow(0.9, hero.pointsInTalent(Talent.MIKA_ARMOR3_3));
         }
 
@@ -75,7 +77,9 @@ public class PerfectDeception extends ArmorAbility {
                 }
             });
 
+            ch.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
             Buff.affect(ch, Doom.class);
+            Sample.INSTANCE.play(Assets.Sounds.BURNING);
 
         } else {
             if (hero.buff(DeceptionBuff.class) != null) {
@@ -83,19 +87,20 @@ public class PerfectDeception extends ArmorAbility {
                 return;
             }
 
-            if (Random.Float() < hero.pointsInTalent(Talent.MIKA_ARMOR3_1)) {
-                Buff.affect(hero, Invisibility.class, 1f);
-            }
-
+            Sample.INSTANCE.play(Assets.Sounds.MISS);
             hero.sprite.operate(hero.pos);
             hero.spendAndNext(1);
+
+            if (Random.Float() < hero.pointsInTalent(Talent.MIKA_ARMOR3_1)) {
+                Buff.affect(hero, Invisibility.class, 1f);
+                Sample.INSTANCE.play(Assets.Sounds.MELD);
+            }
 
             Buff.affect(hero, DeceptionBuff.class, DeceptionBuff.DURATION);
         }
 
         armor.charge -= chargeUse(hero);
         Item.updateQuickslot();
-        Invisibility.dispel();
     }
 
     @Override
@@ -143,7 +148,7 @@ public class PerfectDeception extends ArmorAbility {
                 return damage;
             } else {
                 defender.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
-                return defender.HP;
+                return Math.max(damage, defender.HP);
             }
         }
     }
