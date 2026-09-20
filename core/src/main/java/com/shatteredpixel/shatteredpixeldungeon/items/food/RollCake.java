@@ -4,8 +4,11 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Slow;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -36,6 +39,9 @@ public class RollCake extends Food {
     protected void satisfy(Hero hero) {
         super.satisfy(hero);
         hero.heal(3);
+        if (hero.hasTalent(Talent.MIKA_ARMOR1_3)) {
+            Buff.affect(hero, Haste.class, 2*hero.pointsInTalent(Talent.MIKA_ARMOR1_3));
+        }
     }
 
     @Override
@@ -52,7 +58,19 @@ public class RollCake extends Food {
 
     private void affectChar(Char ch) {
         ch.heal(10);
-        Buff.affect(ch, Slow.class, Slow.DURATION*2);
+        Hero hero = Dungeon.hero;
+        if (ch.alignment == Char.Alignment.ENEMY) {
+            Buff.affect(ch, Slow.class, Slow.DURATION*2);
+            if (hero.hasTalent(Talent.MIKA_ARMOR1_1)) {
+                Buff.affect(ch, Blindness.class, 2*hero.pointsInTalent(Talent.MIKA_ARMOR1_1));
+            }
+            if (hero.hasTalent(Talent.MIKA_ARMOR1_2)) {
+                Buff.affect(ch, Ooze.class).set(5*hero.pointsInTalent(Talent.MIKA_ARMOR1_2));
+            }
+        }
+        if (hero.hasTalent(Talent.MIKA_ARMOR1_3)) {
+            Buff.affect(hero, Haste.class, 2*hero.pointsInTalent(Talent.MIKA_ARMOR1_3));
+        }
     }
 
     @Override
