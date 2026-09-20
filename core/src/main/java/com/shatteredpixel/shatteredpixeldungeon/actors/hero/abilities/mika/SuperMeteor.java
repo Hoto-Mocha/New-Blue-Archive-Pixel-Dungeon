@@ -47,7 +47,7 @@ public class SuperMeteor extends ArmorAbility {
         float chargeUse = super.chargeUse(hero);
 
         if (hero.buff(SerialUseTracker.class) != null) {
-            chargeUse *= (float) (1-Math.pow(0.8f, hero.pointsInTalent(Talent.MIKA_ARMOR2_3)));
+            chargeUse *= (float) (Math.pow(0.8f, hero.pointsInTalent(Talent.MIKA_ARMOR2_3)));
         }
 
         return chargeUse;
