@@ -5,7 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 public class MikaArmor extends ClassArmor {
 
     {
-        image = ItemSpriteSheet.ARMOR_IZUNA;
+        image = ItemSpriteSheet.ARMOR_MIKA;
     }
 
 }

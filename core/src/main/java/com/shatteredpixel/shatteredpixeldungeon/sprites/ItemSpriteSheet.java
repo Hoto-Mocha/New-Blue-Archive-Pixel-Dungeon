@@ -887,7 +887,7 @@ public class ItemSpriteSheet {
 		assignItemRect(ARMOR_MIYU,	    13, 12);
 		assignItemRect(ARMOR_YUZU,	    13, 12);
 		assignItemRect(ARMOR_IZUNA,	    15, 11);
-		assignItemRect(ARMOR_IZUNA,	    16, 16);
+		assignItemRect(ARMOR_MIKA,	    13, 13);
 	}
 	private static final int SPECIAL_ITEMS 	= 								xy(1, 36);
 	public static final int EX_DISC	  		= SPECIAL_ITEMS+0;

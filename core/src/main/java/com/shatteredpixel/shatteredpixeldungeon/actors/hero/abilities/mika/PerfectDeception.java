@@ -19,6 +19,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
@@ -31,7 +32,7 @@ public class PerfectDeception extends ArmorAbility {
 
     @Override
     public int icon() {
-        return super.icon();
+        return HeroIcon.MIKA_3;
     }
 
     @Override
@@ -45,7 +46,7 @@ public class PerfectDeception extends ArmorAbility {
         float chargeUse = super.chargeUse(hero);
 
         if (hero.buff(DeceptionBuff.class) != null && hero.hasTalent(Talent.MIKA_ARMOR3_3)) {
-            chargeUse *= (float) Math.pow(0.9, hero.pointsInTalent(Talent.MIKA_ARMOR3_3));
+            chargeUse *= (float) Math.pow(0.9f, hero.pointsInTalent(Talent.MIKA_ARMOR3_3));
         }
 
         return chargeUse;
