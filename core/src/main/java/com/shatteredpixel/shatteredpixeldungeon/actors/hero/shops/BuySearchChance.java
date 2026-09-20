@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.YuzuStatus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.levels.VaultLevel;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
@@ -26,7 +27,8 @@ public class BuySearchChance extends YuzuShopContent {
 
     @Override
     public boolean canSelect(Hero hero) {
-        return super.canSelect(hero) && YuzuStatus.yuzuSearchChanceBonus(hero) < YuzuStatus.SEARCH_CHANCE_INCREMENT*YuzuStatus.MAX_LEVEL;
+        if (Dungeon.level instanceof VaultLevel) return false;
+        else return super.canSelect(hero) && YuzuStatus.yuzuSearchChanceBonus(hero) < YuzuStatus.SEARCH_CHANCE_INCREMENT*YuzuStatus.MAX_LEVEL;
     }
 
     @Override

@@ -206,6 +206,11 @@ public class Scrunchie extends Artifact {
         return new scrunchieRecharge();
     }
 
+    public void directCharge(int amount) {
+        charge += Math.min(charge+amount, chargeCap);
+        updateQuickslot();
+    }
+
     @Override
     public void charge(Hero target, float amount) {
         if (charge < chargeCap && !cursed && target.buff(MagicImmune.class) == null){

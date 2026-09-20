@@ -28,15 +28,26 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
+import com.shatteredpixel.shatteredpixeldungeon.items.ConversionKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.Laptop;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.TrashBin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Scrunchie;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Greatsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_SP;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.VaultMirrorSprite;
@@ -94,6 +105,41 @@ public class VaultMirror extends NPC {
 					reward = new HolyTome().upgrade(8).identify(false);
 					((HolyTome) reward).directCharge(8);
 					break;
+				case ARIS:
+					reward = new SuperNova().upgrade(3).identify(false);
+					break;
+				case NONOMI:
+					reward = new MG_SP().upgrade(3).identify(false);
+					((MeleeWeapon)reward).enchant();
+					break;
+				case MIYAKO:
+					Claymore claymore = new Claymore();
+					claymore.setAmount(8);
+					reward = claymore;
+					break;
+				case HOSHINO:
+					reward = new IronHorus();
+					break;
+				case SHIROKO:
+					reward = new Bicycle();
+					break;
+				case NOA:
+					reward = new ConversionKit().upgrade();
+					break;
+				case MIYU:
+					reward = new TrashBin();
+					break;
+				case YUZU:
+					reward = new Laptop();
+					break;
+				case IZUNA:
+					reward =  new NinjaCape().upgrade(8).identify(false);
+					((NinjaCape) reward).directCharge(8);
+					break;
+				case MIKA:
+					reward = new Scrunchie().upgrade(8);
+					((Scrunchie) reward).directCharge(8);
+					break;
 			}
 		Random.popGenerator();
 	}
@@ -125,6 +171,36 @@ public class VaultMirror extends NPC {
 								break;
 							case CLERIC:
 								sceneText += Messages.get(VaultMirror.class, "scene_cleric");
+								break;
+							case ARIS:
+								sceneText += Messages.get(VaultMirror.class, "scene_aris");
+								break;
+							case NONOMI:
+								sceneText += Messages.get(VaultMirror.class, "scene_nonomi");
+								break;
+							case MIYAKO:
+								sceneText += Messages.get(VaultMirror.class, "scene_miyako");
+								break;
+							case HOSHINO:
+								sceneText += Messages.get(VaultMirror.class, "scene_hoshino");
+								break;
+							case SHIROKO:
+								sceneText += Messages.get(VaultMirror.class, "scene_shiroko");
+								break;
+							case NOA:
+								sceneText += Messages.get(VaultMirror.class, "scene_noa");
+								break;
+							case MIYU:
+								sceneText += Messages.get(VaultMirror.class, "scene_miyu");
+								break;
+							case YUZU:
+								sceneText += Messages.get(VaultMirror.class, "scene_yuzu");
+								break;
+							case IZUNA:
+								sceneText += Messages.get(VaultMirror.class, "scene_izuna");
+								break;
+							case MIKA:
+								sceneText += Messages.get(VaultMirror.class, "scene_mika");
 								break;
 						}
 						sceneText += "\n\n" + Messages.get(VaultMirror.class, "scene_final");

@@ -128,6 +128,11 @@ public class Grenade extends Item {
         }
     }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+        Item.updateQuickslot();
+    }
+
     @Override
     public String status() { //아이템 칸 오른쪽 위에 나타내는 글자
         return Messages.format(TXT_STATUS, amount, maxAmount()); //TXT_STATUS 형식(%d/%d)으로, amount, maxAmount() 변수를 순서대로 %d부분에 출력
