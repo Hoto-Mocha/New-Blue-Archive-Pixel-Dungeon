@@ -2368,7 +2368,7 @@ public enum Talent {
 
 		@Override
 		public void tintIcon(Image icon) {
-			icon.hardlight(0xC2A8CF);
+			icon.hardlight(0xF284F1);
 		}
 
 		@Override

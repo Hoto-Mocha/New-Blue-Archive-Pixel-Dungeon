@@ -97,7 +97,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
 
     @Override
     public int indicatorColor() {
-        return 0xC2A8CF;
+        return 0xF284F1;
     }
 
     @Override
@@ -282,7 +282,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
 
         @Override
         public void tintIcon(Image icon) {
-            icon.hardlight(0xC2A8CF);
+            icon.hardlight(0xF284F1);
         }
 
         @Override
