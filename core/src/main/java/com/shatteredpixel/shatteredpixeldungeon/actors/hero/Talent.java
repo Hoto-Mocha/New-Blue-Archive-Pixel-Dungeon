@@ -65,6 +65,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbili
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.SpikeShield;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.PerfectDeception;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.DivineSense;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.RecallInscription;
@@ -2041,6 +2042,10 @@ public enum Talent {
 				//brief immunity, to prevent stacking absurd damage with it with things like para gas
 				Buff.prolong(enemy, WandOfBlastWave.BWaveOnHitTracker.class, 3f);
 			}
+		}
+
+		if (hero.buff(PerfectDeception.DeceptionBuff.class) != null) {
+			dmg = hero.buff(PerfectDeception.DeceptionBuff.class).onAttack(dmg, enemy);
 		}
 
 		return dmg;
