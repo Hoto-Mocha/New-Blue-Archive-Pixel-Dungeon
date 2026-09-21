@@ -224,7 +224,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
     }
 
     public void breakWall(Hero hero, int cell) {
-        if (Dungeon.level.canBreakWall(cell)) {
+        if (!Dungeon.level.canBreakWall(cell)) {
             hero.yellW("cannot_break");
             return;
         }

@@ -146,7 +146,7 @@ public class Scrunchie extends Artifact {
                     }
                 });
             } else if (target > 0 && Dungeon.level.solid[target] && target < Dungeon.level.map.length) {
-                if (Dungeon.level.canBreakWall(target)) {
+                if (!Dungeon.level.canBreakWall(target)) {
                     GLog.w(Messages.get(Scrunchie.class, "cannot_break"));
                     return;
                 }
