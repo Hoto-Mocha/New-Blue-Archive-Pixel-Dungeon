@@ -184,10 +184,18 @@ public class Shopkeeper extends NPC {
 		}
 
 		Notes.remove( landmark() );
-		yell(Messages.get(this, "yell"));
+		if (this instanceof ImpShopkeeper) {
+			yell(Messages.get(this, "yell_akira"));
+		} else {
+			yell(Messages.get(this, "yell"));
+		}
 		GLog.newLine();
 		if (warning) {
-			GLog.n(Messages.get(this, "flee_warning"));
+			if (this instanceof ImpShopkeeper) {
+				GLog.w(Messages.get(this, "flee_warning_akira"));
+			} else {
+				GLog.w(Messages.get(this, "flee_warning"));
+			}
 			Sample.INSTANCE.play(Assets.Sounds.ALERT);
 			CellEmitter.center( pos ).start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
 
@@ -289,7 +297,11 @@ public class Shopkeeper extends NPC {
 			}
 
 		} else {
-			GLog.i(Messages.get(this, "flee"));
+			if (this instanceof ImpShopkeeper) {
+				GLog.i(Messages.get(this, "flee_akira"));
+			} else {
+				GLog.i(Messages.get(this, "flee"));
+			}
 		}
 
 		if (sprite != null) {
