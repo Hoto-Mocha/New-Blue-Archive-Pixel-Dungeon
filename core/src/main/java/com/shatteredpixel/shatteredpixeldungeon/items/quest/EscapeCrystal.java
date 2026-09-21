@@ -29,11 +29,13 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.VaultTokenDoor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.quest.vault.VaultBossElemental;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
+import com.shatteredpixel.shatteredpixeldungeon.items.ConversionKit;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.VaultLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
@@ -186,6 +188,8 @@ public class EscapeCrystal extends Item {
 															&& item.level() <= maxLevel+1; //+1 to account for staff's level
 												} else if (item instanceof Armor && ((Armor) item).checkSeal() != null){
 													return item.level() <= maxLevel+1; //+1 to account for seal's level
+												} else if (item instanceof Gun && ((Gun) item).checkKit() != null){
+													return item.level() <= maxLevel+1; //+1 to account for kit's level
 												} else {
 													return item.level() <= maxLevel && !item.unique;
 												}
@@ -207,6 +211,8 @@ public class EscapeCrystal extends Item {
 													desc += "\n\n" + Messages.get(EscapeCrystal.class, "leaving_seal");
 												} else if (item instanceof MagesStaff){
 													desc += "\n\n" + Messages.get(EscapeCrystal.class, "leaving_staff");
+												} else if (item instanceof Gun && ((Gun) item).checkKit() != null){
+													desc += "\n\n" + Messages.get(EscapeCrystal.class, "leaving_kit");
 												//can only take 1 of a consumable item
 												} if (item.quantity() > 0 && !(item instanceof EquipableItem)){
 													item = item.duplicate().quantity(1);
@@ -275,6 +281,8 @@ public class EscapeCrystal extends Item {
 			w.identify(false);
 			w.upgrade(preserve.level()-1);
 			preserve = w;
+		} else if (preserve instanceof Gun && ((Gun) preserve).checkKit() != null){
+			((Gun) preserve).detachKit();
 		}
 
 		restoreHeroBelongings(Dungeon.hero, preserve);

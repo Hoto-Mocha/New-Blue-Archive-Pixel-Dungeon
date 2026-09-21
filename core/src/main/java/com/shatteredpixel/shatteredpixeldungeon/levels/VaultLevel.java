@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.VaultFlameTraps;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.quest.vault.VaultDM100;
@@ -244,24 +245,45 @@ public class VaultLevel extends CityLevel {
 
 		Item loot;
 		//first weapon (lower tier, more upgrades)
-		do {
-			switch (lootTier) {
-				default:
-				case 0:
-					loot = Generator.randomUsingDefaults(Generator.Category.WEP_T2);
-					break;
-				case 1:
-					loot = Generator.randomUsingDefaults(Generator.Category.WEP_T2);
-					break;
-				case 2:
-					loot = Generator.randomUsingDefaults(Generator.Category.WEP_T3);
-					break;
-				case 3:
-					loot = Generator.randomUsingDefaults(Generator.Category.WEP_T4);
-					break;
-			}
-		//T2 weapon duplicates allowed, because so many can be generated
-		} while (lootTier > 1 && generatedClasses.contains(loot.getClass()));
+		if (Dungeon.hero.heroClass == HeroClass.ARIS) {
+			do {
+				switch (lootTier) {
+					default:
+					case 0:
+						loot = Generator.randomUsingDefaults(Generator.Category.WEP_T2);
+						break;
+					case 1:
+						loot = Generator.randomUsingDefaults(Generator.Category.WEP_T2);
+						break;
+					case 2:
+						loot = Generator.randomUsingDefaults(Generator.Category.WEP_T3);
+						break;
+					case 3:
+						loot = Generator.randomUsingDefaults(Generator.Category.WEP_T4);
+						break;
+				}
+				//T2 weapon duplicates allowed, because so many can be generated
+			} while (lootTier > 1 && generatedClasses.contains(loot.getClass()));
+		} else {
+			do {
+				switch (lootTier) {
+					default:
+					case 0:
+						loot = Generator.randomUsingDefaults(Generator.Category.GUN_T2);
+						break;
+					case 1:
+						loot = Generator.randomUsingDefaults(Generator.Category.GUN_T2);
+						break;
+					case 2:
+						loot = Generator.randomUsingDefaults(Generator.Category.GUN_T3);
+						break;
+					case 3:
+						loot = Generator.randomUsingDefaults(Generator.Category.GUN_T4);
+						break;
+				}
+				//T2 weapon duplicates allowed, because so many can be generated
+			} while (lootTier > 1 && generatedClasses.contains(loot.getClass()));
+		}
 		generatedClasses.add(loot.getClass());
 		if (lootTier == 0) { //always +0 at T0
 			loot.level(lootTier);
@@ -276,24 +298,46 @@ public class VaultLevel extends CityLevel {
 		lootList.add(loot);
 
 		//second weapon (higher tier, fewer upgrades)
-		do {
-			switch (lootTier) {
-				default:
-				case 0:
-					loot = Generator.randomUsingDefaults(Generator.Category.WEP_T2);
-					break;
-				case 1:
-					loot = Generator.randomUsingDefaults(Generator.Category.WEP_T3);
-					break;
-				case 2:
-					loot = Generator.randomUsingDefaults(Generator.Category.WEP_T4);
-					break;
-				case 3:
-					loot = Generator.randomUsingDefaults(Generator.Category.WEP_T5);
-					break;
-			}
-		//T2 weapon duplicates allowed, because so many can be generated
-		} while (lootTier > 0 && generatedClasses.contains(loot.getClass()));
+		if (Dungeon.hero.heroClass == HeroClass.ARIS) {
+			do {
+				switch (lootTier) {
+					default:
+					case 0:
+						loot = Generator.randomUsingDefaults(Generator.Category.WEP_T2);
+						break;
+					case 1:
+						loot = Generator.randomUsingDefaults(Generator.Category.WEP_T3);
+						break;
+					case 2:
+						loot = Generator.randomUsingDefaults(Generator.Category.WEP_T4);
+						break;
+					case 3:
+						loot = Generator.randomUsingDefaults(Generator.Category.WEP_T5);
+						break;
+				}
+				//T2 weapon duplicates allowed, because so many can be generated
+			} while (lootTier > 0 && generatedClasses.contains(loot.getClass()));
+		} else {
+			do {
+				switch (lootTier) {
+					default:
+					case 0:
+						loot = Generator.randomUsingDefaults(Generator.Category.GUN_T2);
+						break;
+					case 1:
+						loot = Generator.randomUsingDefaults(Generator.Category.GUN_T3);
+						break;
+					case 2:
+						loot = Generator.randomUsingDefaults(Generator.Category.GUN_T4);
+						break;
+					case 3:
+						loot = Generator.randomUsingDefaults(Generator.Category.GUN_T5);
+						break;
+				}
+				//T2 weapon duplicates allowed, because so many can be generated
+			} while (lootTier > 0 && generatedClasses.contains(loot.getClass()));
+		}
+
 		generatedClasses.add(loot.getClass());
 		loot.level(lootTier);
 		if (Random.Int(3) >= lootTier) {

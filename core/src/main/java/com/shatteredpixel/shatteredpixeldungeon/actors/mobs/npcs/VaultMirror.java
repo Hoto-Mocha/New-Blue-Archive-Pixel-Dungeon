@@ -48,6 +48,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_SP;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T5;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.VaultMirrorSprite;
@@ -127,7 +128,8 @@ public class VaultMirror extends NPC {
 					reward = new ConversionKit().upgrade();
 					break;
 				case MIYU:
-					reward = new TrashBin();
+					reward = new MirrorSR().upgrade(3).identify(false);
+					((MeleeWeapon)reward).enchant();
 					break;
 				case YUZU:
 					reward = new Laptop();
@@ -272,6 +274,15 @@ public class VaultMirror extends NPC {
 	}
 
 	public static class MirrorSword extends Greatsword {
+
+		{
+			//cannot be taken out of the vault
+			unique = true;
+		}
+
+	}
+
+	public static class MirrorSR extends SR_T5 {
 
 		{
 			//cannot be taken out of the vault

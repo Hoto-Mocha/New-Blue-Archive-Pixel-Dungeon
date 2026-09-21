@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Golem;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Monk;
@@ -336,11 +337,19 @@ public class Imp extends NPC {
 				rewardOptions.add(ring);
 
 				if (Random.Int(2) == 0) {
-					rewardOptions.add(((Weapon)Generator.random(Generator.Category.WEP_T5)).enchant().identify(false).level(Random.IntRange(2, 4)));
+					if (Dungeon.hero.heroClass == HeroClass.ARIS) {
+						rewardOptions.add(((Weapon)Generator.random(Generator.Category.WEP_T5)).enchant().identify(false).level(Random.IntRange(2, 4)));
+					} else {
+						rewardOptions.add(((Weapon)Generator.random(Generator.Category.GUN_T5)).enchant().identify(false).level(Random.IntRange(2, 4)));
+					}
 					rewardOptions.add(((Weapon)Generator.random(Generator.Category.MIS_T4)).enchant().identify(false).level(Random.IntRange(3, 5)));
 				} else {
 					rewardOptions.add(((Weapon)Generator.random(Generator.Category.MIS_T5)).enchant().identify(false).level(Random.IntRange(2, 4)));
-					rewardOptions.add(((Weapon)Generator.random(Generator.Category.WEP_T4)).enchant().identify(false).level(Random.IntRange(3, 5)));
+					if (Dungeon.hero.heroClass == HeroClass.ARIS) {
+						rewardOptions.add(((Weapon)Generator.random(Generator.Category.WEP_T4)).enchant().identify(false).level(Random.IntRange(3, 5)));
+					} else {
+						rewardOptions.add(((Weapon)Generator.random(Generator.Category.GUN_T4)).enchant().identify(false).level(Random.IntRange(3, 5)));
+					}
 				}
 				rewardOptions.add(new PlateArmor().inscribe().identify(false).level(Random.IntRange(2, 4)));
 				Wand w = (Wand) Generator.random(Generator.Category.WAND);

@@ -1704,4 +1704,38 @@ public abstract class Level implements Bundlable {
 				return "";
 		}
 	}
+
+
+	public boolean canBreakWall(int cell) {
+		boolean canBreakWall = Dungeon.level.solid[cell]
+				&& cell < Dungeon.level.map.length
+				&& cell % Dungeon.level.width() != 0                          //왼쪽 벽
+				&& cell % Dungeon.level.width() != Dungeon.level.width()-1    //오른쪽 벽
+				&& cell > Dungeon.level.width()                               //위쪽 벽
+				&& cell < Dungeon.level.map.length-Dungeon.level.width();     //아래쪽 벽
+		boolean canBreakLevel = Dungeon.branch == 0
+				&& !(Dungeon.level instanceof DeadEndLevel)
+				&& !(Dungeon.level instanceof LastLevel)
+				&& !(Dungeon.level instanceof SewerBossLevel)
+				&& !(Dungeon.level instanceof PrisonBossLevel)
+				&& !(Dungeon.level instanceof CavesBossLevel)
+				&& !(Dungeon.level instanceof CityBossLevel)
+				&& !(Dungeon.level instanceof HallsBossLevel);
+		return canBreakWall && canBreakLevel;
+	}
+
+	public boolean breakWall(int cell) {
+		boolean result = false;
+		if (canBreakWall(cell)) {
+			result = true;
+			for (int i : PathFinder.NEIGHBOURS9) {
+				Dungeon.level.discoverable[cell+i] = true;
+			}
+			Dungeon.level.losBlocking[cell] = false;
+			GameScene.updateMap(cell);
+			Dungeon.observe();
+		}
+
+		return result;
+	}
 }
