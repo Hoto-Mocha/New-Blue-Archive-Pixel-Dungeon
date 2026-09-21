@@ -32,10 +32,10 @@ public class ImpSprite extends MobSprite {
 		
 		texture( Assets.Sprites.AKIRA );
 		
-		TextureFilm frames = new TextureFilm( texture, 12, 17 );
+		TextureFilm frames = new TextureFilm( texture, 13, 17 );
 
-		idle = new Animation( 1, true );
-		idle.frames( frames, 1, 1, 1, 0 );
+		idle = new Animation( 2, true );
+		idle.frames( frames, 0, 0, 0, 0, 0, 1 );
 		
 		run = new Animation( 20, true );
 		run.frames( frames, 0 );
