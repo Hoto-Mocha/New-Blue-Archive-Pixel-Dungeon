@@ -345,7 +345,7 @@ public class Assets {
 		public static final String GHOST    = "sprites/ghost.png";
 		public static final String MAKER    = "sprites/wandmaker.png";
 		public static final String TROLL    = "sprites/blacksmith.png";
-		public static final String IMP      = "sprites/imp.png";
+		public static final String IMP      = "sprites/akira.png";
 		public static final String RATKING  = "sprites/ratking.png";
 		public static final String BEE      = "sprites/bee.png";
 		public static final String MIMIC    = "sprites/mimic.png";
@@ -389,5 +389,6 @@ public class Assets {
 		public static final String KURUMI  = "sprites/kurumi.png";
 		public static final String OTOGI  = "sprites/otogi.png";
 		public static final String SORA  = "sprites/sora.png";
+		public static final String AKIRA  = "sprites/akira.png";
 	}
 }
