@@ -177,7 +177,9 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         int shot = 0;
         final int MAX_SHOT = 3;
         final int SIZE = availableGuns.size();
-        while (shot < Math.min(MAX_SHOT, SIZE)) {
+        final int finalMaxShot = Math.min(MAX_SHOT, SIZE);
+        hero.busy();
+        while (shot < finalMaxShot) {
             shot++;
             Gun gun = Random.element(availableGuns);
             availableGuns.remove(gun);
@@ -188,8 +190,8 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
                 @Override
                 protected void onComplete() {
-                    if (finalShot == MAX_SHOT) {
-                        hero.spend(1f);
+                    if (finalShot == finalMaxShot) {
+                        hero.spendAndNext(1f);
                     }
                     Gun.Bullet bullet = gun.knockBullet();
                     bullet.setSpecialShot(true);
