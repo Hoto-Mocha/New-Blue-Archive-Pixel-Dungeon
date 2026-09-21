@@ -32,7 +32,7 @@ public class ShopkeeperSprite extends MobSprite {
 	public ShopkeeperSprite() {
 		super();
 
-		texture( Assets.Sprites.KEEPER );
+		texture( Assets.Sprites.SORA );
 		TextureFilm film = new TextureFilm( texture, 13, 16 );
 
 		idle = new Animation( 4, true );
