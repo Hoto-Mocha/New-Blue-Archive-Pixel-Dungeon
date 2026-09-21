@@ -893,10 +893,12 @@ public class ItemSpriteSheet {
 	public static final int EX_DISC	  		= SPECIAL_ITEMS+0;
 	public static final int TELEPORTER    	= SPECIAL_ITEMS+1;
 	public static final int GUNSMITHING_TOOL= SPECIAL_ITEMS+2;
+	public static final int WALKIE_TALKIE	= SPECIAL_ITEMS+3;
 	static {
 		assignItemRect(EX_DISC,   		16, 14);
 		assignItemRect(TELEPORTER,    	14, 14);
 		assignItemRect(GUNSMITHING_TOOL,16, 13);
+		assignItemRect(WALKIE_TALKIE,	11, 13);
 	}
 
 	private static final int BULLETS		=			xy(1, 37);  //16 slots

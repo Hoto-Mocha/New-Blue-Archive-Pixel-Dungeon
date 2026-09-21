@@ -414,7 +414,7 @@ public class WndRanking extends WndTabbed {
 
 			EscapeCrystal crystal = Dungeon.hero.belongings.getItem(EscapeCrystal.class);
 			if (crystal != null){
-				IconButton vaultInv = new IconButton(new ItemSprite(ItemSpriteSheet.ESCAPE)){
+				IconButton vaultInv = new IconButton(new ItemSprite(ItemSpriteSheet.WALKIE_TALKIE)){
 					@Override
 					protected void onClick() {
 						Bundle items = crystal.storedItems;
