@@ -138,8 +138,8 @@ public class VaultMirror extends NPC {
 					((NinjaCape) reward).directCharge(8);
 					break;
 				case MIKA:
-					reward = new Scrunchie().upgrade(8);
-					((Scrunchie) reward).directCharge(8);
+					reward = new Scrunchie().upgrade(8).identify(false);
+					((Scrunchie) reward).directCharge(3);
 					break;
 			}
 		Random.popGenerator();
