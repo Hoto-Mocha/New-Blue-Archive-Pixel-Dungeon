@@ -125,7 +125,7 @@ public class HeroSprite extends CharSprite {
 		die.frames( film, 1 );
 
 		attack = new Animation( 15, false );
-		attack.frames( film, 4, 5, 6 );
+		attack.frames( film, 4, 5, 6, 0 );
 
 		zap = new Animation( 15, false );
 		zap.frames( film, 7, 8, 7, 8, 7, 8, 9, 9, 10, 10, 9, 9, 10, 10, 0 );
