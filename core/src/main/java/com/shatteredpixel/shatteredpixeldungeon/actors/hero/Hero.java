@@ -175,6 +175,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.BeyondTheLumination;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.quick.QuickWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
@@ -2619,6 +2620,10 @@ public class Hero extends Char {
 
 		if (hit && heroClass == HeroClass.DUELIST && wasEnemy){
 			Buff.affect( this, Sai.ComboStrikeTracker.class).addHit( attackTarget );
+		}
+
+		if (buff(QuickWeapon.QuickWeaponTracker.class) != null) {
+			buff(QuickWeapon.QuickWeaponTracker.class).onAttack();
 		}
 
 		curAction = null;

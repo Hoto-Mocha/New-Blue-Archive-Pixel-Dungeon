@@ -89,11 +89,16 @@ public class QuickWeapon extends MeleeWeapon {
             this.weapon = weapon;
         }
 
-        @Override
-        public boolean act() {
+        //TODO: 공격 후에 직접 작동시켜도 원래 무기로 돌아오지 않는 현상이 확인되었으나 정확한 원인 파악 불가
+        public void onAttack() { //공격에 턴을 소모하지 않았을 때 직접 작동시킴
             Dungeon.hero.belongings.weapon = weapon; //영웅의 무기를 원래 무기로 되돌림
             Item.updateQuickslot();
             detach();
+        }
+
+        @Override
+        public boolean act() {
+            onAttack(); //공격에 턴을 소모하면 자동으로 작동함
             return true;
         }
 
