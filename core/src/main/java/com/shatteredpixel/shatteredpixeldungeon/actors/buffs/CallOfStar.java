@@ -11,6 +11,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.MeteorParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.quest.DarkGold;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
@@ -22,6 +23,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
+import com.shatteredpixel.shatteredpixeldungeon.levels.MiningLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ConeAOE;
@@ -207,7 +209,15 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
 
         for (int cell : affectedCells) {
             if (Dungeon.level.solid[cell] && Dungeon.level.map[cell] != Terrain.ALCHEMY) {
-                Level.set(cell, Terrain.EMPTY);
+                if (Dungeon.level instanceof MiningLevel) {
+                    if (Dungeon.level.map[cell] == Terrain.WALL_DECO) {
+                        DarkGold gold = new DarkGold();
+                        Dungeon.level.drop( gold, cell ).sprite.drop();
+                    }
+                    Level.set(cell, Terrain.EMPTY_DECO);
+                } else {
+                    Level.set(cell, Terrain.EMPTY);
+                }
             }
             if (Dungeon.level.flamable[cell]) {
                 Level.set(cell, Terrain.EMBERS);
