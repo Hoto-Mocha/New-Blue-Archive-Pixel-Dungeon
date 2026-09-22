@@ -206,7 +206,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
         }
 
         for (int cell : affectedCells) {
-            if (Dungeon.level.solid[cell]) {
+            if (Dungeon.level.solid[cell] && Dungeon.level.map[cell] != Terrain.ALCHEMY) {
                 Level.set(cell, Terrain.EMPTY);
             }
             if (Dungeon.level.flamable[cell]) {
