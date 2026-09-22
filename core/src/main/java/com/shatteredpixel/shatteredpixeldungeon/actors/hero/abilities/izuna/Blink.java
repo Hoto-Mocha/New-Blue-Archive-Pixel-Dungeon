@@ -77,8 +77,8 @@ public class Blink extends ArmorAbility {
         }
 
         //능력이 턴을 소모하지 않으므로 버프의 턴을 1 감소
-        if (hero.hasTalent(Talent.IZUNA_ARMOR2_3)) {
-            Buff.prolong(hero, PerfectAssassination.class, hero.pointsInTalent(Talent.IZUNA_ARMOR2_3)-1);
+        if (hero.hasTalent(Talent.IZUNA_ARMOR2_2)) {
+            Buff.prolong(hero, PerfectAssassination.class, hero.pointsInTalent(Talent.IZUNA_ARMOR2_2)-1);
         }
 
         CellEmitter.get( hero.pos ).burst( Speck.factory( Speck.WOOL ), 10 );
