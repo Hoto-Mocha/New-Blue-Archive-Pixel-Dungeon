@@ -35,19 +35,11 @@ public class WallDig extends SandboxConsoleContent {
         Dungeon.level.map[target] = Terrain.EMPTY;
         hero.spendAndNext(1);
 
-        Dungeon.level.solid[target] = false;
-        for (int i : PathFinder.NEIGHBOURS9) {
-            Dungeon.level.discoverable[target+i] = true;
-        }
-        Dungeon.level.losBlocking[target] = false;
-        Dungeon.level.passable[target] = true;
-
-        GameScene.updateMap(target);
+        Dungeon.level.breakWall(target);
         CellEmitter.get( target ).start(Speck.factory(Speck.ROCK), 0.07f, 10);
         CellEmitter.center( target ).burst( Speck.factory( Speck.STAR ), 7 );
         Sample.INSTANCE.play(Assets.Sounds.ROCKS);
         Sample.INSTANCE.play(Assets.Sounds.EVOKE);
-        if (Dungeon.level.heroFOV[target]) Dungeon.observe();
 
         return true;
     }
@@ -59,12 +51,7 @@ public class WallDig extends SandboxConsoleContent {
 
     @Override
     public boolean canBuild(int target) {
-        return Dungeon.level.solid[target]
-                && target < Dungeon.level.map.length
-                && target % Dungeon.level.width() != 1                          //왼쪽 벽
-                && target % Dungeon.level.width() != Dungeon.level.width()-1    //오른쪽 벽
-                && target > Dungeon.level.width()                               //위쪽 벽
-                && target < Dungeon.level.map.length-Dungeon.level.width();      //아래쪽 벽
+        return Dungeon.level.canBreakWall(target);
     }
 
     @Override

@@ -409,7 +409,7 @@ public class Teleporter extends Item {
 
 //                if (Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class) != null) Dungeon.hero.buff(AntiMaterialRifle.GotRifleTracker.class).detach();
 
-//                new Gold(100000).doPickUp(Dungeon.hero, Dungeon.hero.pos);
+                new Gold(100000).doPickUp(Dungeon.hero, Dungeon.hero.pos);
 
 //                if (Dungeon.level.passable[target] && Actor.findChar(target) == null) {
 //                    Mob mob = new Sandbag();
@@ -424,7 +424,7 @@ public class Teleporter extends Item {
 //                }
 //                Buff.affect(curUser, CallOfStar.class).onHit(100);
 
-                Buff.affect(curUser, Awareness.class, 100f);
+//                Buff.affect(curUser, Awareness.class, 100f);
             }
         }
         @Override
