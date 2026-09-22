@@ -47,6 +47,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChaseMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Conversation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
@@ -490,6 +491,14 @@ public class Hero extends Char {
 	public void live() {
 		for (Buff b : buffs()){
 			if (!b.revivePersists) b.detach();
+			if (b instanceof AvantGardeKunBuff) {
+				b.detach();
+				Buff.affect(this, AvantGardeKunBuff.class);
+			}
+			if (b instanceof Conversation) {
+				b.detach();
+				Buff.affect(this, Conversation.class);
+			}
 		}
 		Buff.affect( this, Regeneration.class );
 		Buff.affect( this, Hunger.class );
