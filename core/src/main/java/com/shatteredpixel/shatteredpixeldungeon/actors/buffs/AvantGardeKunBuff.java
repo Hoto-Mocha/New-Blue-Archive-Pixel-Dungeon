@@ -14,8 +14,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -25,14 +23,12 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -44,9 +40,13 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
     }
 
     private int HP = 0;
+    private boolean onBoard = false;
 
     @Override
     public boolean attachTo(Char target) {
+        if (target instanceof Hero && !onBoard && this.HP == 0) {
+            this.HP = OnBoard.robotHT(((Hero) target).lvl);
+        }
         ActionIndicator.setAction(this);
         return super.attachTo(target);
     }
@@ -58,11 +58,13 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
     }
 
     private static final String ROBOT_HP = "HP";
+    private static final String ON_BOARD = "onBoard";
 
     @Override
     public void storeInBundle(Bundle bundle) {
         super.storeInBundle(bundle);
         bundle.put(ROBOT_HP, HP);
+        bundle.put(ON_BOARD, onBoard);
     }
 
     @Override
@@ -70,6 +72,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         ActionIndicator.setAction(this);
         super.restoreFromBundle(bundle);
         HP = bundle.getInt(ROBOT_HP);
+        onBoard = bundle.getBoolean(ON_BOARD);
     }
 
     @Override
@@ -117,6 +120,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         if (hero.buff(OnBoard.class) != null) {
             GameScene.selectCell(selector);
         } else {
+            onBoard = true;
             if (this.HP != 0) {
                 this.HP = Buff.affect(hero, OnBoard.class).onBoard(hero.lvl, this.HP);
             } else { //일반적으로 도달할 일 없음
@@ -137,6 +141,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
             if (target == hero.pos) {
                 AvantGardeKunBuff.this.HP = buff.offBoard();
+                onBoard = false;
             } else if (Dungeon.level.adjacent(hero.pos, target)) {
                 if (Actor.findChar(target) != null) {
                     //근접 공격
@@ -250,6 +255,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         if (this.HP != 0) {
             this.HP = Math.min(this.HP+OnBoard.HP_PER_LVL, OnBoard.BASE_HT+level*OnBoard.HP_PER_LVL);
         }
+        ActionIndicator.refresh();
     }
 
     public void repairRobot(int level, int amount) {
@@ -295,6 +301,10 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         int HT = BASE_HT;
         int HP = HT;
         int lvl = 0;
+
+        public static int robotHT(int level) {
+            return BASE_HT+level*HP_PER_LVL;
+        }
 
         @Override
         public void fx(boolean on) {
