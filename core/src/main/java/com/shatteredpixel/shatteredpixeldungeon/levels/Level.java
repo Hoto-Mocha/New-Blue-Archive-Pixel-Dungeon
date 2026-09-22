@@ -1708,7 +1708,7 @@ public abstract class Level implements Bundlable {
 
 	public boolean canBreakWall(int cell) {
 		boolean canBreakWall = Dungeon.level.solid[cell]
-				&& cell < Dungeon.level.map.length
+				&& Dungeon.level.map[cell] != Terrain.ALCHEMY
 				&& cell % Dungeon.level.width() != 0                          //왼쪽 벽
 				&& cell % Dungeon.level.width() != Dungeon.level.width()-1    //오른쪽 벽
 				&& cell > Dungeon.level.width()                               //위쪽 벽
@@ -1728,6 +1728,9 @@ public abstract class Level implements Bundlable {
 		boolean result = false;
 		if (canBreakWall(cell)) {
 			result = true;
+			Dungeon.level.map[cell] = Terrain.EMPTY;
+			Dungeon.level.solid[cell] = false;
+			Dungeon.level.passable[cell] = true;
 			for (int i : PathFinder.NEIGHBOURS9) {
 				Dungeon.level.discoverable[cell+i] = true;
 			}
