@@ -100,13 +100,13 @@ public class RingOfForce extends Ring {
 				dmg += Math.round(3+tier+(level*((4+2*tier)/8f)));
 			}
 			if (hero.heroClass == HeroClass.MIKA) {
-				dmg += Hero.heroDamageIntRange(hero.STR(), 2*(hero.STR()+hero.lvl));
+				dmg += Hero.heroDamageIntRange(Math.max(0, hero.STR()-10), 2*(hero.STR()-10+hero.lvl)+10);
 			}
 			return dmg;
 		} else {
 			//attack without any ring of force influence
 			if (hero.heroClass == HeroClass.MIKA) {
-				return Hero.heroDamageIntRange(hero.STR(), 2*(hero.STR()+hero.lvl));
+				return Hero.heroDamageIntRange(Math.max(0, hero.STR()-10), 2*(hero.STR()-10+hero.lvl)+10);
 			}
 			return Hero.heroDamageIntRange(1, Math.max(hero.STR()-8, 1));
 		}
@@ -122,7 +122,7 @@ public class RingOfForce extends Ring {
 		));
 
 		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.MIKA) {
-			dmg += Dungeon.hero.STR();
+			dmg += Math.max(0, Dungeon.hero.STR()-10);
 		}
 
 		return dmg;
@@ -138,7 +138,7 @@ public class RingOfForce extends Ring {
 		));
 
 		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.MIKA) {
-			dmg += 2*(Dungeon.hero.STR()+Dungeon.hero.lvl);
+			dmg += 2*(Dungeon.hero.STR()-10+Dungeon.hero.lvl)+10;
 		}
 
 		return dmg;
