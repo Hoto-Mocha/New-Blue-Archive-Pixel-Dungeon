@@ -27,7 +27,7 @@ public class WallDig extends SandboxConsoleContent {
         }
 
         if (!canBuild(target)) {
-            hero.yellW("cannot_do");
+            hero.yellW("cannot_break");
             return false;
         }
 
