@@ -257,7 +257,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
     private float cooldownTime(float count, int killCount, Hero hero) {
         float reductionRate = 1-0.05f*hero.pointsInTalent(Talent.MIKA_EX1_1)*killCount;
         reductionRate = Math.max(reductionRate, 0);
-        return count*2*reductionRate;
+        return Math.min(count*2*reductionRate, CallOfStarCooldown.DURATION);
     }
 
     public static boolean isWallBreakable(int depth, int cell) {
