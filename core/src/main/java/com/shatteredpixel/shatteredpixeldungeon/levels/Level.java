@@ -1737,7 +1737,7 @@ public abstract class Level implements Bundlable {
 //				}
 //				set(cell, Terrain.EMPTY_DECO);
 //			} else {
-//				set(cell, Terrain.EMPTY);
+				set(cell, Terrain.EMPTY);
 //			}
 			for (int i : PathFinder.NEIGHBOURS9) {
 				Dungeon.level.discoverable[cell+i] = true;
