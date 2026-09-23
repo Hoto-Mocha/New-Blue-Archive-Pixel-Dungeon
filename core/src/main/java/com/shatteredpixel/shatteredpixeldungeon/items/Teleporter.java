@@ -425,6 +425,7 @@ public class Teleporter extends Item {
 //                Buff.affect(curUser, CallOfStar.class).onHit(100);
 
 //                Buff.affect(curUser, Awareness.class, 100f);
+                GLog.i((Dungeon.level.map[target] == Terrain.STATUE) + "");
             }
         }
         @Override

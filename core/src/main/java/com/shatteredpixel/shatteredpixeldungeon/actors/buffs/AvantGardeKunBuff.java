@@ -242,6 +242,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
                 if (Dungeon.level.breakWall(cell)) {
                     if (Dungeon.level.heroFOV[ cell ]){
                         CellEmitter.get( cell - Dungeon.level.width() ).start(Speck.factory(Speck.ROCK), 0.07f, 10);
+                        Sample.INSTANCE.play(Assets.Sounds.ROCKS);
                     }
 
                     hero.spendAndNext(4-hero.pointsInTalent(Talent.YUZU_EX1_3));
