@@ -111,6 +111,7 @@ public class LittleAngry extends Buff implements ActionIndicator.Action {
             WandOfBlastWave.BlastWave.blast(cell);
 
             hero.spendAndNext(1);
+            Invisibility.dispel();
 
             Buff.affect(target, LittleAngryCooldown.class, LittleAngryCooldown.DURATION);
             detach();

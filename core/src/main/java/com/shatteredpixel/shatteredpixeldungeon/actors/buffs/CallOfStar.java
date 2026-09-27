@@ -140,6 +140,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
                 }
             });
             hero.busy();
+            Invisibility.dispel();
 
             CellEmitter.heroCenter(cell).burst(MeteorParticle.factory(new Callback() {
                 @Override
