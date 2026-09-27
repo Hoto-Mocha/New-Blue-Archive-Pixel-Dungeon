@@ -22,6 +22,10 @@ import com.watabou.utils.PathFinder;
 
 public class LittleAngry extends Buff implements ActionIndicator.Action {
 
+    {
+        revivePersists = true;
+    }
+
     @Override
     public boolean attachTo(Char target) {
         ActionIndicator.setAction(this);

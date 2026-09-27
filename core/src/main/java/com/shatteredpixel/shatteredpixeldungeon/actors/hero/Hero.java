@@ -60,6 +60,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invulnerability;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Levitation;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LittleAngry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
@@ -1081,6 +1082,9 @@ public class Hero extends Char {
 
 		if (hasTalent(Talent.NONOMI_T3_2) && buff(Talent.AutoReloadBuff.class) == null) {
 			Buff.affect(this, Talent.AutoReloadBuff.class);
+		}
+		if (subClass == HeroSubClass.LITTLE_ANGRY && buff(LittleAngry.class) == null) {
+			Buff.affect(this, LittleAngry.class);
 		}
 
 		if (buff(NoticeTracker.class) != null) Item.updateQuickslot();
