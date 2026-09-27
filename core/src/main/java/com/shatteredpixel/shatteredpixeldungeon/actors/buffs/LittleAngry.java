@@ -13,6 +13,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -46,7 +47,7 @@ public class LittleAngry extends Buff implements ActionIndicator.Action {
 
     @Override
     public int actionIcon() {
-        return ActionIndicator.Action.super.actionIcon();
+        return HeroIcon.LITTLE_ANGRY_ACTION;
     }
 
     @Override
