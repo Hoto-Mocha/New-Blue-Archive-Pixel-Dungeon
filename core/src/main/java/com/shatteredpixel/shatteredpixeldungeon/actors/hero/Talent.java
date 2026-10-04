@@ -785,7 +785,7 @@ public enum Talent {
 	//universal T4
 	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one
 	//Ratmogrify T4
-	RATSISTANCE(23, 9, 4), RATLOMACY(24, 9, 4), RATFORCEMENTS(25, 9, 4);
+	RATSISTANCE(23, 11, 4), RATLOMACY(24, 11, 4), RATFORCEMENTS(25, 11, 4);
 
 	public static class ImprovisedProjectileCooldown extends FlavourBuff{
 		public int icon() { return BuffIndicator.TIME; }
