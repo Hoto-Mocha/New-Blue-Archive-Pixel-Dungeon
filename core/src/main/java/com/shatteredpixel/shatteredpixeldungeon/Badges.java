@@ -74,6 +74,7 @@ public class Badges {
 		MASTERY_YUZU,
 		MASTERY_IZUNA,
 		MASTERY_MIKA,
+		MASTERY_MARI,
 
 //		MASTERY_WARRIOR,
 //		MASTERY_MAGE,
@@ -142,6 +143,7 @@ public class Badges {
 		BOSS_SLAIN_1_YUZU,
 		BOSS_SLAIN_1_IZUNA,
 		BOSS_SLAIN_1_MIKA,
+		BOSS_SLAIN_1_MARI,
 //		BOSS_SLAIN_1_WARRIOR,
 //		BOSS_SLAIN_1_MAGE,
 //		BOSS_SLAIN_1_ROGUE,
@@ -201,6 +203,7 @@ public class Badges {
 		VICTORY_YUZU,
 		VICTORY_IZUNA,
 		VICTORY_MIKA,
+		VICTORY_MARI,
 //		VICTORY_WARRIOR,
 //		VICTORY_MAGE,
 //		VICTORY_ROGUE,
@@ -861,6 +864,7 @@ public class Badges {
 		firstBossClassBadges.put(HeroClass.YUZU, Badge.BOSS_SLAIN_1_YUZU);
 		firstBossClassBadges.put(HeroClass.IZUNA, Badge.BOSS_SLAIN_1_IZUNA);
 		firstBossClassBadges.put(HeroClass.MIKA, Badge.BOSS_SLAIN_1_MIKA);
+		firstBossClassBadges.put(HeroClass.MARI, Badge.BOSS_SLAIN_1_MARI);
 //		firstBossClassBadges.put(HeroClass.WARRIOR, Badge.BOSS_SLAIN_1_WARRIOR);
 //		firstBossClassBadges.put(HeroClass.MAGE, Badge.BOSS_SLAIN_1_MAGE);
 //		firstBossClassBadges.put(HeroClass.ROGUE, Badge.BOSS_SLAIN_1_ROGUE);
@@ -881,6 +885,7 @@ public class Badges {
 		victoryClassBadges.put(HeroClass.YUZU, Badge.VICTORY_YUZU);
 		victoryClassBadges.put(HeroClass.IZUNA, Badge.VICTORY_IZUNA);
 		victoryClassBadges.put(HeroClass.MIKA, Badge.VICTORY_MIKA);
+		victoryClassBadges.put(HeroClass.MARI, Badge.VICTORY_MARI);
 //		victoryClassBadges.put(HeroClass.WARRIOR, Badge.VICTORY_WARRIOR);
 //		victoryClassBadges.put(HeroClass.MAGE, Badge.VICTORY_MAGE);
 //		victoryClassBadges.put(HeroClass.ROGUE, Badge.VICTORY_ROGUE);
@@ -1056,6 +1061,9 @@ public class Badges {
 				break;
 			case MIKA:
 				badge = Badge.MASTERY_MIKA;
+				break;
+			case MARI:
+				badge = Badge.MASTERY_MARI;
 				break;
 //			case WARRIOR:
 //				badge = Badge.MASTERY_WARRIOR;

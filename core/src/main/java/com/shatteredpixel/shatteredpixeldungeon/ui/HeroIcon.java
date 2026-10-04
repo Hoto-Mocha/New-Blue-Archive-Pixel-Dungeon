@@ -136,6 +136,8 @@ public class HeroIcon extends Image {
 	public static final int CHASE			= 128+17;
 	public static final int CALL_OF_STAR	= 128+18;
 	public static final int LITTLE_ANGRY	= 128+19;
+	public static final int DEVOUT_PRAYER	= 128+20;
+	public static final int SYMBOL_OF_PEACE	= 128+21;
 
 	//new armor abilities
 	public static final int ARIS_1			= 128+24;
@@ -168,6 +170,9 @@ public class HeroIcon extends Image {
 	public static final int MIKA_1			= 128+51;
 	public static final int MIKA_2			= 128+52;
 	public static final int MIKA_3			= 128+53;
+	public static final int MARI_1			= 128+54;
+	public static final int MARI_2			= 128+55;
+	public static final int MARI_3			= 128+56;
 
 	//new action indicator visuals
   	public static final int CHARGE						= 128+64;

@@ -92,6 +92,9 @@ public class WndHeroInfo extends WndTabbed {
 			case MIKA:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SCRUNCHIE, null);
 				break;
+			case MARI:
+				tabIcon = new ItemSprite(ItemSpriteSheet.CROSS, null);
+				break;
 			case WARRIOR:
 				tabIcon = new ItemSprite(ItemSpriteSheet.SEAL, null);
 				break;
@@ -271,6 +274,12 @@ public class WndHeroInfo extends WndTabbed {
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.SCRUNCHIE),
 							new ItemSprite(ItemSpriteSheet.SMG_PLACEHOLDER),
 							new ItemSprite(ItemSpriteSheet.SMG_TIER_1),
+							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
+					break;
+				case MARI:
+					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.CROSS),
+							new ItemSprite(ItemSpriteSheet.HG_PLACEHOLDER),
+							new ItemSprite(ItemSpriteSheet.HG_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
 
