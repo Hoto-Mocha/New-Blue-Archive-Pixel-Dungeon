@@ -157,10 +157,10 @@ public class CrossNecklace extends Artifact {
             exp += Math.round(chargesSpent * 10f * Math.pow(0.75f, -lvlDiffFromTarget));
         }
 
-        if (exp >= (level() + 1) * 50 && level() < levelCap) {
+        if (exp >= (level() + 1) * 180 && level() < levelCap) {
             upgrade();
             Catalog.countUse(HolyTome.class);
-            exp -= level() * 50;
+            exp -= level() * 180;
             GLog.p(Messages.get(this, "levelup"));
 
         }
@@ -275,11 +275,13 @@ public class CrossNecklace extends Artifact {
         public boolean act() {
             if (charge < chargeCap && !cursed && target.buff(MagicImmune.class) == null) {
                 if (Regeneration.regenOn()) {
-                    float turnsToCharge = 20;
+                    float missing = (chargeCap - charge);
+                    float turnsToCharge = 35 - missing;
                     if (Dungeon.hero != null && Dungeon.hero.belongings.weapon() instanceof HG) {
                         turnsToCharge *= 0.5f;
                     }
                     turnsToCharge /= RingOfEnergy.artifactChargeMultiplier(target);
+                    turnsToCharge = Math.max(1, turnsToCharge); //충전에 반드시 1턴은 필요함
                     float chargeToGain = (1f / turnsToCharge);
                     if (!isEquipped(Dungeon.hero)){
                         chargeToGain *= 0.75f*Dungeon.hero.pointsInTalent(Talent.MARI_T3_2)/3f;
