@@ -91,6 +91,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Ch
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.DeathMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.PenetrationShot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.AuraOfProtection;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BeamingRay;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.GuidingLight;
@@ -438,6 +439,10 @@ public abstract class Char extends Actor {
 				}
 
 				if (h.buff(PenetrationShot.IgnoreArmor.class) != null){
+					dr = 0;
+				}
+
+				if (h.heroClass == HeroClass.MARI && h.belongings.attackingWeapon() instanceof Gun.Bullet){
 					dr = 0;
 				}
 			}
@@ -1178,6 +1183,13 @@ public abstract class Char extends Actor {
 				icon = FloatingText.PHYS_DMG_NO_BLOCK;
 			}
 
+			if (src == Dungeon.hero
+					&& Dungeon.hero.heroClass == HeroClass.MARI
+					&& Dungeon.hero.belongings.attackingWeapon() instanceof Gun.Bullet) {
+				icon = FloatingText.DMG_MIRACLE;
+			}
+			if (MariMiracle.MIRACLE_DAMAGE.contains(src.getClass()))    icon = FloatingText.DMG_MIRACLE;
+
 			if (src instanceof Hunger)                                  icon = FloatingText.HUNGER;
 			if (src instanceof Burning)                                 icon = FloatingText.BURNING;
 			if (src instanceof Chill || src instanceof Frost)           icon = FloatingText.FROST;
@@ -1193,8 +1205,9 @@ public abstract class Char extends Actor {
 			if (src instanceof AscensionChallenge)                      icon = FloatingText.AMULET;
 			if (src instanceof JusticeIncarnate.JusticeIncarnateBullet) icon = FloatingText.EXPERIENCE;
 
-			if ((icon == FloatingText.PHYS_DMG || icon == FloatingText.PHYS_DMG_NO_BLOCK) && hitMissIcon != -1){
+			if ((icon == FloatingText.PHYS_DMG || icon == FloatingText.PHYS_DMG_NO_BLOCK || icon == FloatingText.DMG_MIRACLE) && hitMissIcon != -1){
 				if (icon == FloatingText.PHYS_DMG_NO_BLOCK) hitMissIcon += 18; //extra row
+				if (icon == FloatingText.DMG_MIRACLE) hitMissIcon += 54;
 				icon = hitMissIcon;
 			}
 			hitMissIcon = -1;

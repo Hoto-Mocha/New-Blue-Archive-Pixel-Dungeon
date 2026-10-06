@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.YuzuConsoleContent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops.YuzuShopContent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.ClericSpell;
 import com.watabou.noosa.Image;
@@ -230,6 +231,9 @@ public class HeroIcon extends Image {
 	public static final int SANDBOX_DIG		= 128 + 127;
 	public static final int SANDBOX_WELL	= 128 + 128;
 
+	//mari miracles
+	public static final int LIGHT_BULLET	= 128 + 136;
+
 
 	public HeroIcon(HeroSubClass subCls){
 		super( Assets.Interfaces.HERO_ICONS );
@@ -261,6 +265,14 @@ public class HeroIcon extends Image {
 			film = new TextureFilm(texture, SIZE, SIZE);
 		}
 		frame(film.get(spell.icon()));
+	}
+
+	public HeroIcon(MariMiracle miracle){
+		super( Assets.Interfaces.HERO_ICONS );
+		if (film == null){
+			film = new TextureFilm(texture, SIZE, SIZE);
+		}
+		frame(film.get(miracle.icon()));
 	}
 
 	public HeroIcon(YuzuShopContent content){

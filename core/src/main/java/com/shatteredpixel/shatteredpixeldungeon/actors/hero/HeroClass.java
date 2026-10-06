@@ -97,6 +97,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Scrunchie;
@@ -468,7 +469,12 @@ public enum HeroClass {
 		HG_T1 hgT1 = new HG_T1();
 		(hero.belongings.weapon = hgT1).identify();
 
-		Dungeon.quickslot.setSlot(0, hgT1);
+		CrossNecklace necklace = new CrossNecklace();
+		(hero.belongings.artifact = necklace).identify();
+		hero.belongings.artifact.activate( hero );
+
+		Dungeon.quickslot.setSlot(0, necklace);
+		Dungeon.quickslot.setSlot(1, hgT1);
 
 		new PotionOfPurity().identify();
 		new ScrollOfRemoveCurse().identify();

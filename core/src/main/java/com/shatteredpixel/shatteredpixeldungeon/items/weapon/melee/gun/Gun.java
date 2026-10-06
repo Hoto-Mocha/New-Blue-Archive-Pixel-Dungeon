@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.Wir
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.AntiMaterialRifle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.HPBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops.InfiniteAmmo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -39,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.GunSmithingTool;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
@@ -435,8 +437,25 @@ public class Gun extends MeleeWeapon {
     }
 
     public void reload() {
+        if (hero.heroClass == HeroClass.MARI) {
+            CrossNecklace necklace = hero.belongings.getItem(CrossNecklace.class);
+            if (necklace == null || (!necklace.isEquipped(hero) && !hero.hasTalent(Talent.MARI_T3_2))) {
+                hero.yellW("no_necklace");
+                return;
+            }
+            int missing = maxRound()-round();
+            int bulletsToLoad = necklace.bulletsCanLoad(missing);
+            if (bulletsToLoad == 0) {
+                hero.yellW("no_charge");
+                return;
+            }
+            necklace.spendCharge(bulletsToLoad);
+            manualReload(bulletsToLoad, false);
+        } else {
+            quickReload();
+        }
+
         onReload();
-        quickReload();
 
         hero.busy();
         hero.sprite.operate(hero.pos);
@@ -1032,9 +1051,11 @@ public class Gun extends MeleeWeapon {
                     }.attachTo(defender);
                     Buff.affect(defender, Talent.CharmTracker.class);
                 }
+
+                if (hero.buff(LightBullet.LightMagazine.class) != null) {
+                    damage = hero.buff(LightBullet.LightMagazine.class).proc(hero, defender, damage);
+                }
             }
-
-
 
             return Gun.this.proc(attacker, defender, damage);
         }
@@ -1220,6 +1241,10 @@ public class Gun extends MeleeWeapon {
 
             if (hero.buff(Talent.PerfectPrecisionTracker.class) != null) {
                 hero.buff(Talent.PerfectPrecisionTracker.class).detach();
+            }
+
+            if (hero.buff(LightBullet.LightMagazine.class) != null) {
+                hero.buff(LightBullet.LightMagazine.class).onShoot(hero);
             }
         }
 

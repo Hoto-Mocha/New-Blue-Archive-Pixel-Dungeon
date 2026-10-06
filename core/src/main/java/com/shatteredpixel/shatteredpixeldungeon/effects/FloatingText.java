@@ -136,6 +136,8 @@ public class FloatingText extends RenderedTextBlock {
 	public static int MISS_TUFT = 81;
 	public static int MISS_RUN  = 82;
 
+	public static int DMG_MIRACLE = 25;
+
 	private Image icon;
 	private boolean iconLeft;
 
