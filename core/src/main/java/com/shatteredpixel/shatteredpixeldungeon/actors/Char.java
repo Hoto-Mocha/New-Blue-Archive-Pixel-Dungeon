@@ -92,6 +92,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.Deat
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.PenetrationShot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.Pray;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.AuraOfProtection;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BeamingRay;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.GuidingLight;
@@ -518,6 +519,10 @@ public abstract class Char extends Actor {
 			}
 
 			if (enemy.buff(MonkEnergy.MonkAbility.Meditate.MeditateResistance.class) != null){
+				dmg *= 0.2f;
+			}
+
+			if (enemy.buff(Pray.PrayResistance.class) != null){
 				dmg *= 0.2f;
 			}
 

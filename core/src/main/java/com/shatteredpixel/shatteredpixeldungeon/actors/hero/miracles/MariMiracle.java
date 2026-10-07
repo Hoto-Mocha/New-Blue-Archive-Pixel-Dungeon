@@ -73,6 +73,8 @@ public abstract class MariMiracle {
 
         if (tier == 1) {
             miracles.add(LightBullet.INSTANCE);
+            miracles.add(Protection.INSTANCE);
+            miracles.add(Pray.INSTANCE);
 
         } else if (tier == 2) {
 
@@ -91,10 +93,13 @@ public abstract class MariMiracle {
     public static ArrayList<MariMiracle> getAllMiracles() {
         ArrayList<MariMiracle> miracles = new ArrayList<>();
         miracles.add(LightBullet.INSTANCE);
+        miracles.add(Protection.INSTANCE);
+        miracles.add(Pray.INSTANCE);
 
         return miracles;
     }
 
+    //this is in the miracle class but it is used for Mari's passive ability
     public static class PunishmentThunder {
 
         public static int thunderDamage(Hero hero) {

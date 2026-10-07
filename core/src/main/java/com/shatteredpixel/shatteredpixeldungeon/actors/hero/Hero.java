@@ -90,6 +90,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.En
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.Thunder;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.Pray;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.Protection;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HallowedGround;
@@ -1889,6 +1890,10 @@ public class Hero extends Char {
 			}
 			//and to monk meditate damage reduction
 			if (buff(MonkEnergy.MonkAbility.Meditate.MeditateResistance.class) != null){
+				damage *= 0.2f;
+			}
+			//mari pray damage reduction
+			if (buff(Pray.PrayResistance.class) != null){
 				damage *= 0.2f;
 			}
 		}
