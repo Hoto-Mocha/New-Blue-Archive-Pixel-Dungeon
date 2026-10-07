@@ -90,6 +90,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.En
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.Thunder;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.Protection;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HallowedGround;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWard;
@@ -1826,6 +1827,11 @@ public class Hero extends Char {
 		if (heroClass == HeroClass.MARI) {
 			Thunder.thunderEffect(enemy.sprite);
 			enemy.damage(MariMiracle.PunishmentThunder.thunderDamage(this), new MariMiracle.PunishmentThunder());
+		}
+
+		if (buff(Protection.ProtectionBuff.class) != null){
+			int blocking = buff(Protection.ProtectionBuff.class).defenseBonus(this);
+			damage -= blocking;
 		}
 
 		damage = Talent.onDefenseProc(this, enemy, damage);

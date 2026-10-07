@@ -96,8 +96,14 @@ public abstract class MariMiracle {
     }
 
     public static class PunishmentThunder {
+
         public static int thunderDamage(Hero hero) {
+
             int damage = (int)Math.ceil(hero.lvl/5f);
+
+            if (hero.buff(Protection.ProtectionBuff.class) != null) {
+                damage += hero.buff(Protection.ProtectionBuff.class).thunderDamageBonus(hero);
+            }
 
             return damage;
         }
