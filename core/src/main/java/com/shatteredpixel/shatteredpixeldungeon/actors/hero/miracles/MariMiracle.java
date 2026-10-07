@@ -1,9 +1,14 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.LifeLinkSpell;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -56,6 +61,13 @@ public abstract class MariMiracle {
 
     public void onMiracleCast(CrossNecklace cross, Hero hero){
         Invisibility.dispel();
+
+        if (hero.hasTalent(Talent.MARI_T1_1) && hero.buff(Talent.BlessOfPlentyTracker.class) != null){
+            int amount = 1 + 2*hero.pointsInTalent(Talent.MARI_T1_1);
+            Buff.affect(hero, Barrier.class).setShield(amount);
+            hero.buff(Talent.BlessOfPlentyTracker.class).detach();
+        }
+
         cross.spendCharge(chargeUse(hero));
         Talent.onArtifactUsed(hero);
     }

@@ -783,46 +783,46 @@ public enum Talent {
 	MIKA_ARMOR3_3(25, 9, 4),
 
 	//Mari T1
-	MARI_T1_1(0, 9, 2),
-	MARI_T1_2(1, 9, 2),
-	MARI_T1_3(2, 9, 2),
-	MARI_T1_4(3, 9, 2),
+	MARI_T1_1(0, 10, 2),
+	MARI_T1_2(1, 10, 2),
+	MARI_T1_3(2, 10, 2),
+	MARI_T1_4(3, 10, 2),
 
 	//Mari T2
-	MARI_T2_1(4, 9, 2),
-	MARI_T2_2(5, 9, 2),
-	MARI_T2_3(6, 9, 2),
-	MARI_T2_4(7, 9, 2),
-	MARI_T2_5(8, 9, 2),
+	MARI_T2_1(4, 10, 2),
+	MARI_T2_2(5, 10, 2),
+	MARI_T2_3(6, 10, 2),
+	MARI_T2_4(7, 10, 2),
+	MARI_T2_5(8, 10, 2),
 
 	//Mari T3
-	MARI_T3_1(9, 9, 3),
-	MARI_T3_2(10, 9, 3),
+	MARI_T3_1(9, 10, 3),
+	MARI_T3_2(10, 10, 3),
 
 	//Devout Prayer T3
-	MARI_EX1_1(11, 9, 3),
-	MARI_EX1_2(12, 9, 3),
-	MARI_EX1_3(13, 9, 3),
+	MARI_EX1_1(11, 10, 3),
+	MARI_EX1_2(12, 10, 3),
+	MARI_EX1_3(13, 10, 3),
 
 	//Symbol of Peace T3
-	MARI_EX2_1(14, 9, 3),
-	MARI_EX2_2(15, 9, 3),
-	MARI_EX2_3(16, 9, 3),
+	MARI_EX2_1(14, 10, 3),
+	MARI_EX2_2(15, 10, 3),
+	MARI_EX2_3(16, 10, 3),
 
 	//Armor Ability 1 T4
-	MARI_ARMOR1_1(17, 9, 4),
-	MARI_ARMOR1_2(18, 9, 4),
-	MARI_ARMOR1_3(19, 9, 4),
+	MARI_ARMOR1_1(17, 10, 4),
+	MARI_ARMOR1_2(18, 10, 4),
+	MARI_ARMOR1_3(19, 10, 4),
 
 	//Armor Ability 2 T4
-	MARI_ARMOR2_1(20, 9, 4),
-	MARI_ARMOR2_2(21, 9, 4),
-	MARI_ARMOR2_3(22, 9, 4),
+	MARI_ARMOR2_1(20, 10, 4),
+	MARI_ARMOR2_2(21, 10, 4),
+	MARI_ARMOR2_3(22, 10, 4),
 
 	//Armor Ability 3 T4
-	MARI_ARMOR3_1(23, 9, 4),
-	MARI_ARMOR3_2(24, 9, 4),
-	MARI_ARMOR3_3(25, 9, 4),
+	MARI_ARMOR3_1(23, 10, 4),
+	MARI_ARMOR3_2(24, 10, 4),
+	MARI_ARMOR3_3(25, 10, 4),
 
 	//universal T4
 	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one
@@ -1587,6 +1587,9 @@ public enum Talent {
 				Item rollCake = new RollCake();
 				Dungeon.level.drop(rollCake, hero.pos).sprite.drop();
 			}
+		}
+		if (hero.hasTalent(MARI_T1_1)){
+			Buff.affect(hero, BlessOfPlentyTracker.class);
 		}
 	}
 
@@ -2423,6 +2426,13 @@ public enum Talent {
 	}
 
 	public static class CharmTracker extends Buff {}
+
+	public static class BlessOfPlentyTracker extends Buff{
+		@Override
+		public int icon() {
+			return BuffIndicator.SPELL_FOOD;
+		}
+	}
 
 	//new buff here
 
