@@ -87,6 +87,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
@@ -1590,6 +1591,14 @@ public enum Talent {
 		}
 		if (hero.hasTalent(MARI_T1_1)){
 			Buff.affect(hero, BlessOfPlentyTracker.class);
+		}
+		if (hero.hasTalent(MARI_T2_1)){
+			CrossNecklace cross = hero.belongings.getItem(CrossNecklace.class);
+			if (cross != null) {
+				// 2/3 of a charge at +1, 1 full charge at +2
+				cross.directCharge( 2+2*hero.pointsInTalent(MARI_T2_1) );
+				ScrollOfRecharging.charge(hero);
+			}
 		}
 	}
 
