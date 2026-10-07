@@ -486,6 +486,10 @@ public class Gun extends MeleeWeapon {
         if (hero.hasTalent(Talent.NOA_EX1_1) && hero.belongings.secondWep() instanceof Gun) {
             ((Gun)hero.belongings.secondWep()).manualReload(hero.pointsInTalent(Talent.NOA_EX1_1), false);
         }
+
+        if (hero.buff(LightBullet.LightMagazine.class) != null) {
+            hero.buff(LightBullet.LightMagazine.class).detach();
+        }
     }
 
     public void quickReload() {	//다른 것들을 작동시키지 않고 탄창만 완전히 재장전하는 메서드

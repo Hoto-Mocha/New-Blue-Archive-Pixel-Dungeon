@@ -97,7 +97,7 @@ public class LightBullet extends TargetedMariMiracle {
     public void onMiracleCast(CrossNecklace cross, Hero hero) {
         super.onMiracleCast(cross, hero);
 
-        Buff.affect(hero, LightMagazine.class).set(getEquippedGun(hero), 1);
+        Buff.affect(hero, LightMagazine.class).stack(getEquippedGun(hero), 1);
 
         Gun gun = getEquippedGun(hero);
         if (gun != null) gun.manualReload();
@@ -105,19 +105,30 @@ public class LightBullet extends TargetedMariMiracle {
 
     public static class LightMagazine extends Buff {
 
+        private Gun gun;
+        private int bullets;
+
         @Override
         public int icon() {
             return BuffIndicator.LIGHT_BULLET;
         }
 
-        private Gun gun;
-        private int bullets;
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc", bullets);
+        }
 
         public void set(Gun gun, int bullets) {
             this.gun = gun;
             if (bullets > this.bullets) {
                 this.bullets = bullets;
             }
+        }
+
+        public void stack(Gun gun, int bullets) {
+            this.gun = gun;
+            this.bullets += bullets;
+            this.bullets = Math.min(gun.maxRound(), this.bullets);
         }
 
         @Override
@@ -135,6 +146,16 @@ public class LightBullet extends TargetedMariMiracle {
             if (bullets <= 0) {
                 detach();
             }
+        }
+
+        @Override
+        public float iconFadePercent() {
+            return Math.max(0, (gun.maxRound()-bullets)/(float)gun.maxRound());
+        }
+
+        @Override
+        public String iconTextDisplay() {
+            return Integer.toString(bullets);
         }
 
         public int proc(Hero attacker, Char defender, int damage) {
