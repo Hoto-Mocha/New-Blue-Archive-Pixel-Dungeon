@@ -87,7 +87,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.Blin
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.PerfectDeception;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.GPSRoute;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.Thunder;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HallowedGround;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWard;
@@ -1819,6 +1821,11 @@ public class Hero extends Char {
 
 		if (enemy == this && heroClass == HeroClass.YUZU && this.belongings.attackingWeapon() instanceof Gun.Bullet) {
 			damage = Math.round(damage * 0.25f);
+		}
+
+		if (heroClass == HeroClass.MARI) {
+			Thunder.thunderEffect(enemy.sprite);
+			enemy.damage(MariMiracle.PunishmentThunder.thunderDamage(this), new MariMiracle.PunishmentThunder());
 		}
 
 		damage = Talent.onDefenseProc(this, enemy, damage);

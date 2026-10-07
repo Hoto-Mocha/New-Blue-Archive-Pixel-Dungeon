@@ -16,6 +16,7 @@ public abstract class MariMiracle {
 
     public static final HashSet<Class> MIRACLE_DAMAGE = new HashSet<>();
     static {
+        MIRACLE_DAMAGE.add( PunishmentThunder.class );
         MIRACLE_DAMAGE.add( LightBullet.class );
     }
 
@@ -92,6 +93,14 @@ public abstract class MariMiracle {
         miracles.add(LightBullet.INSTANCE);
 
         return miracles;
+    }
+
+    public static class PunishmentThunder {
+        public static int thunderDamage(Hero hero) {
+            int damage = (int)Math.ceil(hero.lvl/5f);
+
+            return damage;
+        }
     }
 
 }

@@ -162,7 +162,6 @@ public class CrossNecklace extends Artifact {
             Catalog.countUse(HolyTome.class);
             exp -= level() * 180;
             GLog.p(Messages.get(this, "levelup"));
-
         }
 
         updateQuickslot();
