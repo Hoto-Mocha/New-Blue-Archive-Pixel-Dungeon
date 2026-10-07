@@ -524,6 +524,9 @@ public abstract class Char extends Actor {
 
 			if (enemy.buff(Pray.PrayResistance.class) != null){
 				dmg *= 0.2f;
+				if (Dungeon.hero.hasTalent(Talent.MARI_T1_4)) {
+					dmg -= Dungeon.hero.pointsInTalent(Talent.MARI_T1_4);
+				}
 			}
 
 			if ( buff(Weakness.class) != null ){

@@ -1895,6 +1895,9 @@ public class Hero extends Char {
 			//mari pray damage reduction
 			if (buff(Pray.PrayResistance.class) != null){
 				damage *= 0.2f;
+				if (hasTalent(Talent.MARI_T1_4)) {
+					damage -= pointsInTalent(Talent.MARI_T1_4);
+				}
 			}
 		}
 
