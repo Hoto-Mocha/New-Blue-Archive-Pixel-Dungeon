@@ -275,7 +275,7 @@ public class CrossNecklace extends Artifact {
             if (charge < chargeCap && !cursed && target.buff(MagicImmune.class) == null) {
                 if (Regeneration.regenOn()) {
                     float missing = (chargeCap - charge);
-                    float turnsToCharge = 35 - missing;
+                    float turnsToCharge = 40 - missing;
                     if (Dungeon.hero != null && Dungeon.hero.belongings.weapon() instanceof HG) {
                         turnsToCharge *= 0.5f;
                     }
