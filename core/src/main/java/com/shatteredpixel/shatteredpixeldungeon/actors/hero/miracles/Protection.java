@@ -38,7 +38,7 @@ public class Protection extends MariMiracle {
 
     @Override
     public void onCast(CrossNecklace cross, Hero hero) {
-        Buff.affect(hero, ProtectionBuff.class, ProtectionBuff.DURATION);
+        Buff.affect(hero, ProtectionBuff.class, ProtectionBuff.DURATION-1); //시전에 턴을 소모하지 않으므로 1턴을 뺌
         Sample.INSTANCE.play(Assets.Sounds.READ);
         hero.busy();
         hero.sprite.operate(hero.pos, new Callback() {
@@ -63,6 +63,11 @@ public class Protection extends MariMiracle {
         @Override
         public int icon() {
             return BuffIndicator.PROTECTION;
+        }
+
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc", defenseBonus(Dungeon.hero), thunderDamageBonus(Dungeon.hero), dispTurns());
         }
 
         @Override
