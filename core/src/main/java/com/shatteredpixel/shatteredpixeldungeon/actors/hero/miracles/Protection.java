@@ -1,12 +1,14 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.audio.Sample;
@@ -24,6 +26,14 @@ public class Protection extends MariMiracle {
     @Override
     public int icon() {
         return HeroIcon.PROTECTION;
+    }
+
+    public String desc(){
+        String desc = Messages.get(this, "desc");
+        if (Dungeon.hero.subClass == HeroSubClass.SYMBOL_OF_PEACE){
+            desc += "\n\n" + Messages.get(this, "desc_symbol");
+        }
+        return desc + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
     }
 
     @Override

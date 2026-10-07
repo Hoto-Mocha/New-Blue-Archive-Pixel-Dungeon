@@ -1,10 +1,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.InventoryClericSpell;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -23,7 +21,7 @@ public abstract class InventoryMariMiracle extends MariMiracle {
 
             @Override
             public Class<? extends Bag> preferredBag() {
-                return this.preferredBag();
+                return InventoryMariMiracle.this.preferredBag();
             }
 
             @Override

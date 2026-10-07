@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
@@ -34,6 +35,14 @@ public class LightBullet extends TargetedMariMiracle {
     @Override
     public float chargeUse(Hero hero) {
         return 2;
+    }
+
+    public String desc(){
+        String desc = Messages.get(this, "desc");
+        if (Dungeon.hero.subClass == HeroSubClass.DEVOUT_PRAYER){
+            desc += "\n\n" + Messages.get(this, "desc_prayer");
+        }
+        return desc + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
     }
 
     @Override

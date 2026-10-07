@@ -1,14 +1,11 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.LifeLinkSpell;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -88,6 +85,10 @@ public abstract class MariMiracle {
             miracles.add(Protection.INSTANCE);
             miracles.add(Pray.INSTANCE);
 
+            if (mari.hasTalent(Talent.MARI_T1_2)) {
+                miracles.add(UnholyDetection.INSTANCE);
+            }
+
         } else if (tier == 2) {
 
 
@@ -107,6 +108,7 @@ public abstract class MariMiracle {
         miracles.add(LightBullet.INSTANCE);
         miracles.add(Protection.INSTANCE);
         miracles.add(Pray.INSTANCE);
+        miracles.add(UnholyDetection.INSTANCE);
 
         return miracles;
     }
