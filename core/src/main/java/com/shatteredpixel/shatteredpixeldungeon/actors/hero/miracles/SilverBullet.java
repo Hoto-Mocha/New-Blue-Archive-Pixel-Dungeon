@@ -36,6 +36,13 @@ public class SilverBullet extends TargetedMariMiracle {
         return 3;
     }
 
+    public String desc(){
+        int min = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 6 : 4;
+        int max = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 12 : 8;
+        int dur = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 6 : 4;
+        return Messages.get(this, "desc", min, max, dur ) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
+    }
+
     @Override
     protected void onTargetSelected(CrossNecklace cross, Hero hero, Integer target) {
         if (target == null){
@@ -87,13 +94,19 @@ public class SilverBullet extends TargetedMariMiracle {
         protected void onThrow(int cell) {
             Char ch = Actor.findChar( cell );
             if (ch != null) {
-                int maxDamage = 8+2*hero.pointsInTalent(Talent.MARI_T2_3);
-                int minDamage = (Char.hasProp(ch, Char.Property.DEMONIC) || Char.hasProp(ch, Char.Property.UNDEAD)) ? maxDamage : 4+hero.pointsInTalent(Talent.MARI_T2_3);
-                ch.damage(Hero.heroDamageIntRange(minDamage, maxDamage), new SilverBullet());
+                int min = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 6 : 4;
+                int max = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 12 : 8;
+                int dur = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 6 : 4;
+                if (Char.hasProp(ch, Char.Property.DEMONIC) || Char.hasProp(ch, Char.Property.UNDEAD)) {
+                    ch.damage(Hero.heroDamageIntRange(max, max), new SilverBullet());
+                } else {
+                    ch.damage(Hero.heroDamageIntRange(min, max), new SilverBullet());
+                }
+
                 Sample.INSTANCE.play(Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.87f, 1.15f));
                 if (ch.buff(SilverBulletBlindTracker.class) == null) {
                     Buff.affect(ch, SilverBulletBlindTracker.class);
-                    Buff.affect(ch, Blindness.class, 2+2*hero.pointsInTalent(Talent.MARI_T2_3));
+                    Buff.affect(ch, Blindness.class, dur);
                 }
                 ch.sprite.burst(0xFFFFFFFF, 3);
             } else {

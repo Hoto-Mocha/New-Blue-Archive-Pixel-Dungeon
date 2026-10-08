@@ -20,6 +20,7 @@ public abstract class MariMiracle {
     static {
         MIRACLE_DAMAGE.add( PunishmentThunder.class );
         MIRACLE_DAMAGE.add( LightBullet.class );
+        MIRACLE_DAMAGE.add( SilverBullet.class );
     }
 
     public abstract void onCast(CrossNecklace cross, Hero hero);
