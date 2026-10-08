@@ -8,19 +8,20 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public class LightBullet extends TargetedMariMiracle {
@@ -67,30 +68,8 @@ public class LightBullet extends TargetedMariMiracle {
         hero.busy();
         Sample.INSTANCE.play( Assets.Sounds.ZAP );
         hero.sprite.zap(target);
-        MagicMissile.boltFromChar(hero.sprite.parent, MagicMissile.LIGHT_MISSILE, hero.sprite, aim.collisionPos, new Callback() {
-            @Override
-            public void call() {
-
-                Char ch = Actor.findChar( aim.collisionPos );
-                if (ch != null) {
-                    ch.damage(Hero.heroDamageIntRange(2, 8), LightBullet.this);
-                    Sample.INSTANCE.play(Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.87f, 1.15f));
-                    ch.sprite.burst(0xFFFFFF44, 3);
-                } else {
-                    Dungeon.level.pressCell(aim.collisionPos);
-                }
-
-                hero.spend( 1f );
-                hero.next();
-
-                onMiracleCast(cross, hero);
-//                if (hero.subClass == HeroSubClass.PRIEST && hero.buff(GuidingLight.GuidingLightPriestCooldown.class) == null) {
-//                    Buff.prolong(hero, GuidingLight.GuidingLightPriestCooldown.class, 50f);
-//                    ActionIndicator.refresh();
-//                }
-
-            }
-        });
+        LightBulletItem lightBulletItem = new LightBulletItem(cross, hero);
+        lightBulletItem.cast(hero, target);
     }
 
     @Override
@@ -101,6 +80,52 @@ public class LightBullet extends TargetedMariMiracle {
 
         Gun gun = getEquippedGun(hero);
         if (gun != null) gun.manualReload();
+    }
+
+    public class LightBulletItem extends Item {
+        {
+            image = ItemSpriteSheet.LIGHT_BULLET;
+        }
+
+        CrossNecklace cross;
+        Hero hero;
+
+        public LightBulletItem(CrossNecklace cross, Hero hero) {
+            this.cross = cross;
+            this.hero = hero;
+        }
+
+        @Override
+        protected void onThrow(int cell) {
+            Char ch = Actor.findChar( cell );
+            if (ch != null) {
+                ch.damage(Hero.heroDamageIntRange(2, 8), new LightBullet());
+                Sample.INSTANCE.play(Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.87f, 1.15f));
+                ch.sprite.burst(0xFFFFFF44, 3);
+            } else {
+                Dungeon.level.pressCell(cell);
+            }
+
+            hero.spend( 1f );
+            hero.next();
+
+            onMiracleCast(cross, hero);
+            Splash.at(cell, 0xFFFFFF44, 3);
+            //if (hero.subClass == HeroSubClass.PRIEST && hero.buff(GuidingLight.GuidingLightPriestCooldown.class) == null) {
+            //    Buff.prolong(hero, GuidingLight.GuidingLightPriestCooldown.class, 50f);
+            //    ActionIndicator.refresh();
+            //}
+        }
+
+        @Override
+        public void throwSound() {
+            Sample.INSTANCE.play(Assets.Sounds.ZAP);
+        }
+
+        @Override
+        public float castDelay(Char user, int cell) {
+            return 0;
+        }
     }
 
     public static class LightMagazine extends Buff {

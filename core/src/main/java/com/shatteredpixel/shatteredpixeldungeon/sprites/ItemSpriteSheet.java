@@ -912,6 +912,9 @@ public class ItemSpriteSheet {
 	public static final int SNIPER_BULLET	= BULLETS+3;
 	public static final int GHOST_BULLET	= BULLETS+4;
 	public static final int NO_BULLET		= BULLETS+5;
+	public static final int LIGHT_BULLET	= BULLETS+6;
+	public static final int SILVER_BULLET	= BULLETS+7;
+	public static final int HOLY_BULLET		= BULLETS+8;
 	static{
 		assignItemRect(SINGLE_BULLET	, 8, 8);
 		assignItemRect(DOUBLE_BULLET	, 11, 10);
@@ -919,6 +922,9 @@ public class ItemSpriteSheet {
 		assignItemRect(SNIPER_BULLET	, 8, 8);
 		assignItemRect(GHOST_BULLET		, 8, 8);
 		assignItemRect(NO_BULLET		, 0, 0);
+		assignItemRect(LIGHT_BULLET		, 8, 8);
+		assignItemRect(SILVER_BULLET	, 8, 8);
+		assignItemRect(HOLY_BULLET		, 8, 8);
 	}
 
 	private static final int SPECIAL_BULLETS=			xy(1, 38);  //16 slots
