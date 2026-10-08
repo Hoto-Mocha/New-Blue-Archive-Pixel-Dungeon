@@ -55,6 +55,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MindBind;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.DivineSense;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGeomancer;
@@ -1497,6 +1498,15 @@ public abstract class Level implements Bundlable {
 			}
 
 			for (TalismanOfForesight.CharAwareness a : c.buffs(TalismanOfForesight.CharAwareness.class)){
+				Char ch = (Char) Actor.findById(a.charID);
+				if (ch == null || !ch.isAlive() || Char.hasProp(ch, Char.Property.OBJECT)) {
+					continue;
+				}
+				int p = ch.pos;
+				for (int i : PathFinder.NEIGHBOURS9) heroMindFov[p+i] = true;
+			}
+
+			for (MindBind.MindBindBuff a : c.buffs(MindBind.MindBindBuff.class)){
 				Char ch = (Char) Actor.findById(a.charID);
 				if (ch == null || !ch.isAlive() || Char.hasProp(ch, Char.Property.OBJECT)) {
 					continue;

@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.AntiM
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.HPBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MindBind;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.shops.InfiniteAmmo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -1382,7 +1383,13 @@ public class Gun extends MeleeWeapon {
                             curUser.buff(Snipe.ScopedArea.class).snipe(target, Actor.findChar(target), knockBullet());
                         }
                     } else {
-                        knockBullet().cast(curUser, target);
+                        Bullet bullet = knockBullet();
+
+                        if (curUser.buff(MindBind.MindBindBuff.class) != null && curUser.buff(MindBind.MindBindBuff.class).aimingTarget(target)) {
+                            bullet.setIgnoreWall(true);
+                        }
+
+                        bullet.cast(curUser, target);
                     }
                 }
             }

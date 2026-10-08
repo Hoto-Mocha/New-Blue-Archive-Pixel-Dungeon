@@ -33,6 +33,6 @@ public abstract class TargetedMariMiracle extends MariMiracle {
         return Messages.get(this, "prompt");
     }
 
-    protected abstract void onTargetSelected(CrossNecklace tome, Hero hero, Integer target);
+    protected abstract void onTargetSelected(CrossNecklace cross, Hero hero, Integer target);
 
 }
