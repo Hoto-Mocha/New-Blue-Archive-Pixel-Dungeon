@@ -236,6 +236,7 @@ public class HeroIcon extends Image {
 	public static final int PROTECTION		= 128 + 137;
 	public static final int PRAY			= 128 + 138;
 	public static final int UNHOLY_DETECTION= 128 + 139;
+	public static final int SILVER_BULLET	= 128 + 140;
 
 
 	public HeroIcon(HeroSubClass subCls){

@@ -90,7 +90,9 @@ public abstract class MariMiracle {
             }
 
         } else if (tier == 2) {
-
+            if (mari.hasTalent(Talent.MARI_T2_3)) {
+                miracles.add(SilverBullet.INSTANCE);
+            }
 
         } else if (tier == 3){
 
@@ -109,11 +111,12 @@ public abstract class MariMiracle {
         miracles.add(Protection.INSTANCE);
         miracles.add(Pray.INSTANCE);
         miracles.add(UnholyDetection.INSTANCE);
+        miracles.add(SilverBullet.INSTANCE);
 
         return miracles;
     }
 
-    //this is in the miracle class but it is used for Mari's passive ability
+    //this is in the miracle class, but it is used for Mari's passive ability
     public static class PunishmentThunder {
 
         public static int thunderDamage(Hero hero) {
