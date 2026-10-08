@@ -106,9 +106,6 @@ public class LightBullet extends TargetedMariMiracle {
                 Dungeon.level.pressCell(cell);
             }
 
-            hero.spend( 1f );
-            hero.next();
-
             onMiracleCast(cross, hero);
             Splash.at(cell, 0xFFFFFF44, 3);
             //if (hero.subClass == HeroSubClass.PRIEST && hero.buff(GuidingLight.GuidingLightPriestCooldown.class) == null) {
@@ -120,11 +117,6 @@ public class LightBullet extends TargetedMariMiracle {
         @Override
         public void throwSound() {
             Sample.INSTANCE.play(Assets.Sounds.ZAP);
-        }
-
-        @Override
-        public float castDelay(Char user, int cell) {
-            return 0;
         }
     }
 
