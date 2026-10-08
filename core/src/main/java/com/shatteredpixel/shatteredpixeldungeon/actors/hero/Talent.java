@@ -67,6 +67,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Divis
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.SpikeShield;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.PerfectDeception;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.nonomi.Bipod;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.DivineSense;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.RecallInscription;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -1778,6 +1779,12 @@ public enum Talent {
 		if (hero.hasTalent(Talent.IZUNA_T2_2)) {
 			int barrierInc = 5+5*hero.pointsInTalent(Talent.IZUNA_T2_2);
 			Buff.affect(hero, Barrier.class).setShield((int)Math.ceil(barrierInc*factor));
+		}
+		if (hero.hasTalent(Talent.MARI_T2_2) && hero.belongings.weapon instanceof Gun) {
+			int maxRounds = ((Gun) hero.belongings.weapon).maxRound();
+			int bulletsToLoad = (int)GameMath.gate(1, (int)Math.ceil(maxRounds*0.25f*hero.pointsInTalent(Talent.MARI_T2_2)*factor), maxRounds);
+			((Gun) hero.belongings.weapon).quickReload();
+			Buff.affect(hero, LightBullet.LightMagazine.class).set(((Gun) hero.belongings.weapon), bulletsToLoad);
 		}
 	}
 
