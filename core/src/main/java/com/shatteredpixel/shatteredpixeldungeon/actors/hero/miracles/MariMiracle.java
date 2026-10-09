@@ -97,6 +97,9 @@ public abstract class MariMiracle {
             if (mari.hasTalent(Talent.MARI_T2_4)) {
                 miracles.add(MindBind.INSTANCE);
             }
+            if (mari.hasTalent(Talent.MARI_T2_5)) {
+                miracles.add(BlessOfCharity.INSTANCE);
+            }
 
         } else if (tier == 3){
 
@@ -117,6 +120,7 @@ public abstract class MariMiracle {
         miracles.add(UnholyDetection.INSTANCE);
         miracles.add(SilverBullet.INSTANCE);
         miracles.add(MindBind.INSTANCE);
+        miracles.add(BlessOfCharity.INSTANCE);
 
         return miracles;
     }

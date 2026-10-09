@@ -153,6 +153,7 @@ public class BuffIndicator extends Component {
 	public static final int CHASE_MARK = 112;
 	public static final int LIGHT_BULLET = 113;
 	public static final int PROTECTION = 114;
+	public static final int BLESS_OF_CHARITY = 115;
 
 	public static final int SIZE_SMALL  = 7;
 	public static final int SIZE_LARGE  = 16;
