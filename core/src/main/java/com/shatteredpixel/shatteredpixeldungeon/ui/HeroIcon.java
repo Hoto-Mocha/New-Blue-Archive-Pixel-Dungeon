@@ -239,6 +239,7 @@ public class HeroIcon extends Image {
 	public static final int SILVER_BULLET	= 128 + 140;
 	public static final int MIND_BIND		= 128 + 141;
 	public static final int BLESS_OF_CHARITY= 128 + 142;
+	public static final int HOLY_PROTECTION = 128 + 143;
 
 
 	public HeroIcon(HeroSubClass subCls){
