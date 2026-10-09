@@ -38,6 +38,11 @@ public class BlessOfCharity extends TargetedMariMiracle {
     }
 
     @Override
+    public boolean canCast(Hero hero) {
+        return super.canCast(hero) && hero.hasTalent(Talent.MARI_T2_5);
+    }
+
+    @Override
     protected void onTargetSelected(CrossNecklace cross, Hero hero, Integer target) {
         if (target == null) return;
 

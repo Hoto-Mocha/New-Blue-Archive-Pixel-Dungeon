@@ -44,6 +44,11 @@ public class SilverBullet extends TargetedMariMiracle {
     }
 
     @Override
+    public boolean canCast(Hero hero) {
+        return super.canCast(hero) && hero.hasTalent(Talent.MARI_T2_3);
+    }
+
+    @Override
     protected void onTargetSelected(CrossNecklace cross, Hero hero, Integer target) {
         if (target == null){
             return;
