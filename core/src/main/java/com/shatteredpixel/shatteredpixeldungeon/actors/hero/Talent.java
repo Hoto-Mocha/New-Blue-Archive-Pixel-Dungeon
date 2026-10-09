@@ -1302,6 +1302,16 @@ public enum Talent {
 			}
 		}
 
+		if (talent == MARI_T3_2 && hero.heroClass == HeroClass.MARI){
+			for (Item item : Dungeon.hero.belongings.backpack){
+				if (item instanceof CrossNecklace){
+					if (!hero.belongings.lostInventory() || item.keptThroughLostInventory()) {
+						((CrossNecklace) item).activate(Dungeon.hero);
+					}
+				}
+			}
+		}
+
 		//if we happen to have spirit form applied with a ring of might
 		if (talent == SPIRIT_FORM){
 			Dungeon.hero.updateHT(false);
