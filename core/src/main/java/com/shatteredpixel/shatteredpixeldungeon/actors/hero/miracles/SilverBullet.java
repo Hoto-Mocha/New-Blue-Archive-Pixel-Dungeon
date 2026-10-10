@@ -9,6 +9,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.IceParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SilverParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
@@ -20,6 +22,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Random;
 
 public class SilverBullet extends TargetedMariMiracle {
@@ -113,18 +116,27 @@ public class SilverBullet extends TargetedMariMiracle {
                     Buff.affect(ch, SilverBulletBlindTracker.class);
                     Buff.affect(ch, Blindness.class, dur);
                 }
-                ch.sprite.burst(0xFFFFFFFF, 3);
+                ch.sprite.burst(0xFFCCCCCC, 3);
             } else {
                 Dungeon.level.pressCell(cell);
             }
 
             onMiracleCast(cross, hero);
-            Splash.at(cell, 0xFFFFFFFF, 3);
+            Splash.at(cell, 0xFFCCCCCC, 3);
         }
 
         @Override
         public void throwSound() {
             Sample.INSTANCE.play(Assets.Sounds.ZAP);
+        }
+
+        @Override
+        public Emitter emitter() {
+            Emitter emitter = new Emitter();
+            emitter.pos( 5, 5, 0, 0);
+            emitter.fillTarget = false;
+            emitter.pour(SilverParticle.FACTORY, 0.001f);
+            return emitter;
         }
     }
 

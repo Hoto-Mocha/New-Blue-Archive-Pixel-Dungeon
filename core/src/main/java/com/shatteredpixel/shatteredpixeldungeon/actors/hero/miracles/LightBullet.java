@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
@@ -21,6 +22,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -117,6 +119,15 @@ public class LightBullet extends TargetedMariMiracle {
         @Override
         public void throwSound() {
             Sample.INSTANCE.play(Assets.Sounds.ZAP);
+        }
+
+        @Override
+        public Emitter emitter() {
+            Emitter emitter = new Emitter();
+            emitter.pos( 5, 5, 0, 0);
+            emitter.fillTarget = false;
+            emitter.pour(MagicMissile.WhiteParticle.YELLOW, 0.01f);
+            return emitter;
         }
     }
 
