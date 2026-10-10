@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
@@ -105,6 +106,9 @@ public abstract class MariMiracle {
             if (mari.hasTalent(Talent.MARI_T3_1)) {
                 miracles.add(Purification.INSTANCE);
             }
+            if (mari.subClass == HeroSubClass.DEVOUT_PRAYER) {
+                miracles.add(HolyBullet.INSTANCE);
+            }
 
         } else if (tier == 4){
 
@@ -124,6 +128,7 @@ public abstract class MariMiracle {
         miracles.add(MindBind.INSTANCE);
         miracles.add(BlessOfCharity.INSTANCE);
         miracles.add(Purification.INSTANCE);
+        miracles.add(HolyBullet.INSTANCE);
 
         return miracles;
     }
