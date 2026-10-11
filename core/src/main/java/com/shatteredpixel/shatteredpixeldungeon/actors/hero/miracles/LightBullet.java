@@ -188,7 +188,7 @@ public class LightBullet extends TargetedMariMiracle {
 
         public int proc(Hero attacker, Char defender, int damage) {
             if (attacker.hasTalent(Talent.MARI_T1_3)) {
-                damage += 1+attacker.pointsInTalent(Talent.MARI_T1_3);
+                damage += 1+2*attacker.pointsInTalent(Talent.MARI_T1_3);
             }
             return damage;
         }
