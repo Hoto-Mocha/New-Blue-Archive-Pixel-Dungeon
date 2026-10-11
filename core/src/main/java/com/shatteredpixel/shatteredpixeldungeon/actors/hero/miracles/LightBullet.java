@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -17,10 +18,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
@@ -37,7 +40,12 @@ public class LightBullet extends TargetedMariMiracle {
 
     @Override
     public float chargeUse(Hero hero) {
-        return 2;
+        if (hero.subClass == HeroSubClass.DEVOUT_PRAYER
+                && hero.buff(LightBulletPrayerCooldown.class) == null){
+            return 0;
+        } else {
+            return 2;
+        }
     }
 
     public String desc(){
@@ -110,10 +118,10 @@ public class LightBullet extends TargetedMariMiracle {
 
             onMiracleCast(cross, hero);
             Splash.at(cell, 0xFFFFFF44, 3);
-            //if (hero.subClass == HeroSubClass.PRIEST && hero.buff(GuidingLight.GuidingLightPriestCooldown.class) == null) {
-            //    Buff.prolong(hero, GuidingLight.GuidingLightPriestCooldown.class, 50f);
-            //    ActionIndicator.refresh();
-            //}
+            if (hero.subClass == HeroSubClass.DEVOUT_PRAYER && hero.buff(LightBulletPrayerCooldown.class) == null) {
+                Buff.prolong(hero, LightBulletPrayerCooldown.class, 50f);
+                ActionIndicator.refresh();
+            }
         }
 
         @Override
@@ -128,6 +136,27 @@ public class LightBullet extends TargetedMariMiracle {
             emitter.fillTarget = false;
             emitter.pour(MagicMissile.WhiteParticle.YELLOW, 0.01f);
             return emitter;
+        }
+    }
+
+    public static class LightBulletPrayerCooldown extends FlavourBuff {
+
+        @Override
+        public int icon() {
+            return BuffIndicator.LIGHT_BULLET;
+        }
+
+        @Override
+        public void tintIcon(Image icon) {
+            icon.brightness(0.5f);
+        }
+
+        public float iconFadePercent() { return Math.max(0, visualcooldown() / 50); }
+
+        @Override
+        public void detach() {
+            super.detach();
+            ActionIndicator.refresh();
         }
     }
 

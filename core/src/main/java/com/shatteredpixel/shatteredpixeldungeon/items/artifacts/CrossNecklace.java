@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
@@ -319,10 +320,9 @@ public class CrossNecklace extends Artifact {
 
         @Override
         public int indicatorColor() {
-//            if (quickMiracle == GuidingLight.INSTANCE && quickMiracle.chargeUse(Dungeon.hero) == 0){
-//                return 0x0063ff;
-//            } else
-            {
+            if (quickMiracle == LightBullet.INSTANCE && quickMiracle.chargeUse(Dungeon.hero) == 0){
+                return 0x0063ff;
+            } else {
                 return 0x002157;
             }
         }

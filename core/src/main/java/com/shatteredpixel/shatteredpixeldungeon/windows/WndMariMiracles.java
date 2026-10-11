@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -125,9 +126,9 @@ public class WndMariMiracles extends Window {
 			if (!cross.canCast(Dungeon.hero, miracle)){
 				icon.alpha( 0.3f );
 			}
-//			else if (miracle == GuidingLight.INSTANCE && miracle.chargeUse(Dungeon.hero) == 0){
-//				icon.brightness(3);
-//			}
+			else if (miracle == LightBullet.INSTANCE && miracle.chargeUse(Dungeon.hero) == 0){
+				icon.brightness(3);
+			}
 
 			bg = Chrome.get(Chrome.Type.TOAST);
 			addToBack(bg);
@@ -136,9 +137,9 @@ public class WndMariMiracles extends Window {
 		@Override
 		protected void onPointerDown() {
 			super.onPointerDown();
-//			if (miracle == GuidingLight.INSTANCE && miracle.chargeUse(Dungeon.hero) == 0){
-//				icon.brightness(4);
-//			}
+			if (miracle == LightBullet.INSTANCE && miracle.chargeUse(Dungeon.hero) == 0){
+				icon.brightness(4);
+			}
 		}
 
 		@Override
@@ -146,10 +147,9 @@ public class WndMariMiracles extends Window {
 			super.onPointerUp();
 			if (!cross.canCast(Dungeon.hero, miracle)){
 				icon.alpha( 0.3f );
+			} else if (miracle == LightBullet.INSTANCE && miracle.chargeUse(Dungeon.hero) == 0){
+				icon.brightness(3);
 			}
-//			else if (miracle == GuidingLight.INSTANCE && miracle.chargeUse(Dungeon.hero) == 0){
-//				icon.brightness(3);
-//			}
 		}
 
 		@Override

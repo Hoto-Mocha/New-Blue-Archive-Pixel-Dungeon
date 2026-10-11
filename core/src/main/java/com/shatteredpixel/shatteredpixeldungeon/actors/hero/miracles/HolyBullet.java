@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
@@ -37,7 +38,11 @@ public class HolyBullet extends TargetedMariMiracle {
 
     @Override
     public String desc() {
-        return Messages.get(this, "desc", Dungeon.hero.lvl+5) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
+        int damage = Dungeon.hero.lvl;
+        if (Dungeon.hero.hasTalent(Talent.MARI_T1_3)) {
+            damage += 1+2*Dungeon.hero.pointsInTalent(Talent.MARI_T1_3);
+        }
+        return Messages.get(this, "desc", damage) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
     }
 
     @Override
@@ -96,14 +101,17 @@ public class HolyBullet extends TargetedMariMiracle {
                 int damage = Hero.heroDamageIntRange(10, 20);
                 if (hero.buff(LightBullet.LightMagazine.class) != null) {
                     hero.buff(LightBullet.LightMagazine.class).onShoot(hero);
-                    damage += hero.lvl+5;
+                    damage += hero.lvl;
+                    if (hero.hasTalent(Talent.MARI_T1_3)) {
+                        damage += 1+2*hero.pointsInTalent(Talent.MARI_T1_3);
+                    }
                 }
                 if (Char.hasProp(ch, Char.Property.DEMONIC) || Char.hasProp(ch, Char.Property.UNDEAD)) {
                     ch.sprite.emitter().burst( ShadowParticle.UP, 6 );
                     Sample.INSTANCE.play(Assets.Sounds.BURNING);
                     damage = Math.round(damage*1.5f);
                 }
-                ch.damage(damage, new LightBullet());
+                ch.damage(damage, new HolyBullet());
                 Sample.INSTANCE.play(Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.87f, 1.15f));
                 ch.sprite.burst(0xFF2CFFE7, 3);
                 if (gun != null) {
