@@ -71,7 +71,7 @@ public abstract class MariMiracle {
         Talent.onArtifactUsed(hero);
     }
 
-    public Gun getEquippedGun(Hero hero) {
+    public static Gun getEquippedGun(Hero hero) {
         if (!(hero.belongings.weapon instanceof Gun)) {
             return null;
         } else {
@@ -142,6 +142,13 @@ public abstract class MariMiracle {
 
             if (hero.buff(Protection.ProtectionBuff.class) != null) {
                 damage += hero.buff(Protection.ProtectionBuff.class).thunderDamageBonus(hero);
+
+                if (hero.subClass == HeroSubClass.DEVOUT_PRAYER) {
+                    Gun gun = getEquippedGun(hero);
+                    if (gun != null) {
+                        Buff.affect(hero, LightBullet.LightMagazine.class).stack(gun, 1);
+                    }
+                }
             }
 
             return damage;
