@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.IceL
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.HolyBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.SilverBullet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.ThunderLance;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyLance;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGeomancer;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -122,6 +123,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		ANGULAR_SPEEDS.put(LightBullet.LightBulletItem.class,  0);
 		ANGULAR_SPEEDS.put(SilverBullet.SilverBulletItem.class,  0);
 		ANGULAR_SPEEDS.put(HolyBullet.HolyBulletItem.class,  0);
+		ANGULAR_SPEEDS.put(ThunderLance.ThunderItem.class,  0);
 
 		//720 is default
 
@@ -205,6 +207,10 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		 || item instanceof HolyBullet.HolyBulletItem
 		) {
 			speed *= 3f;
+		}
+		if (item instanceof ThunderLance.ThunderItem
+		) {
+			speed *= 1.5f;
 		}
 		
 		PosTweener tweener = new PosTweener( this, to, d.length() / speed );

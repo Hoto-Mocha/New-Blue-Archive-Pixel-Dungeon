@@ -23,6 +23,7 @@ public abstract class MariMiracle {
         MIRACLE_DAMAGE.add( LightBullet.class );
         MIRACLE_DAMAGE.add( SilverBullet.class );
         MIRACLE_DAMAGE.add( HolyBullet.class );
+        MIRACLE_DAMAGE.add( ThunderLance.class );
     }
 
     public abstract void onCast(CrossNecklace cross, Hero hero);
@@ -113,6 +114,9 @@ public abstract class MariMiracle {
             if (mari.hasTalent(Talent.MARI_EX1_1)) {
                 miracles.add(HolyBlast.INSTANCE);
             }
+            if (mari.hasTalent(Talent.MARI_EX1_2)) {
+                miracles.add(ThunderLance.INSTANCE);
+            }
 
         } else if (tier == 4){
 
@@ -134,6 +138,7 @@ public abstract class MariMiracle {
         miracles.add(Purification.INSTANCE);
         miracles.add(HolyBullet.INSTANCE);
         miracles.add(HolyBlast.INSTANCE);
+        miracles.add(ThunderLance.INSTANCE);
 
         return miracles;
     }

@@ -863,9 +863,11 @@ public class ItemSpriteSheet {
 	private static final int UNIQUE_ITEM_2 	= 								xy(1, 34);
 	public static final int SCRUNCHIE 		= UNIQUE_ITEM_2+0;
 	public static final int CROSS	 		= UNIQUE_ITEM_2+1;
+	public static final int THUNDER_LANCE	= UNIQUE_ITEM_2+2;
 	static {
 		assignItemRect(SCRUNCHIE, 			11, 12);
 		assignItemRect(CROSS, 				14, 15);
+		assignItemRect(THUNDER_LANCE, 		13, 13);
 	}
 
 	private static final int NEW_ARMOR 	= 								xy(1, 35);

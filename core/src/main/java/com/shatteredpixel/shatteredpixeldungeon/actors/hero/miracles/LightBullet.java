@@ -205,6 +205,10 @@ public class LightBullet extends TargetedMariMiracle {
             }
         }
 
+        public int bullets() {
+            return bullets;
+        }
+
         @Override
         public float iconFadePercent() {
             return Math.max(0, (gun.maxRound()-bullets)/(float)gun.maxRound());

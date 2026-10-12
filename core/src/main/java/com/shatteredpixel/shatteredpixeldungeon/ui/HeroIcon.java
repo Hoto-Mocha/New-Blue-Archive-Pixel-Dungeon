@@ -242,6 +242,7 @@ public class HeroIcon extends Image {
 	public static final int HOLY_PROTECTION = 128 + 143;
 	public static final int HOLY_BULLET		= 128 + 144;
 	public static final int HOLY_BLAST		= 128 + 145;
+	public static final int THUNDER_LANCE	= 128 + 146;
 
 
 	public HeroIcon(HeroSubClass subCls){
