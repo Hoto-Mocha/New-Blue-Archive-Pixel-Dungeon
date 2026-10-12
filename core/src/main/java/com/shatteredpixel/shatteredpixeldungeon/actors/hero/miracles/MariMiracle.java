@@ -109,6 +109,9 @@ public abstract class MariMiracle {
             if (mari.subClass == HeroSubClass.DEVOUT_PRAYER) {
                 miracles.add(HolyBullet.INSTANCE);
             }
+            if (mari.hasTalent(Talent.MARI_EX1_1)) {
+                miracles.add(HolyBlast.INSTANCE);
+            }
 
         } else if (tier == 4){
 
@@ -129,6 +132,7 @@ public abstract class MariMiracle {
         miracles.add(BlessOfCharity.INSTANCE);
         miracles.add(Purification.INSTANCE);
         miracles.add(HolyBullet.INSTANCE);
+        miracles.add(HolyBlast.INSTANCE);
 
         return miracles;
     }
