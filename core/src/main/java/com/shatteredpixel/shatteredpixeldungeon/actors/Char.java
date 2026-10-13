@@ -91,6 +91,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Ch
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.DeathMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.PenetrationShot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.HolyMantle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.Pray;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.AuraOfProtection;
@@ -740,6 +741,10 @@ public abstract class Char extends Actor {
 		}
 
 		if (defender.buff(TrashBin.EvasionBuff.class) != null){
+			defStat = INFINITE_EVASION;
+		}
+
+		if (defender.buff(HolyMantle.HolyMantleBuff.class) != null){
 			defStat = INFINITE_EVASION;
 		}
 

@@ -88,6 +88,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.Perfe
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.GPSRoute;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.Thunder;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.HolyMantle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.Pray;
@@ -760,6 +761,14 @@ public class Hero extends Char {
 
 		if (buff(ShieldParry.ParryBuff.class) != null) {
 			Sample.INSTANCE.play(Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
+			return Messages.get(Monk.class, "parried");
+		}
+
+		if (buff(HolyMantle.HolyMantleBuff.class) != null) {
+			buff(HolyMantle.HolyMantleBuff.class).detach();
+			if (sprite != null && sprite.visible) {
+				Sample.INSTANCE.play(Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
+			}
 			return Messages.get(Monk.class, "parried");
 		}
 
