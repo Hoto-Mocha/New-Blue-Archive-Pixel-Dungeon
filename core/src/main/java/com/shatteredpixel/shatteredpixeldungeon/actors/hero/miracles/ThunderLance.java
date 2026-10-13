@@ -83,7 +83,11 @@ public class ThunderLance extends TargetedMariMiracle {
                 int multi = amount(hero);
                 int min = 2*hero.pointsInTalent(Talent.MARI_EX1_2)*multi;
                 int max = 10*hero.pointsInTalent(Talent.MARI_EX1_2)*multi;
-                ch.damage(Hero.heroDamageIntRange(min, max), new ThunderLance());
+                int damage = Hero.heroDamageIntRange(min, max);
+                if (hero.hasTalent(Talent.MARI_T1_3)) {
+                    damage += 1+2*hero.pointsInTalent(Talent.MARI_T1_3);
+                }
+                ch.damage(damage, new ThunderLance());
                 ch.sprite.burst(0xFFFFFFFF, 3);
                 Thunder.thunderEffect(ch.sprite);
                 Buff.affect(ch, Paralysis.class, amount(hero));
