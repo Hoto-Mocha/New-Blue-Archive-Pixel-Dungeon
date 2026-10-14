@@ -120,6 +120,9 @@ public abstract class MariMiracle {
             if (mari.hasTalent(Talent.MARI_EX1_3)) {
                 miracles.add(HolyMantle.INSTANCE);
             }
+            if (mari.subClass == HeroSubClass.SYMBOL_OF_PEACE) {
+                miracles.add(HealingTouch.INSTANCE);
+            }
 
         } else if (tier == 4){
 
@@ -143,6 +146,7 @@ public abstract class MariMiracle {
         miracles.add(HolyBlast.INSTANCE);
         miracles.add(ThunderLance.INSTANCE);
         miracles.add(HolyMantle.INSTANCE);
+        miracles.add(HealingTouch.INSTANCE);
 
         return miracles;
     }
