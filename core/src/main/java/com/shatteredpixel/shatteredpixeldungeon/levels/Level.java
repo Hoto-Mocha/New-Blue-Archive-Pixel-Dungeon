@@ -770,6 +770,9 @@ public abstract class Level implements Bundlable {
 		} else {
 			cooldown = TIME_TO_RESPAWN;
 		}
+		if (Dungeon.hero != null && Dungeon.hero.subClass == HeroSubClass.SYMBOL_OF_PEACE) {
+			cooldown *= 1.2f;
+		}
 		return cooldown / DimensionalSundial.spawnMultiplierAtCurrentTime();
 	}
 
