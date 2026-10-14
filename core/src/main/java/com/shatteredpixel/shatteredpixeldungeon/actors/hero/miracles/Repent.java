@@ -38,8 +38,8 @@ public class Repent extends TargetedMariMiracle {
     @Override
     public String desc() {
         String desc;
-        if (Dungeon.hero.pointsInTalent(Talent.MARI_EX2_3) > 1) {
-            int chance = 10 * (Dungeon.hero.pointsInTalent(Talent.MARI_EX2_3)-1);
+        int chance = 10 * (Dungeon.hero.pointsInTalent(Talent.MARI_EX2_3)-1);
+        if (chance > 0) {
             desc = Messages.get(this, "alt_desc", chance);
         } else {
             desc = Messages.get(this, "desc");
