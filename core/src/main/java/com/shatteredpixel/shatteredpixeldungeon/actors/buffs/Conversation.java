@@ -267,11 +267,11 @@ public class Conversation extends Buff implements ActionIndicator.Action {
         } else {
             //if no debuff can be applied (all are present), then go up one tier
             if (category == MINOR_DEBUFFS)          debuffEnemy( hero, enemy, MAJOR_DEBUFFS);
-            else if (category == MAJOR_DEBUFFS)     enthallEnemy( enemy );
+            else if (category == MAJOR_DEBUFFS)     enthrallEnemy( enemy );
         }
     }
 
-    private void enthallEnemy( Mob enemy ){
+    private void enthrallEnemy(Mob enemy ){
         Hero hero = Dungeon.hero;
         if (hero == null) return;
 
@@ -339,7 +339,7 @@ public class Conversation extends Buff implements ActionIndicator.Action {
         }
 
         if (enthallingPower > enemyResist){
-            enthallEnemy( enemy );
+            enthrallEnemy( enemy );
         } else {
             float debuffChance = enthallingPower / enemyResist;
             if (Random.Float() < debuffChance){
