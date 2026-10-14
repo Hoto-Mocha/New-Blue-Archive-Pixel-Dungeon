@@ -745,10 +745,6 @@ public abstract class Char extends Actor {
 			defStat = INFINITE_EVASION;
 		}
 
-		if (defender.buff(HolyMantle.HolyMantleBuff.class) != null){
-			defStat = INFINITE_EVASION;
-		}
-
 		//if accuracy or evasion are large enough, treat them as infinite.
 		//note that infinite evasion beats infinite accuracy
 		if (defStat >= INFINITE_EVASION){
@@ -1118,6 +1114,13 @@ public abstract class Char extends Actor {
 		if (buff(Protection.ProtectionBuff.class) != null && !(src instanceof Hunger)) {
 			dmg -= buff(Protection.ProtectionBuff.class).damageReduction(Dungeon.hero);
 			if (dmg < 0) dmg = 0;
+		}
+
+		if (buff(HolyMantle.HolyMantleBuff.class) != null) {
+			if (dmg < 0) {
+				buff(HolyMantle.HolyMantleBuff.class).detach();
+				dmg = 0;
+			}
 		}
 
 		int shielded = dmg;

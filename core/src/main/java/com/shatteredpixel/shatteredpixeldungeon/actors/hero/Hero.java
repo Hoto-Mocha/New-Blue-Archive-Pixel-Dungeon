@@ -764,14 +764,6 @@ public class Hero extends Char {
 			return Messages.get(Monk.class, "parried");
 		}
 
-		if (buff(HolyMantle.HolyMantleBuff.class) != null) {
-			buff(HolyMantle.HolyMantleBuff.class).detach();
-			if (sprite != null && sprite.visible) {
-				Sample.INSTANCE.play(Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
-			}
-			return Messages.get(Monk.class, "parried");
-		}
-
 		return super.defenseVerb();
 	}
 
