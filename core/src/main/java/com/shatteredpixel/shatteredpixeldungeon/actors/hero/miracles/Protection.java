@@ -67,7 +67,11 @@ public class Protection extends MariMiracle {
 
         @Override
         public String desc() {
-            return Messages.get(this, "desc", defenseBonus(Dungeon.hero), thunderDamageBonus(Dungeon.hero), dispTurns());
+            if (Dungeon.hero.subClass == HeroSubClass.SYMBOL_OF_PEACE) {
+                return Messages.get(this, "desc_symbol", damageReduction(Dungeon.hero), thunderDamageBonus(Dungeon.hero), dispTurns());
+            } else {
+                return Messages.get(this, "desc", defenseBonus(Dungeon.hero), thunderDamageBonus(Dungeon.hero), dispTurns());
+            }
         }
 
         @Override
@@ -78,9 +82,16 @@ public class Protection extends MariMiracle {
         public int defenseBonus(Hero hero) {
             if (hero.subClass == HeroSubClass.DEVOUT_PRAYER) {
                 return 3;
+            } else if (hero.subClass == HeroSubClass.SYMBOL_OF_PEACE) {
+                return 0; //removes the physical damage reduction, see Char.damage()
             } else {
                 return 1;
             }
+        }
+
+        public int damageReduction(Hero hero) {
+            if (hero.subClass == HeroSubClass.SYMBOL_OF_PEACE) return 1;
+            else return 0;
         }
 
         public int thunderDamageBonus(Hero hero) {

@@ -94,6 +94,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.En
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.HolyMantle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.Pray;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.Protection;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.AuraOfProtection;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BeamingRay;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.GuidingLight;
@@ -1112,6 +1113,11 @@ public abstract class Char extends Actor {
 			sprite.showStatus(CharSprite.WARNING, Messages.titleCase(b.name()) + " " + dmg);
 			Splash.at( sprite.center(), -PointF.PI / 2, PointF.PI / 6, sprite.blood(), 10 );
 			return;
+		}
+
+		if (buff(Protection.ProtectionBuff.class) != null && !(src instanceof Hunger)) {
+			dmg -= buff(Protection.ProtectionBuff.class).damageReduction(Dungeon.hero);
+			if (dmg < 0) dmg = 0;
 		}
 
 		int shielded = dmg;
