@@ -34,6 +34,11 @@ public class HealingTouch extends TargetedMariMiracle {
     protected void onTargetSelected(CrossNecklace cross, Hero hero, Integer target) {
         if (target == null) return;
 
+        if (!Dungeon.level.heroFOV[target]) {
+            hero.yellW("fov");
+            return;
+        }
+
         Char ch = Actor.findChar(target);
 
         if (ch == null) {
