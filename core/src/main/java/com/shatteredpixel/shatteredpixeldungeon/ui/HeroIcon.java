@@ -247,6 +247,7 @@ public class HeroIcon extends Image {
 	public static final int HEALING_TOUCH	= 128 + 148;
 	public static final int BAPTIZE			= 128 + 149;
 	public static final int SALVATION		= 128 + 150;
+	public static final int REPENT			= 128 + 151;
 
 
 	public HeroIcon(HeroSubClass subCls){
