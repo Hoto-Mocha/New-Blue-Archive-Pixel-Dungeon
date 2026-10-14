@@ -72,7 +72,7 @@ public class Baptize extends TargetedMariMiracle {
         hero.sprite.zap(target, new Callback() {
             @Override
             public void call() {
-                hero.spendAndNext(Actor.TICK);
+                hero.next();
                 hero.sprite.idle();
             }
         });
