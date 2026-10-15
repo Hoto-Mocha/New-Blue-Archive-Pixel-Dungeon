@@ -189,10 +189,12 @@ public class MariTrinity extends ArmorAbility {
         @Override
         public String desc() {
             String desc = Messages.get(this, "desc");
-            if (red) desc += "\n\n" + Messages.get(this, "desc_red", minDr(Dungeon.hero), maxDr(Dungeon.hero));
-            if (yellow) desc += "\n\n" + Messages.get(this, "desc_yellow", mindVisionRange());
-            if (blue) desc += "\n\n" + Messages.get(this, "desc_blue", shielding());
-            if (red && yellow && blue) desc += "\n\n" + Messages.get(this, "desc_all");
+
+            if (red)                    desc += "\n" + Messages.get(this, "desc_red", minDr(Dungeon.hero), maxDr(Dungeon.hero));
+            if (yellow)                 desc += "\n" + Messages.get(this, "desc_yellow", mindVisionRange());
+            if (blue)                   desc += "\n" + Messages.get(this, "desc_blue", shielding());
+            if (red && yellow && blue)  desc += "\n" + Messages.get(this, "desc_all");
+
             desc += "\n\n" + Messages.get(this, "desc_left", left);
             return desc;
         }
