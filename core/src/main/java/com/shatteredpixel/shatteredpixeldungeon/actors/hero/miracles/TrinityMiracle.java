@@ -1,8 +1,10 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.MariTrinity;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 
 public abstract class TrinityMiracle extends MariMiracle {
@@ -24,7 +26,10 @@ public abstract class TrinityMiracle extends MariMiracle {
 
     @Override
     public void onCast(CrossNecklace cross, Hero hero) {
+        if (getBuff(hero) == null) return;
+
         hero.busy();
+        Sample.INSTANCE.play(Assets.Sounds.READ);
         hero.sprite.operate(hero.pos, new Callback() {
             @Override
             public void call() {

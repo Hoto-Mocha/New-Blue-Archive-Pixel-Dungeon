@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -74,6 +75,10 @@ public class MariTrinity extends ArmorAbility {
 
         public static final float DURATION = 15f;
 
+        private boolean yellow = false;
+        private boolean red = false;
+        private boolean blue = false;
+
         private int mindVision = 0;
         private int defense = 0;
         public int left = 15;
@@ -84,7 +89,14 @@ public class MariTrinity extends ArmorAbility {
 
         @Override
         public int icon() {
-            return BuffIndicator.TRINITY;
+            if (!yellow && !red && !blue)   return BuffIndicator.TRINITY_NONE;
+            if (yellow  && !red && !blue)    return BuffIndicator.TRINITY_YELLOW;
+            if (!yellow && red  && !blue)    return BuffIndicator.TRINITY_RED;
+            if (!yellow && !red && blue )    return BuffIndicator.TRINITY_BLUE;
+            if (yellow  && red  && !blue)     return BuffIndicator.TRINITY_YELLOW_RED;
+            if (yellow  && !red && blue )     return BuffIndicator.TRINITY_YELLOW_BLUE;
+            if (!yellow && red  && blue )     return BuffIndicator.TRINITY_RED_BLUE;
+            else                            return BuffIndicator.TRINITY_ALL;
         }
 
         @Override
@@ -110,6 +122,9 @@ public class MariTrinity extends ArmorAbility {
         }
 
         public void reset() {
+            yellow = false;
+            red = false;
+            blue = false;
             mindVision = 0;
             defense = 0;
             left = (int)DURATION+1;
@@ -117,15 +132,19 @@ public class MariTrinity extends ArmorAbility {
 
         public void extend(){
             left += 5;
+            BuffIndicator.refreshHero();
         }
 
         public void mindVisionCast(Hero hero) {
+            yellow = true;
             mindVision += hero.pointsInTalent(Talent.MARI_ARMOR2_2);
             mindVision = Math.min(mindVision, 12);
+            Dungeon.observe();
             extend();
         }
 
         public void defenseCast() {
+            red = true;
             defense++;
             if (defense > 2) {
                 defense = 2;
@@ -134,6 +153,7 @@ public class MariTrinity extends ArmorAbility {
         }
 
         public void shieldCast(Hero hero) {
+            blue = true;
             int amount = 10*hero.pointsInTalent(Talent.MARI_ARMOR2_3);
             if (shielding() + amount > hero.HT) {
                 setShield(hero.HT);
@@ -156,6 +176,9 @@ public class MariTrinity extends ArmorAbility {
             return Messages.get(this, "desc", shielding(), left);
         }
 
+        private static final String YELLOW = "yellow";
+        private static final String RED = "red";
+        private static final String BLUE = "blue";
         private static final String MIND_VISION = "mind_vision";
         private static final String DEFENSE = "defense";
         private static final String LEFT = "left";
@@ -163,6 +186,9 @@ public class MariTrinity extends ArmorAbility {
         @Override
         public void storeInBundle(Bundle bundle) {
             super.storeInBundle(bundle);
+            bundle.put(YELLOW, yellow);
+            bundle.put(RED, red);
+            bundle.put(BLUE, blue);
             bundle.put(MIND_VISION, mindVision);
             bundle.put(DEFENSE, defense);
             bundle.put(LEFT, left);
@@ -171,6 +197,9 @@ public class MariTrinity extends ArmorAbility {
         @Override
         public void restoreFromBundle(Bundle bundle) {
             super.restoreFromBundle(bundle);
+            yellow = bundle.getBoolean(YELLOW);
+            red = bundle.getBoolean(RED);
+            blue = bundle.getBoolean(BLUE);
             mindVision = bundle.getInt(MIND_VISION);
             defense = bundle.getInt(DEFENSE);
             left = bundle.getInt(LEFT);

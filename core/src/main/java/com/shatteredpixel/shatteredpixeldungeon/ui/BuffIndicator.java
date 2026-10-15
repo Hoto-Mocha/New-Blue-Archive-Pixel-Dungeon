@@ -155,7 +155,14 @@ public class BuffIndicator extends Component {
 	public static final int PROTECTION = 114;
 	public static final int BLESS_OF_CHARITY = 115;
 	public static final int HOLY_MANTLE = 116;
-	public static final int TRINITY = 117;
+	public static final int TRINITY_NONE = 117;
+	public static final int TRINITY_YELLOW = 118;
+	public static final int TRINITY_RED = 119;
+	public static final int TRINITY_BLUE = 120;
+	public static final int TRINITY_YELLOW_RED = 121;
+	public static final int TRINITY_YELLOW_BLUE = 122;
+	public static final int TRINITY_RED_BLUE = 123;
+	public static final int TRINITY_ALL = 124;
 
 	public static final int SIZE_SMALL  = 7;
 	public static final int SIZE_LARGE  = 16;
