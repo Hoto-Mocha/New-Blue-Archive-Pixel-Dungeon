@@ -85,6 +85,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.MariTrinity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Chase;
@@ -1025,6 +1026,11 @@ public abstract class Char extends Actor {
 				if (b.type == Buff.buffType.NEGATIVE) debuffs++;
 			}
 			damage *= 1+0.1f*debuffs;
+		}
+		if (MariMiracle.MIRACLE_DAMAGE.contains(src.getClass())
+				&& Dungeon.hero.buff(MariTrinity.TrinityBuff.class) != null
+				&& Dungeon.hero.buff(MariTrinity.TrinityBuff.class).isTrinityComplete()) {
+			damage *= 1.5f;
 		}
 
 		//two separate things can convert dmg to bleed, we handle that here

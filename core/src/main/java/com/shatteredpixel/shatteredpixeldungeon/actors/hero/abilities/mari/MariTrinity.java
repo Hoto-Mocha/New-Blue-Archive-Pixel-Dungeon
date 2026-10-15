@@ -183,6 +183,10 @@ public class MariTrinity extends ArmorAbility {
             return Random.NormalIntRange(minDr(hero), maxDr(hero));
         }
 
+        public boolean isTrinityComplete() {
+            return red && yellow && blue;
+        }
+
         @Override
         public String desc() {
             String desc = Messages.get(this, "desc");
