@@ -248,6 +248,10 @@ public class HeroIcon extends Image {
 	public static final int BAPTIZE			= 128 + 149;
 	public static final int SALVATION		= 128 + 150;
 	public static final int REPENT			= 128 + 151;
+//	public static final int 			= 128 + 152;
+//	public static final int 			= 128 + 153;
+//	public static final int 			= 128 + 154;
+	public static final int TOUGH_BODY			= 128 + 155;
 
 
 	public HeroIcon(HeroSubClass subCls){

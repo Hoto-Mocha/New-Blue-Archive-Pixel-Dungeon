@@ -155,6 +155,7 @@ public class BuffIndicator extends Component {
 	public static final int PROTECTION = 114;
 	public static final int BLESS_OF_CHARITY = 115;
 	public static final int HOLY_MANTLE = 116;
+	public static final int TRINITY = 117;
 
 	public static final int SIZE_SMALL  = 7;
 	public static final int SIZE_LARGE  = 16;

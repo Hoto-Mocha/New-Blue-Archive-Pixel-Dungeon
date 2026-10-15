@@ -77,6 +77,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.TimeStasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.YuzuStatus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.MariTrinity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.AscendedForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
@@ -801,6 +802,11 @@ public class Hero extends Char {
 
 		if (buff(AvantGardeKunBuff.OnBoard.class) != null) {
 			dr += buff(AvantGardeKunBuff.OnBoard.class).drRoll();
+		}
+
+		if (buff(MariTrinity.TrinityBuff.class) != null) {
+			MariTrinity.TrinityBuff buff = buff(MariTrinity.TrinityBuff.class);
+			dr += buff.drRoll(this);
 		}
 
 		return dr;

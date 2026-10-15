@@ -24,6 +24,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.MariTrinity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyako.WireHook;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.AntiMaterialRifle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.HPBullet;
@@ -1386,6 +1387,10 @@ public class Gun extends MeleeWeapon {
                         Bullet bullet = knockBullet();
 
                         if (curUser.buff(MindBind.MindBindBuff.class) != null && curUser.buff(MindBind.MindBindBuff.class).aimingTarget(target)) {
+                            bullet.setIgnoreWall(true);
+                        }
+
+                        if (curUser.buff(MariTrinity.TrinityBuff.class) != null) {
                             bullet.setIgnoreWall(true);
                         }
 

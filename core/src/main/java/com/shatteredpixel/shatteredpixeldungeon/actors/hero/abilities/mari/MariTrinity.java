@@ -1,11 +1,23 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.DivineIntervention;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Bundle;
+import com.watabou.utils.Random;
 
 public class MariTrinity extends ArmorAbility {
     {
@@ -23,11 +35,6 @@ public class MariTrinity extends ArmorAbility {
     }
 
     @Override
-    public String targetingPrompt() {
-        return Messages.get(this, "prompt");
-    }
-
-    @Override
     public float chargeUse(Hero hero) {
         float chargeUse = super.chargeUse(hero);
 
@@ -36,12 +43,137 @@ public class MariTrinity extends ArmorAbility {
 
     @Override
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
-        if (target == null || target == hero.pos) return;
+        if (hero.buff(TrinityBuff.class) != null) {
+            hero.yellW("already_casting");
+            return;
+        }
 
+        hero.busy();
+        Buff.affect(hero, TrinityBuff.class).reset();
+        hero.sprite.operate(hero.pos);
+        Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
+        hero.spendAndNext(Actor.TICK);
+
+        armor.charge -= chargeUse(hero);
+        Item.updateQuickslot();
+        Invisibility.dispel();
     }
 
     @Override
     public Talent[] talents() {
         return new Talent[]{Talent.MARI_ARMOR2_1, Talent.MARI_ARMOR2_2, Talent.MARI_ARMOR2_3, Talent.HEROIC_ENERGY};
+    }
+
+    public static class TrinityBuff extends ShieldBuff {
+        {
+            type = buffType.POSITIVE;
+
+            detachesAtZero = false;
+            shieldUsePriority = 1;
+        }
+
+        public static final float DURATION = 15f;
+
+        private int mindVision = 0;
+        private int defense = 0;
+        public int left = 15;
+
+        {
+            type = buffType.POSITIVE;
+        }
+
+        @Override
+        public int icon() {
+            return BuffIndicator.TRINITY;
+        }
+
+        @Override
+        public float iconFadePercent() {
+            return Math.max(0, (DURATION - left) / DURATION);
+        }
+
+        @Override
+        public String iconTextDisplay() {
+            return Integer.toString(left);
+        }
+
+        @Override
+        public boolean act() {
+            left--;
+            if (left <= 0){
+                detach();
+                return true;
+            }
+
+            spend(TICK);
+            return true;
+        }
+
+        public void reset() {
+            mindVision = 0;
+            defense = 0;
+            left = (int)DURATION+1;
+        }
+
+        public void extend(){
+            left += 5;
+        }
+
+        public void mindVisionCast(Hero hero) {
+            mindVision += hero.pointsInTalent(Talent.MARI_ARMOR2_2);
+            mindVision = Math.min(mindVision, 12);
+            extend();
+        }
+
+        public void defenseCast() {
+            defense++;
+            if (defense > 2) {
+                defense = 2;
+            }
+            extend();
+        }
+
+        public void shieldCast(Hero hero) {
+            int amount = 10*hero.pointsInTalent(Talent.MARI_ARMOR2_3);
+            if (shielding() + amount > hero.HT) {
+                setShield(hero.HT);
+            } else {
+                incShield(amount);
+            }
+            extend();
+        }
+
+        public int mindVisionRange() {
+            return mindVision;
+        }
+
+        public int drRoll(Hero hero) {
+            return Random.NormalIntRange(defense*hero.pointsInTalent(Talent.MARI_ARMOR2_1), defense*5*hero.pointsInTalent(Talent.MARI_ARMOR2_1));
+        }
+
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc", shielding(), left);
+        }
+
+        private static final String MIND_VISION = "mind_vision";
+        private static final String DEFENSE = "defense";
+        private static final String LEFT = "left";
+
+        @Override
+        public void storeInBundle(Bundle bundle) {
+            super.storeInBundle(bundle);
+            bundle.put(MIND_VISION, mindVision);
+            bundle.put(DEFENSE, defense);
+            bundle.put(LEFT, left);
+        }
+
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+            mindVision = bundle.getInt(MIND_VISION);
+            defense = bundle.getInt(DEFENSE);
+            left = bundle.getInt(LEFT);
+        }
     }
 }
