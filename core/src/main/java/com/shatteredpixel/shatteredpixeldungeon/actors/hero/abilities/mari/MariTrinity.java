@@ -138,8 +138,7 @@ public class MariTrinity extends ArmorAbility {
 
         public void mindVisionCast(Hero hero) {
             yellow = true;
-            mindVision += hero.pointsInTalent(Talent.MARI_ARMOR2_2);
-            mindVision = Math.min(mindVision, 12);
+            mindVision++;
             Dungeon.observe();
             extend();
         }
@@ -167,7 +166,7 @@ public class MariTrinity extends ArmorAbility {
         }
 
         public int mindVisionRange() {
-            return mindVision;
+            return Math.min(12, mindVision*Dungeon.hero.pointsInTalent(Talent.MARI_ARMOR2_2));
         }
 
         private int minDr(Hero hero) {
@@ -188,14 +187,14 @@ public class MariTrinity extends ArmorAbility {
 
         @Override
         public String desc() {
-            String desc = Messages.get(this, "desc");
+            String desc = Messages.get(this, "desc") + "\n\n";
 
-            if (red)                    desc += "\n" + Messages.get(this, "desc_red", minDr(Dungeon.hero), maxDr(Dungeon.hero));
-            if (yellow)                 desc += "\n" + Messages.get(this, "desc_yellow", mindVisionRange());
-            if (blue)                   desc += "\n" + Messages.get(this, "desc_blue", shielding());
-            if (red && yellow && blue)  desc += "\n" + Messages.get(this, "desc_all");
-
-            desc += "\n\n" + Messages.get(this, "desc_left", left);
+            if (red)                    desc += Messages.get(this, "desc_red", minDr(Dungeon.hero), maxDr(Dungeon.hero)) + "\n";
+            if (yellow)                 desc += Messages.get(this, "desc_yellow", mindVisionRange()) + "\n";
+            if (blue)                   desc += Messages.get(this, "desc_blue", shielding()) + "\n";
+            if (red && yellow && blue)  desc += Messages.get(this, "desc_all") + "\n";
+            if (red || yellow || blue) desc += "\n";
+            desc += Messages.get(this, "desc_left", left);
             return desc;
         }
 
