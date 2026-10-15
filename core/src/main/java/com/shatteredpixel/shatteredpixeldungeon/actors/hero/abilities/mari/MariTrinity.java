@@ -11,9 +11,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.DivineIntervention;
+import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.audio.Sample;
@@ -75,8 +77,8 @@ public class MariTrinity extends ArmorAbility {
 
         public static final float DURATION = 15f;
 
-        private boolean yellow = false;
         private boolean red = false;
+        private boolean yellow = false;
         private boolean blue = false;
 
         private int mindVision = 0;
@@ -90,8 +92,8 @@ public class MariTrinity extends ArmorAbility {
         @Override
         public int icon() {
             if (!yellow && !red && !blue)   return BuffIndicator.TRINITY_NONE;
-            if (yellow  && !red && !blue)    return BuffIndicator.TRINITY_YELLOW;
             if (!yellow && red  && !blue)    return BuffIndicator.TRINITY_RED;
+            if (yellow  && !red && !blue)    return BuffIndicator.TRINITY_YELLOW;
             if (!yellow && !red && blue )    return BuffIndicator.TRINITY_BLUE;
             if (yellow  && red  && !blue)     return BuffIndicator.TRINITY_YELLOW_RED;
             if (yellow  && !red && blue )     return BuffIndicator.TRINITY_YELLOW_BLUE;
@@ -122,8 +124,8 @@ public class MariTrinity extends ArmorAbility {
         }
 
         public void reset() {
-            yellow = false;
             red = false;
+            yellow = false;
             blue = false;
             mindVision = 0;
             defense = 0;
@@ -156,8 +158,10 @@ public class MariTrinity extends ArmorAbility {
             blue = true;
             int amount = 10*hero.pointsInTalent(Talent.MARI_ARMOR2_3);
             if (shielding() + amount > hero.HT) {
+                hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(hero.HT-shielding()), FloatingText.SHIELDING);
                 setShield(hero.HT);
             } else {
+                hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(amount), FloatingText.SHIELDING);
                 incShield(amount);
             }
             extend();
@@ -176,8 +180,8 @@ public class MariTrinity extends ArmorAbility {
             return Messages.get(this, "desc", shielding(), left);
         }
 
-        private static final String YELLOW = "yellow";
         private static final String RED = "red";
+        private static final String YELLOW = "yellow";
         private static final String BLUE = "blue";
         private static final String MIND_VISION = "mind_vision";
         private static final String DEFENSE = "defense";
@@ -186,8 +190,8 @@ public class MariTrinity extends ArmorAbility {
         @Override
         public void storeInBundle(Bundle bundle) {
             super.storeInBundle(bundle);
-            bundle.put(YELLOW, yellow);
             bundle.put(RED, red);
+            bundle.put(YELLOW, yellow);
             bundle.put(BLUE, blue);
             bundle.put(MIND_VISION, mindVision);
             bundle.put(DEFENSE, defense);
@@ -197,8 +201,8 @@ public class MariTrinity extends ArmorAbility {
         @Override
         public void restoreFromBundle(Bundle bundle) {
             super.restoreFromBundle(bundle);
-            yellow = bundle.getBoolean(YELLOW);
             red = bundle.getBoolean(RED);
+            yellow = bundle.getBoolean(YELLOW);
             blue = bundle.getBoolean(BLUE);
             mindVision = bundle.getInt(MIND_VISION);
             defense = bundle.getInt(DEFENSE);
