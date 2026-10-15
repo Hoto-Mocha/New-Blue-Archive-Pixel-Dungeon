@@ -253,6 +253,7 @@ public class HeroIcon extends Image {
 //	public static final int 			= 128 + 154;
 	public static final int TOUGH_BODY			= 128 + 155;
 	public static final int CRYSTAL_MIND		= 128 + 156;
+	public static final int HOLY_SOUL			= 128 + 157;
 
 
 	public HeroIcon(HeroSubClass subCls){
