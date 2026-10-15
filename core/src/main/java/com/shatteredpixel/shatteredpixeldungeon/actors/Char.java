@@ -1027,7 +1027,10 @@ public abstract class Char extends Actor {
 			}
 			damage *= 1+0.1f*debuffs;
 		}
-		if (MariMiracle.MIRACLE_DAMAGE.contains(src.getClass())
+		if ((MariMiracle.MIRACLE_DAMAGE.contains(src.getClass())
+				|| (src == Dungeon.hero
+				&& Dungeon.hero.heroClass == HeroClass.MARI
+				&& Dungeon.hero.belongings.attackingWeapon() instanceof Gun.Bullet))
 				&& Dungeon.hero.buff(MariTrinity.TrinityBuff.class) != null
 				&& Dungeon.hero.buff(MariTrinity.TrinityBuff.class).isTrinityComplete()) {
 			damage *= 1.5f;
