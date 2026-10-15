@@ -171,13 +171,27 @@ public class MariTrinity extends ArmorAbility {
             return mindVision;
         }
 
+        private int minDr(Hero hero) {
+            return defense*hero.pointsInTalent(Talent.MARI_ARMOR2_1);
+        }
+
+        private int maxDr(Hero hero) {
+            return defense*5*hero.pointsInTalent(Talent.MARI_ARMOR2_1);
+        }
+
         public int drRoll(Hero hero) {
-            return Random.NormalIntRange(defense*hero.pointsInTalent(Talent.MARI_ARMOR2_1), defense*5*hero.pointsInTalent(Talent.MARI_ARMOR2_1));
+            return Random.NormalIntRange(minDr(hero), maxDr(hero));
         }
 
         @Override
         public String desc() {
-            return Messages.get(this, "desc", shielding(), left);
+            String desc = Messages.get(this, "desc");
+            if (red) desc += "\n\n" + Messages.get(this, "desc_red", minDr(Dungeon.hero), maxDr(Dungeon.hero));
+            if (yellow) desc += "\n\n" + Messages.get(this, "desc_yellow", mindVisionRange());
+            if (blue) desc += "\n\n" + Messages.get(this, "desc_blue", shielding());
+            if (red && yellow && blue) desc += "\n\n" + Messages.get(this, "desc_all");
+            desc += "\n\n" + Messages.get(this, "desc_left", left);
+            return desc;
         }
 
         private static final String RED = "red";
