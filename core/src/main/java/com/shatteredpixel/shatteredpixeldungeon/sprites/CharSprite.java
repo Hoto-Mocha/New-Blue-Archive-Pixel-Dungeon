@@ -24,12 +24,14 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari.MariTrinity;
 import com.shatteredpixel.shatteredpixeldungeon.effects.DarkBlock;
 import com.shatteredpixel.shatteredpixeldungeon.effects.EmoIcon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.IceBlock;
 import com.shatteredpixel.shatteredpixeldungeon.effects.GlowBlock;
+import com.shatteredpixel.shatteredpixeldungeon.effects.RGBBlock;
 import com.shatteredpixel.shatteredpixeldungeon.effects.ShieldHalo;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
@@ -87,7 +89,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	public boolean visibleOutOfFFOV = false;
 
 	public enum State {
-		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, HEARTS, GLOWING, AURA
+		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, HEARTS, GLOWING, AURA, RGB
 	}
 	
 	protected Animation idle;
@@ -115,6 +117,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected ShieldHalo shield;
 	protected AlphaTweener invisible;
 	protected Flare aura;
+	protected RGBBlock rgbBlock;
 	
 	protected EmoIcon emo;
 	protected CharHealthIndicator health;
@@ -386,6 +389,17 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 		auraRays = nRays;
 	}
 
+	public void rgb(MariTrinity.TrinityBuff buff) {
+		if (rgbBlock != null) {
+			rgbBlock.darken();
+		}
+		rgbBlock = RGBBlock.lighten(this, buff);
+	}
+
+	public void clearRgb() {
+		remove(State.RGB);
+	}
+
 	protected synchronized void processStateAddition( State state ) {
 		switch (state) {
 			case BURNING:
@@ -569,6 +583,12 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 					aura = null;
 				}
 				break;
+			case RGB:
+				if (rgbBlock != null){
+					rgbBlock.darken();
+					rgbBlock = null;
+				}
+				break;
 		}
 	}
 	
@@ -639,6 +659,13 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			showSleep();
 		} else {
 			hideSleep();
+		}
+
+		if (rgbBlock != null) {
+			if (rgbBlock.parent == null && parent != null) {
+				parent.add(rgbBlock);
+			}
+			rgbBlock.visible = visible;
 		}
 		synchronized (EmoIcon.class) {
 			if (emo != null && emo.alive) {
@@ -863,6 +890,8 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			
 		}
 	}
+
+
 
 	private static class JumpTweener extends Tweener {
 
