@@ -7,9 +7,9 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
-public class CrystalMind extends TrinityMiracle {
+public class HolyMind extends TrinityMiracle {
 
-    public static CrystalMind INSTANCE = new CrystalMind();
+    public static HolyMind INSTANCE = new HolyMind();
 
     @Override
     public int icon() {

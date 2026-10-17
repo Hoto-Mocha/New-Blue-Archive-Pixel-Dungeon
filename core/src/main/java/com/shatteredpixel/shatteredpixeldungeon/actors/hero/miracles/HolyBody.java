@@ -6,9 +6,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
-public class ToughBody extends TrinityMiracle {
+public class HolyBody extends TrinityMiracle {
 
-    public static ToughBody INSTANCE = new ToughBody();
+    public static HolyBody INSTANCE = new HolyBody();
 
     @Override
     public int icon() {
