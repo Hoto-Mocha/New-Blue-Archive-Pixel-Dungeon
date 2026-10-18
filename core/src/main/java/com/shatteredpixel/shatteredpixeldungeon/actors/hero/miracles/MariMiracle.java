@@ -138,6 +138,9 @@ public abstract class MariMiracle {
             if (mari.hasTalent(Talent.MARI_ARMOR1_1)) {
                 miracles.add(Flash.INSTANCE);
             }
+            if (mari.hasTalent(Talent.MARI_ARMOR1_2)) {
+                miracles.add(BlessOfLight.INSTANCE);
+            }
             if (mari.hasTalent(Talent.MARI_ARMOR2_1)) {
                 miracles.add(HolyBody.INSTANCE);
             }
@@ -172,6 +175,7 @@ public abstract class MariMiracle {
         miracles.add(Salvation.INSTANCE);
         miracles.add(Repent.INSTANCE);
         miracles.add(Flash.INSTANCE);
+        miracles.add(BlessOfLight.INSTANCE);
         miracles.add(HolyBody.INSTANCE);
         miracles.add(HolyMind.INSTANCE);
         miracles.add(HolySoul.INSTANCE);

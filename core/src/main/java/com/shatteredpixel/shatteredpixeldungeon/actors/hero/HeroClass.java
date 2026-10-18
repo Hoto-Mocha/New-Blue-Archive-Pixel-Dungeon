@@ -51,7 +51,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.Thro
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.ElementalBlast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WarpBeacon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WildMagic;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari.BulletOfLight;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari.LightMagazineReload;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari.DivinePunishment;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.PerfectDeception;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.RollCakeThrow;
@@ -608,7 +608,7 @@ public enum HeroClass {
 			case MIKA:
 				return new ArmorAbility[]{new RollCakeThrow(), new SuperMeteor(), new PerfectDeception()};
 			case MARI:
-				return new ArmorAbility[]{new BulletOfLight(), new MariTrinity(), new DivinePunishment()};
+				return new ArmorAbility[]{new LightMagazineReload(), new MariTrinity(), new DivinePunishment()};
 
 			case WARRIOR:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};

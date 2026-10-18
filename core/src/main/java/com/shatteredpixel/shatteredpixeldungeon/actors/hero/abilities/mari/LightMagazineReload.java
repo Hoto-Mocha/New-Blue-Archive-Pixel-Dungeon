@@ -10,7 +10,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.utils.Callback;
 
-public class BulletOfLight extends ArmorAbility {
+public class LightMagazineReload extends ArmorAbility {
     {
         baseChargeUse = 25f;
     }

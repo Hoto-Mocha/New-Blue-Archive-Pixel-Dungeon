@@ -26,7 +26,7 @@ public class Flash extends MariMiracle {
 
     @Override
     public float chargeUse(Hero hero) {
-        return super.chargeUse(hero);
+        return 3;
     }
 
     @Override
@@ -56,6 +56,7 @@ public class Flash extends MariMiracle {
         });
         Sample.INSTANCE.play(Assets.Sounds.READ);
         Buff.affect(hero, FlashBuff.class);
+        onMiracleCast(cross, hero);
     }
 
     public static class FlashBuff extends Buff {
