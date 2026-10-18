@@ -1,12 +1,14 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.watabou.utils.Callback;
 
 public class BulletOfLight extends ArmorAbility {
     {
@@ -19,26 +21,34 @@ public class BulletOfLight extends ArmorAbility {
     }
 
     @Override
-    public int targetedPos(Char user, int dst) {
-        return super.targetedPos(user, dst);
-    }
-
-    @Override
-    public String targetingPrompt() {
-        return Messages.get(this, "prompt");
-    }
-
-    @Override
-    public float chargeUse(Hero hero) {
-        float chargeUse = super.chargeUse(hero);
-
-        return chargeUse;
-    }
-
-    @Override
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
-        if (target == null || target == hero.pos) return;
+        if (!(hero.belongings.weapon instanceof Gun)) {
+            hero.yellW("need_gun");
+            return;
+        }
 
+        Gun gun = (Gun) hero.belongings.weapon;
+
+        if (gun.round() == gun.maxRound()) {
+            hero.yellW("already_loaded");
+            return;
+        }
+
+        hero.busy();
+        hero.sprite.operate(hero.pos, new Callback() {
+            @Override
+            public void call() {
+                hero.sprite.idle();
+                hero.next();
+            }
+        });
+
+        int bulletsLoaded = gun.maxRound() - gun.round();
+        Buff.affect(hero, LightBullet.LightMagazine.class).stack(gun, bulletsLoaded);
+        gun.quickReload();
+
+        armor.charge -= chargeUse(hero);
+        armor.updateQuickslot();
     }
 
     @Override
