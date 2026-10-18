@@ -179,6 +179,9 @@ public class LightBullet extends TargetedMariMiracle {
             if (Dungeon.hero.buff(BlessOfLight.BlessOfLightBuff.class) != null) {
                 desc += "\n\n" + Messages.get(BlessOfLight.BlessOfLightBuff.class, "desc");
             }
+            if (Dungeon.hero.buff(PunishmentBullet.PunishmentBulletBuff.class) != null) {
+                desc += "\n\n" + Messages.get(PunishmentBullet.PunishmentBulletBuff.class, "desc");
+            }
             return desc;
         }
 
@@ -213,6 +216,9 @@ public class LightBullet extends TargetedMariMiracle {
             if (target.buff(BlessOfLight.BlessOfLightBuff.class) != null) {
                 target.buff(BlessOfLight.BlessOfLightBuff.class).detach();
             }
+            if (target.buff(PunishmentBullet.PunishmentBulletBuff.class) != null) {
+                target.buff(PunishmentBullet.PunishmentBulletBuff.class).detach();
+            }
             super.detach();
         }
 
@@ -246,6 +252,9 @@ public class LightBullet extends TargetedMariMiracle {
             }
             if (attacker.buff(BlessOfLight.BlessOfLightBuff.class) != null) {
                 attacker.buff(BlessOfLight.BlessOfLightBuff.class).proc(attacker, defender, damage);
+            }
+            if (attacker.buff(PunishmentBullet.PunishmentBulletBuff.class) != null) {
+                attacker.buff(PunishmentBullet.PunishmentBulletBuff.class).proc(attacker, defender);
             }
 
             return damage;

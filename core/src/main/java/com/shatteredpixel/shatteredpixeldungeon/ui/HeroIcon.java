@@ -250,7 +250,7 @@ public class HeroIcon extends Image {
 	public static final int REPENT			= 128 + 151;
 	public static final int FLASH_MIRACLE	= 128 + 152;
 	public static final int BLESS_OF_LIGHT	= 128 + 153;
-//	public static final int 			= 128 + 154;
+	public static final int PUNISHMENT_BULLET	= 128 + 154;
 	public static final int TOUGH_BODY			= 128 + 155;
 	public static final int CRYSTAL_MIND		= 128 + 156;
 	public static final int HOLY_SOUL			= 128 + 157;
