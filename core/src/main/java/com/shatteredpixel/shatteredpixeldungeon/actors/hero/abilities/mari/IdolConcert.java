@@ -17,11 +17,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public class IdolConcert extends ArmorAbility {
     {
-        baseChargeUse = 100f;
+        baseChargeUse = 50f;
     }
 
     @Override
@@ -31,7 +32,15 @@ public class IdolConcert extends ArmorAbility {
 
     @Override
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
+        hero.sprite.operate(hero.pos, new Callback() {
+            @Override
+            public void call() {
+                hero.sprite.idle();
+            }
+        });
         concert(hero);
+        armor.charge -= chargeUse(hero);
+        armor.updateQuickslot();
     }
 
     @Override
@@ -48,10 +57,10 @@ public class IdolConcert extends ArmorAbility {
 
         Sample.INSTANCE.play(Assets.Sounds.LULLABY, 1f, 1.1f);
         //background beat
-        Sample.INSTANCE.play(Assets.Sounds.BLAST, 0.6f, 0.6f);
-        Sample.INSTANCE.playDelayed(Assets.Sounds.BLAST, beat, 0.5f, 0.8f);
-        Sample.INSTANCE.playDelayed(Assets.Sounds.BLAST, beat*2.5f, 0.5f, 0.6f);
-        Sample.INSTANCE.playDelayed(Assets.Sounds.BLAST, beat*3f, 0.5f, 0.8f);
+//        Sample.INSTANCE.play(Assets.Sounds.BLAST, 0.6f, 0.6f);
+//        Sample.INSTANCE.playDelayed(Assets.Sounds.BLAST, beat, 0.5f, 0.8f);
+//        Sample.INSTANCE.playDelayed(Assets.Sounds.BLAST, beat*2.5f, 0.5f, 0.6f);
+//        Sample.INSTANCE.playDelayed(Assets.Sounds.BLAST, beat*3f, 0.5f, 0.8f);
     }
 
     public static class ConcertTimeStasis extends FlavourBuff {
