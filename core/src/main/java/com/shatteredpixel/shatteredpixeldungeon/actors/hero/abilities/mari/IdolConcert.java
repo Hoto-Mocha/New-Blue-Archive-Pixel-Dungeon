@@ -122,6 +122,9 @@ public class IdolConcert extends ArmorAbility {
             target.sprite.zap(target.pos);
             target.sprite.centerEmitter().start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
             for (Char ch : Actor.chars()) {
+                if (ch.alignment == Dungeon.hero.alignment) {
+                    ch.heal(5);
+                }
                 if (ch instanceof Mob && ch.alignment == Char.Alignment.ENEMY) {
                     Buff.affect(ch, Amok.class, 5f);
                     Sample.INSTANCE.playDelayed(Assets.Sounds.FALLING, Random.Float(0.3f),  0.4f, Random.Float(2f, 4f));
