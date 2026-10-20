@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -8,9 +9,13 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfSirensSong;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Callback;
 
 public class CharityKiss extends TargetedMariMiracle {
     public static CharityKiss INSTANCE = new CharityKiss();
@@ -23,6 +28,12 @@ public class CharityKiss extends TargetedMariMiracle {
     @Override
     public float chargeUse(Hero hero) {
         return 10;
+    }
+
+    @Override
+    public String desc() {
+        int turns = 3*Dungeon.hero.pointsInTalent(Talent.MARI_ARMOR3_2);
+        return Messages.get(this, "desc", turns) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
     }
 
     @Override
@@ -54,7 +65,17 @@ public class CharityKiss extends TargetedMariMiracle {
             return;
         }
 
+        hero.sprite.emitter().burst(Speck.factory( Speck.HEART ), 1);
+        Sample.INSTANCE.play(Assets.Sounds.LULLABY);
+        hero.sprite.zap(target, new Callback() {
+            @Override
+            public void call() {
+                hero.spendAndNext(Actor.TICK);
+                hero.sprite.idle();
+            }
+        });
         AllyBuff.affectAndLoot((Mob)ch, hero, ScrollOfSirensSong.Enthralled.class);
+        ch.sprite.centerEmitter().burst( Speck.factory( Speck.HEART ), 10 );
         AllyBuff.affect(ch, Adrenaline.class, 3*hero.pointsInTalent(Talent.MARI_ARMOR3_2));
 
         onMiracleCast(cross, hero);

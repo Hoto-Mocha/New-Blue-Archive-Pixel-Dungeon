@@ -153,6 +153,16 @@ public abstract class MariMiracle {
             if (mari.hasTalent(Talent.MARI_ARMOR2_3)) {
                 miracles.add(HolySoul.INSTANCE);
             }
+            if (mari.hasTalent(Talent.MARI_ARMOR3_1)) {
+                miracles.add(Encore.INSTANCE);
+            }
+            if (mari.hasTalent(Talent.MARI_ARMOR3_2)) {
+                miracles.add(CharityKiss.INSTANCE);
+            }
+            if (mari.hasTalent(Talent.MARI_ARMOR3_3)) {
+                miracles.add(HeartOverflow.INSTANCE);
+            }
+
 
         }
 
@@ -183,6 +193,9 @@ public abstract class MariMiracle {
         miracles.add(HolyBody.INSTANCE);
         miracles.add(HolyMind.INSTANCE);
         miracles.add(HolySoul.INSTANCE);
+        miracles.add(Encore.INSTANCE);
+        miracles.add(CharityKiss.INSTANCE);
+        miracles.add(HeartOverflow.INSTANCE);
 
         return miracles;
     }

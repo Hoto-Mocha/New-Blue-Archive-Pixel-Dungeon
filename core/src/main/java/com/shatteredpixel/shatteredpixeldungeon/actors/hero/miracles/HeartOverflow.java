@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -24,6 +25,13 @@ public class HeartOverflow extends MariMiracle {
     @Override
     public float chargeUse(Hero hero) {
         return 10;
+    }
+
+    @Override
+    public String desc() {
+        int interval = 6-Dungeon.hero.pointsInTalent(Talent.MARI_ARMOR3_3);
+        int healing = 5;
+        return Messages.get(this, "desc", interval, healing) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
     }
 
     @Override
@@ -113,7 +121,7 @@ public class HeartOverflow extends MariMiracle {
 
         @Override
         public String desc() {
-            return Messages.get(this, "desc", healingPerTick(), interval, healingLeft);
+            return Messages.get(this, "desc", interval, healingLeft);
         }
     }
 }
