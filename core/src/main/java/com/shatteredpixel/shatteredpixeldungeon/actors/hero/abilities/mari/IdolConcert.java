@@ -11,6 +11,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.HeartOverflow;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
@@ -99,6 +100,9 @@ public class IdolConcert extends ArmorAbility {
             }
             if (Dungeon.hero.hasTalent(Talent.MARI_ARMOR3_1)) {
                 Buff.affect(target, Encore.class, Encore.DURATION);
+            }
+            if (target.buff(HeartOverflow.HeartOverflowBuff.class) != null) {
+                target.buff(HeartOverflow.HeartOverflowBuff.class).detach();
             }
             Dungeon.observe();
         }

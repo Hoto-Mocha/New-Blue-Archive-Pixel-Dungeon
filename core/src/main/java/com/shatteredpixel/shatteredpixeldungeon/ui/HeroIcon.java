@@ -256,6 +256,7 @@ public class HeroIcon extends Image {
 	public static final int HOLY_SOUL			= 128 + 157;
 	public static final int ENCORE			= 128 + 158;
 	public static final int CHARITY_KISS	= 128 + 159;
+	public static final int HEART_OVERFLOW	= 128 + 160;
 
 
 	public HeroIcon(HeroSubClass subCls){
