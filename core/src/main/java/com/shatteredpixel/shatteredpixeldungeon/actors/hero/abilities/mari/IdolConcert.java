@@ -15,6 +15,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
@@ -96,6 +97,9 @@ public class IdolConcert extends ArmorAbility {
             if (target.buff(ConcertBuff.class) != null) {
                 target.buff(ConcertBuff.class).detach();
             }
+            if (Dungeon.hero.hasTalent(Talent.MARI_ARMOR3_1)) {
+                Buff.affect(target, Encore.class, Encore.DURATION);
+            }
             Dungeon.observe();
         }
 
@@ -125,6 +129,21 @@ public class IdolConcert extends ArmorAbility {
                 }
             }
             return true;
+        }
+    }
+
+    public static class Encore extends FlavourBuff {
+
+        public static final float DURATION = 5f;
+
+        @Override
+        public int icon() {
+            return BuffIndicator.ENCORE;
+        }
+
+        @Override
+        public float iconFadePercent() {
+            return Math.max(0, visualcooldown()/DURATION);
         }
     }
 }
