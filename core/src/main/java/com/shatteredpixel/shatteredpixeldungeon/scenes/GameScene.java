@@ -141,6 +141,7 @@ import com.watabou.noosa.NoosaScript;
 import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.SkinnedBlock;
+import com.watabou.noosa.Tilemap;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
@@ -170,6 +171,7 @@ public class GameScene extends PixelScene {
 	private RaisedTerrainTilemap raisedTerrain;
 	private DungeonWallsTilemap walls;
 	private WallBlockingTilemap wallBlocking;
+	private ArrayList<Tilemap> customTilemaps = new ArrayList<>();
 	private FogOfWar fog;
 	private HeroSprite hero;
 
@@ -1081,15 +1083,21 @@ public class GameScene extends PixelScene {
 	}
 
 	public void addCustomTile( CustomTilemap visual){
-		customTiles.add( visual.create() );
+		Tilemap t = visual.create();
+		customTiles.add( t );
+		customTilemaps.add( t );
 	}
 
 	public void addCustomTerrain(CustomTilemap visual){
-		customTerrain.add( visual.create() );
+		Tilemap t = visual.create();
+		customTerrain.add( t );
+		customTilemaps.add( t );
 	}
 
 	public void addCustomWall( CustomTilemap visual){
-		customWalls.add( visual.create() );
+		Tilemap t = visual.create();
+		customWalls.add( t );
+		customTilemaps.add( t );
 	}
 
 	private void addHeapSprite( Heap heap ) {
@@ -1416,6 +1424,9 @@ public class GameScene extends PixelScene {
 			scene.terrainFeatures.updateMap();
 			scene.raisedTerrain.updateMap();
 			scene.walls.updateMap();
+			for (Tilemap cust : scene.customTilemaps){
+				cust.updateMap();
+			}
 			updateFog();
 		}
 	}
@@ -1428,6 +1439,9 @@ public class GameScene extends PixelScene {
 			scene.terrainFeatures.updateMapCell( cell );
 			scene.raisedTerrain.updateMapCell( cell );
 			scene.walls.updateMapCell( cell );
+			for (Tilemap cust : scene.customTilemaps){
+				cust.updateMapCell( cell );
+			}
 			//update adjacent cells too
 			updateFog( cell, 1 );
 		}
