@@ -2050,7 +2050,7 @@ public enum Talent {
 			Buff.affect(enemy, PushingTracker.class);
 			Elastic.pushEnemyWithoutPit(hero, enemy, hero.belongings.weapon(), 1 + hero.pointsInTalent(Talent.NONOMI_T2_5));
 			if (Random.Float() < 0.2f) {
-				hero.yellI("nonomi_push");
+				hero.yellI("push");
 			}
 		}
 
