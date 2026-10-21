@@ -61,6 +61,10 @@ public class LittleAngry extends Buff implements ActionIndicator.Action {
 
     @Override
     public void doAction() {
+        if (Dungeon.hero.buff(LittleAngryCooldown.class) != null) {
+            Dungeon.hero.yellW("cooldown");
+            return;
+        }
         GameScene.selectCell(selector);
     }
 
