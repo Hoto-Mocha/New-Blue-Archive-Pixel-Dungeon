@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -97,6 +98,7 @@ public class SuperNovaBeam extends ArmorAbility {
                             Buff.affect(hero, SuperNovaBeamTracker.class, 5f);
                         }
 
+                        Invisibility.dispel();
                         hero.spendAndNext(Actor.TICK);
                         armor.charge -= chargeUse(hero);
                         armor.updateQuickslot();
