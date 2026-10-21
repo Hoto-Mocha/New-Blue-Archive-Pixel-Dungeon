@@ -281,11 +281,11 @@ public class Goo extends Mob {
 
 	@Override
 	public void die( Object cause ) {
-		
-		super.die( cause );
-		
+
 		Dungeon.level.unseal();
 		
+		super.die( cause );
+
 		GameScene.bossSlain();
 		Dungeon.level.drop( new WornKey( Dungeon.depth ), pos ).sprite.drop();
 		

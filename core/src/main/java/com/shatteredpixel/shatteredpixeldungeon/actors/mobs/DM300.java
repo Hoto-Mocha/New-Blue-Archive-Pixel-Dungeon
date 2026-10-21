@@ -572,10 +572,11 @@ public class DM300 extends Mob {
 	@Override
 	public void die( Object cause ) {
 
+		Dungeon.level.unseal();
+
 		super.die( cause );
 
 		GameScene.bossSlain();
-		Dungeon.level.unseal();
 
 		//60% chance of 2 shards, 30% chance of 3, 10% chance for 4. Average of 2.5
 		int shards = Random.chances(new float[]{0, 0, 6, 3, 1});
