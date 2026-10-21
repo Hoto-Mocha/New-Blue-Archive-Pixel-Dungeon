@@ -50,6 +50,8 @@ public class HeartOverflow extends MariMiracle {
             }
         });
         Buff.affect(hero, HeartOverflowBuff.class).setHeal(5, 6-hero.pointsInTalent(Talent.MARI_ARMOR3_3));
+
+        onMiracleCast(cross, hero);
     }
 
     public static class HeartOverflowBuff extends Buff {
