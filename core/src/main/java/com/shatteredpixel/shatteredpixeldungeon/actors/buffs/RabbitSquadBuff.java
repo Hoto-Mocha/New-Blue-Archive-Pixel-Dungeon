@@ -686,6 +686,13 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         public float iconFadePercent() {
             return Math.max(0, (DURATION - visualcooldown()) / DURATION);
         }
+
+        @Override
+        public void detach() {
+            super.detach();
+            Dungeon.hero.interrupt();
+            ActionIndicator.refresh();
+        }
     }
 
     public static class MiyuCooldown extends FlavourBuff {
@@ -715,6 +722,13 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         public float iconFadePercent() {
             return Math.max(0, (DURATION - visualcooldown()) / DURATION);
         }
+
+        @Override
+        public void detach() {
+            super.detach();
+            Dungeon.hero.interrupt();
+            ActionIndicator.refresh();
+        }
     }
 
     public static class MoeCooldown extends FlavourBuff {
@@ -743,6 +757,13 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         @Override
         public float iconFadePercent() {
             return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+        }
+
+        @Override
+        public void detach() {
+            super.detach();
+            Dungeon.hero.interrupt();
+            ActionIndicator.refresh();
         }
     }
 }
