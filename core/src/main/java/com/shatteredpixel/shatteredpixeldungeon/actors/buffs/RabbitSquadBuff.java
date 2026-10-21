@@ -6,7 +6,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -73,11 +72,26 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         if (a instanceof Saki){
             saki = (Saki)a;
         } else {
-            if (Stasis.getStasisAlly() instanceof Saki){
-                saki = (Saki) Stasis.getStasisAlly();
-                sakiID = saki.id();
-            } else {
+            for (Char ch : Actor.chars()) {
+                if (ch instanceof Saki) {
+                    saki = (Saki) ch;
+                    sakiID = saki.id();
+                    break;
+                }
+            }
+            if (saki == null) {
                 sakiID = 0;
+            }
+        }
+    }
+
+    public static void destroySaki() {
+        if (Dungeon.hero.buff(RabbitSquadBuff.class) != null) {
+            for (Char ch : Actor.chars()) {
+                if (ch instanceof Saki) {
+                    ch.destroy();
+                    break;
+                }
             }
         }
     }

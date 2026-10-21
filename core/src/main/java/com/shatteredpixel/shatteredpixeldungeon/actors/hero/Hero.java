@@ -68,6 +68,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.NoticeTracker;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitSquadBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Snipe;
@@ -506,6 +507,10 @@ public class Hero extends Char {
 			if (b instanceof Conversation) {
 				b.detach();
 				Buff.affect(this, Conversation.class);
+			}
+			if (b instanceof RabbitSquadBuff) {
+				b.detach();
+				Buff.affect(this, RabbitSquadBuff.class);
 			}
 		}
 		Buff.affect( this, Regeneration.class );
