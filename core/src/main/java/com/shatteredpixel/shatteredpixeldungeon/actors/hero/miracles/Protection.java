@@ -33,6 +33,9 @@ public class Protection extends MariMiracle {
         if (Dungeon.hero.subClass == HeroSubClass.DEVOUT_PRAYER){
             desc += "\n\n" + Messages.get(this, "desc_prayer");
         }
+        if (Dungeon.hero.subClass == HeroSubClass.SYMBOL_OF_PEACE){
+            desc += "\n\n" + Messages.get(this, "desc_symbol");
+        }
         return desc + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
     }
 
