@@ -616,7 +616,7 @@ public class Gun extends MeleeWeapon {
 
     @Override
     public int min(int lvl) {
-        if (hero != null && hero.heroClass == HeroClass.MIKA) {
+        if (hero != null && hero.heroClass == HeroClass.MIKA && curUser == hero) {
             return Math.max(0, hero.STR()-10);
         }
 
@@ -631,7 +631,7 @@ public class Gun extends MeleeWeapon {
 
     @Override
     public int max(int lvl) {
-        if (hero != null && hero.heroClass == HeroClass.MIKA) {
+        if (hero != null && hero.heroClass == HeroClass.MIKA && curUser == hero) {
             return 2*(hero.STR()-10+hero.lvl)+10;
         }
 
