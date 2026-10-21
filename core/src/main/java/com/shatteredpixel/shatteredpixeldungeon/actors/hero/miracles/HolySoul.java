@@ -22,7 +22,7 @@ public class HolySoul extends TrinityMiracle {
 
     @Override
     public String desc() {
-        int amount = 10 * Dungeon.hero.pointsInTalent(Talent.MARI_ARMOR2_3);
+        int amount = 15 * Dungeon.hero.pointsInTalent(Talent.MARI_ARMOR2_3);
         return Messages.get(this, "desc", amount) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
     }
 

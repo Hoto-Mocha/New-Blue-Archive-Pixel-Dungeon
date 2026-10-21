@@ -163,7 +163,7 @@ public class MariTrinity extends ArmorAbility {
 
         public void shieldCast(Hero hero) {
             blue = true;
-            int amount = 10*hero.pointsInTalent(Talent.MARI_ARMOR2_3);
+            int amount = 15*hero.pointsInTalent(Talent.MARI_ARMOR2_3);
             if (shielding() + amount > hero.HT) {
                 hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(hero.HT-shielding()), FloatingText.SHIELDING);
                 setShield(hero.HT);
