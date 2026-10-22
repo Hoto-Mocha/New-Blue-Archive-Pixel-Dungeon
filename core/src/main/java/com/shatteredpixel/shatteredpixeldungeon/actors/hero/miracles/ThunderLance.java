@@ -29,33 +29,37 @@ public class ThunderLance extends TargetedMariMiracle {
 
     @Override
     public float chargeUse(Hero hero) {
-        return 3*amount(hero);
+        return 8;
     }
 
     @Override
     public String desc() {
-        int minBase = 2*Dungeon.hero.pointsInTalent(Talent.MARI_EX1_2);
-        int maxBase = 10*Dungeon.hero.pointsInTalent(Talent.MARI_EX1_2);
-        int min = minBase*amount(Dungeon.hero);
-        int max = maxBase*amount(Dungeon.hero);
-        int paralysis = amount(Dungeon.hero);
-        return Messages.get(this, "desc", minBase, maxBase, min, max, paralysis) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
+        int minBase = min(Dungeon.hero);
+        int maxBase = max(Dungeon.hero);
+        int paralysis = paralysisTurns();
+        return Messages.get(this, "desc", minBase, maxBase, paralysis) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
     }
 
     @Override
     public boolean canCast(Hero hero) {
-        return super.canCast(hero) && hero.hasTalent(Talent.MARI_EX1_2) && amount(hero) > 0;
+        return super.canCast(hero) && hero.hasTalent(Talent.MARI_EX1_2);
     }
 
-    private int amount(Hero hero) {
-        if (hero.buff(LightBullet.LightMagazine.class) == null) return 0;
-        else return hero.buff(LightBullet.LightMagazine.class).bullets();
+    private int min(Hero hero) {
+        return 15 + 15*hero.pointsInTalent(Talent.HOLY_LANCE);
+    }
+
+    private int max(Hero hero) {
+        return Math.round(27.5f + 27.5f*hero.pointsInTalent(Talent.HOLY_LANCE));
+    }
+
+    private int paralysisTurns() {
+        return 3;
     }
 
     @Override
     protected void onTargetSelected(CrossNecklace cross, Hero hero, Integer target) {
         if (target == null) return;
-        if (amount(hero) <= 0) return;
 
         ThunderItem thunder = new ThunderItem(cross, hero);
         thunder.cast(hero, target);
@@ -78,17 +82,18 @@ public class ThunderLance extends TargetedMariMiracle {
         protected void onThrow(int cell) {
             Char ch = Actor.findChar( cell );
             if (ch != null) {
-                int multi = amount(hero);
-                int min = 2*hero.pointsInTalent(Talent.MARI_EX1_2)*multi;
-                int max = 10*hero.pointsInTalent(Talent.MARI_EX1_2)*multi;
-                int damage = Hero.heroDamageIntRange(min, max);
-                if (hero.hasTalent(Talent.MARI_T1_3)) {
-                    damage += 1+2*hero.pointsInTalent(Talent.MARI_T1_3);
+                int min = min(hero);
+                int max = max(hero);
+                int damage;
+                if (Char.hasProp(ch, Char.Property.UNDEAD) || Char.hasProp(ch, Char.Property.DEMONIC)) {
+                    damage = max(hero);
+                } else {
+                    damage = Hero.heroDamageIntRange(min, max);
                 }
                 ch.damage(damage, new ThunderLance());
-                ch.sprite.burst(0xFFFFFFFF, 3);
+                ch.sprite.burst(0xFFFFFFFF, paralysisTurns());
                 Thunder.thunderEffect(ch.sprite);
-                Buff.affect(ch, Paralysis.class, amount(hero));
+                Buff.affect(ch, Paralysis.class, 3);
             } else {
                 Dungeon.level.pressCell(cell);
             }
