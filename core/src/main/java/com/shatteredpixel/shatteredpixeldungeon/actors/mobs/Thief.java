@@ -145,6 +145,8 @@ public class Thief extends Mob {
 
 	protected boolean steal( Hero hero ) {
 
+		if (!isAlive()) return false;
+
 		Item toSteal = hero.belongings.randomUnequipped();
 
 		if (toSteal != null && !toSteal.unique && toSteal.level() < 1 ) {

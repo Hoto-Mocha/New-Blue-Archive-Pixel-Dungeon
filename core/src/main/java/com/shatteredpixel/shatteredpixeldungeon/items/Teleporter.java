@@ -5,6 +5,8 @@ import static com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMag
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Awareness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -425,7 +427,10 @@ public class Teleporter extends Item {
 //                Buff.affect(curUser, CallOfStar.class).onHit(100);
 
 //                Buff.affect(curUser, Awareness.class, 100f);
-                GLog.i((Dungeon.level.map[target] == Terrain.STATUE) + "");
+//                GLog.i((Dungeon.level.map[target] == Terrain.STATUE) + "");
+
+                Char ch = Actor.findChar(target);
+                if (ch != null) ch.HP = 1;
             }
         }
         @Override
