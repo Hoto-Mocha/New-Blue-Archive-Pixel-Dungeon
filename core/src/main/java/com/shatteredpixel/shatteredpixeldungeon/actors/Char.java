@@ -1132,11 +1132,11 @@ public abstract class Char extends Actor {
 
 		if (buff(Protection.ProtectionBuff.class) != null && !(src instanceof Hunger)) {
 			dmg -= buff(Protection.ProtectionBuff.class).damageReduction(Dungeon.hero);
-			if (dmg < 0) dmg = 0;
+			dmg = Math.max(dmg, 0);
 		}
 
 		if (buff(HolyMantle.HolyMantleBuff.class) != null && !(src instanceof Hunger)) {
-			if (dmg < 0) {
+			if (dmg > 0) {
 				buff(HolyMantle.HolyMantleBuff.class).detach();
 				dmg = 0;
 			}
