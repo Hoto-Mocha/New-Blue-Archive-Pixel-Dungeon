@@ -25,9 +25,10 @@ import java.util.Locale;
 
 public enum Languages {
 	KOREAN("한국어",         "ko", Status.O_COMPLETE, null, null),
-	RUSSIAN("русский",      "ru", Status.__UNREVIEW, new String[]{"Aleksey Petrenko"}, new String[]{"SPD's translators credit"}),
+	RUSSIAN("русский",      "ru", Status.X_UNFINISH, new String[]{"Aleksey Petrenko"}, new String[]{"SPD's translators credit"}),
 	ENGLISH("english",      "en", Status.X_UNFINISH, null, null),
 	CHI_SMPL("简体中文",     "zh", Status.X_UNFINISH, null, new String[]{"SPD's translators credit"}),
+	ESPERANTO("esperanto",  "es", Status.X_UNFINISH, null, new String[]{"SPD's translators credit"}),
 	SPANISH("español",      "es", Status.X_UNFINISH, null, new String[]{"SPD's translators credit"}),
 	PORTUGUESE("português", "pt", Status.X_UNFINISH, null, new String[]{"SPD's translators credit"}),
 	FRENCH("français",      "fr", Status.X_UNFINISH, null, new String[]{"SPD's translators credit"}),
@@ -45,8 +46,7 @@ public enum Languages {
 	SWEDISH("svenska",      "sv", Status.X_UNFINISH, null, new String[]{"SPD's translators credit"}),
 	HUNGARIAN("magyar",     "hu", Status.X_UNFINISH, null, new String[]{"SPD's translators credit"}),
 	GREEK("ελληνικά",       "el", Status.X_UNFINISH, null, new String[]{"SPD's translators credit"}),
-	BELARUSIAN("беларуская","be", Status.X_UNFINISH, null, new String[]{"SPD's translators credit"}),
-	ESPERANTO("esperanto",  "eo", Status.X_UNFINISH, null, new String[]{"SPD's translators credit"});
+	BELARUSIAN("беларуская","be", Status.X_UNFINISH, null, new String[]{"SPD's translators credit"});
 
 	public enum Status{
 		//below 80% translated languages are not added or removed
