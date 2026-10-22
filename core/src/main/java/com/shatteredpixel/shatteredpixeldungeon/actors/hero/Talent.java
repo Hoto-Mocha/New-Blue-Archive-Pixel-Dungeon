@@ -2462,6 +2462,11 @@ public enum Talent {
 		public int icon() {
 			return BuffIndicator.SPELL_FOOD;
 		}
+
+		@Override
+		public String desc() {
+			return Messages.get(this, "desc", 1+2*Dungeon.hero.pointsInTalent(Talent.MARI_T1_1));
+		}
 	}
 
 	//new buff here
