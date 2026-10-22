@@ -106,9 +106,9 @@ public class HolyBullet extends TargetedMariMiracle {
             if (ch != null) {
                 int damage = Hero.heroDamageIntRange(10, 20);
                 if (hero.buff(LightBullet.LightMagazine.class) != null) {
-                    hero.buff(LightBullet.LightMagazine.class).onShoot(hero);
                     damage = hero.buff(LightBullet.LightMagazine.class).proc(hero, ch, damage);
                     damage += hero.lvl;
+                    hero.buff(LightBullet.LightMagazine.class).onShoot(hero);
                 }
                 if (Char.hasProp(ch, Char.Property.DEMONIC) || Char.hasProp(ch, Char.Property.UNDEAD)) {
                     ch.sprite.emitter().burst( ShadowParticle.UP, 6 );
