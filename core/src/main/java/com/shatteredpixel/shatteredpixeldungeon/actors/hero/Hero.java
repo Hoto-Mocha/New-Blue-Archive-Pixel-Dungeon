@@ -133,6 +133,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CapeOfThorns;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
@@ -1906,9 +1907,13 @@ public class Hero extends Char {
 			}
 			//mari pray damage reduction
 			if (buff(Pray.PrayResistance.class) != null){
-				damage *= 0.2f;
-				if (hasTalent(Talent.MARI_T1_4)) {
-					damage -= pointsInTalent(Talent.MARI_T1_4);
+				CrossNecklace.CrossRecharge crossBuff = buff(CrossNecklace.CrossRecharge.class);
+				if (crossBuff != null) {
+					float reduction = 0.7f-0.5f*(1f-crossBuff.chargePercent());
+					damage *= reduction;
+					if (hasTalent(Talent.MARI_T1_4)) {
+						damage -= pointsInTalent(Talent.MARI_T1_4);
+					}
 				}
 			}
 		}

@@ -307,6 +307,10 @@ public class CrossNecklace extends Artifact {
             return true;
         }
 
+        public float chargePercent() {
+            return charge/(float)chargeCap;
+        }
+
         @Override
         public String actionName() {
             return quickMiracle.name();

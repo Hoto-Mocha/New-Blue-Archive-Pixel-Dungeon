@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
@@ -29,6 +30,7 @@ public class Pray extends MariMiracle {
     @Override
     public void onCast(CrossNecklace cross, Hero hero) {
         hero.sprite.operate(hero.pos);
+        Buff.affect(hero, Hunger.class).affectHunger(-5);
         GameScene.flash(0x88000000, false);
         Sample.INSTANCE.play(Assets.Sounds.READ);
 
@@ -45,8 +47,8 @@ public class Pray extends MariMiracle {
 
             @Override
             protected boolean act() {
-                Buff.affect(hero, Recharging.class, 6f);
-                Buff.affect(hero, ArtifactRecharge.class).extend(6f).ignoreHornOfPlenty = false;
+                Buff.affect(hero, Recharging.class, 5f);
+                Buff.affect(hero, ArtifactRecharge.class).extend(5f).ignoreHornOfPlenty = false;
                 Actor.remove(this);
                 onMiracleCast(cross, hero);
                 return true;

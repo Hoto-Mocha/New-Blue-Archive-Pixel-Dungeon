@@ -128,6 +128,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Obfuscation;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Potential;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
@@ -525,10 +526,15 @@ public abstract class Char extends Actor {
 				dmg *= 0.2f;
 			}
 
+			//mari pray damage reduction
 			if (enemy.buff(Pray.PrayResistance.class) != null){
-				dmg *= 0.2f;
-				if (Dungeon.hero.hasTalent(Talent.MARI_T1_4)) {
-					dmg -= Dungeon.hero.pointsInTalent(Talent.MARI_T1_4);
+				CrossNecklace.CrossRecharge crossBuff = enemy.buff(CrossNecklace.CrossRecharge.class);
+				if (crossBuff != null) {
+					float reduction = 0.7f-0.5f*(1f-crossBuff.chargePercent());
+					dmg *= reduction;
+					if (Dungeon.hero.hasTalent(Talent.MARI_T1_4)) {
+						dmg -= Dungeon.hero.pointsInTalent(Talent.MARI_T1_4);
+					}
 				}
 			}
 
