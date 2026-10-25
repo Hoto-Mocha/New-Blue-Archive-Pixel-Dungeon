@@ -36,7 +36,7 @@ public class PunishmentBullet extends MariMiracle {
     @Override
     public boolean canCast(Hero hero) {
         return super.canCast(hero)
-                && hero.hasTalent(Talent.MARI_ARMOR1_2)
+                && hero.hasTalent(Talent.MARI_ARMOR1_3)
                 && hero.buff(LightBullet.LightMagazine.class) != null
                 && hero.buff(PunishmentBulletBuff.class) == null;
     }
