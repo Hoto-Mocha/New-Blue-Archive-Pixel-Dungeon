@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.WondrousResin;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.CursedWand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SpecialGun;
@@ -31,7 +32,10 @@ public class Mulligan extends MG implements SpecialGun {
 
     public void randomEffect(Char owner, Char enemy, int lvl) {
         Ballistica aim = new Ballistica(owner.pos, enemy.pos, Ballistica.STOP_TARGET);
-        boolean positiveOnly = Random.Float() < (1f+lvl)/(6f+lvl);
+        boolean positiveOnly = Random.Float() < (1f+lvl)/(3f+lvl);
+        if (!positiveOnly) {
+            positiveOnly = Random.Float() < WondrousResin.positiveCurseEffectChance();
+        }
         CursedWand.randomValidEffect(this, owner, aim, positiveOnly).effect(null, owner, aim, positiveOnly);
     }
 
