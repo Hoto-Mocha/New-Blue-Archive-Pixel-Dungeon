@@ -815,6 +815,10 @@ public class Hero extends Char {
 			dr += buff.drRoll(this);
 		}
 
+		if (buff(Protection.ProtectionBuff.class) != null){
+			dr += buff(Protection.ProtectionBuff.class).defenseBonus(this);
+		}
+
 		return dr;
 	}
 	
@@ -1843,9 +1847,6 @@ public class Hero extends Char {
 			enemy.damage(MariMiracle.PunishmentThunder.thunderDamage(this), new MariMiracle.PunishmentThunder());
 		}
 
-		if (buff(Protection.ProtectionBuff.class) != null){
-			int blocking = buff(Protection.ProtectionBuff.class).defenseBonus(this);
-			damage -= blocking;
 		}
 
 		damage = Talent.onDefenseProc(this, enemy, damage);
