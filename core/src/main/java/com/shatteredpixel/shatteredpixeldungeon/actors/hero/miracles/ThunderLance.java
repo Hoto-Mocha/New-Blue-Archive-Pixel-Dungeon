@@ -100,7 +100,6 @@ public class ThunderLance extends TargetedMariMiracle {
 
             onMiracleCast(cross, hero);
             Splash.at(cell, 0xFFFFFFFF, 3);
-            hero.buff(LightBullet.LightMagazine.class).detach();
         }
 
         @Override
