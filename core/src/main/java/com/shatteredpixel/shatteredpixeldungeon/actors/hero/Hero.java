@@ -90,6 +90,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.Perfe
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.GPSRoute;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.Thunder;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.HealingTouch;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.HolyMantle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
@@ -1909,7 +1910,7 @@ public class Hero extends Char {
 				damage *= 0.2f;
 			}
 			//mari pray damage reduction
-			if (buff(Pray.PrayResistance.class) != null){
+			if (buff(Pray.PrayResistance.class) != null && !(src instanceof HealingTouch.NeutralDeferedDamage)){
 				CrossNecklace.CrossRecharge crossBuff = buff(CrossNecklace.CrossRecharge.class);
 				if (crossBuff != null) {
 					float reduction = 0.7f-0.5f*(1f-crossBuff.chargePercent());
