@@ -1847,6 +1847,8 @@ public class Hero extends Char {
 			enemy.damage(MariMiracle.PunishmentThunder.thunderDamage(this), new MariMiracle.PunishmentThunder());
 		}
 
+		if (buff(Pray.PrayResistance.class) != null) {
+			buff(Pray.PrayResistance.class).defenseProc(this);
 		}
 
 		damage = Talent.onDefenseProc(this, enemy, damage);

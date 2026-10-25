@@ -47,8 +47,7 @@ public class Pray extends MariMiracle {
 
             @Override
             protected boolean act() {
-                Buff.affect(hero, Recharging.class, 5f);
-                Buff.affect(hero, ArtifactRecharge.class).extend(5f).ignoreHornOfPlenty = false;
+                cross.directCharge(2);
                 Actor.remove(this);
                 onMiracleCast(cross, hero);
                 return true;
@@ -62,6 +61,10 @@ public class Pray extends MariMiracle {
     public static class PrayResistance extends FlavourBuff {
         {
             actPriority = HERO_PRIO+1; //ends just before the hero acts
+        }
+
+        public void defenseProc(Hero hero) {
+            ArtifactRecharge.chargeArtifacts(hero, 0.5f);
         }
     };
 }
