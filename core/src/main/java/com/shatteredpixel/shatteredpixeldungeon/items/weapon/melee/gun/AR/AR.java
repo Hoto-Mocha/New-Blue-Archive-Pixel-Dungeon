@@ -9,7 +9,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 public class AR extends Gun {
 
     {
-        max_round = 4;
+        max_round = 6;
         round = max_round;
         shootingAccuracy = 1.2f;
     }
