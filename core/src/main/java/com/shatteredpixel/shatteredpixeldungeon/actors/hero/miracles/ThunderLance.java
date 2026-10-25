@@ -34,10 +34,8 @@ public class ThunderLance extends TargetedMariMiracle {
 
     @Override
     public String desc() {
-        int minBase = min(Dungeon.hero);
-        int maxBase = max(Dungeon.hero);
         int paralysis = paralysisTurns();
-        return Messages.get(this, "desc", minBase, maxBase, paralysis) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
+        return Messages.get(this, "desc", min(Dungeon.hero), max(Dungeon.hero), paralysis) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
     }
 
     @Override
