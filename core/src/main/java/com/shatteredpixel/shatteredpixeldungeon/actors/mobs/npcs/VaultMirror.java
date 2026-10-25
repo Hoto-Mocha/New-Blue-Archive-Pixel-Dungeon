@@ -39,6 +39,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.active.Laptop;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.TrashBin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.NinjaCape;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Scrunchie;
@@ -140,6 +141,10 @@ public class VaultMirror extends NPC {
 				case MIKA:
 					reward = new Scrunchie().upgrade(8).identify(false);
 					((Scrunchie) reward).directCharge(3);
+					break;
+				case MARI:
+					reward = new CrossNecklace().upgrade(8).identify(false);
+					((CrossNecklace) reward).directCharge(3);
 					break;
 			}
 		Random.popGenerator();
