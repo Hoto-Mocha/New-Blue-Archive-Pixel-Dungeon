@@ -8,7 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 public class TacticalTherapy extends AR implements SpecialGun {
     {
         image = ItemSpriteSheet.TACTICAL_THERAPY;
-        tier = 3;
+        tier = 4;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class TacticalTherapy extends AR implements SpecialGun {
         public int proc(Char attacker, Char defender, int damage) {
             int dmg = super.proc(attacker, defender, damage);
             if (defender.alignment == Char.Alignment.ALLY) {
-                defender.heal(Math.round(dmg*0.4f));
+                defender.heal(Math.round(dmg*0.3f));
                 return 0;
             }
             return dmg;
