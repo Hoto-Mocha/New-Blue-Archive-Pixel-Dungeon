@@ -44,11 +44,11 @@ public class ThunderLance extends TargetedMariMiracle {
     }
 
     private int min(Hero hero) {
-        return 15 + 15*hero.pointsInTalent(Talent.HOLY_LANCE);
+        return 15 + 15*hero.pointsInTalent(Talent.MARI_EX1_2);
     }
 
     private int max(Hero hero) {
-        return Math.round(27.5f + 27.5f*hero.pointsInTalent(Talent.HOLY_LANCE));
+        return Math.round(27.5f + 27.5f*hero.pointsInTalent(Talent.MARI_EX1_2));
     }
 
     private int paralysisTurns() {
