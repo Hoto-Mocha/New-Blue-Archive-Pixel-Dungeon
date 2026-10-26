@@ -1307,9 +1307,9 @@ public class WndSettings extends WndTabbed {
 			sep1.y = title.bottom() + 3*GAP;
 
 			if (width > 200) {
-				chkAutoDewPickup.setRect(0, sep1.y + 1 + GAP, width / 2 - 1, SLIDER_HEIGHT);
+				chkAutoDewPickup.setRect(0, sep1.y + 1 + GAP, width / 2 - 1, BTN_HEIGHT);
 			} else {
-				chkAutoDewPickup.setRect(0, sep1.y + 1 + GAP, width, SLIDER_HEIGHT);
+				chkAutoDewPickup.setRect(0, sep1.y + 1 + GAP, width, BTN_HEIGHT);
 			}
 
 		}
