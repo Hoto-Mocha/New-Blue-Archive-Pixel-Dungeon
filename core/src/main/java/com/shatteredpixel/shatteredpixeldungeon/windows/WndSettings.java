@@ -68,6 +68,7 @@ public class WndSettings extends WndTabbed {
 	private DataTab     data;
 	private AudioTab    audio;
 	private LangsTab    langs;
+	private PreferenceTab    preference;
 
 	public static int last_index = 0;
 
@@ -185,6 +186,20 @@ public class WndSettings extends WndTabbed {
 
 		};
 		add( langsTab );
+
+		preference = new PreferenceTab();
+		preference.setSize(width, 0);
+		height = Math.max(height, preference.height());
+		add( preference );
+
+		add( new IconTab(Icons.get(Icons.CATALOG)){
+			@Override
+			protected void select(boolean value) {
+				super.select(value);
+				preference.visible = preference.active = value;
+				if (value) last_index = 6;
+			}
+		});
 
 		resize(width, (int)Math.ceil(height));
 
@@ -1254,6 +1269,47 @@ public class WndSettings extends WndTabbed {
 				txtTranifex.maxWidth((int)width);
 
 				height = txtTranifex.bottom();
+			}
+
+		}
+	}
+
+	private static class PreferenceTab extends Component {
+
+		RenderedTextBlock title;
+		ColorBlock sep1;
+		CheckBox chkAutoDewPickup;
+
+		@Override
+		protected void createChildren() {
+			title = PixelScene.renderTextBlock(Messages.get(this, "title"), 9);
+			title.hardlight(TITLE_COLOR);
+			add(title);
+
+			sep1 = new ColorBlock(1, 1, 0xFF000000);
+			add(sep1);
+
+			chkAutoDewPickup = new CheckBox(Messages.get(this, "auto_dew_collect")){
+				@Override
+				protected void onClick() {
+					super.onClick();
+					SPDSettings.autoDewCollect(checked());
+				}
+			};
+			chkAutoDewPickup.checked(SPDSettings.autoDewCollect());
+			add(chkAutoDewPickup);
+		}
+
+		@Override
+		protected void layout() {
+			title.setPos((width - title.width())/2, y + GAP);
+			sep1.size(width, 1);
+			sep1.y = title.bottom() + 3*GAP;
+
+			if (width > 200) {
+				chkAutoDewPickup.setRect(0, sep1.y + 1 + GAP, width / 2 - 1, SLIDER_HEIGHT);
+			} else {
+				chkAutoDewPickup.setRect(0, sep1.y + 1 + GAP, width, SLIDER_HEIGHT);
 			}
 
 		}

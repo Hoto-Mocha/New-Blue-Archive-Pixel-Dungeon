@@ -477,4 +477,16 @@ public class SPDSettings extends GameSettings {
 	public static int fulLScreenMonitor(){
 		return getInt( KEY_FULLSCREEN_MONITOR, 0 );
 	}
+
+	//Preferences
+
+	public static final String KEY_AUTO_DEW_COLLECT = "auto_dew_collect";
+
+	public static void autoDewCollect( boolean value ) {
+		put( KEY_AUTO_DEW_COLLECT, value );
+	}
+
+	public static boolean autoDewCollect() {
+		return getBoolean( KEY_AUTO_DEW_COLLECT, false );
+	}
 }
