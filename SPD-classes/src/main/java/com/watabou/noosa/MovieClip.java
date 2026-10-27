@@ -21,6 +21,7 @@
 
 package com.watabou.noosa;
 
+import com.watabou.utils.GameSettings;
 import com.watabou.utils.RectF;
 
 public class MovieClip extends Image {
@@ -59,7 +60,7 @@ public class MovieClip extends Image {
 			
 			int lastFrame = curFrame;
 			
-			frameTimer += Game.elapsed;
+			frameTimer += Game.elapsed * GameSettings.frameSpeed();
 			while (frameTimer > curAnim.delay) {
 				frameTimer -= curAnim.delay;
 				if (curFrame >= curAnim.frames.length - 1) {

@@ -137,5 +137,14 @@ public class GameSettings {
 		get().putString(key, value);
 		get().flush();
 	}
-	
+
+	public static final String KEY_FRAME_SPEED = "frame_speed";
+
+	public static int frameSpeed() {
+		return getInt(KEY_FRAME_SPEED, 1);
+	}
+
+	public static void frameSpeed(int value) {
+		put(KEY_FRAME_SPEED, value);
+	}
 }
