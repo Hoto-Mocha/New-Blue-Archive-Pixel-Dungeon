@@ -253,7 +253,7 @@ public class SurfaceScene extends PixelScene {
 		add( frame );
 
 		if (dayTime) {
-			a.brightness( 1.2f );
+//			a.brightness( 1.2f );
 			pet.brightness( 1.2f );
 		} else {
 			frame.hardlight( 0xDDEEFF );
