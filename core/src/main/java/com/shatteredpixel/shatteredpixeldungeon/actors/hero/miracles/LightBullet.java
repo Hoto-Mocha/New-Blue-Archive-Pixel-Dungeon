@@ -86,10 +86,11 @@ public class LightBullet extends TargetedMariMiracle {
     public void onMiracleCast(CrossNecklace cross, Hero hero) {
         super.onMiracleCast(cross, hero);
 
-        Buff.affect(hero, LightMagazine.class).stack(getEquippedGun(hero), 1);
-
         Gun gun = getEquippedGun(hero);
-        if (gun != null) gun.manualReload();
+        if (gun != null) {
+            Buff.affect(hero, LightMagazine.class).stack(getEquippedGun(hero), 1);
+            gun.manualReload();
+        }
     }
 
     public class LightBulletItem extends Item {
