@@ -489,4 +489,14 @@ public class SPDSettings extends GameSettings {
 	public static boolean autoDewCollect() {
 		return getBoolean( KEY_AUTO_DEW_COLLECT, false );
 	}
+
+	public static final String KEY_SCORE_WARNING = "score_warning";
+
+	public static void scoreAlert(boolean value ) {
+		put( KEY_SCORE_WARNING, value );
+	}
+
+	public static boolean scoreAlert() {
+		return getBoolean( KEY_SCORE_WARNING, false );
+	}
 }

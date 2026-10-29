@@ -1279,6 +1279,7 @@ public class WndSettings extends WndTabbed {
 		RenderedTextBlock title;
 		ColorBlock sep1;
 		CheckBox chkAutoDewPickup;
+		CheckBox chkScoreWarning;
 		OptionSlider optFrameSpeed;
 
 		@Override
@@ -1300,6 +1301,16 @@ public class WndSettings extends WndTabbed {
 			chkAutoDewPickup.checked(SPDSettings.autoDewCollect());
 			add(chkAutoDewPickup);
 
+			chkScoreWarning = new CheckBox(Messages.get(this, "score_warning")){
+				@Override
+				protected void onClick() {
+					super.onClick();
+					SPDSettings.scoreAlert(checked());
+				}
+			};
+			chkScoreWarning.checked(SPDSettings.scoreAlert());
+			add(chkScoreWarning);
+
 			optFrameSpeed = new OptionSlider(Messages.get(this, "frame_speed"), "x1", "x5", 1, 5) {
 				@Override
 				protected void onChange() {
@@ -1318,9 +1329,11 @@ public class WndSettings extends WndTabbed {
 
 			if (width > 200) {
 				chkAutoDewPickup.setRect(0, sep1.y + 1 + GAP, width / 2 - 1, BTN_HEIGHT);
+				chkScoreWarning.setRect(chkAutoDewPickup.right() + GAP, chkAutoDewPickup.top(), width / 2 - 1, BTN_HEIGHT);
 				optFrameSpeed.setRect(0, chkAutoDewPickup.bottom() + GAP, width/2-1, SLIDER_HEIGHT);
 			} else {
 				chkAutoDewPickup.setRect(0, sep1.y + 1 + GAP, width, BTN_HEIGHT);
+				chkScoreWarning.setRect(0, chkAutoDewPickup.bottom() + GAP, width, BTN_HEIGHT);
 				optFrameSpeed.setRect(0, chkAutoDewPickup.bottom() + GAP, width, BTN_HEIGHT);
 			}
 

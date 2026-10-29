@@ -132,6 +132,7 @@ public class CrystalGuardian extends Mob{
 				}
 			}
 			if (!spireNear){
+				Statistics.scoreAlert(-100, "quest");
 				Statistics.questScores[2] -= 100;
 			}
 		}

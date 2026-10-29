@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon;
 
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.SparseArray;
 
@@ -271,6 +273,16 @@ public class Statistics {
 	public static void preview( GamesInProgress.Info info, Bundle bundle ){
 		info.goldCollected  = bundle.getInt( GOLD );
 		info.maxDepth       = bundle.getInt( DEEPEST );
+	}
+
+	public static void scoreAlert(int score, String key) {
+		if (!SPDSettings.scoreAlert()) return;
+
+		if (score > 0) {
+			GLog.p(Messages.get(Statistics.class, "score_"+key, score));
+		} else {
+			GLog.w(Messages.get(Statistics.class, "score_warning_"+key, -score));
+		}
 	}
 
 }

@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -571,6 +572,8 @@ public class DwarfKing extends Mob {
 		if (Statistics.qualifiedForBossChallengeBadge){
 			Badges.validateBossChallengeCompleted();
 		}
+
+		Statistics.scoreAlert(4000, "boss");
 		Statistics.bossScores[3] += 4000;
 
 		Bestiary.skipCountingEncounters = true;
@@ -630,6 +633,7 @@ public class DwarfKing extends Mob {
 		@Override
 		protected void zap() {
 			if (enemy == Dungeon.hero){
+				Statistics.scoreAlert(-400, "boss");
 				Statistics.bossScores[3] -= 400;
 			}
 			super.zap();

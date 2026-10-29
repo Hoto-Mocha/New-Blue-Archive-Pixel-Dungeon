@@ -132,6 +132,7 @@ public class CrystalSpire extends Mob {
 						dmg += 12; //18-27 damage
 						Buff.prolong(ch, Cripple.class, 30f);
 					} else if (ch == Dungeon.hero){
+						Statistics.scoreAlert(-100, "quest");
 						Statistics.questScores[2] -= 100;
 					}
 					ch.damage(dmg, new SpireSpike());

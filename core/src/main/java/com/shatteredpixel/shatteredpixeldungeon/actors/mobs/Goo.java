@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -72,6 +73,7 @@ public class Goo extends Mob {
 			pumpedUp = 0;
 			if (enemy == Dungeon.hero) {
 				Statistics.qualifiedForBossChallengeBadge = false;
+				Statistics.scoreAlert(-100, "boss");
 				Statistics.bossScores[0] -= 100;
 			}
 			return Random.NormalIntRange( min*3, max*3 );
@@ -234,6 +236,7 @@ public class Goo extends Mob {
 			pumpedUp = 0;
 			if (enemy == Dungeon.hero) {
 				Statistics.qualifiedForBossChallengeBadge = false;
+				Statistics.scoreAlert(-100, "boss");
 				Statistics.bossScores[0] -= 100;
 			}
 		}
@@ -303,6 +306,7 @@ public class Goo extends Mob {
 		if (Statistics.qualifiedForBossChallengeBadge){
 			Badges.validateBossChallengeCompleted();
 		}
+		Statistics.scoreAlert(1000, "boss");
 		Statistics.bossScores[0] += 1000;
 		
 		yell( Messages.get(this, "defeated") );

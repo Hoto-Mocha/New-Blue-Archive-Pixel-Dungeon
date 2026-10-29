@@ -85,6 +85,7 @@ public class GreatCrab extends Crab {
 			GLog.n( Messages.get(this, "noticed") );
 			sprite.showStatus( CharSprite.NEUTRAL, Messages.get(this, "def_verb") );
 			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
+			Statistics.scoreAlert(-50, "quest");
 			Statistics.questScores[0] -= 50;
 		} else {
 			super.damage( dmg, src );
@@ -104,6 +105,7 @@ public class GreatCrab extends Crab {
 				GLog.n( Messages.get(this, "noticed") );
 			}
 			if (enemy == Dungeon.hero){
+				Statistics.scoreAlert(-50, "quest");
 				Statistics.questScores[0] -= 50;
 			}
 			return INFINITE_EVASION;

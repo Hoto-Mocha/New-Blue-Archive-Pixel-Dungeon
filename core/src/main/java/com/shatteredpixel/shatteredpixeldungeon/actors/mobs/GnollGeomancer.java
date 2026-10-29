@@ -730,6 +730,7 @@ public class GnollGeomancer extends Mob {
 							ch.damage(Random.NormalIntRange(6, 12), new GnollGeomancer.Boulder());
 
 							if (ch == Dungeon.hero){
+								Statistics.scoreAlert(-100, "quest");
 								Statistics.questScores[2] -= 100;
 							}
 
@@ -839,6 +840,7 @@ public class GnollGeomancer extends Mob {
 		public void affectChar(Char ch) {
 			ch.damage(Random.NormalIntRange(6, 12), this);
 			if (ch == Dungeon.hero){
+				Statistics.scoreAlert(-100, "quest");
 				Statistics.questScores[2] -= 100;
 			}
 			if (ch.isAlive()) {

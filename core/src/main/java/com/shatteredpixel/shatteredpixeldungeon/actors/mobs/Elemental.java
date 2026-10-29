@@ -372,6 +372,7 @@ public abstract class Elemental extends Mob {
 						if (target != null && target != this) {
 							Buff.affect(target, Burning.class).reignite(target);
 							if (target == Dungeon.hero){
+								Statistics.scoreAlert(-200, "quest");
 								Statistics.questScores[1] -= 200;
 							}
 						}
@@ -416,6 +417,7 @@ public abstract class Elemental extends Mob {
 			if (alignment == Alignment.ENEMY) {
 				Dungeon.level.drop( new Embers(), pos ).sprite.drop();
 				//assign score here as player may choose to keep the embers
+				Statistics.scoreAlert(2000, "quest");
 				Statistics.questScores[1] += 2000;
 				Game.runOnRenderThread(new Callback() {
 					@Override

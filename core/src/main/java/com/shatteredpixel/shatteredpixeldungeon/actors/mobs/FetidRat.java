@@ -68,6 +68,7 @@ public class FetidRat extends Rat {
 			Buff.affect(enemy, Ooze.class).set( Ooze.DURATION );
 			//score loss is on-hit instead of on-attack because it's tied to ooze
 			if (enemy == Dungeon.hero && !Dungeon.level.water[enemy.pos]){
+				Statistics.scoreAlert(-50, "quest");
 				Statistics.questScores[0] -= 50;
 			}
 		}

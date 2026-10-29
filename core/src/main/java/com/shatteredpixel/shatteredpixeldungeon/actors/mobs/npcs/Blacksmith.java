@@ -466,6 +466,7 @@ public class Blacksmith extends NPC {
 
 			if (bossBeaten) favor += 1000;
 
+			Statistics.scoreAlert(favor, "quest");
 			Statistics.questScores[2] += favor;
 
 			if (favor >= 2500){

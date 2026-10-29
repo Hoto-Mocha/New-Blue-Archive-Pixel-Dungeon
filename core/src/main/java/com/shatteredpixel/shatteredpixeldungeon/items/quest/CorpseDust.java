@@ -192,6 +192,7 @@ public class CorpseDust extends Item {
 				atkCount++;
 				//first attack from each wraith is free, max of -200 point penalty per wraith
 				if (atkCount == 2 || atkCount == 3){
+					Statistics.scoreAlert(-100, "quest");
 					Statistics.questScores[1] -= 100;
 				}
 			}

@@ -76,6 +76,7 @@ public class RotLasher extends Mob {
 	@Override
 	public boolean attack(Char enemy, float dmgMulti, float dmgBonus, float accMulti) {
 		if (enemy == Dungeon.hero){
+			Statistics.scoreAlert(-100, "quest");
 			Statistics.questScores[1] -= 100;
 		}
 		return super.attack(enemy, dmgMulti, dmgBonus, accMulti);

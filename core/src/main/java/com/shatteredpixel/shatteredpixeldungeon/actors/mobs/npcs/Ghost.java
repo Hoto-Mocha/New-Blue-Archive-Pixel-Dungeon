@@ -374,6 +374,7 @@ public class Ghost extends NPC {
 				GLog.n( Messages.get(Ghost.class, "find_me") );
 				Sample.INSTANCE.play( Assets.Sounds.GHOST );
 				processed = true;
+				Statistics.scoreAlert(1000, "quest");
 				Statistics.questScores[0] += 1000;
 
 				Game.runOnRenderThread(new Callback() {

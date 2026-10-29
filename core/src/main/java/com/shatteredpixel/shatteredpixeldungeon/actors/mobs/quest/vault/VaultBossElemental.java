@@ -667,6 +667,7 @@ public class VaultBossElemental extends Mob {
 				//at this depth fire deals ~32 damage, already loads
 				Buff.affect(ch, Burning.class).reignite(ch);
 				if (ch == Dungeon.hero){
+					Statistics.scoreAlert(-100, "quest");
 					Statistics.questScores[3] -= 100;
 				}
 			}
@@ -781,6 +782,7 @@ public class VaultBossElemental extends Mob {
 							Buff.affect(ch, Burning.class).reignite(ch, 5); //~20 effective damage
 							if (ch == Dungeon.hero){
 								Sample.INSTANCE.play(Assets.Sounds.BURNING);
+								Statistics.scoreAlert(-100, "quest");
 								Statistics.questScores[3] -= 100;
 							}
 						}
@@ -935,6 +937,7 @@ public class VaultBossElemental extends Mob {
 						Buff.affect(ch, Frost.class, 5f);
 						Buff.affect(ch, FrostResist.class);
 						if (ch == Dungeon.hero){
+							Statistics.scoreAlert(-100, "quest");
 							Statistics.questScores[3] -= 100;
 							Sample.INSTANCE.play(Assets.Sounds.SHATTER);
 							if (!ch.isAlive()){
@@ -1091,6 +1094,7 @@ public class VaultBossElemental extends Mob {
 						Buff.affect(ch, FrostResist.class);
 						if (ch == Dungeon.hero){
 							Sample.INSTANCE.play(Assets.Sounds.SHATTER);
+							Statistics.scoreAlert(-100, "quest");
 							Statistics.questScores[3] -= 100;
 						}
 					}
@@ -1255,6 +1259,7 @@ public class VaultBossElemental extends Mob {
 				if (ch == Dungeon.hero){
 					Sample.INSTANCE.play(Assets.Sounds.LIGHTNING);
 					PixelScene.shake( 2, 0.3f );
+					Statistics.scoreAlert(-100, "quest");
 					Statistics.questScores[3] -= 100;
 					if (!ch.isAlive()){
 						Badges.validateDeathFromEnemyMagic();
@@ -1435,6 +1440,7 @@ public class VaultBossElemental extends Mob {
 			if (ch == Dungeon.hero){
 				Sample.INSTANCE.play(Assets.Sounds.LIGHTNING);
 				PixelScene.shake( 2, 0.3f );
+				Statistics.scoreAlert(-100, "quest");
 				Statistics.questScores[3] -= 100;
 				if (!ch.isAlive()){
 					Badges.validateDeathFromEnemyMagic();

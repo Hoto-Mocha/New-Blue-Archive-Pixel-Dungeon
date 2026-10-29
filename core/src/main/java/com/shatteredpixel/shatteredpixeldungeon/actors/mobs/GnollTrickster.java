@@ -79,6 +79,7 @@ public class GnollTrickster extends Gnoll {
 
 		if (combo >= 1){
 			//score loss is on-hit instead of on-attack as it's tied to combo
+			Statistics.scoreAlert(-50, "quest");
 			Statistics.questScores[0] -= 50;
 		}
 

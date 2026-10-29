@@ -93,6 +93,7 @@ public class VaultFlameTraps extends Blob {
 							if (Imp.Quest.hazardFreebies > 0){
 								Imp.Quest.hazardFreebies--;
 							} else {
+								Statistics.scoreAlert(-100, "quest");
 								Statistics.questScores[3] -= 100;
 							}
 						}

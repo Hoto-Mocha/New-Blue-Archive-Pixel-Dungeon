@@ -139,6 +139,7 @@ public class Pylon extends Mob {
 
 			if (ch == Dungeon.hero) {
 				Statistics.qualifiedForBossChallengeBadge = false;
+				Statistics.scoreAlert(-100, "boss");
 				Statistics.bossScores[2] -= 100;
 				if (!ch.isAlive()) {
 					Dungeon.fail(DM300.class);

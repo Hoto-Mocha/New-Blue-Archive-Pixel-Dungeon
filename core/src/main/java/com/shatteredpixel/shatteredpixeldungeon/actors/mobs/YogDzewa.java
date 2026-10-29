@@ -218,6 +218,7 @@ public class YogDzewa extends Mob {
 				for (Char ch : affected) {
 
 					if (ch == Dungeon.hero) {
+						Statistics.scoreAlert(-500, "boss");
 						Statistics.bossScores[4] -= 500;
 					}
 
@@ -539,6 +540,7 @@ public class YogDzewa extends Mob {
 		} else {
 			Statistics.qualifiedForBossChallengeBadge = false;
 		}
+		Statistics.scoreAlert(5000 + 1250*Statistics.spawnersAlive, "boss");
 		Statistics.bossScores[4] += 5000 + 1250*Statistics.spawnersAlive;
 
 		Badges.validateTakingTheMick(cause);

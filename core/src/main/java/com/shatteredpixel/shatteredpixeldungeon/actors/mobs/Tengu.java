@@ -222,6 +222,7 @@ public class Tengu extends Mob {
 		if (Statistics.qualifiedForBossChallengeBadge){
 			Badges.validateBossChallengeCompleted();
 		}
+		Statistics.scoreAlert(2000, "boss");
 		Statistics.bossScores[1] += 2000;
 		
 		LloydsBeacon beacon = Dungeon.hero.belongings.getItem(LloydsBeacon.class);
@@ -641,6 +642,7 @@ public class Tengu extends Mob {
 
 							if (ch == Dungeon.hero){
 								Statistics.qualifiedForBossChallengeBadge = false;
+								Statistics.scoreAlert(-100, "boss");
 								Statistics.bossScores[1] -= 100;
 
 								if (!ch.isAlive()) {
@@ -875,6 +877,7 @@ public class Tengu extends Mob {
 							}
 							if (ch == Dungeon.hero){
 								Statistics.qualifiedForBossChallengeBadge = false;
+								Statistics.scoreAlert(-100, "boss");
 								Statistics.bossScores[1] -= 100;
 							}
 
@@ -1070,6 +1073,7 @@ public class Tengu extends Mob {
 								
 								if (ch == Dungeon.hero){
 									Statistics.qualifiedForBossChallengeBadge = false;
+									Statistics.scoreAlert(-100, "boss");
 									Statistics.bossScores[1] -= 100;
 									if (!ch.isAlive()) {
 										Dungeon.fail(Tengu.class);

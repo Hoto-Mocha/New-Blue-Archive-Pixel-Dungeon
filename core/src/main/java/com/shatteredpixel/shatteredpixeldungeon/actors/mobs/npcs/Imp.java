@@ -387,6 +387,7 @@ public class Imp extends NPC {
 			reward = null;
 			completed = true;
 
+			Statistics.scoreAlert(4000, "quest");
 			Statistics.questScores[3] = 4000;
 			Notes.remove( Notes.Landmark.IMP );
 		}
@@ -395,6 +396,7 @@ public class Imp extends NPC {
 			completed = true;
 
 			Imp.Quest.score = score;
+			Statistics.scoreAlert(score, "quest");
 			Statistics.questScores[3] += score;
 			Notes.remove( Notes.Landmark.IMP );
 		}
