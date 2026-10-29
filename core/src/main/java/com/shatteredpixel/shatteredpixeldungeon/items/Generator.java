@@ -30,15 +30,22 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.DuelistArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.HoshinoArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.HuntressArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.IzunaArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.LeatherArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.MageArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.MailArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.MariArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.MikaArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.MiyakoArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.MiyuArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.NoaArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.NonomiArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.RogueArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ScaleArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.ShirokoArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.WarriorArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.YuzuArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
@@ -642,9 +649,16 @@ public class Generator {
 					ArisArmor.class,
 					NonomiArmor.class,
 					MiyakoArmor.class,
-					HoshinoArmor.class
+					HoshinoArmor.class,
+					ShirokoArmor.class,
+					NoaArmor.class,
+					MiyuArmor.class,
+					YuzuArmor.class,
+					IzunaArmor.class,
+					MikaArmor.class,
+					MariArmor.class
 			};
-			ARMOR.probs = new float[]{ 1, 1, 1, 1, 1, 0, 0, 0, 0 };
+			ARMOR.probs = new float[]{ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			
 			//see Generator.randomMissile
 			MISSILE.classes = new Class<?>[]{};
