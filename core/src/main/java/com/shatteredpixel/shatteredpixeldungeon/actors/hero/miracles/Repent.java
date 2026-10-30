@@ -32,7 +32,7 @@ public class Repent extends TargetedMariMiracle {
 
     @Override
     public float chargeUse(Hero hero) {
-        return super.chargeUse(hero);
+        return 3;
     }
 
     @Override
