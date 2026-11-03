@@ -499,4 +499,14 @@ public class SPDSettings extends GameSettings {
 	public static boolean scoreAlert() {
 		return getBoolean( KEY_SCORE_WARNING, false );
 	}
+
+	public static final String KEY_IMAGE_DISPLAY = "image_display";
+
+	public static void imageDisplay( boolean value ) {
+		put( KEY_IMAGE_DISPLAY, value );
+	}
+
+	public static boolean imageDisplay() {
+		return getBoolean( KEY_IMAGE_DISPLAY, false );
+	}
 }
