@@ -377,17 +377,17 @@ public class Armor extends EquipableItem {
 	}
 
 	public int DRMax(int lvl){
-		if (Dungeon.isChallenged(Challenges.NO_ARMOR)){
-			return 1 + tier + lvl + augment.defenseFactor(lvl);
-		}
-
 		int max = tier * (2 + lvl) + augment.defenseFactor(lvl);
+
+		if (Dungeon.isChallenged(Challenges.NO_ARMOR)){
+			max = 1 + tier + lvl + augment.defenseFactor(lvl);
+		}
 
 		if (tier <= 3 && Dungeon.hero != null && Dungeon.hero.hasTalent(Talent.HOSHINO_T1_3)) {
 			max += 1+Dungeon.hero.pointsInTalent(Talent.HOSHINO_T1_3);
 		}
 
-		if (lvl > max){
+		if (lvl > max && !Dungeon.isChallenged(Challenges.NO_ARMOR)){
 			return ((lvl - max)+1)/2;
 		} else {
 			return max;
