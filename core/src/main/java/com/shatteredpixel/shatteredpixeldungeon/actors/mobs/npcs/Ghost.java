@@ -339,6 +339,10 @@ public class Ghost extends NPC {
 					weapon = (Weapon) Generator.random(Generator.gunTiers[wepTier - 1]);
 				}
 
+				//clear armor's starting properties
+				armor.level(0);
+				armor.inscribe(null);
+				armor.cursed = false;
 				//clear weapon's starting properties
 				weapon.level(0);
 				weapon.enchant(null);
