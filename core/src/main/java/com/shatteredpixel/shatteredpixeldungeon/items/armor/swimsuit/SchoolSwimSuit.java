@@ -1,9 +1,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit;
 
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-public class SchoolSwimSuit extends Armor {
+public class SchoolSwimSuit extends SwimSuit {
     {
         image = ItemSpriteSheet.SCHOOL_SWIMSUIT;
 

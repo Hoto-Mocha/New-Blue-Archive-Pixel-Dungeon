@@ -25,14 +25,10 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ArisArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClericArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.DuelistArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.HoshinoArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.HuntressArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.IzunaArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.LeatherArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.MageArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.MailArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.MariArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.MikaArmor;
@@ -41,13 +37,11 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.MiyuArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.NoaArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.NonomiArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.RogueArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ScaleArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ShirokoArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.WarriorArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.YuzuArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit.BikiniSwimSuit;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit.CamisoleSwimSuit;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit.FrilledSwimSuit;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit.SchoolSwimSuit;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit.TrinitySwimSuit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
@@ -669,7 +663,7 @@ public class Generator {
 
 			ARMOR_T4.classes = new Class<?>[]{
 					ScaleArmor.class,
-					CamisoleSwimSuit.class
+					FrilledSwimSuit.class
 			};
 			ARMOR_T4.defaultProbs = new float[]{ 1, 1 };
 			ARMOR_T4.probs = ARMOR_T4.defaultProbs.clone();

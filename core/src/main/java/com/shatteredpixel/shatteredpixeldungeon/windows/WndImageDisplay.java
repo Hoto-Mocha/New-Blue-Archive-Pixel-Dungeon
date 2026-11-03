@@ -11,12 +11,19 @@ public class WndImageDisplay extends Window {
 
     private static final int MARGIN = 2;
 
+    public static Image getImage(String imagePath) {
+        return new Image(imagePath);
+    }
+
     public WndImageDisplay(String imagePath, String titleText) {
         super();
 
         float currentY = 1 + MARGIN;
+        Image image;
 
-        // 1. 제목 텍스트 (선택 사항)
+        image = getImage(imagePath);
+
+        // 2. 제목 텍스트
         if (titleText != null && !titleText.isEmpty()) {
             RenderedTextBlock title = PixelScene.renderTextBlock(titleText, 9);
             title.hardlight(Window.TITLE_COLOR);
@@ -24,9 +31,6 @@ public class WndImageDisplay extends Window {
             add(title);
             currentY = title.bottom() + 2 + MARGIN;
         }
-
-        // 2. 이미지 생성
-        Image image = new Image(imagePath);
 
         // 3. 화면 크기(UI 카메라) 대비 최대 가용 영역 계산 (여백 고려)
         float maxAllowedWidth = PixelScene.uiCamera.width - 20;   // 화면 좌우 여백 20
