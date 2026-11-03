@@ -419,10 +419,10 @@ public class Armor extends EquipableItem {
 	}
 
 	public int DRMax(int lvl){
-		int max = tier() * (2 + lvl) + augment.defenseFactor(lvl);
+		int max = Math.max(0, tier() * (2 + lvl) + augment.defenseFactor(lvl));
 
 		if (Dungeon.isChallenged(Challenges.NO_ARMOR)){
-			max = 1 + tier() + lvl + augment.defenseFactor(lvl);
+			max = Math.max(0, 1 + tier() + lvl + augment.defenseFactor(lvl));
 		}
 
 		if (tier <= 3 && Dungeon.hero != null && Dungeon.hero.hasTalent(Talent.HOSHINO_T1_3)) {
@@ -474,7 +474,7 @@ public class Armor extends EquipableItem {
 			}
 		}
 		
-		return evasion + augment.evasionFactor(buffedLvl()) + armorType.evasionBonus(tier(), buffedLvl());
+		return evasion + augment.evasionFactor(buffedLvl()) + armorType.evasionBonus(tier, buffedLvl());
 	}
 	
 	public float speedFactor( Char owner, float speed ){
