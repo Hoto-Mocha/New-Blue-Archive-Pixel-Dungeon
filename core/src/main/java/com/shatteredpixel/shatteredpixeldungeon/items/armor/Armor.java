@@ -659,6 +659,9 @@ public class Armor extends EquipableItem {
 			}
 		}
 
+		String statsInfo = statsInfo();
+		if (!statsInfo.equals("")) info += "\n\n" + statsInfo;
+
 		switch (augment) {
 			case EVASION:
 				info += " " + Messages.get(Armor.class, "evasion");
@@ -980,5 +983,9 @@ public class Armor extends EquipableItem {
 
 	public int defenseProc(Char attacker, Char defender, int damage) {
 		return damage;
+	}
+
+	public String statsInfo(){
+		return Messages.get(this, "stats_desc");
 	}
 }
