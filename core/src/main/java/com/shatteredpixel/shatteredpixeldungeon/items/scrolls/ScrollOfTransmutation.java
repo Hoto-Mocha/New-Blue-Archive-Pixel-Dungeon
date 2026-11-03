@@ -24,14 +24,16 @@ package com.shatteredpixel.shatteredpixeldungeon.items.scrolls;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Transmuting;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
@@ -76,8 +78,11 @@ public class ScrollOfTransmutation extends InventoryScroll {
 			return false;
 		}
 		//all melee weapons, except pickaxe when in a mining level
-		if (item instanceof MeleeWeapon){
+		if (item instanceof MeleeWeapon) {
 			return !(item instanceof Pickaxe && Dungeon.level instanceof MiningLevel);
+
+		} else if (item instanceof Armor) {
+			return !(item instanceof ClassArmor);
 
 		//all missile weapons except untipped darts
 		} else if (item instanceof MissileWeapon){
@@ -167,6 +172,8 @@ public class ScrollOfTransmutation extends InventoryScroll {
 			return changeTippedDart( (TippedDart)item );
 		} else if (item instanceof MeleeWeapon || item instanceof MissileWeapon) {
 			return changeWeapon( (Weapon)item );
+		} else if (item instanceof Armor) {
+			return changeArmor( (Armor)item );
 		} else if (item instanceof Scroll) {
 			return changeScroll( (Scroll)item );
 		} else if (item instanceof Potion) {
@@ -295,6 +302,41 @@ public class ScrollOfTransmutation extends InventoryScroll {
 
 		return n;
 		
+	}
+
+	private static Armor changeArmor( Armor a ) {
+		Armor n;
+		Generator.Category c;
+		c = Generator.armorTiers[a.tier - 1];
+
+		//If there aren't any possible other armor to transmute, prevent StackOverflowException and return null to show nothing happened
+		//TODO: delete try-catch when I add all alternative armors per tier
+		try	{
+			do {
+				n = (Armor) Generator.randomUsingDefaults(c);
+			} while (Challenges.isItemBlocked(n) || n.getClass() == a.getClass());
+		} catch (Exception e) {
+			return null;
+		}
+
+		n.level(0);
+		int level = a.trueLevel();
+		if (level > 0) {
+			n.upgrade( level );
+		} else if (level < 0) {
+			n.degrade( -level );
+		}
+
+		n.glyph = a.glyph;
+		n.curseInfusionBonus = a.curseInfusionBonus;
+		n.masteryPotionBonus = a.masteryPotionBonus;
+		n.levelKnown = a.levelKnown;
+		n.cursedKnown = a.cursedKnown;
+		n.cursed = a.cursed;
+		n.augment = a.augment;
+		n.glyphHardened = a.glyphHardened;
+
+		return n;
 	}
 	
 	private static Ring changeRing( Ring r ) {

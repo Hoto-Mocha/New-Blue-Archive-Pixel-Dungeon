@@ -1106,6 +1106,23 @@ public class ItemSpriteSheet {
 		assignItemRect(FACNY_LIGHT, 			15, 15);
 	}
 
+	// 16 free slots xy(1, 44);
+
+	// 16 free slots xy(1, 45);
+
+	private static final int SWIMSUITS = 							xy(1, 46); //8 slots
+	// empty slot for 1 tier
+	public static final int SCHOOL_SWIMSUIT 	= SWIMSUITS+1;
+	public static final int TRINITY_SWIMSUIT	= SWIMSUITS+2;
+	public static final int CAMISOLE_SWIMSUIT 	= SWIMSUITS+3;
+	public static final int BIKINI_SWIMSUIT 	= SWIMSUITS+4;
+	static {
+		assignItemRect(SCHOOL_SWIMSUIT, 	11, 15);
+		assignItemRect(TRINITY_SWIMSUIT,	12, 16);
+		assignItemRect(CAMISOLE_SWIMSUIT, 	13, 15);
+		assignItemRect(BIKINI_SWIMSUIT, 	11, 15);
+	}
+
 	//for smaller 8x8 icons that often accompany an item sprite
 	public static class Icons {
 

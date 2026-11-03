@@ -46,6 +46,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.ScaleArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ShirokoArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.WarriorArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.YuzuArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit.SchoolSwimSuit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
@@ -304,7 +305,13 @@ public class Generator {
 		GUN_SP  ( 0, 0, Gun.class ),
 
 		ARMOR	( 2, 1, Armor.class ),
-		
+		ARMOR_T1( 0, 0, Armor.class ),
+		ARMOR_T2( 0, 0, Armor.class ),
+		ARMOR_T3( 0, 0, Armor.class ),
+		ARMOR_T4( 0, 0, Armor.class ),
+		ARMOR_T5( 0, 0, Armor.class ),
+		ARMOR_CL( 0, 0, Armor.class ),
+
 		MISSILE ( 1, 2, MissileWeapon.class ),
 		MIS_T1  ( 0, 0, MissileWeapon.class ),
 		MIS_T2  ( 0, 0, MissileWeapon.class ),
@@ -634,18 +641,41 @@ public class Generator {
 			GUN_SP.probs = GUN_SP.defaultProbs.clone();
 			
 			//see Generator.randomArmor
-			ARMOR.classes = new Class<?>[]{
-					ClothArmor.class,
+			ARMOR.classes = new Class<?>[]{};
+			ARMOR.probs = new float[]{};
+
+			ARMOR_T1.classes = new Class<?>[]{
+					ClothArmor.class
+			};
+			ARMOR_T1.defaultProbs = new float[]{ 1 };
+			ARMOR_T1.probs = ARMOR_T1.defaultProbs.clone();
+
+			ARMOR_T2.classes = new Class<?>[]{
 					LeatherArmor.class,
-					MailArmor.class,
-					ScaleArmor.class,
-					PlateArmor.class,
-//					WarriorArmor.class,
-//					MageArmor.class,
-//					RogueArmor.class,
-//					HuntressArmor.class,
-//					DuelistArmor.class,
-//					ClericArmor.class
+					SchoolSwimSuit.class
+			};
+			ARMOR_T2.defaultProbs = new float[]{ 1, 1 };
+			ARMOR_T2.probs = ARMOR_T2.defaultProbs.clone();
+
+			ARMOR_T3.classes = new Class<?>[]{
+					MailArmor.class
+			};
+			ARMOR_T3.defaultProbs = new float[]{ 1 };
+			ARMOR_T3.probs = ARMOR_T3.defaultProbs.clone();
+
+			ARMOR_T4.classes = new Class<?>[]{
+					ScaleArmor.class
+			};
+			ARMOR_T4.defaultProbs = new float[]{ 1 };
+			ARMOR_T4.probs = ARMOR_T4.defaultProbs.clone();
+
+			ARMOR_T5.classes = new Class<?>[]{
+					PlateArmor.class
+			};
+			ARMOR_T5.defaultProbs = new float[]{ 1 };
+			ARMOR_T5.probs = ARMOR_T5.defaultProbs.clone();
+
+			ARMOR_CL.classes = new Class<?>[]{
 					ArisArmor.class,
 					NonomiArmor.class,
 					MiyakoArmor.class,
@@ -658,7 +688,7 @@ public class Generator {
 					MikaArmor.class,
 					MariArmor.class
 			};
-			ARMOR.probs = new float[]{ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			ARMOR_CL.probs = new float[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			
 			//see Generator.randomMissile
 			MISSILE.classes = new Class<?>[]{};
@@ -946,15 +976,36 @@ public class Generator {
 		return Reflection.newInstance(cl).random();
 	}
 
+	public static final Category[] armorTiers = new Category[]{
+			Category.ARMOR_T1,
+			Category.ARMOR_T2,
+			Category.ARMOR_T3,
+			Category.ARMOR_T4,
+			Category.ARMOR_T5
+	};
+
 	public static Armor randomArmor(){
 		return randomArmor(Dungeon.depth / 5);
 	}
-	
+
 	public static Armor randomArmor(int floorSet) {
+		return randomArmor(floorSet, false);
+	}
+
+	public static Armor randomArmor(boolean useDefaults) {
+		return randomArmor(Dungeon.depth / 5, useDefaults);
+	}
+	
+	public static Armor randomArmor(int floorSet, boolean useDefaults) {
 
 		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
-		
-		Armor a = (Armor)Reflection.newInstance(Category.ARMOR.classes[Random.chances(floorSetTierProbs[floorSet])]);
+
+		Armor a;
+		if (useDefaults) {
+			a = (Armor) randomUsingDefaults(armorTiers[Random.chances(floorSetTierProbs[floorSet])]);
+		} else {
+			a = (Armor) random(armorTiers[Random.chances(floorSetTierProbs[floorSet])]);
+		}
 		a.random();
 		return a;
 	}

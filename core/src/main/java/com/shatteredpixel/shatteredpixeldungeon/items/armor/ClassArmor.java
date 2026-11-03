@@ -156,6 +156,7 @@ abstract public class ClassArmor extends Armor {
 		classArmor.level(armor.trueLevel());
 		classArmor.tier = armor.tier;
 		classArmor.augment = armor.augment;
+		classArmor.armorType = armor.armorType;
 		classArmor.inscribe(armor.glyph);
 		if (armor.seal != null) {
 			classArmor.seal = armor.seal;

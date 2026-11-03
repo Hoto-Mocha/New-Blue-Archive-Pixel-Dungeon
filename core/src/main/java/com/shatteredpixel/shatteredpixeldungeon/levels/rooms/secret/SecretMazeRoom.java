@@ -104,7 +104,7 @@ public class SecretMazeRoom extends SecretRoom {
 				((Weapon) prize).enchant(null);
 			}
 		} else {
-			prize = Generator.randomArmor((Dungeon.depth / 5) + 1);
+			prize = Generator.randomArmor((Dungeon.depth / 5) + 1, true);
 			if (((Armor)prize).hasCurseGlyph()){
 				((Armor) prize).inscribe(null);
 			}

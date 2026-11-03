@@ -748,7 +748,7 @@ public class WndJournal extends WndTabbed {
 	private static void addGridItems( ScrollingGridPane grid, Collection<Class<?>> classes) {
 		for (Class<?> itemClass : classes) {
 
-			boolean seen = Catalog.isSeen(itemClass);;
+			boolean seen = Catalog.isSeen(itemClass);
 			ItemSprite sprite = null;
 			Image secondIcon = null;
 			String title = "";

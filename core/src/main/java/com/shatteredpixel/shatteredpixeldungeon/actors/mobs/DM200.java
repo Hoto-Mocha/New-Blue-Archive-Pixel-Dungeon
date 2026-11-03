@@ -83,7 +83,7 @@ public class DM200 extends Mob {
 		if (loot == Generator.Category.WEAPON){
 			return Generator.randomWeapon(4, true);
 		} else {
-			return Generator.randomArmor(4);
+			return Generator.randomArmor(4, true);
 		}
 	}
 

@@ -110,9 +110,44 @@ public class Armor extends EquipableItem {
 			return Math.round((2 + level) * defenceFactor);
 		}
 	}
+
+	public enum ArmorType {
+		NORMAL 		(0, 1, 0, 0),
+		SWIMSUIT 	(-5, 2, 1, 0),
+		RACING 		(-1, 1, 0, 0);
+
+		private int tierFactor; //방어력 성능 결정
+		private int evasionTries; //회피 시도 횟수
+		private int evasionBonus; //회피 보너스 배율
+		private int reqStrFactor; //요구 힘 수치 증가량
+
+		ArmorType(int tierFactor, int evasionTries, int evasionBonus, int reqStrFactor){
+			this.tierFactor = tierFactor;
+			this.evasionTries = evasionTries;
+			this.evasionBonus = evasionBonus;
+			this.reqStrFactor = reqStrFactor;
+		}
+
+		public int tierFactor(){
+			return tierFactor;
+		}
+
+		public int evasionTries(){
+			return evasionTries;
+		}
+
+		public int evasionBonus( int tier, int level ) {
+			return evasionBonus * tier * (level+2);
+		}
+
+		public int reqStrFactor() {
+			return reqStrFactor;
+		}
+	}
 	
 	public Augment augment = Augment.NONE;
-	
+	public ArmorType armorType = ArmorType.NORMAL;
+
 	public Glyph glyph;
 	public boolean glyphHardened = false;
 	public boolean curseInfusionBonus = false;
@@ -138,6 +173,7 @@ public class Armor extends EquipableItem {
 	private static final String MASTERY_POTION_BONUS = "mastery_potion_bonus";
 	private static final String SEAL            = "seal";
 	private static final String AUGMENT			= "augment";
+	private static final String ARMOR_TYPE		= "armorType";
 
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -150,6 +186,7 @@ public class Armor extends EquipableItem {
 		bundle.put( MASTERY_POTION_BONUS, masteryPotionBonus );
 		bundle.put( SEAL, seal);
 		bundle.put( AUGMENT, augment);
+		bundle.put( ARMOR_TYPE, armorType);
 	}
 
 	@Override
@@ -164,6 +201,7 @@ public class Armor extends EquipableItem {
 		seal = (BrokenSeal)bundle.get(SEAL);
 		
 		augment = bundle.getEnum(AUGMENT, Augment.class);
+		armorType = bundle.getEnum(ARMOR_TYPE, ArmorType.class);
 	}
 
 	@Override
@@ -366,6 +404,10 @@ public class Armor extends EquipableItem {
 
 		}
 	}
+
+	public int tier() {
+		return Math.max(0, tier + armorType.tierFactor());
+	}
 	
 	@Override
 	public boolean isEquipped( Hero hero ) {
@@ -377,10 +419,10 @@ public class Armor extends EquipableItem {
 	}
 
 	public int DRMax(int lvl){
-		int max = tier * (2 + lvl) + augment.defenseFactor(lvl);
+		int max = tier() * (2 + lvl) + augment.defenseFactor(lvl);
 
 		if (Dungeon.isChallenged(Challenges.NO_ARMOR)){
-			max = 1 + tier + lvl + augment.defenseFactor(lvl);
+			max = 1 + tier() + lvl + augment.defenseFactor(lvl);
 		}
 
 		if (tier <= 3 && Dungeon.hero != null && Dungeon.hero.hasTalent(Talent.HOSHINO_T1_3)) {
@@ -432,7 +474,7 @@ public class Armor extends EquipableItem {
 			}
 		}
 		
-		return evasion + augment.evasionFactor(buffedLvl());
+		return evasion + augment.evasionFactor(buffedLvl()) + armorType.evasionBonus(tier(), buffedLvl());
 	}
 	
 	public float speedFactor( Char owner, float speed ){
@@ -551,6 +593,8 @@ public class Armor extends EquipableItem {
 			}
 			damage = Math.max(damage, 0);
 		}
+
+		damage = defenseProc(attacker, defender, damage);
 		
 		if (!levelKnown && defender == Dungeon.hero) {
 			float uses = Math.min( availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this) );
@@ -705,6 +749,7 @@ public class Armor extends EquipableItem {
 		if (masteryPotionBonus){
 			req -= 2;
 		}
+		req += armorType.reqStrFactor();
 		return req;
 	}
 
@@ -861,7 +906,7 @@ public class Armor extends EquipableItem {
 		public boolean curse() {
 			return false;
 		}
-		
+
 		@Override
 		public void restoreFromBundle( Bundle bundle ) {
 		}
@@ -928,5 +973,9 @@ public class Armor extends EquipableItem {
 			}
 		}
 		
+	}
+
+	public int defenseProc(Char attacker, Char defender, int damage) {
+		return damage;
 	}
 }

@@ -214,7 +214,12 @@ public enum Catalog {
 		GUNS.addItems(Generator.Category.GUN_T5.classes);
 		GUNS.addItems(Generator.Category.GUN_SP.classes);
 
-		ARMOR.addItems(Generator.Category.ARMOR.classes);
+		ARMOR.addItems(Generator.Category.ARMOR_T1.classes);
+		ARMOR.addItems(Generator.Category.ARMOR_T2.classes);
+		ARMOR.addItems(Generator.Category.ARMOR_T3.classes);
+		ARMOR.addItems(Generator.Category.ARMOR_T4.classes);
+		ARMOR.addItems(Generator.Category.ARMOR_T5.classes);
+		ARMOR.addItems(Generator.Category.ARMOR_CL.classes);
 
 		THROWN_WEAPONS.addItems(Generator.Category.MIS_T1.classes);
 		THROWN_WEAPONS.addItems(Generator.Category.MIS_T2.classes);

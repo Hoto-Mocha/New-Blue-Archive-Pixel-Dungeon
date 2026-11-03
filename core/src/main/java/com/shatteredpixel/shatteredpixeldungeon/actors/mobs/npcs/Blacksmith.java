@@ -378,7 +378,7 @@ public class Blacksmith extends NPC {
 				Generator.undoDrop(i);
 			}
 			smithRewards.add(Generator.randomMissile(3, useDecks));
-			smithRewards.add(Generator.randomArmor(3));
+			smithRewards.add(Generator.randomArmor(3, useDecks));
 
 			//30%:+0, 45%:+1, 20%:+2, 5%:+3
 			int rewardLevel;

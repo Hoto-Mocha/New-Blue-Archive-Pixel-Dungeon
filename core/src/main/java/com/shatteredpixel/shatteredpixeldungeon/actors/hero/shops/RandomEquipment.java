@@ -45,7 +45,7 @@ public class RandomEquipment extends YuzuShopContent {
                 if (w.hasCurseEnchant()) w.enchant(null);
                 return w;
             case 1:
-                Armor a = Generator.randomArmor(Dungeon.depth);
+                Armor a = Generator.randomArmor(Dungeon.depth, true);
                 if (a.hasCurseGlyph()) a.inscribe(null);
                 return a;
         }

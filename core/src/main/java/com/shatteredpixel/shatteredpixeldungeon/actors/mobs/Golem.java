@@ -92,7 +92,7 @@ public class Golem extends Mob {
 		if (loot == Generator.Category.WEAPON){
 			return Generator.randomWeapon(5, true);
 		} else {
-			return Generator.randomArmor(5);
+			return Generator.randomArmor(5, true);
 		}
 	}
 

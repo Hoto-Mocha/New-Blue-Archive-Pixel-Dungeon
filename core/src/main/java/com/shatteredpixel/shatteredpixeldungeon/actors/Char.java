@@ -778,7 +778,17 @@ public abstract class Char extends Actor {
 		}
 		acuRoll *= accMulti;
 
-		float defRoll = Random.Float( defStat );
+		float defRoll;
+		if (defender instanceof Hero && ((Hero)defender).belongings.armor != null) {
+			defRoll = Random.Float( defStat );
+			int tries = ((Hero)defender).belongings.armor.armorType.evasionTries();
+			for (int i = 1; i < tries; i++) {
+				float roll = Random.Float( defStat );
+				if (roll > defRoll) defRoll = roll;
+			}
+		} else {
+			defRoll = Random.Float( defStat );
+		}
 		if (defender.buff(Bless.class) != null) defRoll *= 1.25f;
 		if (defender.buff(  Hex.class) != null) defRoll *= 0.8f;
 		if (defender.buff( Daze.class) != null) defRoll *= 0.5f;
