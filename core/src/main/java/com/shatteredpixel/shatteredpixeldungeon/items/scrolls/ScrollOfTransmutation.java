@@ -309,15 +309,9 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		Generator.Category c;
 		c = Generator.armorTiers[a.tier - 1];
 
-		//If there aren't any possible other armor to transmute, prevent StackOverflowException and return null to show nothing happened
-		//TODO: delete try-catch when I add all alternative armors per tier
-		try	{
-			do {
-				n = (Armor) Generator.randomUsingDefaults(c);
-			} while (Challenges.isItemBlocked(n) || n.getClass() == a.getClass());
-		} catch (Exception e) {
-			return null;
-		}
+		do {
+			n = (Armor) Generator.randomUsingDefaults(c);
+		} while (Challenges.isItemBlocked(n) || n.getClass() == a.getClass());
 
 		n.level(0);
 		int level = a.trueLevel();

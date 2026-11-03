@@ -35,4 +35,8 @@ public class ClothArmor extends Armor {
 		super( 1 );
 	}
 
+	@Override
+	public boolean transmutable() {
+		return false;
+	}
 }
