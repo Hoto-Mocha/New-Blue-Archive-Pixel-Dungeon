@@ -22,9 +22,11 @@
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -187,19 +189,21 @@ public class WndSettings extends WndTabbed {
 		};
 		add( langsTab );
 
-		preference = new PreferenceTab();
-		preference.setSize(width, 0);
-		height = Math.max(height, preference.height());
-		add( preference );
+		if (Badges.isUnlocked(Badges.Badge.VICTORY) || DeviceCompat.isDebug()) {
+			preference = new PreferenceTab();
+			preference.setSize(width, 0);
+			height = Math.max(height, preference.height());
+			add( preference );
 
-		add( new IconTab(Icons.get(Icons.CATALOG)){
-			@Override
-			protected void select(boolean value) {
-				super.select(value);
-				preference.visible = preference.active = value;
-				if (value) last_index = 6;
-			}
-		});
+			add( new IconTab(Icons.get(Icons.CATALOG)){
+				@Override
+				protected void select(boolean value) {
+					super.select(value);
+					preference.visible = preference.active = value;
+					if (value) last_index = 6;
+				}
+			});
+		}
 
 		resize(width, (int)Math.ceil(height));
 
