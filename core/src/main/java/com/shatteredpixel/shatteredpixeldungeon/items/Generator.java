@@ -46,7 +46,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.ScaleArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ShirokoArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.WarriorArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.YuzuArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit.BikiniSwimSuit;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit.CamisoleSwimSuit;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit.SchoolSwimSuit;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit.TrinitySwimSuit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
@@ -658,21 +661,24 @@ public class Generator {
 			ARMOR_T2.probs = ARMOR_T2.defaultProbs.clone();
 
 			ARMOR_T3.classes = new Class<?>[]{
-					MailArmor.class
+					MailArmor.class,
+					TrinitySwimSuit.class
 			};
-			ARMOR_T3.defaultProbs = new float[]{ 1 };
+			ARMOR_T3.defaultProbs = new float[]{ 1, 1 };
 			ARMOR_T3.probs = ARMOR_T3.defaultProbs.clone();
 
 			ARMOR_T4.classes = new Class<?>[]{
-					ScaleArmor.class
+					ScaleArmor.class,
+					CamisoleSwimSuit.class
 			};
-			ARMOR_T4.defaultProbs = new float[]{ 1 };
+			ARMOR_T4.defaultProbs = new float[]{ 1, 1 };
 			ARMOR_T4.probs = ARMOR_T4.defaultProbs.clone();
 
 			ARMOR_T5.classes = new Class<?>[]{
-					PlateArmor.class
+					PlateArmor.class,
+					BikiniSwimSuit.class
 			};
-			ARMOR_T5.defaultProbs = new float[]{ 1 };
+			ARMOR_T5.defaultProbs = new float[]{ 1, 1 };
 			ARMOR_T5.probs = ARMOR_T5.defaultProbs.clone();
 
 			ARMOR_CL.classes = new Class<?>[]{
