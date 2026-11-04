@@ -209,12 +209,21 @@ public class WndSettings extends WndTabbed {
 
 		layoutTabs();
 
-		if (tabs.size() == 5 && last_index >= 3){
-			//input tab isn't visible
-			select(last_index-1);
-		} else {
-			select(last_index);
+//		if (tabs.size() == 5 && last_index >= 3){
+//			//input tab isn't visible
+//			select(last_index-1);
+//		} else {
+//			select(last_index);
+//		}
+
+		boolean hasInputTab = DeviceCompat.hasHardKeyboard() || ControllerHandler.isControllerConnected();
+
+		int selectIndex = last_index;
+		if (!hasInputTab && selectIndex >= 3) {
+			selectIndex--;
 		}
+		selectIndex = Math.max(0, Math.min(selectIndex, tabs.size() - 1));
+		select(selectIndex);
 
 	}
 
