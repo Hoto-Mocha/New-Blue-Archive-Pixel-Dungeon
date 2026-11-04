@@ -19,11 +19,11 @@ public class SwimSuit extends Armor {
 
         if (SPDSettings.imageDisplay() && !Dungeon.customSeedText.contains("test")) {
             try {
-                WndImageDisplay.getImage(Assets.Arts.swimsuit(hero.heroClass.name(), tier));
+                WndImageDisplay.getImage(Assets.Arts.image("swimsuit", hero.heroClass.name(), tier));
             } catch (Exception e) {
                 return super.doEquip(hero);
             }
-            GameScene.show(new WndImageDisplay(Assets.Arts.swimsuit(hero.heroClass.name(), tier), name()));
+            GameScene.show(new WndImageDisplay(Assets.Arts.image("swimsuit", hero.heroClass.name(), tier), name()));
         }
 
         return super.doEquip(hero);

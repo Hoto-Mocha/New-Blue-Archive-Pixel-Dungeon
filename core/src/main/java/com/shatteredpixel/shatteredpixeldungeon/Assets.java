@@ -291,9 +291,9 @@ public class Assets {
 
 	public static class Arts {
 		private static final int IMAGES_NUM = 1; //준비된 이미지 개수
-		public static String swimsuit(String className, int tier) {
+		public static String image(String key, String className, int tier) {
 			int altNumber = 1+(int)Dungeon.seed % IMAGES_NUM; //같은 판에서는 똑같은 이미지를 띄움
-			return "splashes/characters/"+className.toLowerCase()+"/swimsuit_"+tier+"tier_"+altNumber+".png";
+			return "splashes/characters/"+className.toLowerCase()+"/"+key+"_"+tier+"tier_"+altNumber+".png";
 		}
 	}
 
