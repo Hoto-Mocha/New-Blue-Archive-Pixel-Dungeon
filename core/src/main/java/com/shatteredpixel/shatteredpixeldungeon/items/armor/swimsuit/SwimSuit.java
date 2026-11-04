@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -16,7 +17,7 @@ public class SwimSuit extends Armor {
     @Override
     public boolean doEquip(Hero hero) {
 
-        if (SPDSettings.imageDisplay()) {
+        if (SPDSettings.imageDisplay() && !Dungeon.customSeedText.contains("test")) {
             try {
                 WndImageDisplay.getImage(Assets.Arts.swimsuit(hero.heroClass.name(), tier));
             } catch (Exception e) {
