@@ -1123,6 +1123,17 @@ public class ItemSpriteSheet {
 		assignItemRect(BIKINI_SWIMSUIT, 	11, 15);
 	}
 
+	private static final int RACING_SUITS = 						xy(9, 46); //8 slots
+	// empty slot for 1 tier
+	// empty slot for 2 tier
+	public static final int JACKET_RACING_SUIT 	= RACING_SUITS+2;
+	// empty slot for 4 tier
+	public static final int LATEX_RACING_SUIT	= RACING_SUITS+4;
+	static {
+		assignItemRect(JACKET_RACING_SUIT, 	16, 14);
+		assignItemRect(LATEX_RACING_SUIT, 	16, 13);
+	}
+
 	//for smaller 8x8 icons that often accompany an item sprite
 	public static class Icons {
 

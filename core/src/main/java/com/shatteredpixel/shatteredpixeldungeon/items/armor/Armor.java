@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -481,6 +482,10 @@ public class Armor extends EquipableItem {
 	}
 	
 	public float speedFactor( Char owner, float speed ){
+
+		if (armorType == ArmorType.RACING) {
+			speed *= Swiftness.speedBoost(owner, buffedLvl());
+		}
 		
 		if (owner instanceof Hero) {
 			int aEnc = STRReq() - ((Hero) owner).STR();
@@ -982,6 +987,10 @@ public class Armor extends EquipableItem {
 	}
 
 	public int defenseProc(Char attacker, Char defender, int damage) {
+		if (armorType == ArmorType.RACING) {
+			Buff.affect(defender, GreaterHaste.class).set((int) Math.ceil(tier+buffedLvl()/2f));
+		}
+
 		return damage;
 	}
 
