@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.levels.features;
 
+import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
@@ -159,10 +160,12 @@ public class HighGrass {
 					if (SPDSettings.autoDewCollect()) {
 						Dewdrop dewdrop = new Dewdrop();
 						Waterskin flask = Dungeon.hero.belongings.getItem( Waterskin.class );
-						if (flask.isFull() || Dungeon.hero.visibleEnemies() > 0) {
+						if (ch != Dungeon.hero || flask == null || flask.isFull() || Dungeon.hero.visibleEnemies() > 0) {
 							level.drop(new Dewdrop(), pos).sprite.drop();
 						} else {
-							dewdrop.doPickUp(Dungeon.hero);
+							if (!Challenges.isItemBlocked(dewdrop)) {
+								dewdrop.doPickUp(Dungeon.hero);
+							}
 						}
 					} else {
 						level.drop(new Dewdrop(), pos).sprite.drop();
