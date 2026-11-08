@@ -6,8 +6,6 @@ public class LatexRacingSuit extends RacingSuit {
 
     {
         image = ItemSpriteSheet.LATEX_RACING_SUIT;
-
-        armorType = ArmorType.RACING;
     }
 
     public LatexRacingSuit() {

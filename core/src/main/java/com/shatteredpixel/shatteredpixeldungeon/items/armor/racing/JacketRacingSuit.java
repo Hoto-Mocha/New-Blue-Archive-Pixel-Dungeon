@@ -6,8 +6,6 @@ public class JacketRacingSuit extends RacingSuit {
 
     {
         image = ItemSpriteSheet.JACKET_RACING_SUIT;
-
-        armorType = ArmorType.RACING;
     }
 
     public JacketRacingSuit() {

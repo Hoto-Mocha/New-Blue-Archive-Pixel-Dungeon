@@ -5,8 +5,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 public class SchoolSwimSuit extends SwimSuit {
     {
         image = ItemSpriteSheet.SCHOOL_SWIMSUIT;
-
-        armorType = ArmorType.SWIMSUIT;
     }
 
     public SchoolSwimSuit() {

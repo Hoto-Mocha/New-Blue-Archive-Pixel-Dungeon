@@ -10,6 +10,10 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndImageDisplay;
 
 public class RacingSuit extends Armor {
 
+    {
+        armorType = ArmorType.RACING;
+    }
+
     public RacingSuit(int tier) {
         super(tier);
     }
