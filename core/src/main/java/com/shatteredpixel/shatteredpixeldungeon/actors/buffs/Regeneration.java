@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.SpiritForm;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ChaoticCenser;
@@ -80,6 +81,10 @@ public class Regeneration extends Buff {
 				//salt cube is turned off while regen is disabled.
 				if (target.buff(LockedFloor.class) == null) {
 					delay /= SaltCube.healthRegenMultiplier();
+				}
+
+				if (((Hero)target).belongings.armor != null) {
+					delay /= ((Hero)target).belongings.armor.healthRegenFactor();
 				}
 
 				partialRegen += 1f / delay;

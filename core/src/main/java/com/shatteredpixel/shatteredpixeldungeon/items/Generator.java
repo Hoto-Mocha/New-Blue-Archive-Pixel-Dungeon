@@ -40,6 +40,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ScaleArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ShirokoArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.YuzuArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.pajamas.AnimalPajamas;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.pajamas.PinkPajamas;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.racing.JacketRacingSuit;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.racing.LatexRacingSuit;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.swimsuit.BikiniSwimSuit;
@@ -659,16 +661,18 @@ public class Generator {
 			ARMOR_T3.classes = new Class<?>[]{
 					MailArmor.class,
 					TrinitySwimSuit.class,
-					JacketRacingSuit.class
+					JacketRacingSuit.class,
+					PinkPajamas.class
 			};
-			ARMOR_T3.defaultProbs = new float[]{ 1, 1, 1 };
+			ARMOR_T3.defaultProbs = new float[]{ 1, 1, 1, 1 };
 			ARMOR_T3.probs = ARMOR_T3.defaultProbs.clone();
 
 			ARMOR_T4.classes = new Class<?>[]{
 					ScaleArmor.class,
-					FrilledSwimSuit.class
+					FrilledSwimSuit.class,
+					AnimalPajamas.class
 			};
-			ARMOR_T4.defaultProbs = new float[]{ 1, 1 };
+			ARMOR_T4.defaultProbs = new float[]{ 1, 1, 1 };
 			ARMOR_T4.probs = ARMOR_T4.defaultProbs.clone();
 
 			ARMOR_T5.classes = new Class<?>[]{

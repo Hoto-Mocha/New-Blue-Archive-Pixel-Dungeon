@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.armor;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -77,9 +76,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndImageDisplay;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
-import com.watabou.noosa.Game;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -118,7 +115,8 @@ public class Armor extends EquipableItem {
 	public enum ArmorType {
 		NORMAL 		(0, 1, 0, 0),
 		SWIMSUIT 	(-5, 2, 1, 0),
-		RACING 		(-1, 1, 0, 0);
+		RACING 		(-1, 1, 0, 0),
+		PAJAMAS		(-1, 1, 0, -1);
 
 		private int tierFactor; //방어력 성능 결정
 		private int evasionTries; //회피 시도 횟수
@@ -986,9 +984,13 @@ public class Armor extends EquipableItem {
 		
 	}
 
+	public int racingHasteTurns(int tier, int level) {
+		return (int) Math.ceil(tier+level/2f);
+	}
+
 	public int defenseProc(Char attacker, Char defender, int damage) {
 		if (armorType == ArmorType.RACING) {
-			Buff.affect(defender, GreaterHaste.class).set((int) Math.ceil(tier+buffedLvl()/2f));
+			Buff.affect(defender, GreaterHaste.class).set(racingHasteTurns(tier, buffedLvl()));
 		}
 
 		return damage;
@@ -996,5 +998,17 @@ public class Armor extends EquipableItem {
 
 	public String statsInfo(){
 		return Messages.get(this, "stats_desc");
+	}
+
+	public float healthRegenFactor() {
+		return healthRegenFactor(buffedLvl());
+	}
+
+	public float healthRegenFactor(int level) {
+		if (armorType == ArmorType.PAJAMAS) {
+			return (float) Math.pow(1.15f, 1+level);
+		} else {
+			return 1f;
+		}
 	}
 }

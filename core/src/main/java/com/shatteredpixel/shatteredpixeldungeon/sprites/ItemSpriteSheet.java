@@ -1134,6 +1134,17 @@ public class ItemSpriteSheet {
 		assignItemRect(LATEX_RACING_SUIT, 	16, 13);
 	}
 
+	private static final int PAJAMAS = 								xy(1, 47); //8 slots
+	// empty slot for 1 tier
+	// empty slot for 2 tier
+	public static final int PINK_PAJAMAS 	= PAJAMAS+2;
+	public static final int ANIMAL_PAJAMAS	= PAJAMAS+3;
+	// empty slot for 5 tier
+	static {
+		assignItemRect(PINK_PAJAMAS, 	13, 13);
+		assignItemRect(ANIMAL_PAJAMAS, 	13, 16);
+	}
+
 	//for smaller 8x8 icons that often accompany an item sprite
 	public static class Icons {
 

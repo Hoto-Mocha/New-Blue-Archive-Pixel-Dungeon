@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.MagicalInfusion;
@@ -387,6 +388,29 @@ public class WndUpgrade extends Window {
 							((Ring) toUpgrade).upgradeStat3(levelTo),
 							bottom);
 				}
+			}
+		}
+
+		if (toUpgrade instanceof Armor) {
+			if (((Armor)toUpgrade).armorType == Armor.ArmorType.SWIMSUIT) {
+				bottom = fillFields(Messages.get(this, "swimsuit_evasion"),
+						Integer.toString((((Armor) toUpgrade).armorType.evasionBonus(((Armor) toUpgrade).tier, levelFrom))),
+						Integer.toString((((Armor) toUpgrade).armorType.evasionBonus(((Armor) toUpgrade).tier, levelTo))),
+						bottom);
+			} else if (((Armor)toUpgrade).armorType == Armor.ArmorType.RACING) {
+				bottom = fillFields(Messages.get(this, "racing_haste"),
+						Integer.toString((((Armor) toUpgrade).racingHasteTurns(((Armor) toUpgrade).tier, levelFrom))),
+						Integer.toString((((Armor) toUpgrade).racingHasteTurns(((Armor) toUpgrade).tier, levelTo))),
+						bottom);
+				bottom = fillFields(Messages.get(this, "racing_speed"),
+						"x"+Messages.decimalFormat("#.##", Swiftness.speedBoost(Dungeon.hero, levelFrom)),
+						"x"+Messages.decimalFormat("#.##", Swiftness.speedBoost(Dungeon.hero, levelTo)),
+						bottom);
+			} else if (((Armor)toUpgrade).armorType == Armor.ArmorType.PAJAMAS) {
+				bottom = fillFields(Messages.get(this, "pajamas_heal"),
+						"x"+Messages.decimalFormat("#.##", (((Armor) toUpgrade).healthRegenFactor(levelFrom))),
+						"x"+Messages.decimalFormat("#.##", (((Armor) toUpgrade).healthRegenFactor(levelTo))),
+						bottom);
 			}
 		}
 
