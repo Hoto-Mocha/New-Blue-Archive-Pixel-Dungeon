@@ -321,6 +321,12 @@ public class ScrollOfTransmutation extends InventoryScroll {
 			n.degrade( -level );
 		}
 
+		if (a.checkSeal() != null) {
+			if (a.checkSeal().level() > 0) {
+				n.degrade( a.checkSeal().level() );
+			}
+			n.affixSeal(a.checkSeal());
+		}
 		n.glyph = a.glyph;
 		n.curseInfusionBonus = a.curseInfusionBonus;
 		n.masteryPotionBonus = a.masteryPotionBonus;
