@@ -82,7 +82,10 @@ public class SilverBullet extends TargetedMariMiracle {
         super.onMiracleCast(cross, hero);
 
         Gun gun = getEquippedGun(hero);
-        if (gun != null) gun.manualReload();
+        if (gun != null) {
+            gun.manualReload();
+            Buff.affect(hero, LightBullet.LightMagazine.class).stack(gun, 1);
+        }
     }
 
     public class SilverBulletItem extends Item {
