@@ -1108,7 +1108,11 @@ public class ItemSpriteSheet {
 
 	// 16 free slots xy(1, 44);
 
-	// 16 free slots xy(1, 45);
+	private static final int NEW_PLACEHOLDERS = 					xy(1, 45); //16 slots
+	public static final int PICTURE = NEW_PLACEHOLDERS+0;
+	static {
+		assignItemRect(PICTURE, 13, 11);
+	}
 
 	private static final int SWIMSUITS = 							xy(1, 46); //8 slots
 	// empty slot for 1 tier

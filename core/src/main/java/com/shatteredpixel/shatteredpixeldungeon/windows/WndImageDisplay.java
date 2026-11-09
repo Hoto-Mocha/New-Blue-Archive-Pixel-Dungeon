@@ -16,6 +16,10 @@ public class WndImageDisplay extends Window {
     }
 
     public WndImageDisplay(String imagePath, String titleText) {
+        this(imagePath, titleText, true);
+    }
+
+    public WndImageDisplay(String imagePath, String titleText, boolean seen) {
         super();
 
         float currentY = 1 + MARGIN;
@@ -64,6 +68,10 @@ public class WndImageDisplay extends Window {
         // 7. 이미지 위치 지정 (창 내부 정중앙 정렬)
         image.x = (windowWidth - finalImgW) / 2f;
         image.y = currentY;
+
+        if (!seen) {
+            image.brightness(0);
+        }
         add(image);
 
         // 8. 최종 창 크기 설정

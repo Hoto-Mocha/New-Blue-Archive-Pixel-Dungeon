@@ -25,10 +25,10 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
-import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.CrystalSpire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -52,6 +52,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
+import com.shatteredpixel.shatteredpixeldungeon.journal.Gallery;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -571,22 +572,32 @@ public class WndJournal extends WndTabbed {
 		
 		private RedButton[] itemButtons;
 		private static final int NUM_BUTTONS = 4;
+		private static final int MAX_NUM_BUTTONS = 5; //for buttons after winning
+
+		private static int btnNumber() {
+			if (Badges.isUnlocked(Badges.Badge.VICTORY) || DeviceCompat.isDebug()) {
+				return MAX_NUM_BUTTONS;
+			} else {
+				return NUM_BUTTONS;
+			}
+		}
 
 		public static int currentItemIdx   = 0;
-		private static float[] scrollPositions = new float[NUM_BUTTONS];
+		private static float[] scrollPositions = new float[btnNumber()];
 		
 		//sprite locations
 		private static final int EQUIP_IDX = 0;
 		private static final int CONSUM_IDX = 1;
 		private static final int BESTIARY_IDX = 2;
 		private static final int LORE_IDX = 3;
+		private static final int GALLERY_IDX = 4;
 
 		private ScrollingGridPane grid;
 		
 		@Override
 		protected void createChildren() {
-			itemButtons = new RedButton[NUM_BUTTONS];
-			for (int i = 0; i < NUM_BUTTONS; i++){
+			itemButtons = new RedButton[btnNumber()];
+			for (int i = 0; i < btnNumber(); i++){
 				final int idx = i;
 				itemButtons[i] = new RedButton( "" ){
 					@Override
@@ -601,6 +612,9 @@ public class WndJournal extends WndTabbed {
 			itemButtons[CONSUM_IDX].icon(new ItemSprite(ItemSpriteSheet.POTION_HOLDER));
 			itemButtons[BESTIARY_IDX].icon(new ItemSprite(ItemSpriteSheet.MOB_HOLDER));
 			itemButtons[LORE_IDX].icon(new ItemSprite(ItemSpriteSheet.DOCUMENT_HOLDER));
+			if (btnNumber() == MAX_NUM_BUTTONS) {
+				itemButtons[GALLERY_IDX].icon(new ItemSprite(ItemSpriteSheet.PICTURE));
+			}
 
 			grid = new ScrollingGridPane(){
 				@Override
@@ -616,10 +630,10 @@ public class WndJournal extends WndTabbed {
 		protected void layout() {
 			super.layout();
 			
-			int perRow = NUM_BUTTONS;
+			int perRow = btnNumber();
 			float buttonWidth = width()/perRow;
 			
-			for (int i = 0; i < NUM_BUTTONS; i++) {
+			for (int i = 0; i < btnNumber(); i++) {
 				itemButtons[i].setRect(x +(i%perRow) * (buttonWidth),
 						y + (i/perRow) * (ITEM_HEIGHT ),
 						buttonWidth, ITEM_HEIGHT);
@@ -627,16 +641,16 @@ public class WndJournal extends WndTabbed {
 			}
 			
 			grid.setRect(x,
-					itemButtons[NUM_BUTTONS-1].bottom() + 1,
+					itemButtons[btnNumber()-1].bottom() + 1,
 					width,
-					height - itemButtons[NUM_BUTTONS-1].height() - 1);
+					height - itemButtons[btnNumber()-1].height() - 1);
 		}
 		
 		public void updateList() {
 			
 			grid.clear();
 			
-			for (int i = 0; i < NUM_BUTTONS; i++){
+			for (int i = 0; i < btnNumber(); i++){
 				if (i == currentItemIdx){
 					itemButtons[i].icon().color(TITLE_COLOR);
 				} else {
@@ -688,7 +702,7 @@ public class WndJournal extends WndTabbed {
 					addGridEntities(grid, bestiary.entities());
 				}
 
-			} else {
+			} else if (currentItemIdx == LORE_IDX) {
 				int totalItems = 0;
 				int totalSeen = 0;
 				for (Document doc : Document.values()){
@@ -734,10 +748,23 @@ public class WndJournal extends WndTabbed {
 					}
 					addGridDocuments(grid, doc);
 				}
+			} else if (currentItemIdx == GALLERY_IDX) {
+				int totalItems = 0;
+				int totalSeen = 0;
+				for (Gallery gallery : Gallery.values()) {
+					totalItems += gallery.totalArmors();
+					totalSeen += gallery.totalSeen();
+				}
+				grid.addHeader("_" + Messages.get(this, "title_gallery") + "_ (" + totalSeen + "/" + totalItems + ")", 9, true);
+
+				for (Gallery gallery : Gallery.values()){
+					grid.addHeader("_" + Messages.titleCase(gallery.title()) + "_ (" + gallery.totalSeen() + "/" + gallery.totalArmors() + "):");
+					addGridGalleries(grid, gallery, gallery.armors());
+				}
 			}
 
-			grid.setRect(x, itemButtons[NUM_BUTTONS-1].bottom() + 1, width,
-					height - itemButtons[NUM_BUTTONS-1].height() - 1);
+			grid.setRect(x, itemButtons[btnNumber()-1].bottom() + 1, width,
+					height - itemButtons[btnNumber()-1].height() - 1);
 
 			grid.scrollTo(0, scrollPositions[currentItemIdx]);
 		}
@@ -1074,6 +1101,52 @@ public class WndJournal extends WndTabbed {
 				}
 			} else {
 				gridItem.hardLightBG(2.2f, 1f, 2.2f);
+			}
+			grid.addItem(gridItem);
+		}
+	}
+
+	private static void addGridGalleries(ScrollingGridPane grid, Gallery gallery, Collection<Class<?>> classes) {
+		for (Class<?> itemClass : classes) {
+			boolean seen = Gallery.isSeen(itemClass, gallery);
+			ItemSprite sprite = null;
+			String title = "";
+
+			if (Item.class.isAssignableFrom(itemClass)) {
+
+				Item item = (Item) Reflection.newInstance(itemClass);
+
+				sprite = new ItemSprite(item.image, seen ? item.glowing() : null);
+				if (!seen)  {
+					sprite.lightness(0);
+					title = Messages.get(HeroClass.class, gallery.name()) + " - " + "???";
+				} else {
+					title = Messages.get(HeroClass.class, gallery.name()) + " - " + Messages.titleCase( item.name() );
+				}
+			}
+
+			String finalTitle = title;
+			ScrollingGridPane.GridItem gridItem = new ScrollingGridPane.GridItem(sprite) {
+				@Override
+				public boolean onClick(float x, float y) {
+					if (inside(x, y)) {
+						Image sprite = new ItemSprite();
+						sprite.copy(icon);
+						Armor armor = (Armor) Reflection.newInstance(itemClass);
+						String key = armor.armorType.name().toLowerCase();
+						if (ShatteredPixelDungeon.scene() instanceof GameScene){
+							GameScene.show(new WndImageDisplay(Assets.Arts.image(key, gallery.name(), armor.tier), finalTitle, seen));
+						} else {
+							ShatteredPixelDungeon.scene().addToFront(new WndImageDisplay(Assets.Arts.image(key, gallery.name(), armor.tier), finalTitle, seen));
+						}
+						return true;
+					} else {
+						return false;
+					}
+				}
+			};
+			if (!seen) {
+				gridItem.hardLightBG(2f, 1f, 2f);
 			}
 			grid.addItem(gridItem);
 		}
