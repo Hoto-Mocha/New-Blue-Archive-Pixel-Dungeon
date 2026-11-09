@@ -40,9 +40,9 @@ public class SilverBullet extends TargetedMariMiracle {
     }
 
     public String desc(){
-        int min = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 6 : 4;
-        int max = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 12 : 8;
-        int dur = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 6 : 4;
+        int min = Dungeon.hero.pointsInTalent(Talent.MARI_T2_3) == 2 ? 6 : 4;
+        int max = Dungeon.hero.pointsInTalent(Talent.MARI_T2_3) == 2 ? 12 : 8;
+        int dur = Dungeon.hero.pointsInTalent(Talent.MARI_T2_3) == 2 ? 6 : 4;
         return Messages.get(this, "desc", min, max, dur ) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
     }
 
@@ -102,9 +102,9 @@ public class SilverBullet extends TargetedMariMiracle {
         protected void onThrow(int cell) {
             Char ch = Actor.findChar( cell );
             if (ch != null) {
-                int min = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 6 : 4;
-                int max = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 12 : 8;
-                int dur = Dungeon.hero.pointsInTalent(Talent.SUNRAY) == 2 ? 6 : 4;
+                int min = Dungeon.hero.pointsInTalent(Talent.MARI_T2_3) == 2 ? 6 : 4;
+                int max = Dungeon.hero.pointsInTalent(Talent.MARI_T2_3) == 2 ? 12 : 8;
+                int dur = Dungeon.hero.pointsInTalent(Talent.MARI_T2_3) == 2 ? 6 : 4;
                 if (Char.hasProp(ch, Char.Property.DEMONIC) || Char.hasProp(ch, Char.Property.UNDEAD)) {
                     ch.damage(Hero.heroDamageIntRange(max, max), new SilverBullet());
                 } else {
