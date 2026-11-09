@@ -1101,14 +1101,10 @@ public class Gun extends MeleeWeapon {
                 Char enemy = hero.attackTarget();
                 if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
                     //deals 25/33/50% toward max to max on surprise, instead of min to max.
-                    int diff = max() - min();
+                    int diff = bulletMax() - bulletMin();
                     damage = augment.damageFactor(Hero.heroDamageIntRange(
-                            min() + Math.round(diff/(float)(5-((Hero)owner).pointsInTalent(Talent.MIYU_T3_1))),
-                            max()));
-                    int exStr = hero.STR() - STRReq();
-                    if (exStr > 0) {
-                        damage += Hero.heroDamageIntRange(0, exStr);
-                    }
+                            bulletMin() + Math.round(diff/(5f-((Hero)owner).pointsInTalent(Talent.MIYU_T3_1))),
+                            bulletMax()));
                 }
             }
             if (isSnipeShot()) {
