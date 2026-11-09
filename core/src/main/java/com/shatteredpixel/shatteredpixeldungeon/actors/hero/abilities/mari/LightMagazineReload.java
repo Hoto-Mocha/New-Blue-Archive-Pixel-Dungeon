@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -8,6 +9,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 
 public class LightMagazineReload extends ArmorAbility {
@@ -46,6 +48,7 @@ public class LightMagazineReload extends ArmorAbility {
         int bulletsLoaded = gun.maxRound() - gun.round();
         Buff.affect(hero, LightBullet.LightMagazine.class).stack(gun, bulletsLoaded);
         gun.quickReload();
+        Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
 
         armor.charge -= chargeUse(hero);
         armor.updateQuickslot();
