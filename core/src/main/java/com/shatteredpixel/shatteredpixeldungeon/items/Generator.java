@@ -655,7 +655,7 @@ public class Generator {
 					LeatherArmor.class,
 					SchoolSwimSuit.class
 			};
-			ARMOR_T2.defaultProbs = new float[]{ 1, 1 };
+			ARMOR_T2.defaultProbs = new float[]{ 3, 1 };
 			ARMOR_T2.probs = ARMOR_T2.defaultProbs.clone();
 
 			ARMOR_T3.classes = new Class<?>[]{
@@ -664,7 +664,7 @@ public class Generator {
 					JacketRacingSuit.class,
 					PinkPajamas.class
 			};
-			ARMOR_T3.defaultProbs = new float[]{ 1, 1, 1, 1 };
+			ARMOR_T3.defaultProbs = new float[]{ 9, 1, 1, 1 };
 			ARMOR_T3.probs = ARMOR_T3.defaultProbs.clone();
 
 			ARMOR_T4.classes = new Class<?>[]{
@@ -672,7 +672,7 @@ public class Generator {
 					FrilledSwimSuit.class,
 					AnimalPajamas.class
 			};
-			ARMOR_T4.defaultProbs = new float[]{ 1, 1, 1 };
+			ARMOR_T4.defaultProbs = new float[]{ 6, 1, 1 };
 			ARMOR_T4.probs = ARMOR_T4.defaultProbs.clone();
 
 			ARMOR_T5.classes = new Class<?>[]{
@@ -680,7 +680,7 @@ public class Generator {
 					BikiniSwimSuit.class,
 					LatexRacingSuit.class
 			};
-			ARMOR_T5.defaultProbs = new float[]{ 1, 1, 1 };
+			ARMOR_T5.defaultProbs = new float[]{ 6, 1, 1 };
 			ARMOR_T5.probs = ARMOR_T5.defaultProbs.clone();
 
 			ARMOR_CL.classes = new Class<?>[]{
