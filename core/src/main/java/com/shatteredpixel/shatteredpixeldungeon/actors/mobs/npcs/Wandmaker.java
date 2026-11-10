@@ -103,6 +103,7 @@ public class Wandmaker extends NPC {
 	@Override
 	public boolean interact(Char c) {
 		sprite.turnTo( pos, Dungeon.hero.pos );
+		((WandmakerSprite)sprite).awake();
 
 		if (c != Dungeon.hero){
 			return true;
@@ -156,26 +157,7 @@ public class Wandmaker extends NPC {
 
 			String msg1 = "";
 			String msg2 = "";
-			switch(Dungeon.hero.heroClass){
-				case WARRIOR:
-					msg1 += Messages.get(this, "intro_warrior");
-					break;
-				case ROGUE:
-					msg1 += Messages.get(this, "intro_rogue");
-					break;
-				case MAGE:
-					msg1 += Messages.get(this, "intro_mage", Messages.titleCase(Dungeon.hero.name()));
-					break;
-				case HUNTRESS:
-					msg1 += Messages.get(this, "intro_huntress");
-					break;
-				case DUELIST:
-					msg1 += Messages.get(this, "intro_duelist");
-					break;
-				case CLERIC:
-					msg1 += Messages.get(this, "intro_cleric");
-					break;
-			}
+			msg1 += Messages.get(this, "intro_"+Dungeon.hero.heroClass.name());
 
 			msg1 += Messages.get(this, "intro_1");
 

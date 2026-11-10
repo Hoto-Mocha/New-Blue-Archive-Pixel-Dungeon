@@ -400,5 +400,6 @@ public class Assets {
 		public static final String OTOGI  = "sprites/otogi.png";
 		public static final String SORA  = "sprites/sora.png";
 		public static final String AKIRA  = "sprites/akira.png";
+		public static final String MOMOI  = "sprites/momoi.png";
 	}
 }
