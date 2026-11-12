@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.CrystalSpire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Pylon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.items.EnergyCrystal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -1119,9 +1120,17 @@ public class WndJournal extends WndTabbed {
 				sprite = new ItemSprite(item.image, seen ? item.glowing() : null);
 				if (!seen)  {
 					sprite.lightness(0);
-					title = Messages.get(HeroClass.class, gallery.name()) + " - " + "???";
+					if (gallery.name().equalsIgnoreCase("sora")) {
+						title = Messages.get(Shopkeeper.class, "name") + " - " + "???";
+					} else {
+						title = Messages.get(HeroClass.class, gallery.name()) + " - " + "???";
+					}
 				} else {
-					title = Messages.get(HeroClass.class, gallery.name()) + " - " + Messages.titleCase( item.name() );
+					if (gallery.name().equalsIgnoreCase("sora")) {
+						title = Messages.get(Shopkeeper.class, "name") + " - " + Messages.titleCase( item.name() );
+					} else {
+						title = Messages.get(HeroClass.class, gallery.name()) + " - " + Messages.titleCase( item.name() );
+					}
 				}
 			}
 

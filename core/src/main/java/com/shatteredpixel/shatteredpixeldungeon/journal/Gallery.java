@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.journal;
 
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.pajamas.AnimalPajamas;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.pajamas.PinkPajamas;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.racing.JacketRacingSuit;
@@ -30,7 +31,8 @@ public enum Gallery {
     YUZU,
     IZUNA,
     MIKA,
-    MARI;
+    MARI,
+    SORA;
 
     private final LinkedHashMap<Class<?>, Boolean> seen = new LinkedHashMap<>();
 
@@ -44,9 +46,9 @@ public enum Gallery {
         return false;
     }
 
-    public static void setSeen(Class<?> cls, HeroClass heroClass){
+    public static void setSeen(Class<?> cls, String name){
         for (Gallery cat : values()) {
-            if (cat.name().equalsIgnoreCase(heroClass.name()) && cat.seen.containsKey(cls) && !cat.seen.get(cls)) {
+            if (cat.name().equalsIgnoreCase(name) && cat.seen.containsKey(cls) && !cat.seen.get(cls)) {
                 cat.seen.put(cls, true);
                 Journal.saveNeeded = true;
             }
@@ -65,7 +67,11 @@ public enum Gallery {
     }
 
     public String title(){
-        return Messages.get(HeroClass.class, name());
+        if (this == SORA) {
+            return Messages.get(Shopkeeper.class, "name");
+        } else {
+            return Messages.get(HeroClass.class, name());
+        }
     }
 
     public int totalArmors() {

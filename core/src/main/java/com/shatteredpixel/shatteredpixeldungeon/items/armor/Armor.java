@@ -1025,7 +1025,7 @@ public class Armor extends EquipableItem {
 			} catch (Exception e) {
 				return;
 			}
-			Gallery.setSeen(this.getClass(), hero.heroClass);
+			Gallery.setSeen(this.getClass(), hero.heroClass.name());
 			GameScene.show(new WndImageDisplay(Assets.Arts.image(armorType.name().toLowerCase(), hero.heroClass.name(), tier), name()));
 		}
 	}
