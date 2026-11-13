@@ -274,6 +274,7 @@ abstract public class ClassArmor extends Armor {
 								level(armor.trueLevel());
 								tier = armor.tier;
 								augment = armor.augment;
+								armorType = armor.armorType;
 								cursed = armor.cursed;
 								curseInfusionBonus = armor.curseInfusionBonus;
 								masteryPotionBonus = armor.masteryPotionBonus;
