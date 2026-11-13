@@ -111,7 +111,7 @@ public class WndPresent extends Window {
 
         @Override
         public boolean itemSelectable(Item item) {
-            return item.isIdentified() && !item.cursed && (item instanceof SwimSuit || item instanceof RacingSuit || item instanceof Pajamas);
+            return item.isIdentified() && !item.isEquipped(Dungeon.hero) && !item.cursed && item instanceof Armor && ((Armor)item).armorType != Armor.ArmorType.NORMAL;
         }
 
         @Override
