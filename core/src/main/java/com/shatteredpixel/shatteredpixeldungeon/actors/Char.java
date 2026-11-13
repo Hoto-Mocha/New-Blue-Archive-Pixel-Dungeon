@@ -1103,6 +1103,9 @@ public abstract class Char extends Actor {
 					dmg -= Math.round(buff(IronHorus.TacticalShieldBuff.class).drRoll()*0.25f*(Dungeon.hero.pointsInTalent(Talent.HOSHINO_T2_4)+1));
 				}
 			}
+			if (this instanceof Hero && ((Hero)this).belongings.armor() != null) {
+				dmg -= ((Hero)this).belongings.armor().magicDrRoll();
+			}
 
 			if (dmg < 0) dmg = 0;
 		}

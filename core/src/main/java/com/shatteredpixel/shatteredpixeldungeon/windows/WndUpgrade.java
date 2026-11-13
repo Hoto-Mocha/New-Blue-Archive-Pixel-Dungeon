@@ -411,6 +411,11 @@ public class WndUpgrade extends Window {
 						"x"+Messages.decimalFormat("#.##", (((Armor) toUpgrade).healthRegenFactor(levelFrom))),
 						"x"+Messages.decimalFormat("#.##", (((Armor) toUpgrade).healthRegenFactor(levelTo))),
 						bottom);
+			} else if (((Armor)toUpgrade).armorType == Armor.ArmorType.DRESS) {
+				bottom = fillFields(Messages.get(this, "dress_antimagic"),
+						((Armor) toUpgrade).magicDrMin(levelFrom) + "-" + (((Armor) toUpgrade).magicDrMax(levelFrom)),
+						((Armor) toUpgrade).magicDrMin(levelTo) + "-" +  (((Armor) toUpgrade).magicDrMax(levelTo)),
+						bottom);
 			}
 		}
 

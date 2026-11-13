@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.journal;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.dress.WeddingDress;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.pajamas.AnimalPajamas;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.pajamas.PinkPajamas;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.racing.JacketRacingSuit;
@@ -90,7 +91,8 @@ public enum Gallery {
         for (Gallery gallery : values()) {
             gallery.addArmors(SchoolSwimSuit.class, TrinitySwimSuit.class, FrilledSwimSuit.class, BikiniSwimSuit.class,
                     JacketRacingSuit.class, LatexRacingSuit.class,
-                    PinkPajamas.class, AnimalPajamas.class);
+                    PinkPajamas.class, AnimalPajamas.class,
+                    WeddingDress.class);
         }
     }
 

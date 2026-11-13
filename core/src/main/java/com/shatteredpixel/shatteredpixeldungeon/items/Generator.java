@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.PlateArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ScaleArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ShirokoArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.YuzuArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.dress.WeddingDress;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.pajamas.AnimalPajamas;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.pajamas.PinkPajamas;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.racing.JacketRacingSuit;
@@ -678,9 +679,10 @@ public class Generator {
 			ARMOR_T5.classes = new Class<?>[]{
 					PlateArmor.class,
 					BikiniSwimSuit.class,
-					LatexRacingSuit.class
+					LatexRacingSuit.class,
+					WeddingDress.class
 			};
-			ARMOR_T5.defaultProbs = new float[]{ 6, 1, 1 };
+			ARMOR_T5.defaultProbs = new float[]{ 15, 2, 2, 1 };
 			ARMOR_T5.probs = ARMOR_T5.defaultProbs.clone();
 
 			ARMOR_CL.classes = new Class<?>[]{

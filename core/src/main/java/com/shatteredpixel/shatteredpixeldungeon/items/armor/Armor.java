@@ -120,7 +120,8 @@ public class Armor extends EquipableItem {
 		NORMAL 		(0, 1, 0, 0),
 		SWIMSUIT 	(-5, 2, 1, 0),
 		RACING 		(-1, 1, 0, 0),
-		PAJAMAS		(-1, 1, 0, -1);
+		PAJAMAS		(-1, 1, 0, -1),
+		DRESS		(-2, 1, 0, 0);
 
 		private int tierFactor; //방어력 성능 결정
 		private int evasionTries; //회피 시도 횟수
@@ -1016,6 +1017,34 @@ public class Armor extends EquipableItem {
 		} else {
 			return 1f;
 		}
+	}
+
+	public int magicDrMin(int level) {
+		if (armorType == ArmorType.DRESS) {
+			return level;
+		} else {
+			return 0;
+		}
+	}
+
+	public int magicDrMax(int level) {
+		if (armorType == ArmorType.DRESS) {
+			if (Dungeon.isChallenged(Challenges.NO_ARMOR)){
+				return Math.max(0, 1 + tier() + level + augment.defenseFactor(level));
+			} else {
+				return Math.max(0, tier() * (2 + level) + augment.defenseFactor(level));
+			}
+		} else {
+			return 0;
+		}
+	}
+
+	public int magicDrRoll() {
+		return magicDrRoll(buffedLvl());
+	}
+
+	public int magicDrRoll(int level) {
+		return Random.NormalIntRange(magicDrMin(level), magicDrMax(level));
 	}
 
 	public void showArmorImage(Hero hero) {

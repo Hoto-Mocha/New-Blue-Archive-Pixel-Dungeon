@@ -1149,6 +1149,16 @@ public class ItemSpriteSheet {
 		assignItemRect(ANIMAL_PAJAMAS, 	13, 16);
 	}
 
+	private static final int DRESSES = 								xy(9, 47); //8 slots
+	// empty slot for 1 tier
+	// empty slot for 2 tier
+	// empty slot for 3 tier
+	// empty slot for 4 tier
+	public static final int WEDDING_DRESS	= DRESSES+4;
+	static {
+		assignItemRect(WEDDING_DRESS, 13, 12);
+	}
+
 	//for smaller 8x8 icons that often accompany an item sprite
 	public static class Icons {
 
