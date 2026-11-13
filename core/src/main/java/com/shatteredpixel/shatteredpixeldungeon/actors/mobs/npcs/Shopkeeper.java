@@ -436,7 +436,7 @@ public class Shopkeeper extends NPC {
 						if (index > 2){
 							return Dungeon.gold >= buybackItems.get(index-3).value();
 						} else if (index == 2) {
-							return !Dungeon.presentedSora;
+							return !Dungeon.presentedSora && !(Shopkeeper.this instanceof ImpShopkeeper);
 						} else {
 							return super.enabled(index);
 						}
