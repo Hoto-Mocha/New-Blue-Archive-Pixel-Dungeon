@@ -365,7 +365,7 @@ public class Bicycle extends Item {
 
 			Char ch = Actor.findChar(target);
 			if (ch == null || ch == hero || !Dungeon.level.adjacent(hero.pos, ch.pos)) {
-				hero.yellW("cannon_slam");	//"그렇게는 할 수 없어."
+				hero.yellW("cannot_slam");	//"그렇게는 할 수 없어."
 				return;
 			}
 
