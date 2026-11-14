@@ -79,7 +79,7 @@ public class ThunderLance extends TargetedMariMiracle {
         @Override
         protected void onThrow(int cell) {
             Char ch = Actor.findChar( cell );
-            if (ch != null) {
+            if (ch != null && cell != hero.pos) {
                 int min = min(hero);
                 int max = max(hero);
                 int damage;
