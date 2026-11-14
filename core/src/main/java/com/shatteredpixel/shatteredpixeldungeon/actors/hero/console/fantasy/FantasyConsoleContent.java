@@ -28,11 +28,11 @@ public abstract class FantasyConsoleContent extends YuzuConsoleContent {
     }
 
     public int min(Hero hero) {
-        return 5*hero.pointsInTalent(Talent.YUZU_EX1_2)+hero.lvl/3;
+        return 5*hero.pointsInTalent(Talent.YUZU_EX2_2)+hero.lvl/3;
     }
 
     public int max(Hero hero) {
-        return 10*(hero.pointsInTalent(Talent.YUZU_EX1_2)+1)+hero.lvl;
+        return 10*(hero.pointsInTalent(Talent.YUZU_EX2_2)+1)+hero.lvl;
     }
 
     public int damageRoll(Hero hero) {
