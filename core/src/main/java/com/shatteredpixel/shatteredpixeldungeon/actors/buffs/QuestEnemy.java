@@ -39,7 +39,7 @@ public class QuestEnemy extends Buff {
     public static void rollForQuest(Mob m){
         if (Dungeon.hero == null || Dungeon.hero.heroClass != HeroClass.YUZU) return;
         if (Dungeon.mobsToQuest <= 0) Dungeon.mobsToQuest = 8;
-        if (m.buff(ChampionEnemy.class) != null) return;
+        if (!m.buffs(ChampionEnemy.class).isEmpty()) return;
 
         Dungeon.mobsToQuest--;
 
