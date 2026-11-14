@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWea
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.MiningLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
+import com.shatteredpixel.shatteredpixeldungeon.levels.VaultLevel;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ConeAOE;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -274,6 +275,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
     public static boolean isWallBreakable(int depth, int cell) {
         boolean flag;
         if (depth % 5 == 0) flag = Dungeon.level.passable[cell];
+        else if (Dungeon.level instanceof VaultLevel) flag = Dungeon.level.passable[cell];
         else flag = true;
         return flag
                 && cell < Dungeon.level.map.length
