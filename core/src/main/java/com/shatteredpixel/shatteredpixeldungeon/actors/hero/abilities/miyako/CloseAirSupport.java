@@ -95,7 +95,7 @@ public class CloseAirSupport extends ArmorAbility {
                                 break;
                             case 2:
                                 if (hero.belongings.getItem(HandGrenade.class) != null) {
-                                    hero.belongings.getItem(HandGrenade.class).reload(1+Random.Int(1));
+                                    hero.belongings.getItem(HandGrenade.class).reload(1+Random.Int(2));
                                 }
                                 break;
                             case 3:
