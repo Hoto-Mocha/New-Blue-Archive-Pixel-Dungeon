@@ -157,8 +157,8 @@ public class SR_SP extends SR {
                 int power = 4 + 2 * Dungeon.hero.pointsInTalent(Talent.MIYU_ARMOR3_1);
                 WandOfBlastWave.throwChar(defender, trajectory, power, false, true, this);
             }
-            if (Dungeon.hero.hasTalent(Talent.MIYU_ARMOR3_1)) {
-                Buff.affect(defender, Vulnerable.class, 5f*Dungeon.hero.pointsInTalent(Talent.MIYU_ARMOR3_1));
+            if (Dungeon.hero.hasTalent(Talent.MIYU_ARMOR3_2)) {
+                Buff.affect(defender, Vulnerable.class, 5f*Dungeon.hero.pointsInTalent(Talent.MIYU_ARMOR3_2));
             }
             return super.proc(attacker, defender, damage);
         }
