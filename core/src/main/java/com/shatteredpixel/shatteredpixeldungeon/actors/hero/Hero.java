@@ -3076,8 +3076,8 @@ public class Hero extends Char {
 			if (belongings.weapon() instanceof Gun) ((Gun) belongings.weapon()).quickReload();
 			if (belongings.secondWep() instanceof Gun) ((Gun) belongings.secondWep()).quickReload();
 		}
-		if (hasTalent(Talent.MIYU_T2_4)) {
-			Buff.affect(this, GreaterHaste.class).set(1+2*pointsInTalent(Talent.MIYU_T2_4));
+		if (hasTalent(Talent.MIYU_T2_4) && belongings.attackingWeapon() instanceof Gun.Bullet) {
+			Buff.affect(this, GreaterHaste.class).set(2+2*pointsInTalent(Talent.MIYU_T2_4));
 		}
 		if (subClass == HeroSubClass.TELESCOPE) {
 			Buff.affect(this, Snipe.class);
