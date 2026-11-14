@@ -57,8 +57,8 @@ public class Chase extends ArmorAbility {
     public float chargeUse( Hero hero ) {
         float chargeUse = super.chargeUse(hero);
         if (hero.buff(ChaseKillTracker.class) != null){
-            //reduced charge use by 16%/30%/41%/50%
-            chargeUse *= Math.pow(0.84, hero.pointsInTalent(Talent.HOSHINO_ARMOR1_3));
+            //reduced charge use by 16%/29%/41%/50%
+            chargeUse *= (float) Math.pow(0.84, hero.pointsInTalent(Talent.HOSHINO_ARMOR1_3));
         }
         return chargeUse;
     }
