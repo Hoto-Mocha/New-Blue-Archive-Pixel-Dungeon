@@ -34,7 +34,7 @@ public class SpikeShield extends ArmorAbility {
         float chargeUse = super.chargeUse(hero);
 
         if (hero.hasTalent(Talent.HOSHINO_ARMOR2_3) && hero.buff(IronHorus.TacticalShieldCooldown.class) != null) {
-            chargeUse *= Math.pow(0.9f, hero.pointsInTalent(Talent.HOSHINO_ARMOR2_3));
+            chargeUse *= (float) Math.pow(0.9f, hero.pointsInTalent(Talent.HOSHINO_ARMOR2_3));
         }
 
         return chargeUse;
