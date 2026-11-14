@@ -1252,7 +1252,7 @@ public class Gun extends MeleeWeapon {
             boolean killedEnemy = false;
             Char enemy = Actor.findChar( cell );
             for (int i = 0; i < shotPerShoot(); i++) { //데미지 입히는 것과 발사 시 주변에서 나는 연기를 shotPerShoot만큼 반복
-                if (enemy == null || enemy == curUser) {
+                if (enemy == null || enemy == curUser || !enemy.isAlive()) {
                     parent = null;
                     CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
                     CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
@@ -1310,6 +1310,7 @@ public class Gun extends MeleeWeapon {
 
             for (Char target : targets){
                 for (int i = 0; i < shotPerShoot(); i++) {
+                    if (!target.isAlive()) break;
                     if (curUser.buff(HPBullet.HPBulletBuff.class) != null) {
                         if (!curUser.buff(HPBullet.HPBulletBuff.class).proc(target, damageRoll(curUser))) curUser.shoot(target, this);
                     } else {
