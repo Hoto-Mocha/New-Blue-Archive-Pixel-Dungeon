@@ -1048,7 +1048,7 @@ public class Armor extends EquipableItem {
 	}
 
 	public void showArmorImage(Hero hero) {
-		if (SPDSettings.imageDisplay() && !Dungeon.customSeedText.contains("test")) {
+		if (SPDSettings.imageDisplay() && Dungeon.customSeedText.isEmpty()) {
 			try {
 				WndImageDisplay.getImage(Assets.Arts.image(armorType.name().toLowerCase(), hero.heroClass.name(), tier));
 			} catch (Exception e) {

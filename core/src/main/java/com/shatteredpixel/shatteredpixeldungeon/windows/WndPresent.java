@@ -71,7 +71,7 @@ public class WndPresent extends Window {
                         @Override
                         public void hide() {
                             super.hide();
-                            if (SPDSettings.imageDisplay() && !Dungeon.customSeedText.contains("test")) {
+                            if (SPDSettings.imageDisplay() && Dungeon.customSeedText.isEmpty()) {
                                 try {
                                     WndImageDisplay.getImage(Assets.Arts.image(((Armor)item).armorType.name().toLowerCase(), "sora", ((Armor)item).tier));
                                 } catch (Exception e) {
