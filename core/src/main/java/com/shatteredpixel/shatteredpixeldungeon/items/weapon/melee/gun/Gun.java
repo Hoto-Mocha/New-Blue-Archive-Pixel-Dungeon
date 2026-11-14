@@ -437,6 +437,8 @@ public class Gun extends MeleeWeapon {
     }
 
     public void reload() {
+        onReload();
+        
         if (hero.heroClass == HeroClass.MARI) {
             CrossNecklace necklace = hero.belongings.getItem(CrossNecklace.class);
             if (necklace == null || (!necklace.isEquipped(hero) && !hero.hasTalent(Talent.MARI_T3_2))) {
@@ -454,8 +456,6 @@ public class Gun extends MeleeWeapon {
         } else {
             quickReload();
         }
-
-        onReload();
 
         hero.busy();
         hero.sprite.operate(hero.pos);
