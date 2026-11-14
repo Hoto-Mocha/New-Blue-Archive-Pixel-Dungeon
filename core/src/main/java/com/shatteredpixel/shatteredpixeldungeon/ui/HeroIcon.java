@@ -136,7 +136,7 @@ public class HeroIcon extends Image {
 	public static final int SWITCHING		= 128+16;
 	public static final int CHASE			= 128+17;
 	public static final int CALL_OF_STAR	= 128+18;
-	public static final int LITTLE_ANGRY	= 128+19;
+	public static final int SHOOTING_STAR 	= 128+19;
 	public static final int DEVOUT_PRAYER	= 128+20;
 	public static final int SYMBOL_OF_PEACE	= 128+21;
 
@@ -190,7 +190,7 @@ public class HeroIcon extends Image {
   	public static final int AVANT_GARDE_KUN_ACTION		= 128+75;
   	public static final int CHASE_ACTION				= 128+76;
   	public static final int CALL_OF_STAR_ACTION			= 128+77;
-  	public static final int LITTLE_ANGRY_ACTION			= 128+78;
+  	public static final int SHOOTING_STAR_ACTION 		= 128+78;
 
 	//Yuzu abilities
 	public static final int SHOP_1			= 128 + 88;

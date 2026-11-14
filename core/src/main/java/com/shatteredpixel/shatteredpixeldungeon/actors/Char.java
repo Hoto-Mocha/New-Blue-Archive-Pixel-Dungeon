@@ -59,7 +59,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invulnerability;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LittleAngry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
@@ -85,10 +84,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari.MariTrinity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.Chase;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari.MariTrinity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.DeathMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.PenetrationShot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
@@ -111,8 +110,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Tengu;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.MirrorImage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.PrismaticImage;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
@@ -1230,10 +1229,6 @@ public abstract class Char extends Actor {
 			//special case for shiroko armor ability
 			if (src == Dungeon.hero
 					&& Dungeon.hero.buff(PenetrationShot.IgnoreArmor.class) != null){
-				icon = FloatingText.PHYS_DMG_NO_BLOCK;
-			}
-
-			if (src == LittleAngry.class){
 				icon = FloatingText.PHYS_DMG_NO_BLOCK;
 			}
 

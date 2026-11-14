@@ -60,7 +60,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invulnerability;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Levitation;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LittleAngry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
@@ -78,7 +77,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.TimeStasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.YuzuStatus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari.MariTrinity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.AscendedForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
@@ -86,12 +84,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.El
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.ShieldParry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.Blink;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari.MariTrinity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.PerfectDeception;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.GPSRoute;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.fantasy.Thunder;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.HealingTouch;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.HolyMantle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.LightBullet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.MariMiracle;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.miracles.Pray;
@@ -203,15 +201,14 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.WelcomeScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
-import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ImpSprite;
+import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
@@ -1109,9 +1106,6 @@ public class Hero extends Char {
 
 		if (hasTalent(Talent.NONOMI_T3_2) && buff(Talent.AutoReloadBuff.class) == null) {
 			Buff.affect(this, Talent.AutoReloadBuff.class);
-		}
-		if (subClass == HeroSubClass.LITTLE_ANGRY && buff(LittleAngry.class) == null) {
-			Buff.affect(this, LittleAngry.class);
 		}
 
 		if (buff(NoticeTracker.class) != null) Item.updateQuickslot();
@@ -3114,10 +3108,6 @@ public class Hero extends Char {
 		if (buff(Blink.PerfectAssassination.class) != null) {
 			buff(Blink.PerfectAssassination.class).detach();
 			Buff.affect(this, Talent.LethalMomentumTracker.class, 0f);
-		}
-
-		if (hasTalent(Talent.MIKA_EX2_3)) {
-			Buff.affect(this, Sungrass.Health.class).boost(pointsInTalent(Talent.MIKA_EX2_3));
 		}
 	}
 

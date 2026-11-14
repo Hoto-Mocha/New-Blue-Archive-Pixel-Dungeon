@@ -159,7 +159,7 @@ public enum HeroClass {
 	MIYU(HeroSubClass.TELESCOPE, HeroSubClass.CAMOUFLAGE),
 	YUZU(HeroSubClass.AVANT_GARDE_KUN, HeroSubClass.GAME_START),
 	IZUNA(HeroSubClass.SWITCHING, HeroSubClass.CHASE),
-	MIKA(HeroSubClass.CALL_OF_STAR, HeroSubClass.LITTLE_ANGRY),
+	MIKA(HeroSubClass.CALL_OF_STAR, HeroSubClass.SHOOTING_STAR),
 	MARI(HeroSubClass.DEVOUT_PRAYER, HeroSubClass.SYMBOL_OF_PEACE),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),

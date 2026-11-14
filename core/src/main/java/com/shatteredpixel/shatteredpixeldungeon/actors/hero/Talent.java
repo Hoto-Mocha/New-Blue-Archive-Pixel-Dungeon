@@ -45,10 +45,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LittleAngry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.NoticeTracker;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitSquadBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
@@ -56,6 +54,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ScrollEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootAllBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShootingStar;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SuperNovaCharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SupportDrone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
@@ -107,7 +106,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfClairvoyance
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
@@ -2106,24 +2104,12 @@ public enum Talent {
 			Buff.affect(hero, CallOfStar.class).onHit(hero.belongings.attackingWeapon());
 		}
 
-		if (hero.subClass == HeroSubClass.LITTLE_ANGRY) {
-			if (enemy.buff(Paralysis.class) != null && enemy.buff(WandOfBlastWave.BWaveOnHitTracker.class) == null){
-				enemy.buff(Paralysis.class).detach();
-				int bonusDmg = Hero.heroDamageIntRange(hero.lvl + hero.STR()*2, 2*(hero.lvl + hero.STR()*2));
-				if (hero.hasTalent(Talent.MIKA_EX2_2)) {
-					bonusDmg = Math.round(bonusDmg*(1+(hero.pointsInTalent(Talent.MIKA_EX2_2)/6f)*((hero.HT-hero.HP)/(float)hero.HT)));
-				}
-				enemy.damage(bonusDmg, LittleAngry.class);
-				WandOfBlastWave.BlastWave.blast(enemy.pos);
-				Sample.INSTANCE.play( Assets.Sounds.BLAST );
-
-				//brief immunity, to prevent stacking absurd damage with it with things like para gas
-				Buff.prolong(enemy, WandOfBlastWave.BWaveOnHitTracker.class, 3f);
-			}
-		}
-
 		if (hero.buff(PerfectDeception.DeceptionBuff.class) != null) {
 			dmg = hero.buff(PerfectDeception.DeceptionBuff.class).onAttack(dmg, enemy);
+		}
+
+		if (hero.subClass == HeroSubClass.SHOOTING_STAR) {
+			Buff.affect(hero, ShootingStar.class).hit();
 		}
 
 		return dmg;
@@ -2750,7 +2736,7 @@ public enum Talent {
 			case CALL_OF_STAR:
 				Collections.addAll(tierTalents, MIKA_EX1_1, MIKA_EX1_2, MIKA_EX1_3);
 				break;
-			case LITTLE_ANGRY:
+			case SHOOTING_STAR:
 				Collections.addAll(tierTalents, MIKA_EX2_1, MIKA_EX2_2, MIKA_EX2_3);
 				break;
 			case DEVOUT_PRAYER:
