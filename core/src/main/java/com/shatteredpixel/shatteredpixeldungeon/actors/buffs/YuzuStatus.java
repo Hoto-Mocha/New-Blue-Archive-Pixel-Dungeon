@@ -79,13 +79,13 @@ public class YuzuStatus extends Buff {
     }
 
     public float criticalDamage(Hero hero, Char enemy, float dmg) {
-        if (hero.buff(SerialCritBuff.class) != null) hero.buff(SerialCritBuff.class).detach();
         if (isCritical(hero)) {
             dmg *= critDmgMulti(hero);
             dmg += critDmgBonus(hero);
             Buff.affect(hero, CriticalTracker.class);
             onCritical(hero, enemy);
         }
+        if (hero.buff(SerialCritBuff.class) != null) hero.buff(SerialCritBuff.class).detach();
 
         return dmg;
     }
