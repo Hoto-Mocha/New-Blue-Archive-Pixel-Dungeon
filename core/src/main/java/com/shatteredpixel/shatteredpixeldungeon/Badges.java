@@ -231,7 +231,9 @@ public class Badges {
 		BOSS_SLAIN_3_SWITCHING,
 		BOSS_SLAIN_3_CHASE,
 		BOSS_SLAIN_3_CALL_OF_STAR,
-		BOSS_SLAIN_3_LITTLE_ANGRY,
+		BOSS_SLAIN_3_SHOOTING_STAR,
+		BOSS_SLAIN_3_DEVOUT_PRAYER,
+		BOSS_SLAIN_3_SYMBOL_OF_PEACE,
 //		BOSS_SLAIN_3_GLADIATOR,
 //		BOSS_SLAIN_3_BERSERKER,
 //		BOSS_SLAIN_3_WARLOCK,
@@ -914,8 +916,10 @@ public class Badges {
 		thirdBossSubclassBadges.put(HeroSubClass.GAME_START, Badge.BOSS_SLAIN_3_GAME_START);
 		thirdBossSubclassBadges.put(HeroSubClass.SWITCHING, Badge.BOSS_SLAIN_3_SWITCHING);
 		thirdBossSubclassBadges.put(HeroSubClass.CHASE, Badge.BOSS_SLAIN_3_CHASE);
-		thirdBossSubclassBadges.put(HeroSubClass.CALL_OF_STAR, Badge.BOSS_SLAIN_3_SWITCHING);
-		thirdBossSubclassBadges.put(HeroSubClass.LITTLE_ANGRY, Badge.BOSS_SLAIN_3_CHASE);
+		thirdBossSubclassBadges.put(HeroSubClass.CALL_OF_STAR, Badge.BOSS_SLAIN_3_CALL_OF_STAR);
+		thirdBossSubclassBadges.put(HeroSubClass.SHOOTING_STAR, Badge.BOSS_SLAIN_3_SHOOTING_STAR);
+		thirdBossSubclassBadges.put(HeroSubClass.DEVOUT_PRAYER, Badge.BOSS_SLAIN_3_DEVOUT_PRAYER);
+		thirdBossSubclassBadges.put(HeroSubClass.SYMBOL_OF_PEACE, Badge.BOSS_SLAIN_3_SYMBOL_OF_PEACE);
 //		thirdBossSubclassBadges.put(HeroSubClass.BERSERKER, Badge.BOSS_SLAIN_3_BERSERKER);
 //		thirdBossSubclassBadges.put(HeroSubClass.GLADIATOR, Badge.BOSS_SLAIN_3_GLADIATOR);
 //		thirdBossSubclassBadges.put(HeroSubClass.BATTLEMAGE, Badge.BOSS_SLAIN_3_BATTLEMAGE);
