@@ -68,7 +68,7 @@ public class ShieldParry extends ArmorAbility {
                 if (hero.belongings.weapon() instanceof Gun) {
                     float possibleRounds = 0.5f*hero.pointsInTalent(Talent.HOSHINO_ARMOR3_3);
                     int rounds = (int)possibleRounds;
-                    if (Random.Float() < rounds % 1f){
+                    if (Random.Float() < possibleRounds % 1f){
                         rounds++;
                     }
                     ((Gun)hero.belongings.weapon()).manualReload(rounds, true);
