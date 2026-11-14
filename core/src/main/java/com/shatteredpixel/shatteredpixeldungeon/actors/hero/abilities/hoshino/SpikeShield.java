@@ -43,12 +43,13 @@ public class SpikeShield extends ArmorAbility {
     @Override
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
         if (hero.hasTalent(Talent.HOSHINO_ARMOR2_3) && hero.buff(IronHorus.TacticalShieldCooldown.class) != null) {
-            hero.buff(IronHorus.TacticalShieldCooldown.class).detach();
             hero.sprite.operate(hero.pos);
             Sample.INSTANCE.play(Assets.Sounds.MISS);
             hero.sprite.emitter().burst(Speck.factory(Speck.JET), 5);
             armor.charge -= chargeUse( hero );
             armor.updateQuickslot();
+            hero.buff(IronHorus.TacticalShieldCooldown.class).detach();
+            return;
         }
 
         if (hero.buff(IronHorus.LightTacticalShieldBuff.class) == null && hero.buff(IronHorus.TacticalShieldBuff.class) == null) {
