@@ -559,7 +559,7 @@ public abstract class RegularLevel extends Level {
 			Talent.HardTackDropped dropped = Buff.affect(Dungeon.hero, Talent.HardTackDropped.class);
 			int targetFloor = (int)(2 + dropped.count());
 			if (dropped.count() > 4) targetFloor++;
-			if (Dungeon.depth >= targetFloor && dropped.count() < 2 + 2*Dungeon.hero.pointsInTalent(Talent.CACHED_RATIONS)){
+			if (Dungeon.depth >= targetFloor && dropped.count() < 2 + 2*Dungeon.hero.pointsInTalent(Talent.MIYU_T1_1)){
 				int cell;
 				int tries = 100;
 				boolean valid;
