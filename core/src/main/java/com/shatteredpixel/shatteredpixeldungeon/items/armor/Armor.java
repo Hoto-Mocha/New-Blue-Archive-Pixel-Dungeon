@@ -276,8 +276,6 @@ public class Armor extends EquipableItem {
 	@Override
 	public boolean doEquip( Hero hero ) {
 
-		showArmorImage(hero);
-
 		// 15/25% chance
 		if (hero.heroClass != HeroClass.CLERIC && hero.hasTalent(Talent.HOLY_INTUITION)
 				&& cursed && !cursedKnown
@@ -291,6 +289,8 @@ public class Armor extends EquipableItem {
 
 		Armor oldArmor = hero.belongings.armor;
 		if (hero.belongings.armor == null || hero.belongings.armor.doUnequip( hero, true, false )) {
+
+			showArmorImage(hero);
 			
 			hero.belongings.armor = this;
 			
