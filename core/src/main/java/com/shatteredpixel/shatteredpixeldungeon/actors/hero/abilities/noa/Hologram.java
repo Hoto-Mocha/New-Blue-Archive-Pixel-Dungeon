@@ -178,7 +178,7 @@ public class Hologram extends ArmorAbility {
         @Override
         public int drRoll() {
             int dr = super.drRoll();
-            if (hero.hasTalent(Talent.NOA_ARMOR1_2)) dr += Random.NormalIntRange(hero.pointsInTalent(Talent.NOA_ARMOR1_2), 4*hero.pointsInTalent(Talent.NOA_ARMOR1_2));
+            if (hero.hasTalent(Talent.NOA_ARMOR2_2)) dr += Random.NormalIntRange(hero.pointsInTalent(Talent.NOA_ARMOR2_2), 4*hero.pointsInTalent(Talent.NOA_ARMOR2_2));
             return dr;
         }
 
