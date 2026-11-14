@@ -145,7 +145,7 @@ public class PerfectDeception extends ArmorAbility {
             if (!(defender instanceof Mob && ((Mob) defender).surprisedBy(Dungeon.hero))) return damage;
             if (Char.hasProp(defender, Char.Property.BOSS)
                     || Char.hasProp(defender, Char.Property.MINIBOSS)
-                    || defender.buff(ChampionEnemy.class) != null) {
+                    || !defender.buffs(ChampionEnemy.class).isEmpty()) {
                 return damage;
             } else {
                 defender.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
