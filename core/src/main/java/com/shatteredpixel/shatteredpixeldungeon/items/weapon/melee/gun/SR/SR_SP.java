@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -11,13 +12,16 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.miyu.AntiM
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.PenetrationShot;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
@@ -63,6 +67,12 @@ public class SR_SP extends SR {
 
     @Override
     public void doDrop(Hero hero) {
+        if (cursed
+                && hero.buff(MagicImmune.class) == null
+                && (!hero.belongings.lostInventory() || keptThroughLostInventory())) {
+            GLog.w(Messages.get(EquipableItem.class, "unequip_cursed"));
+            return;
+        }
         changeWeapon(hero, true);
         Dungeon.level.drop(originalGun, hero.pos).sprite.drop();
     }
@@ -70,6 +80,13 @@ public class SR_SP extends SR {
     @Override
     public boolean doUnequip(Hero hero, boolean collect, boolean single) {
         changeWeapon(hero, true);
+        if (cursed
+                && hero.buff(MagicImmune.class) == null
+                && (!hero.belongings.lostInventory() || keptThroughLostInventory())) {
+            GLog.w(Messages.get(EquipableItem.class, "unequip_cursed"));
+            Dungeon.hero.belongings.weapon = originalGun;
+            return false;
+        }
         if (collect) {
             if (!originalGun.collect(hero.belongings.backpack)) {
                 Dungeon.level.drop(originalGun, hero.pos).sprite.drop();
