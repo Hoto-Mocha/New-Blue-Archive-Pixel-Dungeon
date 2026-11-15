@@ -84,11 +84,12 @@ public class AntiMaterialRifle extends ArmorAbility {
                     gun.quickReload();
                     break;
                 case 3:
-                    sr.manualReload(1, true);
+                    gun.manualReload(1, true);
                     gun.quickReload();
                     if (Random.Float() < 0.5f) {
                         sr.manualReload(2, true);
-                        gun.manualReload(1, true);
+                    } else {
+                        sr.manualReload(1, true);
                     }
                     break;
                 case 4:
