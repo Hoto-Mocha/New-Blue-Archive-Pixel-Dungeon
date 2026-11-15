@@ -92,7 +92,7 @@ public class PerfectDeception extends ArmorAbility {
             hero.sprite.operate(hero.pos);
             hero.spendAndNext(1);
 
-            if (Random.Float() < hero.pointsInTalent(Talent.MIKA_ARMOR3_1)) {
+            if (Random.Float() < 0.25f*hero.pointsInTalent(Talent.MIKA_ARMOR3_1)) {
                 Buff.affect(hero, Invisibility.class, 1f);
                 Sample.INSTANCE.play(Assets.Sounds.MELD);
             }
