@@ -622,7 +622,7 @@ public class Hero extends Char {
 				} else if (buff(Talent.PerfectPrecisionTracker.class) != null) {
 					switch (pointsInTalent(Talent.NOA_T3_1)){
 						default: case 1:
-							accuracy *= 2; break;
+							accuracy *= 3; break;
 						case 2:
 							accuracy *= 5; break;
 						case 3:
