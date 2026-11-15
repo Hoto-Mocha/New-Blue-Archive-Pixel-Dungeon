@@ -98,8 +98,13 @@ public class SuperNovaCharge extends CounterBuff implements ActionIndicator.Acti
             hero.yellW("no_cooldown");
         } else {
             float duration = hero.buff(SuperNova.SuperNovaCooldown.class).duration();
-            countDown((int)duration);
-            hero.buff(SuperNova.SuperNovaCooldown.class).detach();
+            if (count() >= duration) {
+                hero.buff(SuperNova.SuperNovaCooldown.class).detach();
+                countDown((int)duration);
+            } else {
+                hero.buff(SuperNova.SuperNovaCooldown.class).hit((int)count());
+                detach();
+            }
         }
     }
 
