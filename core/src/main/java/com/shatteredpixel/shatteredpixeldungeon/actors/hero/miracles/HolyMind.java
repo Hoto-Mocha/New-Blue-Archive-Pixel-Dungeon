@@ -23,7 +23,7 @@ public class HolyMind extends TrinityMiracle {
 
     @Override
     public String desc() {
-        int range = Dungeon.hero.pointsInTalent(Talent.MARI_ARMOR2_1);
+        int range = Dungeon.hero.pointsInTalent(Talent.MARI_ARMOR2_2);
         int maxRange = 12;
         return Messages.get(this, "desc", range, maxRange) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
     }

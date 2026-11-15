@@ -175,7 +175,7 @@ public class MariTrinity extends ArmorAbility {
         }
 
         public int mindVisionRange() {
-            return Math.min(12, mindVision*Dungeon.hero.pointsInTalent(Talent.MARI_ARMOR2_2));
+            return Math.min(12, mindVision*(1+Dungeon.hero.pointsInTalent(Talent.MARI_ARMOR2_2)));
         }
 
         private int minDr(Hero hero) {
