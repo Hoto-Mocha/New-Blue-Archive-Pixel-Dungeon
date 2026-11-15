@@ -480,7 +480,7 @@ public class Gun extends MeleeWeapon {
         }
 
         if (round == 0 && hero.hasTalent(Talent.NOA_T2_4)) {
-            Buff.affect(hero, GreaterHaste.class).set(hero.pointsInTalent(Talent.NOA_T2_4));
+            Buff.affect(hero, GreaterHaste.class).set((int)reloadTime() + hero.pointsInTalent(Talent.NOA_T2_4));
         }
 
         if (hero.hasTalent(Talent.NOA_EX1_1) && hero.belongings.secondWep() instanceof Gun) {
