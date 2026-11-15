@@ -94,7 +94,7 @@ public class Grenade extends Item {
     @Override
     public String info() {
         String info = super.info();
-        info += "\n\n" + Messages.get(this, "throw_desc", explodeMinDmg(), explodeMaxDmg(), amount, maxAmount(), Messages.decimalFormat("#.##", dropChance*100));
+        info += "\n\n" + Messages.get(this, "throw_desc", explodeMinDmg(buffedLvl()), explodeMaxDmg(buffedLvl()), amount, maxAmount(), Messages.decimalFormat("#.##", dropChance*100));
         return info;
     }
 
@@ -148,12 +148,12 @@ public class Grenade extends Item {
         return true;
     }
 
-    public int explodeMinDmg(){
-        return 5 + Dungeon.scalingDepth();
+    public int explodeMinDmg(int lvl){
+        return 5 + lvl + Dungeon.scalingDepth();
     }
 
-    public int explodeMaxDmg(){
-        return 10 + Dungeon.scalingDepth()*2;
+    public int explodeMaxDmg(int lvl){
+        return 10 + 2*lvl + Dungeon.scalingDepth()*2;
     }
 
     //needs to be overridden
@@ -242,7 +242,7 @@ public class Grenade extends Item {
                 continue;
             }
 
-            int dmg = Random.NormalIntRange(explodeMinDmg(), explodeMaxDmg());
+            int dmg = Hero.heroDamageIntRange(explodeMinDmg(buffedLvl()), explodeMaxDmg(buffedLvl()));
 
             //those not at the center of the blast take less damage
             if (ch.pos != cell){

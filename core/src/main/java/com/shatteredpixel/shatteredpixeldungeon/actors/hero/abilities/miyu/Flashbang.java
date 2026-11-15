@@ -66,12 +66,12 @@ public class Flashbang extends ArmorAbility {
 
     public static class FlashBangGrenade extends Grenade {
         @Override
-        public int explodeMinDmg() {
+        public int explodeMinDmg(int lvl) {
             return 0;
         }
 
         @Override
-        public int explodeMaxDmg() {
+        public int explodeMaxDmg(int lvl) {
             return 0;
         }
 

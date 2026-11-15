@@ -16,8 +16,8 @@ public class HandGrenade extends Grenade {
     }
 
     @Override
-    public int explodeMinDmg() {
-        int dmg = super.explodeMinDmg();
+    public int explodeMinDmg(int lvl) {
+        int dmg = super.explodeMinDmg(lvl);
         if (Dungeon.hero != null) {
             if (Dungeon.hero.hasTalent(Talent.MIYAKO_T1_1)) dmg += Dungeon.hero.pointsInTalent(Talent.MIYAKO_T1_1)+1;
         }
@@ -25,8 +25,8 @@ public class HandGrenade extends Grenade {
     }
 
     @Override
-    public int explodeMaxDmg() {
-        int dmg = super.explodeMaxDmg();
+    public int explodeMaxDmg(int lvl) {
+        int dmg = super.explodeMaxDmg(lvl);
         if (Dungeon.hero != null) {
             if (Dungeon.hero.hasTalent(Talent.MIYAKO_T1_1)) dmg += Dungeon.hero.pointsInTalent(Talent.MIYAKO_T1_1)+1;
         }

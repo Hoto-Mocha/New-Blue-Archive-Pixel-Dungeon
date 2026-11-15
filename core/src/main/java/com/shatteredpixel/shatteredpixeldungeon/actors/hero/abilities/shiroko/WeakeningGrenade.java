@@ -69,13 +69,13 @@ public class WeakeningGrenade extends ArmorAbility {
     public static class WeakeningGrenadeItem extends Grenade {
 
         @Override
-        public int explodeMinDmg(){
-            return Math.round((5 + Dungeon.scalingDepth()) * (1+0.25f*Dungeon.hero.pointsInTalent(Talent.SHIROKO_ARMOR2_1)));
+        public int explodeMinDmg(int lvl){
+            return Math.round((5 + lvl + Dungeon.scalingDepth()) * (1+0.25f*Dungeon.hero.pointsInTalent(Talent.SHIROKO_ARMOR2_1)));
         }
 
         @Override
-        public int explodeMaxDmg(){
-            return Math.round((10 + Dungeon.scalingDepth()*2) * (1+0.25f*Dungeon.hero.pointsInTalent(Talent.SHIROKO_ARMOR2_1)));
+        public int explodeMaxDmg(int lvl){
+            return Math.round((10 + 2*lvl + Dungeon.scalingDepth()*2) * (1+0.25f*Dungeon.hero.pointsInTalent(Talent.SHIROKO_ARMOR2_1)));
         }
 
         @Override

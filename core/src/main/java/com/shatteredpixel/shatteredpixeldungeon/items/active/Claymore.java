@@ -44,6 +44,16 @@ public class Claymore extends Grenade {
     }
 
     @Override
+    public int explodeMinDmg(int lvl) {
+        return super.explodeMinDmg(lvl)*2;
+    }
+
+    @Override
+    public int explodeMaxDmg(int lvl) {
+        return super.explodeMaxDmg(lvl)*2;
+    }
+
+    @Override
     public Boomer knockItem(){
         return new Blaster();
     }
@@ -95,7 +105,7 @@ public class Claymore extends Grenade {
             }
 
             for (Char ch : affected) {
-                ch.damage(2*Random.NormalIntRange(5 + buffedLvl() + Dungeon.scalingDepth(), 10 + 2*buffedLvl() + Dungeon.scalingDepth()*2)*openUpMulti, this);
+                ch.damage(Hero.heroDamageIntRange(explodeMinDmg(buffedLvl()), explodeMaxDmg(buffedLvl()))*openUpMulti, this);
                 ch.sprite.flash();
                 Sample.INSTANCE.play(Assets.Sounds.HIT);
                 if (Random.Float() < 0.4f + 0.1f*buffedLvl()) {
