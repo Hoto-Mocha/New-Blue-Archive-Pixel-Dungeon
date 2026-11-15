@@ -32,7 +32,6 @@ public class WallDig extends SandboxConsoleContent {
         }
 
         hero.sprite.zap(target);
-        Dungeon.level.map[target] = Terrain.EMPTY;
         hero.spendAndNext(1);
 
         Dungeon.level.breakWall(target);

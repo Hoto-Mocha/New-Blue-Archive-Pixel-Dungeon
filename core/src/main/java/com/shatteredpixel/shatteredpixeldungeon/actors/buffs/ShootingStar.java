@@ -154,18 +154,7 @@ public class ShootingStar extends CounterBuff implements ActionIndicator.Action 
                                             CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
                                         }
 
-                                        if (Dungeon.level.flamable[c]) {
-                                            Dungeon.level.destroy(c);
-                                            GameScene.updateMap(c);
-                                        }
-
-                                        if (CallOfStar.isWallBreakable(Dungeon.depth, c) && Dungeon.level.solid[c]) {
-                                            for (int j : PathFinder.NEIGHBOURS9) {
-                                                Dungeon.level.discoverable[c+j] = true;
-                                            }
-                                            Level.set(c, Terrain.EMPTY);
-                                            GameScene.updateMap(c);
-                                        }
+                                        Dungeon.level.destroyTerrain(c);
 
                                         Char ch = Actor.findChar(c);
                                         if (ch != null) {

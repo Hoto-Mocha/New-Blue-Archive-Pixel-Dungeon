@@ -192,7 +192,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
         ArrayList<Char> affectedChars = new ArrayList<>();
 
         //중앙 타일
-        if (isWallBreakable(Dungeon.depth, center)) {
+        if (Dungeon.level.canBreakWall(center)) {
             affectedCells.add(center);
         }
         if (Actor.findChar(center) != null) {
@@ -201,7 +201,9 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
 
         //중앙 타일을 제외한 타일
         for (int cell : aoe.cells) {
-            if (isWallBreakable(Dungeon.depth, cell)) {
+            if (Dungeon.level.passable[cell]) {
+                affectedCells.add(cell);
+            } else if (Dungeon.level.solid[cell] && Dungeon.level.canBreakWall(cell)) {
                 affectedCells.add(cell);
             }
             if (Actor.findChar(cell) != null) {
@@ -210,27 +212,8 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
         }
 
         for (int cell : affectedCells) {
-            if (Dungeon.level.solid[cell]) {
-                if (Dungeon.level instanceof MiningLevel) {
-                    if (Dungeon.level.map[cell] == Terrain.WALL_DECO) {
-                        DarkGold gold = new DarkGold();
-                        Dungeon.level.drop( gold, cell ).sprite.drop();
-                    }
-                    Level.set(cell, Terrain.EMPTY_DECO);
-                } else {
-                    Level.set(cell, Terrain.EMPTY);
-                }
-            }
-            if (Dungeon.level.flamable[cell]) {
-                Level.set(cell, Terrain.EMBERS);
-            }
-
+            Dungeon.level.destroyTerrain(cell);
             CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 4);
-            for (int i : PathFinder.NEIGHBOURS9) {
-                Dungeon.level.discoverable[cell+i] = true;
-            }
-            Dungeon.level.losBlocking[cell] = false;
-            GameScene.updateMap(cell);
         }
         Dungeon.observe();
 
@@ -270,23 +253,6 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
         float reductionRate = 1-0.05f*hero.pointsInTalent(Talent.MIKA_EX1_1)*killCount;
         reductionRate = Math.max(reductionRate, 0);
         return Math.min(count*2*reductionRate, CallOfStarCooldown.DURATION);
-    }
-
-    public static boolean isWallBreakable(int depth, int cell) {
-        boolean flag;
-        if (depth % 5 == 0) flag = Dungeon.level.passable[cell];
-        else if (Dungeon.level instanceof VaultLevel) flag = Dungeon.level.passable[cell];
-        else if (Dungeon.level.map[cell] == Terrain.ALCHEMY) flag = false;
-        else if (Dungeon.level.map[cell] == Terrain.LOCKED_DOOR) flag = false;
-        else if (Dungeon.level.map[cell] == Terrain.HERO_LKD_DR) flag = false;
-        else if (Dungeon.level.map[cell] == Terrain.CRYSTAL_DOOR) flag = false;
-        else flag = true;
-        return flag
-                && cell < Dungeon.level.map.length
-                && cell % Dungeon.level.width() != 0                          //왼쪽 벽
-                && cell % Dungeon.level.width() != Dungeon.level.width()-1    //오른쪽 벽
-                && cell > Dungeon.level.width()                               //위쪽 벽
-                && cell < Dungeon.level.map.length-Dungeon.level.width();     //아래쪽 벽
     }
 
     public static class CallOfStarCooldown extends FlavourBuff {

@@ -1727,20 +1727,24 @@ public abstract class Level implements Bundlable {
 
 
 	public boolean canBreakWall(int cell) {
-		boolean canBreakWall = Dungeon.level.solid[cell]
-				&& Dungeon.level.map[cell] != Terrain.ALCHEMY
-				&& cell % Dungeon.level.width() != 0                          //왼쪽 벽
-				&& cell % Dungeon.level.width() != Dungeon.level.width()-1    //오른쪽 벽
-				&& cell > Dungeon.level.width()                               //위쪽 벽
-				&& cell < Dungeon.level.map.length-Dungeon.level.width();     //아래쪽 벽
-		boolean canBreakLevel = Dungeon.branch == 0
-				&& !(Dungeon.level instanceof DeadEndLevel)
-				&& !(Dungeon.level instanceof LastLevel)
-				&& !(Dungeon.level instanceof SewerBossLevel)
-				&& !(Dungeon.level instanceof PrisonBossLevel)
-				&& !(Dungeon.level instanceof CavesBossLevel)
-				&& !(Dungeon.level instanceof CityBossLevel)
-				&& !(Dungeon.level instanceof HallsBossLevel);
+		if (cell >= Dungeon.level.length) return false;
+		boolean flag = solid[cell]
+				&& map[cell] != Terrain.ALCHEMY
+				&& map[cell] != Terrain.LOCKED_DOOR
+				&& map[cell] != Terrain.HERO_LKD_DR
+				&& map[cell] != Terrain.CRYSTAL_DOOR;
+		boolean canBreakWall = flag
+				&& cell % width() != 0            //왼쪽 벽
+				&& cell % width() != width()-1    //오른쪽 벽
+				&& cell > width()                 //위쪽 벽
+				&& cell < map.length-width();     //아래쪽 벽
+		boolean canBreakLevel = !(this instanceof DeadEndLevel)
+				&& !(this instanceof LastLevel)
+				&& !(this instanceof SewerBossLevel)
+				&& !(this instanceof PrisonBossLevel)
+				&& !(this instanceof CavesBossLevel)
+				&& !(this instanceof CityBossLevel)
+				&& !(this instanceof HallsBossLevel);
 		return canBreakWall && canBreakLevel;
 	}
 
@@ -1748,24 +1752,31 @@ public abstract class Level implements Bundlable {
 		boolean result = false;
 		if (canBreakWall(cell)) {
 			result = true;
-			//Dungeon.branch == 0일 때에만 작동하기 때문에 해당 코드는 필요 없음
-//			if (Dungeon.level instanceof MiningLevel) {
-//				if (Dungeon.level.map[cell] == Terrain.WALL_DECO) {
-//					DarkGold gold = new DarkGold();
-//					Dungeon.level.drop( gold, cell ).sprite.drop();
-//				}
-//				set(cell, Terrain.EMPTY_DECO);
-//			} else {
+			if (this instanceof MiningLevel) {
+				if (map[cell] == Terrain.WALL_DECO) {
+					DarkGold gold = new DarkGold();
+					drop( gold, cell ).sprite.drop();
+				}
+				set(cell, Terrain.EMPTY_DECO);
+			} else {
 				set(cell, Terrain.EMPTY);
-//			}
-			for (int i : PathFinder.NEIGHBOURS9) {
-				Dungeon.level.discoverable[cell+i] = true;
 			}
-			Dungeon.level.losBlocking[cell] = false;
+			for (int i : PathFinder.NEIGHBOURS9) {
+				discoverable[cell+i] = true;
+			}
+			losBlocking[cell] = false;
 			GameScene.updateMap(cell);
 			Dungeon.observe();
 		}
 
 		return result;
+	}
+
+	public void destroyTerrain(int cell) {
+		if (solid[cell]) {
+			breakWall(cell);
+		} else {
+			destroy(cell);
+		}
 	}
 }
