@@ -47,6 +47,7 @@ public class CharityKiss extends TargetedMariMiracle {
 
         if (!Dungeon.level.heroFOV[target]) {
             hero.yellW("fov");
+            return;
         }
 
         Char ch = Actor.findChar(target);
