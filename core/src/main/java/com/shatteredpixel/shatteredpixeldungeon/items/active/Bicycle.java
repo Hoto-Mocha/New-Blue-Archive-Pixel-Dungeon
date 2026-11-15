@@ -1,7 +1,5 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.active;
 
-import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
-
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
@@ -46,6 +44,8 @@ import com.watabou.utils.PathFinder;
 import java.util.ArrayList;
 
 public class Bicycle extends Item {
+
+	private static final Hero hero = Dungeon.hero;
 
 	private float maxCharge = 60f;
 	private float charge;
