@@ -89,7 +89,7 @@ public class Snipe extends Buff implements ActionIndicator.Action {
                     if (ch instanceof Mob && ch.alignment == Char.Alignment.ENEMY
                             && hero.hasTalent(Talent.MIYU_EX1_1)
                             && Dungeon.level.distance(hero.pos, ch.pos) >= 12-3*hero.pointsInTalent(Talent.MIYU_EX1_1)) {
-                        Buff.prolong(ch, Slow.class, 2f);
+                        Buff.prolong(ch, Slow.class, 3f);
                     }
                 }
                 if (hero.hasTalent(Talent.MIYU_EX1_3) && hero.belongings.weapon() instanceof Gun) {
