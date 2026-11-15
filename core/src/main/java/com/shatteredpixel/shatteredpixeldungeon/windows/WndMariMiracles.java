@@ -208,7 +208,7 @@ public class WndMariMiracles extends Window {
 							break;
 						case 0:
 							hide();
-							if(!cross.canCast(Dungeon.hero, miracle)){
+							if (!cross.canCast(Dungeon.hero, miracle)){
 								GLog.w(Messages.get(CrossNecklace.class, "no_miracle"));
 							} else {
 								miracle.onCast(cross, Dungeon.hero);

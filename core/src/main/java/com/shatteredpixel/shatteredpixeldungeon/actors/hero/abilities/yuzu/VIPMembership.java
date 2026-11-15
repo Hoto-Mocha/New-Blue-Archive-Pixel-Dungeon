@@ -33,7 +33,7 @@ public class VIPMembership extends ArmorAbility {
     @Override
     protected void activate(ClassArmor armor, Hero hero, Integer target) {
         if (hero.buff(VIPBuff.class) != null) {
-            GLog.w(Messages.get(this, "already_active"));
+            hero.yellW("already_active");
             return;
         }
 
