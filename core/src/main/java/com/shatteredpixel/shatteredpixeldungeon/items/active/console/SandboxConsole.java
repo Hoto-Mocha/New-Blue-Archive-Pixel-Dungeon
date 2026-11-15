@@ -22,7 +22,7 @@ public class SandboxConsole extends Console {
             }
         }
         int tokenBonus = Math.max(0, -4+3*hero.pointsInTalent(Talent.YUZU_EX2_3)); //+0/2/5
-        Buff.affect(hero, SandboxConsoleContent.SandboxConsoleBuff.class).set(YuzuConsoleContent.ConsoleBuff.MAX_COUNT + tokenBonus);
+        Buff.affect(hero, SandboxConsoleContent.SandboxConsoleBuff.class).set(YuzuConsoleContent.ConsoleBuff.SET_COUNT + tokenBonus);
         BuffIndicator.refreshHero();
         super.showWindow(hero);
         detach(hero.belongings.backpack);
