@@ -89,6 +89,7 @@ public class Chase extends ArmorAbility {
         Sample.INSTANCE.play(Assets.Sounds.MISS);
         Ballistica path = new Ballistica(hero.pos, target, Ballistica.PROJECTILE);
         Char enemy = Actor.findChar(target);
+        final int heroFirstPos = Dungeon.hero.pos;
         hero.sprite.jump(hero.pos, target, 3, 0.1f, new Callback() {
             @Override
             public void call() {
@@ -120,11 +121,20 @@ public class Chase extends ArmorAbility {
                     if (enemy.isAlive()) {
                         ArrayList<Integer> candidates = new ArrayList<>();
                         for (int n : PathFinder.NEIGHBOURS8){
-                            if (Dungeon.level.passable[target+n]){
+                            if (Dungeon.level.passable[target+n] || (enemy.flying && Dungeon.level.pit[target+n])){
                                 candidates.add(target+n);
                             }
                         }
-                        Actor.add(new Pushing(enemy, target, Random.element(candidates)));
+                        int to;
+                        if (!candidates.isEmpty()) {
+                            to = Random.element(candidates);
+                            Actor.add(new Pushing(enemy, target, to));
+                            enemy.pos = to;
+                        } else {
+                            to = heroFirstPos;
+                            Actor.add(new Pushing(hero, target, to));
+                            hero.pos = to;
+                        }
 
                         if (hero.hasTalent(Talent.HOSHINO_ARMOR1_2)) {
                             Ballistica aim = new Ballistica(hero.pos, target, Ballistica.MAGIC_BOLT);
