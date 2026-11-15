@@ -119,8 +119,7 @@ public class Bicycle extends Item {
 
 	@Override
 	public int level() {
-		int level = Dungeon.hero == null ? 0 : Dungeon.hero.lvl/5;
-		return level;
+        return hero == null ? 0 : hero.lvl/5;
 	}
 
 	@Override
@@ -189,9 +188,9 @@ public class Bicycle extends Item {
 		charge -= amount;
 		charge = Math.max(0, charge);
 		if (charge < 1) {
-			Buff buff = Dungeon.hero.buff(BicycleBuff.class);
+			Buff buff = hero.buff(BicycleBuff.class);
 			if (buff != null) buff.detach();
-			Dungeon.hero.yellW("no_charge");	//"지금은 자전거를 탈 수 없어."
+			hero.yellW("no_charge");	//"지금은 자전거를 탈 수 없어."
 		}
 		updateQuickslot();
 	}
@@ -211,7 +210,7 @@ public class Bicycle extends Item {
 		public int tintColor;
 
 		ProfessionalRideMove(float chargeReq, int tintColor){
-			this.chargeReq = chargeReq*(1-hero.pointsInTalent(Talent.SHIROKO_EX1_3)/6f); //충전량 소모량
+			this.chargeReq = chargeReq; //충전량 소모량
 			this.tintColor = tintColor;	//색칠
 		}
 
@@ -221,6 +220,10 @@ public class Bicycle extends Item {
 
 		public String desc(){
 			return Messages.get(this, name() + ".desc");
+		}
+
+		public float chargeReq() {
+			return this.chargeReq * (1-hero.pointsInTalent(Talent.SHIROKO_EX1_3)/6f);
 		}
 
 	}
@@ -255,7 +258,7 @@ public class Bicycle extends Item {
 					hero.spend(-((Gun) wep).reloadTime());
 					Item.updateQuickslot();
 					BuffIndicator.refreshHero();
-					use(move.chargeReq);
+					use(move.chargeReq());
 				}
 				break;
 			case SLAM:
@@ -265,7 +268,7 @@ public class Bicycle extends Item {
 				Sample.INSTANCE.play(Assets.Sounds.MISS);
 				Buff.affect(hero, AccelerationBuff.class);
 				hero.sprite.emitter().burst(Speck.factory(Speck.JET), 5);
-				use(move.chargeReq);
+				use(move.chargeReq());
 				break;
 			case DRIFT:
 				if (hero.buff(BicycleBuff.class) != null) {
@@ -296,19 +299,19 @@ public class Bicycle extends Item {
 			//chains cannot be used to go where it is impossible to walk to
 			PathFinder.buildDistanceMap(target, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
 			if (PathFinder.distance[hero.pos] == Integer.MAX_VALUE){
-				Dungeon.hero.yellW("dash_bad_position");
+				hero.yellW("dash_bad_position");
 				return;
 			}
 
 			if (hero.rooted){
-				Dungeon.hero.yellW("rooted");
+				hero.yellW("rooted");
 				return;
 			}
 
 			int range = 3;
 
 			if (Dungeon.level.distance(hero.pos, target) > range){
-				Dungeon.hero.yellW("dash_bad_position");	//"그 쪽으로는 할 수 없어."
+				hero.yellW("dash_bad_position");	//"그 쪽으로는 할 수 없어."
 				return;
 			}
 
@@ -318,7 +321,7 @@ public class Bicycle extends Item {
 					|| Actor.findChar(target) != null
 					|| (Dungeon.level.solid[target] && !Dungeon.level.passable[target])
 					|| Dungeon.level.map[target] == Terrain.CHASM){
-				Dungeon.hero.yellW("dash_bad_position");	//"그 쪽으로는 할 수 없어."
+				hero.yellW("dash_bad_position");	//"그 쪽으로는 할 수 없어."
 				return;
 			}
 
@@ -346,7 +349,7 @@ public class Bicycle extends Item {
 			Item.updateQuickslot();
 			AttackIndicator.updateState();
 
-			bicycle.use(ProfessionalRideMove.SKID_MARK.chargeReq);
+			bicycle.use(ProfessionalRideMove.SKID_MARK.chargeReq());
 		}
 
 		@Override
@@ -376,7 +379,7 @@ public class Bicycle extends Item {
 			hero.spendAndNext(Actor.TICK);
 			Sample.INSTANCE.play(Assets.Sounds.BLAST);
 
-			bicycle.use(ProfessionalRideMove.SLAM.chargeReq);
+			bicycle.use(ProfessionalRideMove.SLAM.chargeReq());
 		}
 
 		@Override
@@ -459,7 +462,7 @@ public class Bicycle extends Item {
 			if (hero.subClass == HeroSubClass.PROFESSIONAL_RIDING) {
 				ActionIndicator.setAction(BicycleBuff.this);
 			}
-			Bicycle bicycle = Dungeon.hero.belongings.getItem(Bicycle.class);
+			Bicycle bicycle = hero.belongings.getItem(Bicycle.class);
 			if (bicycle == null) {
 				detach();
 			} else {
@@ -475,7 +478,7 @@ public class Bicycle extends Item {
 
 		@Override
 		public float iconFadePercent() {
-			Bicycle bicycle = Dungeon.hero.belongings.getItem(Bicycle.class);
+			Bicycle bicycle = hero.belongings.getItem(Bicycle.class);
 			if (bicycle != null) {
 				return Math.max(0, bicycle.chargePercent());
 			} else {
@@ -490,7 +493,7 @@ public class Bicycle extends Item {
 
 		@Override
 		public String desc() {
-			Bicycle bicycle = Dungeon.hero.belongings.getItem(Bicycle.class);
+			Bicycle bicycle = hero.belongings.getItem(Bicycle.class);
 			if (bicycle != null) {
 				String desc = Messages.get(this, "desc_1");
 				if (hero.subClass != HeroSubClass.PROFESSIONAL_RIDING) {
@@ -527,7 +530,7 @@ public class Bicycle extends Item {
 		@Override
 		public Visual secondaryVisual() {
 			BitmapText txt = new BitmapText(PixelScene.pixelFont);
-			Bicycle bicycle = Dungeon.hero.belongings.getItem(Bicycle.class);
+			Bicycle bicycle = hero.belongings.getItem(Bicycle.class);
 			if (bicycle != null) {
 				txt.text( Messages.decimalFormat("#.##", bicycle.charge()));
 				txt.hardlight(CharSprite.POSITIVE);
@@ -545,7 +548,7 @@ public class Bicycle extends Item {
 
 		@Override
 		public void doAction() {
-			Bicycle bicycle = Dungeon.hero.belongings.getItem(Bicycle.class);
+			Bicycle bicycle = hero.belongings.getItem(Bicycle.class);
 			if (bicycle != null) {
 				GameScene.show(new WndProfessionalRide(bicycle));
 			}

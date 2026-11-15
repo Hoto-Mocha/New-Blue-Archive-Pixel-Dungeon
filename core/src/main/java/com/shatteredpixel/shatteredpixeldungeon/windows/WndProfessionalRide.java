@@ -60,7 +60,7 @@ public class WndProfessionalRide extends Window {
 
 		for (Bicycle.ProfessionalRideMove move : Bicycle.ProfessionalRideMove.values()) {
 
-			String text = "_" + Messages.titleCase(move.title()) + " " + Messages.get(this, "charge_req", new DecimalFormat("#.#").format(move.chargeReq)) + ":_ " + move.desc();
+			String text = "_" + Messages.titleCase(move.title()) + " " + Messages.get(this, "charge_req", new DecimalFormat("#.#").format(move.chargeReq())) + ":_ " + move.desc();
 			RedButton moveBtn = new RedButton(text, 6){
 				@Override
 				protected void onClick() {
