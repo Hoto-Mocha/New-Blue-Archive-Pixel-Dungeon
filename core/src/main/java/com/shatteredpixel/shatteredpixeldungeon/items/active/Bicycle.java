@@ -279,6 +279,7 @@ public class Bicycle extends Item {
 				}
 				Buff.affect(hero, DriftCooldown.class).set();
 				Buff.affect(hero, DriftBuff.class, 19f);
+				use(move.chargeReq());
 				break;
 		}
 		ActionIndicator.refresh();
