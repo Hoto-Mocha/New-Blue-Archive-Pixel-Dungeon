@@ -186,21 +186,10 @@ public class SR_SP extends SR {
             for (int c : path.path) {
                 if (c == path.collisionPos) break;
                 if (Dungeon.level.solid[c]) {
-                    if (Dungeon.level.heroFOV[ c ]){
-                        CellEmitter.get( c - Dungeon.level.width() ).start(Speck.factory(Speck.ROCK), 0.07f, 10);
-                    }
-                    Level.set(c, Terrain.EMPTY);
-                    for (int i : PathFinder.NEIGHBOURS9) {
-                        Dungeon.level.discoverable[c+i] = true;
-                    }
-
-                    GameScene.updateMap(c);
-
-                    wallPenetration = true;
+                    wallPenetration = Dungeon.level.breakWall(c);
                 }
             }
             if (wallPenetration) {
-                Dungeon.observe();
                 Sample.INSTANCE.play(Assets.Sounds.ROCKS);
             }
             super.onThrow(cell);
