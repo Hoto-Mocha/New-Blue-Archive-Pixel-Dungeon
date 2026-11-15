@@ -277,7 +277,7 @@ public class Conversation extends Buff implements ActionIndicator.Action {
 
         //cannot re-corrupt or doom an enemy, so give them a major debuff instead
         if(enemy.buff(ScrollOfSirensSong.Enthralled.class) != null){
-            GLog.w( Messages.get(this, "already_enthalled") );
+            hero.yellW("already_enthralled");
             return;
         }
 
