@@ -50,7 +50,6 @@ public class FireBall extends FantasyConsoleContent {
         Point c = Dungeon.level.cellToPoint(bolt.collisionPos);
         boolean[] fieldOfView = new boolean[Dungeon.level.length()];
         ShadowCaster.castShadow(c.x, c.y, Dungeon.level.width(), fieldOfView, Dungeon.level.solid, isEnhanced(hero) ? 3 : 1);
-        boolean positiveOnly = isEnhanced(hero);
 
         MagicMissile.boltFromChar( hero.sprite.parent,
                 MagicMissile.FIRE,
@@ -62,7 +61,7 @@ public class FireBall extends FantasyConsoleContent {
                         for (int i = 0; i < Dungeon.level.length(); i++){
                             if (fieldOfView[i] && !Dungeon.level.solid[i]){
                                 //does not directly harm allies
-                                if (positiveOnly && Actor.findChar(i) != null && Actor.findChar(i).alignment == Char.Alignment.ALLY){
+                                if (Actor.findChar(i) != null && Actor.findChar(i).alignment == Char.Alignment.ALLY){
                                     continue;
                                 }
 
