@@ -382,8 +382,9 @@ public class Gun extends MeleeWeapon {
         if (action.equals(AC_RELOAD)) {
             if (isAllLoaded()){
                 if (hero.heroClass == HeroClass.HOSHINO && round == maxRound()) {
-                    onReload();
+                    beforeReload();
                     manualReload(1, true);
+                    afterReload();
 
                     hero.busy();
                     hero.sprite.operate(hero.pos);
@@ -437,7 +438,6 @@ public class Gun extends MeleeWeapon {
     }
 
     public void reload() {
-        onReload();
         
         if (hero.heroClass == HeroClass.MARI) {
             CrossNecklace necklace = hero.belongings.getItem(CrossNecklace.class);
@@ -452,10 +452,14 @@ public class Gun extends MeleeWeapon {
                 return;
             }
             necklace.spendCharge(bulletsToLoad);
+            beforeReload();
             manualReload(bulletsToLoad, false);
         } else {
+            beforeReload();
             quickReload();
         }
+
+        afterReload();
 
         hero.busy();
         hero.sprite.operate(hero.pos);
@@ -464,7 +468,17 @@ public class Gun extends MeleeWeapon {
         GLog.i(Messages.get(this, "reload"));
     }
 
-    public void onReload() {	//재장전 시 작동하는 메서드. 특히 현재 장탄수가 바뀌기 전에 동작해야 한다
+    public void beforeReload() { //재장전 시 작동하는 메서드. 장탄수가 바뀌기 전에 작동한다.
+        if (round == 0 && hero.hasTalent(Talent.HOSHINO_T1_4)) {
+            Buff.affect(hero, Barrier.class).setShield(1+2*hero.pointsInTalent(Talent.HOSHINO_T1_4));
+        }
+
+        if (round == 0 && hero.hasTalent(Talent.NOA_T2_4)) {
+            Buff.affect(hero, GreaterHaste.class).set((int)reloadTime() + hero.pointsInTalent(Talent.NOA_T2_4));
+        }
+    }
+
+    public void afterReload() {	//재장전 시 작동하는 메서드. 장탄수가 바뀌고 난 후에 작동한다.
         if (hero.hasTalent(Talent.NONOMI_T1_4)) {
             Buff.affect(hero, Barrier.class).setShield((int)reloadTime() + Math.max(0, hero.pointsInTalent(Talent.NONOMI_T1_4)-1)); //reload time + 0 or 1, depends on talent level
         }
@@ -473,14 +487,6 @@ public class Gun extends MeleeWeapon {
 
         if (hero.subClass == HeroSubClass.SWIFT_MOVEMENT) {
             Buff.affect(hero, SwiftMovement.class);
-        }
-
-        if (round == 0 && hero.hasTalent(Talent.HOSHINO_T1_4)) {
-            Buff.affect(hero, Barrier.class).setShield(1+2*hero.pointsInTalent(Talent.HOSHINO_T1_4));
-        }
-
-        if (round == 0 && hero.hasTalent(Talent.NOA_T2_4)) {
-            Buff.affect(hero, GreaterHaste.class).set((int)reloadTime() + hero.pointsInTalent(Talent.NOA_T2_4));
         }
 
         if (hero.hasTalent(Talent.NOA_EX1_1) && hero.belongings.secondWep() instanceof Gun) {
