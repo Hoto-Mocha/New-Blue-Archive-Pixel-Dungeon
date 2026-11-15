@@ -934,7 +934,7 @@ public class Gun extends MeleeWeapon {
             level += hero.pointsInTalent(Talent.MIYU_T3_2);
         }
         if (hero != null && hero.buff(AvantGardeKunBuff.GunUpgradeBuff.class) != null) {
-            level = Math.min(level+1+hero.pointsInTalent(Talent.YUZU_EX1_2), 3+hero.pointsInTalent(Talent.YUZU_EX1_2));
+            level = Math.max(Math.min(level+1+hero.pointsInTalent(Talent.YUZU_EX1_2), 3+hero.pointsInTalent(Talent.YUZU_EX1_2)), level);
         }
 
         return level;
