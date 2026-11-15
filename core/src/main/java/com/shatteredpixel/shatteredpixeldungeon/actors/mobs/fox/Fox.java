@@ -44,6 +44,8 @@ public class Fox extends Mob {
         immunities.add(StoneOfAggression.Aggression.class); 	//목표 지정 면역
         immunities.add(Drowsy.class); 	                        //졸림 면역
         immunities.add(AllyBuff.class);                         //아군으로 만들 수 없음
+        
+        properties.add(Property.MINIBOSS);
 
         lootChance = 1f;
     }
