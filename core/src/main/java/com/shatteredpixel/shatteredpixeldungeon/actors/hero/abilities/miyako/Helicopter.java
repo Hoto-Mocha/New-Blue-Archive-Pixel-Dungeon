@@ -62,12 +62,11 @@ public class Helicopter extends ArmorAbility {
 
                     hero.next();
                     Dungeon.observe();
-                    return;
                 } else {
                     GLog.w(Messages.get(this, "already_char"));
                     hero.next();
-                    return;
                 }
+                return;
             }
 
             Ballistica route = new Ballistica(hero.pos, target, Ballistica.STOP_TARGET);
@@ -89,17 +88,11 @@ public class Helicopter extends ArmorAbility {
             hero.sprite.operate(hero.pos, new Callback() {
                 @Override
                 public void call() {
-                    if (hero.hasTalent(Talent.MIYAKO_ARMOR2_2) && Random.Float() < 0.25f*hero.pointsInTalent(Talent.MIYAKO_ARMOR2_2)) {
-                        System.out.println("---Jump---");
-                        System.out.println("startCell: "+startCell);
-                        System.out.println("dest: "+dest);
+                    if (Random.Float() < 0.25f*hero.pointsInTalent(Talent.MIYAKO_ARMOR2_2) && hero.belongings.weapon() instanceof Gun) {
                         Ballistica finalRoute = new Ballistica(startCell, dest, Ballistica.STOP_TARGET);
                         float delay = 0f;
                         Gun gun = (Gun) hero.belongings.weapon().duplicate(); //현재 장착한 총기와 똑같은 무기를 생성한다. 영웅이 장착한 무기를 직접 사용할 경우 탄환을 소모하기 때문
-                        System.out.println("path dist: "+finalRoute.dist);
-                        System.out.println("---for---");
                         for (int c : finalRoute.subPath(1, finalRoute.dist)) {
-                            System.out.println("path pos: "+c);
                             Char enemy = Actor.findChar(c);
                             if (enemy != null
                                     && enemy.alignment == Char.Alignment.ENEMY
