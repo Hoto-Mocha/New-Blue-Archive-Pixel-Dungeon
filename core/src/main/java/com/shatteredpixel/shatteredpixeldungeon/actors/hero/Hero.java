@@ -3090,7 +3090,7 @@ public class Hero extends Char {
 			AvantGardeKunBuff.repairRobot(this, pointsInTalent(Talent.YUZU_EX1_1));
 		}
 		if (hasTalent(Talent.IZUNA_T2_5) && !Dungeon.level.adjacent(pos, mob.pos)) {
-			Buff.affect(this, GreaterHaste.class).set(1+2*pointsInTalent(Talent.IZUNA_T2_5));
+			Buff.affect(this, GreaterHaste.class).set(2+2*pointsInTalent(Talent.IZUNA_T2_5));
 		}
 		if (hasTalent(Talent.IZUNA_EX2_2) && buff(ChaseMark.ChaseTracker.class) != null) {
 			new FlavourBuff() {
