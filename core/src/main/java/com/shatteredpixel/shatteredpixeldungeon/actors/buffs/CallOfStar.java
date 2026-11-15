@@ -210,7 +210,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
         }
 
         for (int cell : affectedCells) {
-            if (Dungeon.level.solid[cell] && Dungeon.level.map[cell] != Terrain.ALCHEMY) {
+            if (Dungeon.level.solid[cell]) {
                 if (Dungeon.level instanceof MiningLevel) {
                     if (Dungeon.level.map[cell] == Terrain.WALL_DECO) {
                         DarkGold gold = new DarkGold();
@@ -276,6 +276,9 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
         boolean flag;
         if (depth % 5 == 0) flag = Dungeon.level.passable[cell];
         else if (Dungeon.level instanceof VaultLevel) flag = Dungeon.level.passable[cell];
+        else if (Dungeon.level.map[cell] == Terrain.ALCHEMY) flag = false;
+        else if (Dungeon.level.map[cell] == Terrain.LOCKED_DOOR) flag = false;
+        else if (Dungeon.level.map[cell] == Terrain.CRYSTAL_DOOR) flag = false;
         else flag = true;
         return flag
                 && cell < Dungeon.level.map.length
