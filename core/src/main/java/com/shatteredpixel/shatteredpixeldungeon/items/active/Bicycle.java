@@ -113,8 +113,8 @@ public class Bicycle extends Item {
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		charge = bundle.getInt(CHARGE);
-		maxCharge = bundle.getInt(MAX_CHARGE);
+		charge = bundle.getFloat(CHARGE);
+		maxCharge = bundle.getFloat(MAX_CHARGE);
 	}
 
 	@Override
