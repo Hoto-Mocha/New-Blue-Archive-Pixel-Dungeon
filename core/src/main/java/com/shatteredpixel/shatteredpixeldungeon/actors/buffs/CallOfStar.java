@@ -278,6 +278,7 @@ public class CallOfStar extends CounterBuff implements ActionIndicator.Action {
         else if (Dungeon.level instanceof VaultLevel) flag = Dungeon.level.passable[cell];
         else if (Dungeon.level.map[cell] == Terrain.ALCHEMY) flag = false;
         else if (Dungeon.level.map[cell] == Terrain.LOCKED_DOOR) flag = false;
+        else if (Dungeon.level.map[cell] == Terrain.HERO_LKD_DR) flag = false;
         else if (Dungeon.level.map[cell] == Terrain.CRYSTAL_DOOR) flag = false;
         else flag = true;
         return flag
