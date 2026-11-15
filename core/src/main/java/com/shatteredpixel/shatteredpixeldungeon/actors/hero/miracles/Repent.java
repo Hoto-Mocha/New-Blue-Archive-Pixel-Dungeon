@@ -13,6 +13,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CrossNecklace;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfSirensSong;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -86,7 +87,12 @@ public class Repent extends TargetedMariMiracle {
             }
         });
 
-        float chance = (ch.HT-ch.HP)/(float)ch.HT;
+        HealingTouch.NeutralDeferedDamage deferred = ch.buff(HealingTouch.NeutralDeferedDamage.class);
+        int effectiveHP = ch.HP;
+        if (deferred != null) {
+            effectiveHP -= deferred.totalIncomingDMG();
+        }
+        float chance = (ch.HT-effectiveHP)/(float)ch.HT;
         chance += 0.1f * (hero.pointsInTalent(Talent.MARI_EX2_3)-1);
 
         Mob enemy = (Mob) ch;
