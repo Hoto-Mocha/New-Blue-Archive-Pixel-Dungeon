@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.console.sandbox;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -22,7 +23,8 @@ public class BarricadeBuild extends SandboxConsoleContent {
     @Override
     public boolean canBuild(int target) {
         return super.canBuild(target)
-                && (Dungeon.level.map[target] == Terrain.DOOR || (Dungeon.level.passable[target] && !Dungeon.level.avoid[target]));
+                && (Dungeon.level.map[target] == Terrain.DOOR || (Dungeon.level.passable[target] && !Dungeon.level.avoid[target]))
+                && Actor.findChar(target) == null;
     }
 
     @Override
