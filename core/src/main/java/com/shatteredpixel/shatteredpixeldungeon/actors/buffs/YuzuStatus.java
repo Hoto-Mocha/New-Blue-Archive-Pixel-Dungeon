@@ -101,7 +101,7 @@ public class YuzuStatus extends Buff {
         if (hero.hasTalent(Talent.YUZU_T2_4)) {
             Buff.affect(hero, SerialCritBuff.class);
         }
-        if (hero.hasTalent(Talent.YUZU_T3_2) && Random.Float() < 1/(float)(4-hero.pointsInTalent(Talent.YUZU_T3_2))) {
+        if (hero.hasTalent(Talent.YUZU_T3_2) && Random.Float() < hero.pointsInTalent(Talent.YUZU_T3_2)/3f) {
             //need to delay this to prevent consuming the buff from self attack with explosion at the attacking turn
             new FlavourBuff() {
                 {
