@@ -41,11 +41,11 @@ public class RandomEquipment extends YuzuShopContent {
     public Item prize() {
         switch (Random.Int(2)) {
             case 0: default:
-                Weapon w = Generator.randomWeapon(Dungeon.depth, true);
+                Weapon w = Generator.randomWeapon(Dungeon.depth/5, true);
                 if (w.hasCurseEnchant()) w.enchant(null);
                 return w;
             case 1:
-                Armor a = Generator.randomArmor(Dungeon.depth, true);
+                Armor a = Generator.randomArmor(Dungeon.depth/5, true);
                 if (a.hasCurseGlyph()) a.inscribe(null);
                 return a;
         }
