@@ -56,7 +56,7 @@ public class BlessOfLight extends MariMiracle {
 
         public void proc(Hero hero, Char ch, int damage) {
             if (ch != null) {
-                hero.heal(Math.round(0.4f*damage));
+                hero.heal(Math.round(0.1f*hero.pointsInTalent(Talent.MARI_ARMOR1_2)*damage));
                 ch.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10 );
             }
         }
