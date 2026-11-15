@@ -292,7 +292,7 @@ public class Conversation extends Buff implements ActionIndicator.Action {
 
             if (hero.hasTalent(Talent.NOA_EX2_3)) {
                 int toHeal = enemy.HT - enemy.HP;
-                enemy.heal(Math.round(toHeal/(4f-hero.pointsInTalent(Talent.NOA_EX2_3))));
+                enemy.heal(Math.round(toHeal*(1f-hero.pointsInTalent(Talent.NOA_EX2_3)/3f)));
             }
         }
     }
