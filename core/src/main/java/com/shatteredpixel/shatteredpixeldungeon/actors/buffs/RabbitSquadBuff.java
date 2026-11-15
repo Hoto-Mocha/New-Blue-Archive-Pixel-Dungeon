@@ -302,11 +302,11 @@ public class RabbitSquadBuff extends Buff implements ActionIndicator.Action {
         ArrayList<Integer> spawnPoints = new ArrayList<>();
         for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
             int p = hero.pos + PathFinder.NEIGHBOURS8[i];
-            if (Actor.findChar(p) == null && (Dungeon.level.passable[p] || Dungeon.level.avoid[p])) {
+            if (Actor.findChar(p) == null && Dungeon.level.passable[p]) {
                 spawnPoints.add(p);
             }
         }
-        if (spawnPoints.size() > 0) {
+        if (!spawnPoints.isEmpty()) {
             saki = new Saki(this);
             sakiID = saki.id();
             saki.pos = Random.element(spawnPoints);
