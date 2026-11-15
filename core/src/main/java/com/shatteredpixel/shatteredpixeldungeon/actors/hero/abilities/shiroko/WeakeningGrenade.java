@@ -84,7 +84,6 @@ public class WeakeningGrenade extends ArmorAbility {
 
             if (Dungeon.hero.hasTalent(Talent.SHIROKO_ARMOR2_2)) {
                 float chance = 0.3f*Dungeon.hero.pointsInTalent(Talent.SHIROKO_ARMOR2_2);
-                GLog.i(chance + "");
                 if (Random.Float() < chance) {
                     GameScene.flash(0x80FFFFFF);
                     Buff.affect(ch, Blindness.class, 5f);
