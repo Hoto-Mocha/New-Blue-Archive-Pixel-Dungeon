@@ -102,6 +102,9 @@ public class Repent extends TargetedMariMiracle {
                         && !(buff instanceof SoulMark)) {
                     buff.detach();
                 }
+                if (buff instanceof HealingTouch.NeutralDeferedDamage) {
+                    buff.detach();
+                }
             }
             AllyBuff.affectAndLoot(enemy, hero, ScrollOfSirensSong.Enthralled.class);
             int toHeal = enemy.HT - enemy.HP;
