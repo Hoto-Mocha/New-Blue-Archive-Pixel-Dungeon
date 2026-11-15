@@ -342,7 +342,7 @@ public class Bicycle extends Item {
 					}
 					hero.pos = target;
 					Dungeon.level.occupyCell(hero);
-					hero.next();
+					hero.spendAndNext(1f);
 				}
 			});
 
