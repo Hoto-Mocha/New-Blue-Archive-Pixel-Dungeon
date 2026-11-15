@@ -50,7 +50,7 @@ public class Invulnerable extends YuzuShopContent {
 
     @Override
     public String desc() {
-        return Messages.get(this, "desc", 30 * Dungeon.hero.pointsInTalent(Talent.YUZU_ARMOR3_2)) + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
+        return Messages.get(this, "desc", 30 * Dungeon.hero.pointsInTalent(Talent.YUZU_ARMOR3_1)) + "\n\n" + Messages.get(this, "credit_cost", creditUse(Dungeon.hero));
     }
 
     @Override
