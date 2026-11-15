@@ -122,8 +122,9 @@ public class SuperNova extends MeleeWeapon {
         return Math.round(damage);
     }
 
-    public int maxDistance() {
+    public int maxDistance( boolean empowered ) {
         float dist = 8 + this.buffedLvl();
+        if (empowered) dist *= 2;
 
         return (int)dist;
     }
@@ -145,12 +146,12 @@ public class SuperNova extends MeleeWeapon {
 
     public void shootLaser(int target) {
         boolean terrainAffected = false;
-        int maxDistance = maxDistance();
 
         Ballistica beam = new Ballistica(curUser.pos, target, Ballistica.WONT_STOP);
         ArrayList<Char> chars = new ArrayList<>();
 
         boolean empowered = hero.buff(ExtendedLaser.ExtendedLaserBuff.class) != null;
+        int maxDistance = maxDistance(empowered);
 
         //empowered means is the laser thick or not
         if (empowered) {
