@@ -48,7 +48,7 @@ public class Thunder extends FantasyConsoleContent {
 
                 @Override
                 protected void onComplete() {
-                    if (finalHit == HIT_TIMES-1 || !enemy.isAlive()) {
+                    if (finalHit == HIT_TIMES-1) {
                         hero.spendAndNext(1f);
                     }
                     if (!enemy.isAlive()) return;
