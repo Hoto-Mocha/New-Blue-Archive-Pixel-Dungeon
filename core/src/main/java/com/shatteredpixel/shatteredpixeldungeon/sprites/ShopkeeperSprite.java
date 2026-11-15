@@ -35,14 +35,14 @@ public class ShopkeeperSprite extends MobSprite {
 		texture( Assets.Sprites.SORA );
 		TextureFilm film = new TextureFilm( texture, 13, 16 );
 
-		idle = new Animation( 4, true );
-		idle.frames( film, 1, 1, 1, 0 );
+		idle = new Animation( 8, true );
+		idle.frames( film, 0,0,0,0,0,0,0,0, 2, 0,0,0,0,0,0,0,0, 2, 0, 2, 0,0,0,0,0,0,0, 1,1, 0,0, 1,1  );
 
 		operate = new Animation( 4, false );
-		operate.frames( film, 2, 3, 2, 3);
+		operate.frames( film, 3, 4, 3, 4);
 
 		die = new Animation( 20, false );
-		die.frames( film, 0 );
+		die.frames( film, 5 );
 
 		run = idle.clone();
 
