@@ -52,6 +52,7 @@ public class SR_SP extends SR {
 
     @Override
     public void reload() {
+        Dungeon.hero.spend(-timeToEquip(Dungeon.hero)); //재장전으로 해제 시 턴을 소모하지 않음
         doUnequip(Dungeon.hero, false, false);
         Dungeon.hero.belongings.weapon = originalGun;
     }
@@ -73,6 +74,7 @@ public class SR_SP extends SR {
             GLog.w(Messages.get(EquipableItem.class, "unequip_cursed"));
             return;
         }
+        hero.spendAndNext( timeToEquip( hero ) );
         changeWeapon(hero, true);
         Dungeon.level.drop(originalGun, hero.pos).sprite.drop();
     }
@@ -87,6 +89,13 @@ public class SR_SP extends SR {
             Dungeon.hero.belongings.weapon = originalGun;
             return false;
         }
+
+        if (single) {
+            hero.spendAndNext( timeToEquip( hero ) );
+        } else {
+            hero.spend( timeToEquip( hero ) );
+        }
+
         if (collect) {
             if (!originalGun.collect(hero.belongings.backpack)) {
                 Dungeon.level.drop(originalGun, hero.pos).sprite.drop();
