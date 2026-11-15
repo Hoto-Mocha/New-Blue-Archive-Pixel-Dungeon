@@ -61,16 +61,17 @@ public class SuperNovaCharge extends CounterBuff implements ActionIndicator.Acti
             int point = Dungeon.hero.pointsInTalent(Talent.ARIS_EX2_1);
             switch (point) {
                 case 1: default:
-                    cnt = Random.IntRange(-1, 2);
+                    cnt = Random.IntRange(0, 2);
                     break;
                 case 2:
-                    cnt = Random.IntRange(0, 2);
+                    cnt = Random.IntRange(0, 3);
                     break;
                 case 3:
                     cnt = Random.IntRange(1, 3);
                     break;
             }
         }
+
         countUp(cnt);
     }
 
