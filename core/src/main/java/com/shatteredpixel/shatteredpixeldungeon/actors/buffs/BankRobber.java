@@ -146,7 +146,7 @@ public class BankRobber extends Buff implements ActionIndicator.Action {
 
             if (mob.buff(Terror.class) != null) {
                 if (mob.buff(Terror.class).cooldown() >= 20 && !mob.isImmune(Dread.class)
-                    || (immediateDread && Random.Float() < 1f * hero.pointsInTalent(Talent.SHIROKO_EX2_1))) {
+                    || (immediateDread && Random.Float() < 0.2f * hero.pointsInTalent(Talent.SHIROKO_EX2_1))) {
                     mob.buff(Terror.class).detach();
                     Buff.affect( mob, Dread.class ).object = hero.id();
 
