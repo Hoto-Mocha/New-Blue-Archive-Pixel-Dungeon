@@ -1013,12 +1013,6 @@ public class Gun extends MeleeWeapon {
 
             if (attacker instanceof Hero) {
                 Hero hero = (Hero) attacker;
-                if (hero.hasTalent(Talent.HOSHINO_T2_5) && hero.buff(Barrier.class) == null) {
-                    int shield = 2+3*hero.pointsInTalent(Talent.HOSHINO_T2_5)-distance;
-                    if (shield > 0) {
-                        Buff.affect(hero, Barrier.class).setShield(shield);
-                    }
-                }
 
                 if (hero.hasTalent(Talent.HOSHINO_T3_1)) {
                     Buff.affect(defender, Talent.TacticalSuppressTracker.class);
