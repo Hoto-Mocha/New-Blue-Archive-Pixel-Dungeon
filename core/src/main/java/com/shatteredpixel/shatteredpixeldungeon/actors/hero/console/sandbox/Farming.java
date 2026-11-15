@@ -46,6 +46,7 @@ public class Farming extends SandboxConsoleContent {
         hero.spendAndNext(1);
 
         GameScene.updateMap(target);
+        Dungeon.observe();
 
         Sample.INSTANCE.play(Assets.Sounds.TRAMPLE);
         CellEmitter.get(target).burst(LeafParticle.LEVEL_SPECIFIC, 4);
