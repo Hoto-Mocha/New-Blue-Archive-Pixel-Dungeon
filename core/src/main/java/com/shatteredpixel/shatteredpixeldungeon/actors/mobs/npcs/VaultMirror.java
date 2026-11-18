@@ -50,6 +50,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SuperNova;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG_SP;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.special.FlashShield;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.VaultMirrorSprite;
@@ -145,6 +146,10 @@ public class VaultMirror extends NPC {
 				case MARI:
 					reward = new CrossNecklace().upgrade(8).identify(false);
 					((CrossNecklace) reward).directCharge(3);
+					break;
+				case KURUMI:
+					reward = new FlashShield().upgrade(3).identify(false);
+					((MeleeWeapon)reward).enchant();
 					break;
 			}
 		Random.popGenerator();

@@ -864,10 +864,12 @@ public class ItemSpriteSheet {
 	public static final int SCRUNCHIE 		= UNIQUE_ITEM_2+0;
 	public static final int CROSS	 		= UNIQUE_ITEM_2+1;
 	public static final int THUNDER_LANCE	= UNIQUE_ITEM_2+2;
+	public static final int FLASH_SHIELD	= UNIQUE_ITEM_2+3;
 	static {
 		assignItemRect(SCRUNCHIE, 			11, 12);
 		assignItemRect(CROSS, 				14, 15);
 		assignItemRect(THUNDER_LANCE, 		13, 13);
+		assignItemRect(FLASH_SHIELD, 		12, 16);
 	}
 
 	private static final int NEW_ARMOR 	= 								xy(1, 35);
@@ -882,6 +884,7 @@ public class ItemSpriteSheet {
 	public static final int ARMOR_IZUNA	    = NEW_ARMOR+8;
 	public static final int ARMOR_MIKA	    = NEW_ARMOR+9;
 	public static final int ARMOR_MARI	    = NEW_ARMOR+10;
+	public static final int ARMOR_KURUMI	= NEW_ARMOR+11;
 	static{
 		assignItemRect(ARMOR_ARIS,   	13, 11);
 		assignItemRect(ARMOR_NONOMI,    14, 11);
@@ -894,6 +897,7 @@ public class ItemSpriteSheet {
 		assignItemRect(ARMOR_IZUNA,	    15, 11);
 		assignItemRect(ARMOR_MIKA,	    13, 13);
 		assignItemRect(ARMOR_MARI,	    15, 14);
+		assignItemRect(ARMOR_KURUMI,	13, 11);
 	}
 	private static final int SPECIAL_ITEMS 	= 								xy(1, 36);
 	public static final int EX_DISC	  		= SPECIAL_ITEMS+0;

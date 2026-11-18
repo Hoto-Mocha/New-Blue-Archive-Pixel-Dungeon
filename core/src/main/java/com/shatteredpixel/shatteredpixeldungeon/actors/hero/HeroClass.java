@@ -29,6 +29,9 @@ import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.YuzuStatus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.kurumi.DefensivePosition;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.kurumi.LineClear;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.kurumi.SniperSupport;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari.MariTrinity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.BatteryChange;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.aris.Division;
@@ -141,6 +144,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T1;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.quick.AssassinsKunai;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.special.FlashShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
@@ -161,6 +165,7 @@ public enum HeroClass {
 	IZUNA(HeroSubClass.SWITCHING, HeroSubClass.CHASE),
 	MIKA(HeroSubClass.CALL_OF_STAR, HeroSubClass.SHOOTING_STAR),
 	MARI(HeroSubClass.DEVOUT_PRAYER, HeroSubClass.SYMBOL_OF_PEACE),
+	KURUMI(HeroSubClass.GUN_STORM, HeroSubClass.SHIELD_DEPLOY),
 
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
@@ -253,6 +258,10 @@ public enum HeroClass {
 
 			case MARI:
 				initMari( hero );
+				break;
+
+			case KURUMI:
+				initKurumi( hero );
 				break;
 
 
@@ -479,6 +488,17 @@ public enum HeroClass {
 		new PotionOfPurity().identify();
 		new ScrollOfRemoveCurse().identify();
 	}
+	private static void initKurumi(Hero hero) {
+        FlashShield shield = new FlashShield();
+		(hero.belongings.weapon = shield).identify();
+		SMG_T1 smgT1 = new SMG_T1();
+		(hero.belongings.secondWep = smgT1).identify();
+
+		Dungeon.quickslot.setSlot(0, smgT1);
+
+		new PotionOfHealing().identify();
+		new ScrollOfRage().identify();
+	}
 
 	private static void initWarrior( Hero hero ) {
 		(hero.belongings.weapon = new WornShortsword()).identify();
@@ -609,6 +629,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new RollCakeThrow(), new SuperMeteor(), new PerfectDeception()};
 			case MARI:
 				return new ArmorAbility[]{new LightMagazineReload(), new MariTrinity(), new IdolConcert()};
+			case KURUMI:
+				return new ArmorAbility[]{new DefensivePosition(), new LineClear(), new SniperSupport()};
 
 			case WARRIOR:
 				return new ArmorAbility[]{new HeroicLeap(), new Shockwave(), new Endure()};
@@ -649,6 +671,8 @@ public enum HeroClass {
 				return Assets.Sprites.MIKA;
 			case MARI:
 				return Assets.Sprites.MARI;
+			case KURUMI:
+				return Assets.Sprites.KURUMI;
 			case WARRIOR:
 				return Assets.Sprites.WARRIOR;
 			case MAGE:
@@ -688,6 +712,8 @@ public enum HeroClass {
 				return Assets.Splashes.MIKA;
 			case MARI:
 				return Assets.Splashes.MARI;
+			case KURUMI:
+				return Assets.Splashes.KURUMI;
 			case WARRIOR:
 				return Assets.Splashes.WARRIOR;
 			case MAGE:

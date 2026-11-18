@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.HoshinoArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.IzunaArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.KurumiArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.LeatherArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.MailArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.MariArmor;
@@ -696,9 +697,10 @@ public class Generator {
 					YuzuArmor.class,
 					IzunaArmor.class,
 					MikaArmor.class,
-					MariArmor.class
+					MariArmor.class,
+					KurumiArmor.class,
 			};
-			ARMOR_CL.probs = new float[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			ARMOR_CL.probs = new float[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			
 			//see Generator.randomMissile
 			MISSILE.classes = new Class<?>[]{};

@@ -274,6 +274,7 @@ public class Assets {
 		public static final String IZUNA	= "splashes/izuna.png";
 		public static final String MIKA		= "splashes/mika.png";
 		public static final String MARI		= "splashes/mari.png";
+		public static final String KURUMI	= "splashes/kurumi.png";
 
 		public static final String SEWERS   = "splashes/sewers.png";
 		public static final String PRISON   = "splashes/prison.png";

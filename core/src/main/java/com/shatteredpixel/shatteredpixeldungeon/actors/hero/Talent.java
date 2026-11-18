@@ -824,6 +824,48 @@ public enum Talent {
 	MARI_ARMOR3_2(24, 10, 4),
 	MARI_ARMOR3_3(25, 10, 4),
 
+	//Kurumi T1
+	KURUMI_T1_1(0, 10, 2),
+	KURUMI_T1_2(1, 10, 2),
+	KURUMI_T1_3(2, 10, 2),
+	KURUMI_T1_4(3, 10, 2),
+
+	//Kurumi T2
+	KURUMI_T2_1(4, 10, 2),
+	KURUMI_T2_2(5, 10, 2),
+	KURUMI_T2_3(6, 10, 2),
+	KURUMI_T2_4(7, 10, 2),
+	KURUMI_T2_5(8, 10, 2),
+
+	//Kurumi T3
+	KURUMI_T3_1(9, 10, 3),
+	KURUMI_T3_2(10, 10, 3),
+
+	//Gun Storm T3
+	KURUMI_EX1_1(11, 10, 3),
+	KURUMI_EX1_2(12, 10, 3),
+	KURUMI_EX1_3(13, 10, 3),
+
+	//Shield Deploy T3
+	KURUMI_EX2_1(14, 10, 3),
+	KURUMI_EX2_2(15, 10, 3),
+	KURUMI_EX2_3(16, 10, 3),
+
+	//Armor Ability 1 T4
+	KURUMI_ARMOR1_1(17, 10, 4),
+	KURUMI_ARMOR1_2(18, 10, 4),
+	KURUMI_ARMOR1_3(19, 10, 4),
+
+	//Armor Ability 2 T4
+	KURUMI_ARMOR2_1(20, 10, 4),
+	KURUMI_ARMOR2_2(21, 10, 4),
+	KURUMI_ARMOR2_3(22, 10, 4),
+
+	//Armor Ability 3 T4
+	KURUMI_ARMOR3_1(23, 10, 4),
+	KURUMI_ARMOR3_2(24, 10, 4),
+	KURUMI_ARMOR3_3(25, 10, 4),
+
 	//universal T4
 	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one
 	//Ratmogrify T4
@@ -1156,9 +1198,12 @@ public enum Talent {
 				case MARI:
 					y = 10;
 					break;
+				case KURUMI:
+					y = 11;
+					break;
 			}
 			if (Ratmogrify.useRatroicEnergy){
-				y = 11;
+				y = 12;
 			}
 			return x+TALENT_NUMBER*y;
 		} else {
@@ -2509,6 +2554,9 @@ public enum Talent {
 			case MARI:
 				Collections.addAll(tierTalents, MARI_T1_1, MARI_T1_2, MARI_T1_3, MARI_T1_4);
 				break;
+			case KURUMI:
+				Collections.addAll(tierTalents, KURUMI_T1_1, KURUMI_T1_2, KURUMI_T1_3, KURUMI_T1_4);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HEARTY_MEAL, VETERANS_INTUITION, PROVOKED_ANGER, IRON_WILL);
 				break;
@@ -2571,6 +2619,9 @@ public enum Talent {
 			case MARI:
 				Collections.addAll(tierTalents, MARI_T2_1, MARI_T2_2, MARI_T2_3, MARI_T2_4, MARI_T2_5);
 				break;
+			case KURUMI:
+				Collections.addAll(tierTalents, KURUMI_T2_1, KURUMI_T2_2, KURUMI_T2_3, KURUMI_T2_4, KURUMI_T2_5);
+				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, IRON_STOMACH, LIQUID_WILLPOWER, RUNIC_TRANSFERENCE, LETHAL_MOMENTUM, IMPROVISED_PROJECTILES);
 				break;
@@ -2632,6 +2683,9 @@ public enum Talent {
 				break;
 			case MARI:
 				Collections.addAll(tierTalents, MARI_T3_1, MARI_T3_2);
+				break;
+			case KURUMI:
+				Collections.addAll(tierTalents, KURUMI_T3_1, KURUMI_T3_2);
 				break;
 			case WARRIOR:
 				Collections.addAll(tierTalents, HOLD_FAST, STRONGMAN);
@@ -2744,6 +2798,12 @@ public enum Talent {
 				break;
 			case SYMBOL_OF_PEACE:
 				Collections.addAll(tierTalents, MARI_EX2_1, MARI_EX2_2, MARI_EX2_3);
+				break;
+			case GUN_STORM:
+				Collections.addAll(tierTalents, KURUMI_EX1_1, KURUMI_EX1_2, KURUMI_EX1_3);
+				break;
+			case SHIELD_DEPLOY:
+				Collections.addAll(tierTalents, KURUMI_EX2_1, KURUMI_EX2_2, KURUMI_EX2_3);
 				break;
 			case BERSERKER:
 				Collections.addAll(tierTalents, ENDLESS_RAGE, DEATHLESS_FURY, ENRAGED_CATALYST);
@@ -3002,6 +3062,7 @@ public enum Talent {
 				|| hero.hasTalent(Talent.YUZU_T2_1)
 				|| hero.hasTalent(Talent.IZUNA_T2_1)
 				|| hero.hasTalent(Talent.MIKA_T2_1)
-				|| hero.hasTalent(Talent.MARI_T2_1);
+				|| hero.hasTalent(Talent.MARI_T2_1)
+				|| hero.hasTalent(Talent.KURUMI_T2_1);
 	}
 }

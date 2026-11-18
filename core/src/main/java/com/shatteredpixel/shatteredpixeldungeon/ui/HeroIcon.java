@@ -139,6 +139,8 @@ public class HeroIcon extends Image {
 	public static final int SHOOTING_STAR 	= 128+19;
 	public static final int DEVOUT_PRAYER	= 128+20;
 	public static final int SYMBOL_OF_PEACE	= 128+21;
+	public static final int GUN_STORM		= 128+22;
+	public static final int SHIELD_DEPLOY	= 128+23;
 
 	//new armor abilities
 	public static final int ARIS_1			= 128+24;
@@ -174,6 +176,9 @@ public class HeroIcon extends Image {
 	public static final int MARI_1			= 128+54;
 	public static final int MARI_2			= 128+55;
 	public static final int MARI_3			= 128+56;
+	public static final int KURUMI_1		= 128+57;
+	public static final int KURUMI_2		= 128+58;
+	public static final int KURUMI_3		= 128+59;
 
 	//new action indicator visuals
   	public static final int CHARGE						= 128+64;

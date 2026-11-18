@@ -512,6 +512,8 @@ public enum Icons {
 				return new ItemSprite(ItemSpriteSheet.SCRUNCHIE);
 			case MARI:
 				return new ItemSprite(ItemSpriteSheet.CROSS);
+			case KURUMI:
+				return new ItemSprite(ItemSpriteSheet.FLASH_SHIELD);
 			case WARRIOR:
 				return new ItemSprite(ItemSpriteSheet.SEAL);
 			case MAGE:
