@@ -6,7 +6,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.utils.Random;
 
 public class FlashShield extends MeleeWeapon {
 
@@ -19,17 +18,29 @@ public class FlashShield extends MeleeWeapon {
     }
 
     @Override
+    public int min(int lvl) {
+        return  tier() +  //base
+                lvl;    //level scaling
+    }
+
+    @Override
+    public int max(int lvl) {
+        return  4*(tier()+1) +    //base
+                lvl*(tier()+1);   //level scaling
+    }
+
+    @Override
     public String statsInfo() {
         if (isIdentified()){
-            return Messages.get(this, "stats_desc", tier()*buffedLvl()+1, 20, -2);
+            return Messages.get(this, "stats_desc", tier()*buffedLvl()+1, 20, -2, tier());
         } else {
-            return Messages.get(this, "typical_stats_desc", tier()+1, 20, -2);
+            return Messages.get(this, "typical_stats_desc", tier()+1, 20, -2, tier());
         }
     }
 
     @Override
     public int tier() {
-        if (Dungeon.hero != null) return 1+Dungeon.hero.lvl/6;
+        if (Dungeon.hero != null) return (int) Math.ceil(Dungeon.hero.lvl/6f);
         else return super.tier();
     }
 
@@ -38,13 +49,15 @@ public class FlashShield extends MeleeWeapon {
         return tier()*buffedLvl()+1;
     }
 
-    public float bulletAccuracyFactor(Hero hero) {
-        if (isEquipped(hero)) return 1.2f;
+    public static float bulletAccuracyFactor(Hero hero) {
+        FlashShield shield = hero.belongings.getItem(FlashShield.class);
+        if (shield != null && shield.isEquipped(hero)) return 1.2f;
         else return 1f;
     }
 
-    public int gunSTRFactor(Hero hero) {
-        if (isEquipped(hero)) return -2;
+    public static int gunSTRFactor(Hero hero) {
+        FlashShield shield = hero.belongings.getItem(FlashShield.class);
+        if (shield != null && shield.isEquipped(hero)) return -2;
         else return 0;
     }
 }

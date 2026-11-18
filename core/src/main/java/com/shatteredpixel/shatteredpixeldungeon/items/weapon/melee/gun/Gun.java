@@ -90,6 +90,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T2;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T3;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T4;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR_T5;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.special.FlashShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -614,9 +615,9 @@ public class Gun extends MeleeWeapon {
     @Override
     public int STRReq(int lvl) {
         int req = STRReq(tier(), lvl);
-        if (masteryPotionBonus){
-            req -= 2;
-        }
+        if (masteryPotionBonus) req -= 2;
+        if (hero != null && hero.heroClass == HeroClass.KURUMI) req += 2;
+        if (hero != null) req += FlashShield.gunSTRFactor(hero);
         return req;
     }
 
@@ -1161,6 +1162,9 @@ public class Gun extends MeleeWeapon {
             }
             if (owner instanceof Hero && owner.buff(Bipod.BipodBuff.class) != null) {
                 ACC *= Bipod.BipodBuff.bulletAccMultiplier();
+            }
+            if (owner instanceof Hero) {
+                ACC *= FlashShield.bulletAccuracyFactor((Hero)owner);
             }
             ACC = Gun.this.barrelMod.bulletAccuracyFactor(ACC, Dungeon.level.adjacent(owner.pos, target.pos));
             return ACC;
