@@ -825,46 +825,46 @@ public enum Talent {
 	MARI_ARMOR3_3(25, 10, 4),
 
 	//Kurumi T1
-	KURUMI_T1_1(0, 10, 2),
-	KURUMI_T1_2(1, 10, 2),
-	KURUMI_T1_3(2, 10, 2),
-	KURUMI_T1_4(3, 10, 2),
+	KURUMI_T1_1(0, 11, 2),
+	KURUMI_T1_2(1, 11, 2),
+	KURUMI_T1_3(2, 11, 2),
+	KURUMI_T1_4(3, 11, 2),
 
 	//Kurumi T2
-	KURUMI_T2_1(4, 10, 2),
-	KURUMI_T2_2(5, 10, 2),
-	KURUMI_T2_3(6, 10, 2),
-	KURUMI_T2_4(7, 10, 2),
-	KURUMI_T2_5(8, 10, 2),
+	KURUMI_T2_1(4, 11, 2),
+	KURUMI_T2_2(5, 11, 2),
+	KURUMI_T2_3(6, 11, 2),
+	KURUMI_T2_4(7, 11, 2),
+	KURUMI_T2_5(8, 11, 2),
 
 	//Kurumi T3
-	KURUMI_T3_1(9, 10, 3),
-	KURUMI_T3_2(10, 10, 3),
+	KURUMI_T3_1(9, 11, 3),
+	KURUMI_T3_2(10, 11, 3),
 
 	//Gun Storm T3
-	KURUMI_EX1_1(11, 10, 3),
-	KURUMI_EX1_2(12, 10, 3),
-	KURUMI_EX1_3(13, 10, 3),
+	KURUMI_EX1_1(11, 11, 3),
+	KURUMI_EX1_2(12, 11, 3),
+	KURUMI_EX1_3(13, 11, 3),
 
 	//Shield Deploy T3
-	KURUMI_EX2_1(14, 10, 3),
-	KURUMI_EX2_2(15, 10, 3),
-	KURUMI_EX2_3(16, 10, 3),
+	KURUMI_EX2_1(14, 11, 3),
+	KURUMI_EX2_2(15, 11, 3),
+	KURUMI_EX2_3(16, 11, 3),
 
 	//Armor Ability 1 T4
-	KURUMI_ARMOR1_1(17, 10, 4),
-	KURUMI_ARMOR1_2(18, 10, 4),
-	KURUMI_ARMOR1_3(19, 10, 4),
+	KURUMI_ARMOR1_1(17, 11, 4),
+	KURUMI_ARMOR1_2(18, 11, 4),
+	KURUMI_ARMOR1_3(19, 11, 4),
 
 	//Armor Ability 2 T4
-	KURUMI_ARMOR2_1(20, 10, 4),
-	KURUMI_ARMOR2_2(21, 10, 4),
-	KURUMI_ARMOR2_3(22, 10, 4),
+	KURUMI_ARMOR2_1(20, 11, 4),
+	KURUMI_ARMOR2_2(21, 11, 4),
+	KURUMI_ARMOR2_3(22, 11, 4),
 
 	//Armor Ability 3 T4
-	KURUMI_ARMOR3_1(23, 10, 4),
-	KURUMI_ARMOR3_2(24, 10, 4),
-	KURUMI_ARMOR3_3(25, 10, 4),
+	KURUMI_ARMOR3_1(23, 11, 4),
+	KURUMI_ARMOR3_2(24, 11, 4),
+	KURUMI_ARMOR3_3(25, 11, 4),
 
 	//universal T4
 	HEROIC_ENERGY(26, 0, 4), //See icon() and title() for special logic for this one

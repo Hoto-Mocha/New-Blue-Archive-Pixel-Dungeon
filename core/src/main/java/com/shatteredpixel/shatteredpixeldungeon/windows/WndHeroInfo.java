@@ -287,7 +287,7 @@ public class WndHeroInfo extends WndTabbed {
 					break;
 				case KURUMI:
 					icons = new Image[]{ new ItemSprite(ItemSpriteSheet.FLASH_SHIELD),
-							new ItemSprite(ItemSpriteSheet.FLASHBANG_GRENADE),
+							new ItemSprite(ItemSpriteSheet.SMG_PLACEHOLDER),
 							new ItemSprite(ItemSpriteSheet.SMG_TIER_1),
 							new ItemSprite(ItemSpriteSheet.SCROLL_ISAZ)};
 					break;
