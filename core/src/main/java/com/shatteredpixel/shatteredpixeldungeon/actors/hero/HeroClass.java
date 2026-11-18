@@ -92,6 +92,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.TengusMask;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Bicycle;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Claymore;
+import com.shatteredpixel.shatteredpixeldungeon.items.active.FlashBang;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.HandGrenade;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.IronHorus;
 import com.shatteredpixel.shatteredpixeldungeon.items.active.Laptop;
@@ -491,10 +492,15 @@ public enum HeroClass {
 	private static void initKurumi(Hero hero) {
         FlashShield shield = new FlashShield();
 		(hero.belongings.weapon = shield).identify();
+
 		SMG_T1 smgT1 = new SMG_T1();
 		(hero.belongings.secondWep = smgT1).identify();
 
+		FlashBang flashBang = new FlashBang();
+		flashBang.collect();
+
 		Dungeon.quickslot.setSlot(0, smgT1);
+		Dungeon.quickslot.setSlot(1, flashBang);
 
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
