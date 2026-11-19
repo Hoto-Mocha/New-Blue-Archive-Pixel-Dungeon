@@ -41,8 +41,8 @@ public class SpringPunch extends GL implements SpecialGun {
         }
 
         @Override
-        protected void onThrow(int cell) {
-            super.onThrow(cell);
+        public void shoot(int cell, boolean useRound) {
+            super.shoot(cell, useRound);
 
             WandOfBlastWave.BlastWave.blast(cell);
             boolean throwChar = false;

@@ -36,8 +36,9 @@ public class WineRedAdmire extends SR implements SpecialGun {
 
     public class WineRedAdmireBullet extends SRBullet {
         @Override
-        protected void onThrow(int cell) {
-            super.onThrow(cell);
+        public void shoot(int cell, boolean useRound) {
+            super.shoot(cell, useRound);
+
             if (Dungeon.level.distance(Dungeon.hero.pos, cell) > 2 && Random.Float() < explosionChance(buffedLvl())) {
                 for (int i : PathFinder.NEIGHBOURS4) {
                     int c = cell+i;
