@@ -880,15 +880,15 @@ public class Gun extends MeleeWeapon {
     }
 
     public void shoot(int cell) { //지정한 위치에 탄환 투사체를 발사함.
-        shoot(cell, false, false, false, true);
+        shoot(cell, false, false, false, false);
     }
 
-    public void shoot(int cell, boolean ignoreWall, boolean isSpecial, boolean isSnipe, boolean usesTurn) {
+    public void shoot(int cell, boolean ignoreWall, boolean isSpecial, boolean isSnipe, boolean isQuickShot) {
         Bullet bullet = knockBullet();
         bullet.setIgnoreWall(ignoreWall);
         bullet.setSpecialShot(isSpecial);
         bullet.setSnipeShot(isSnipe);
-        bullet.setQuickShot(usesTurn);
+        bullet.setQuickShot(isQuickShot);
         bullet.cast(hero, cell);
     }
 
