@@ -199,7 +199,7 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
                     if (finalShot == finalMaxShot) {
                         gun.shoot(cell);
                     } else {
-                        gun.shoot(cell, false, false, false, false);
+                        gun.shoot(cell, 0);
                     }
                     super.onComplete();
                 }

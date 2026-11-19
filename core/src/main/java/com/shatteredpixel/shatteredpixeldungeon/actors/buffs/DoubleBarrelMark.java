@@ -112,7 +112,7 @@ public class DoubleBarrelMark extends FlavourBuff implements ActionIndicator.Act
 		}
 
 		bullet.setSpecialShot(true);
-		bullet.setQuickShot(true);
+		bullet.setDelay(0);
 
 		bullet.cast(hero, cell);
 		detach();

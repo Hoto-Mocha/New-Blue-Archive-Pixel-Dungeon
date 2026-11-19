@@ -880,15 +880,20 @@ public class Gun extends MeleeWeapon {
     }
 
     public void shoot(int cell) { //지정한 위치에 탄환 투사체를 발사함.
-        shoot(cell, false, false, false, false);
+        shoot(cell, -1);
     }
 
-    public void shoot(int cell, boolean ignoreWall, boolean isSpecial, boolean isSnipe, boolean isQuickShot) {
+    public void shoot(int cell, float forcedDelay) {
+        shoot(cell, forcedDelay, false, false, false);
+    }
+
+    public void shoot(int cell, float forcedDelay, boolean ignoreWall, boolean isSpecial, boolean isSnipe) {
+        if (round() <= 0) return;
         Bullet bullet = knockBullet();
+        bullet.setDelay(forcedDelay); //만약 forcedDelay가 음수라면 총기의 원래 턴 소모량이 된다. 0 이상일 경우 지정한 턴만큼 소모한다.
         bullet.setIgnoreWall(ignoreWall);
         bullet.setSpecialShot(isSpecial);
         bullet.setSnipeShot(isSnipe);
-        bullet.setQuickShot(isQuickShot);
         bullet.cast(hero, cell);
     }
 
@@ -977,7 +982,7 @@ public class Gun extends MeleeWeapon {
 
         private boolean specialShot = false;
         private boolean snipeShot = false;
-        private boolean quickShot = false;
+        private float forcedDelay = -1;
 
         {
             image = ItemSpriteSheet.SINGLE_BULLET;
@@ -1020,12 +1025,12 @@ public class Gun extends MeleeWeapon {
             return this.snipeShot;
         }
 
-        public void setQuickShot(boolean isQuick) {
-            this.quickShot = isQuick;
+        public void setDelay(float turns) {
+            this.forcedDelay = turns;
         }
 
-        public boolean isQuickShot() {
-            return this.quickShot;
+        public float delay() {
+            return this.forcedDelay;
         }
 
         @Override
@@ -1174,7 +1179,7 @@ public class Gun extends MeleeWeapon {
                 return 0;
             }
 
-            if (quickShot) return 0;
+            if (delay() >= 0) return forcedDelay;
 
             float speed = Gun.this.delayFactor(user) * shootingSpeed;
 
