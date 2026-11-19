@@ -27,10 +27,10 @@ public class SpringPunch extends GL implements SpecialGun {
 
     @Override
     public Bullet knockBullet(){
-        return new FunnyFireworkBullet();
+        return new SpringPunchBullet();
     }
 
-    public class FunnyFireworkBullet extends GLBullet {
+    public class SpringPunchBullet extends GLBullet {
         @Override
         public int proc(Char attacker, Char defender, int damage) {
             float dmg = damage;
