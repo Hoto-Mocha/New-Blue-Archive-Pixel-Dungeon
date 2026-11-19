@@ -374,11 +374,7 @@ public class MeleeWeapon extends Weapon {
 	}
 	
 	public String statsInfo(){
-		if (isIdentified()){
-			return Messages.get(this, "stats_desc", 6+2*buffedLvl());
-		} else {
-			return Messages.get(this, "typical_stats_desc", 6);
-		}
+		return Messages.get(this, "stats_desc");
 	}
 
 	public String abilityInfo() {
