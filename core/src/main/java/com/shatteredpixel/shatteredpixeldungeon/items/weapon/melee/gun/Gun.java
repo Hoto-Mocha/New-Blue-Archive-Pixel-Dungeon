@@ -887,7 +887,6 @@ public class Gun extends MeleeWeapon {
         bullet.setIgnoreWall(ignoreWall);
         bullet.setSpecialShot(isSpecial);
         bullet.setSnipeShot(isSnipe);
-        //bullet.shoot()은 턴을 소모하지 않으므로 setQuickShot()은 의미가 없음
         bullet.shoot(cell, useRound);
     }
 

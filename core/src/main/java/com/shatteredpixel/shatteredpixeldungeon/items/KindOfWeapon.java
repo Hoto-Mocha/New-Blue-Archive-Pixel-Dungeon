@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GunStorm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
@@ -283,21 +284,29 @@ abstract public class KindOfWeapon extends EquipableItem {
 			hero.belongings.secondWep = null;
 		}
 
+		boolean result;
+
 		if (super.doUnequip( hero, collect, single )) {
 
 			if (!second){
 				hero.belongings.weapon = null;
 			}
-			return true;
+			result = true;
 
 		} else {
 
 			if (second){
 				hero.belongings.secondWep = this;
 			}
-			return false;
+			result = false;
 
 		}
+
+		if (hero.subClass == HeroSubClass.GUN_STORM) {
+			Buff.affect(hero, GunStorm.class).checkWeapon(hero);
+		}
+
+		return result;
 	}
 
 	public int min(){
