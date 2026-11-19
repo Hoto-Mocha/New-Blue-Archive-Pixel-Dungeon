@@ -97,10 +97,13 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.MissileSprite;
+import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -531,6 +534,10 @@ public class Gun extends MeleeWeapon {
         return shotPerShoot + inscribeMod.shotBonus();
     }
 
+    public float shootingSpeed() {
+        return this.shootingSpeed;
+    }
+
     public int maxRound() { //최대 장탄수
         int amount = max_round;
 
@@ -584,7 +591,7 @@ public class Gun extends MeleeWeapon {
             amount -= 1;
         }
 
-        if (hero != null && hero.belongings.secondWep() == this) {
+        if (hero != null && hero.subClass == HeroSubClass.DOUBLE_BARREL && hero.belongings.secondWep() == this) {
             amount += 1;
         }
 
@@ -866,6 +873,11 @@ public class Gun extends MeleeWeapon {
         return new Bullet();
     }
 
+    //needs to be overridden
+    public Bullet knockBurstBullet(){
+        return new BurstBullet();
+    }
+
     public void shootWithoutBullet(int cell) { //탄환 투사체 없이 공격 판정만 발생시킴. 주로 광역 공격에 사용하므로 각각의 타격은 탄환을 소모하지 않음
         shootWithoutBullet(cell, false, false, false, false);
     }
@@ -884,16 +896,38 @@ public class Gun extends MeleeWeapon {
     }
 
     public void shoot(int cell, float forcedDelay) {
-        shoot(cell, forcedDelay, false, false, false);
+        shoot(cell, forcedDelay, false, false, false, null);
     }
 
-    public void shoot(int cell, float forcedDelay, boolean ignoreWall, boolean isSpecial, boolean isSnipe) {
+    public void shoot(int cell, float forcedDelay, boolean ignoreWall, boolean isSpecial, boolean isSnipe, HitProc proc) {
         if (round() <= 0) return;
         Bullet bullet = knockBullet();
         bullet.setDelay(forcedDelay); //만약 forcedDelay가 음수라면 총기의 원래 턴 소모량이 된다. 0 이상일 경우 지정한 턴만큼 소모한다.
         bullet.setIgnoreWall(ignoreWall);
         bullet.setSpecialShot(isSpecial);
         bullet.setSnipeShot(isSnipe);
+        bullet.setHitProc(proc);
+        bullet.cast(hero, cell);
+    }
+
+    public void burstShoot(int cell) {
+        burstShoot(cell, -1);
+    }
+
+    public void burstShoot(int cell, float forcedDelay) {
+        burstShoot(cell, forcedDelay, false, false, false, null);
+    }
+
+    public void burstShoot(int cell, float forcedDelay, boolean ignoreWall, boolean isSpecial, boolean isSnipe, HitProc proc) {
+        //BurstBullet은 Tweener를 통한 여러 발 사격 구현 시 마지막 사격을 제외한 나머지 탄환에 사용되는 탄환으로,
+        //일반 탄환과 똑같지만 턴을 소모하고도 행동 종료(hero.next())를 하지 않도록 설계되어 있다.
+        if (round() <= 0) return;
+        Bullet bullet = knockBurstBullet();
+        bullet.setDelay(forcedDelay);
+        bullet.setIgnoreWall(ignoreWall);
+        bullet.setSpecialShot(isSpecial);
+        bullet.setSnipeShot(isSnipe);
+        bullet.setHitProc(proc);
         bullet.cast(hero, cell);
     }
 
@@ -983,6 +1017,7 @@ public class Gun extends MeleeWeapon {
         private boolean specialShot = false;
         private boolean snipeShot = false;
         private float forcedDelay = -1;
+        private HitProc hitProc = null;
 
         {
             image = ItemSpriteSheet.SINGLE_BULLET;
@@ -1031,6 +1066,10 @@ public class Gun extends MeleeWeapon {
 
         public float delay() {
             return this.forcedDelay;
+        }
+
+        public void setHitProc(HitProc proc) {
+            this.hitProc = proc;
         }
 
         @Override
@@ -1100,6 +1139,10 @@ public class Gun extends MeleeWeapon {
                 if (hero.buff(LightBullet.LightMagazine.class) != null) {
                     damage = hero.buff(LightBullet.LightMagazine.class).proc(hero, defender, damage);
                 }
+            }
+
+            if (hitProc != null) {
+                damage = hitProc.proc(attacker, defender, damage);
             }
 
             return Gun.this.proc(attacker, defender, damage);
@@ -1411,6 +1454,50 @@ public class Gun extends MeleeWeapon {
         }
     }
 
+    public class BurstBullet extends Bullet {
+        @Override
+        public void cast(Hero user, int dst) {
+            final int cell = throwPos( user, dst );
+            user.sprite.zap( cell );
+            user.busy();
+
+            throwSound();
+
+            Char enemy = Actor.findChar( cell );
+            QuickSlotButton.target(enemy);
+
+            final float delay = castDelay(user, cell);
+
+            if (enemy != null) {
+                ((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
+                        reset(user.sprite,
+                                enemy.sprite,
+                                this,
+                                new Callback() {
+                                    @Override
+                                    public void call() {
+                                        curUser = user;
+                                        user.spend(delay);
+                                        BurstBullet.this.onThrow(cell);
+                                    }
+                                });
+            } else {
+                ((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
+                        reset(user.sprite,
+                                cell,
+                                this,
+                                new Callback() {
+                                    @Override
+                                    public void call() {
+                                        curUser = user;
+                                        user.spend(delay);
+                                        BurstBullet.this.onThrow(cell);
+                                    }
+                                });
+            }
+        }
+    }
+
     private CellSelector.Listener shooter = new CellSelector.Listener() {
         @Override
         public void onSelect( Integer target ) {
@@ -1507,5 +1594,9 @@ public class Gun extends MeleeWeapon {
         public String info() {
             return "";
         }
+    }
+
+    public static abstract class HitProc {
+        public abstract int proc(Char attacker, Char defender, int damage);
     }
 }

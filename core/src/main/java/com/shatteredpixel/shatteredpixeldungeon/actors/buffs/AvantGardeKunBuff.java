@@ -190,16 +190,14 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
             int finalShot = shot;
             Dungeon.hero.sprite.parent.add(new Tweener(Dungeon.hero.sprite.parent, 0.1f * finalShot) {
                 @Override
-                protected void updateValues(float progress) {
-                    hero.busy();
-                }
+                protected void updateValues(float progress) {}
 
                 @Override
                 protected void onComplete() {
                     if (finalShot == finalMaxShot) {
                         gun.shoot(cell);
                     } else {
-                        gun.shoot(cell, 0);
+                        gun.burstShoot(cell, 0);
                     }
                     super.onComplete();
                 }
