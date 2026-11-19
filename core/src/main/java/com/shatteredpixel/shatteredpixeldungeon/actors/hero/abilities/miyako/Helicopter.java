@@ -106,10 +106,7 @@ public class Helicopter extends ArmorAbility {
                                     @Override
                                     protected void onComplete() {
                                         super.onComplete();
-                                        Gun.Bullet bullet = gun.knockBullet();
-                                        bullet.setIgnoreWall(true);
-                                        bullet.cast(hero, enemy.pos);
-                                        hero.spend(-bullet.delayFactor(hero)); //투척에 필요한 턴 수를 뺀다.
+                                        gun.shoot(enemy.pos, true, false, false, false);
                                         System.out.println("enemy pos: "+enemy.pos);
                                     }
                                 });

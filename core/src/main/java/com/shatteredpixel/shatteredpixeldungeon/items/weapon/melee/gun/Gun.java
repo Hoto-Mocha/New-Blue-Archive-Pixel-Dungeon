@@ -866,6 +866,32 @@ public class Gun extends MeleeWeapon {
         return new Bullet();
     }
 
+    public void shootWithoutBullet(int cell) { //탄환 투사체 없이 공격 판정만 발생시킴. 주로 광역 공격에 사용하므로 각각의 타격은 탄환을 소모하지 않음
+        shootWithoutBullet(cell, false, false, false, false);
+    }
+
+    public void shootWithoutBullet(int cell, boolean useRound, boolean ignoreWall, boolean isSpecial, boolean isSnipe) {
+        Bullet bullet = knockBullet();
+        bullet.setIgnoreWall(ignoreWall);
+        bullet.setSpecialShot(isSpecial);
+        bullet.setSnipeShot(isSnipe);
+        //bullet.shoot()은 턴을 소모하지 않으므로 setQuickShot()은 의미가 없음
+        bullet.shoot(cell, useRound);
+    }
+
+    public void shoot(int cell) { //지정한 위치에 탄환 투사체를 발사함.
+        shoot(cell, false, false, false, true);
+    }
+
+    public void shoot(int cell, boolean ignoreWall, boolean isSpecial, boolean isSnipe, boolean usesTurn) {
+        Bullet bullet = knockBullet();
+        bullet.setIgnoreWall(ignoreWall);
+        bullet.setSpecialShot(isSpecial);
+        bullet.setSnipeShot(isSnipe);
+        bullet.setQuickShot(usesTurn);
+        bullet.cast(hero, cell);
+    }
+
     public void affixKit(ConversionKit kit){
         this.kit = kit;
         if (kit.level() > 0){
@@ -951,6 +977,7 @@ public class Gun extends MeleeWeapon {
 
         private boolean specialShot = false;
         private boolean snipeShot = false;
+        private boolean quickShot = false;
 
         {
             image = ItemSpriteSheet.SINGLE_BULLET;
@@ -991,6 +1018,14 @@ public class Gun extends MeleeWeapon {
 
         public boolean isSnipeShot() {
             return this.snipeShot;
+        }
+
+        public void setQuickShot(boolean isQuick) {
+            this.quickShot = isQuick;
+        }
+
+        public boolean isQuickShot() {
+            return this.quickShot;
         }
 
         @Override
@@ -1139,7 +1174,7 @@ public class Gun extends MeleeWeapon {
                 return 0;
             }
 
-            if (specialShot) return 0;
+            if (quickShot) return 0;
 
             float speed = Gun.this.delayFactor(user) * shootingSpeed;
 

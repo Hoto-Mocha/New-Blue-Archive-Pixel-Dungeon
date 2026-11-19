@@ -195,12 +195,11 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
 
                 @Override
                 protected void onComplete() {
-                    Gun.Bullet bullet = gun.knockBullet();
-                    bullet.setSpecialShot(true);
                     if (finalShot == finalMaxShot) {
-                        bullet.setSpecialShot(false);
+                        gun.shoot(cell);
+                    } else {
+                        gun.shoot(cell, false, false, false, false);
                     }
-                    bullet.cast(hero, cell);
                     super.onComplete();
                 }
             });
