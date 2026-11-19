@@ -183,7 +183,6 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
         final int MAX_SHOT = 3;
         final int SIZE = availableGuns.size();
         final int finalMaxShot = Math.min(MAX_SHOT, SIZE);
-        hero.busy();
         while (shot < finalMaxShot) {
             shot++;
             Gun gun = Random.element(availableGuns);
@@ -191,7 +190,9 @@ public class AvantGardeKunBuff extends Buff implements ActionIndicator.Action {
             int finalShot = shot;
             Dungeon.hero.sprite.parent.add(new Tweener(Dungeon.hero.sprite.parent, 0.1f * finalShot) {
                 @Override
-                protected void updateValues(float progress) {}
+                protected void updateValues(float progress) {
+                    hero.busy();
+                }
 
                 @Override
                 protected void onComplete() {
