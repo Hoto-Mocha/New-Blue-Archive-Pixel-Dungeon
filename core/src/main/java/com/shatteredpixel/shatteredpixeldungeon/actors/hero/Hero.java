@@ -494,6 +494,10 @@ public class Hero extends Char {
 			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, pitch);
 			return true;
 		}
+		if ( belongings.secondWep() != null && belongings.secondWep().defenseFactor(this) >= 4 ){
+			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, pitch);
+			return true;
+		}
 		return super.blockSound(pitch);
 	}
 
@@ -786,6 +790,7 @@ public class Hero extends Char {
 		}
 		if (belongings.weapon() != null && !RingOfForce.fightingUnarmed(this))  {
 			int wepDr = Random.NormalIntRange( 0 , belongings.weapon().defenseFactor( this ) );
+			wepDr += Random.NormalIntRange( 0, belongings.secondWep().defenseFactor(this));
 			if (STR() < ((Weapon)belongings.weapon()).STRReq()){
 				wepDr -= 2*(((Weapon)belongings.weapon()).STRReq() - STR());
 			}
