@@ -984,7 +984,7 @@ public class Gun extends MeleeWeapon {
     @Override
     public int buffedLvl() {
         int level = super.buffedLvl();
-        if (!evaluatingTwinUpgrades && hero != null && isEquipped(hero) && hero.hasTalent(Talent.NOA_EX1_2)){
+        if (!evaluatingTwinUpgrades && hero != null && isEquipped(hero) && (hero.hasTalent(Talent.NOA_EX1_2))){
             KindOfWeapon other = null;
             if (hero.belongings.weapon() != this) other = hero.belongings.weapon();
             if (hero.belongings.secondWep() != this) other = hero.belongings.secondWep();
@@ -996,6 +996,24 @@ public class Gun extends MeleeWeapon {
 
                 //weaker weapon needs to be 2/1/0 tiers lower, based on talent level
                 if ((tier() + (3 - hero.pointsInTalent(Talent.NOA_EX1_2))) <= ((Gun) other).tier()
+                        && otherLevel > super.buffedLvl()) {
+                    return otherLevel;
+                }
+
+            }
+        }
+        if (!evaluatingTwinUpgrades && hero != null && isEquipped(hero) && (hero.hasTalent(Talent.KURUMI_EX1_2))){
+            KindOfWeapon other = null;
+            if (hero.belongings.weapon() != this) other = hero.belongings.weapon();
+            if (hero.belongings.secondWep() != this) other = hero.belongings.secondWep();
+
+            if (other instanceof Gun) {
+                evaluatingTwinUpgrades = true;
+                int otherLevel = other.buffedLvl();
+                evaluatingTwinUpgrades = false;
+
+                //weaker weapon needs to be 2/1/0 tiers lower, based on talent level
+                if ((tier() + (3 - hero.pointsInTalent(Talent.KURUMI_EX1_2))) <= ((Gun) other).tier()
                         && otherLevel > super.buffedLvl()) {
                     return otherLevel;
                 }
