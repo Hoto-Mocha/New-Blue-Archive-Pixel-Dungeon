@@ -653,4 +653,61 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         gun1.useRound();
         gun2.useRound();
     }
+
+    //더블 SMG
+    public static void focusShot(Hero hero, Gun gun1, Gun gun2, int cell) {
+        int maxDistance = 1+6; //영웅 '앞' 6타일이므로 실질적인 최대 거리는 7타일
+        int minDistance = 1+1;
+        Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.STOP_SOLID);
+        List<Integer> path = aim.subPath(1, maxDistance);
+        //최대 사거리와 최소 사거리를 고려하여 최종 위치 선정
+        int finalCell;
+        if (Dungeon.level.distance(hero.pos, cell) < minDistance) {
+            finalCell = path.get(minDistance-1);
+        } else if (Dungeon.level.distance(hero.pos, cell) > maxDistance) {
+            finalCell = path.get(path.size()-1);
+        } else {
+            finalCell = cell;
+        }
+        hero.busy();
+        hero.sprite.zap(finalCell);
+        int rounds = gun1.round()+gun2.round();
+        float delay = Math.max(gun1.knockBullet().delayFactor(hero), gun2.knockBullet().delayFactor(hero));
+        boolean isPrimaryGun = gun1.round() >= gun2.round();
+        for (int i = 0; i < rounds; i++) {
+            int c = finalCell+PathFinder.NEIGHBOURS9[Random.Int(9)];
+            int finalI = i;
+            boolean finalIsPrimaryGun = isPrimaryGun;
+            Dungeon.hero.sprite.parent.add(new Tweener(Dungeon.hero.sprite.parent, finalI * 0.1f) {
+                @Override
+                protected void updateValues(float progress) {}
+
+                @Override
+                protected void onComplete() {
+                    CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(c)), 3);
+                    if (finalIsPrimaryGun) {
+                        gun1.burstShoot(c, 0, 1f, false, true, new Gun.HitProc() {
+                            @Override
+                            public int proc(Char attacker, Char defender, int damage) {
+                                return Math.round(damage*0.5f);
+                            }
+                        });
+                    } else {
+                        gun2.burstShoot(c, 0, 1f, false, true, new Gun.HitProc() {
+                            @Override
+                            public int proc(Char attacker, Char defender, int damage) {
+                                return Math.round(damage*0.5f);
+                            }
+                        });
+                    }
+
+                    if (finalI == rounds-1) {
+                        hero.spendAndNext(delay);
+                    }
+                }
+            });
+
+            isPrimaryGun = !isPrimaryGun;
+        }
+    }
 }
