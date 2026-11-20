@@ -6,20 +6,19 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.AirSupportParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BulletParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.HG.HG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MG.MG;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.MT.MT;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR;
@@ -44,6 +43,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+
+import java.util.List;
 
 public class GunStorm extends Buff implements ActionIndicator.Action {
 
@@ -299,6 +300,9 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 case DUEL_MG:
                     serialShot(hero, (Gun)w1, (Gun)w2, cell);
                     break;
+                case DUEL_SMG:
+                    focusShot(hero, (Gun)w1, (Gun)w2, cell);
+                    break;
             }
 
         }
@@ -322,6 +326,14 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         super.restoreFromBundle(bundle);
         abilityType = bundle.getEnum(ABILITY_TYPE, AbilityType.class);
         ActionIndicator.setAction(this);
+    }
+
+    public static int abilityDamage(Hero hero, float baseMulti, int damage) {
+        return Math.round(damage*baseMulti*(1f+0.05f*hero.pointsInTalent(Talent.KURUMI_EX1_3)));
+    }
+
+    public static float abilityAccuracy(Hero hero, float baseMulti) {
+        return baseMulti*(1f+0.1f*hero.pointsInTalent(Talent.KURUMI_EX1_3));
     }
 
     //양손 총기 재장전
@@ -362,23 +374,37 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             return;
         }
 
+        Gun.HitProc hitProc;
+        hitProc = new Gun.HitProc() {
+            @Override
+            public int proc(Char attacker, Char defender, int damage) {
+                return abilityDamage(hero, 1f, damage);
+            }
+        };
         if (gun1.round() <= 0) {
-            gun2.shoot(cell);
+            gun2.shoot(cell, -1, abilityAccuracy(hero, 1f), false, true, hitProc);
             return;
         } else if (gun2.round() <= 0) {
-            gun1.shoot(cell);
+            gun1.shoot(cell, -1, abilityAccuracy(hero, 1f), false, true, hitProc);
             return;
         }
 
+        hitProc = new Gun.HitProc() {
+            @Override
+            public int proc(Char attacker, Char defender, int damage) {
+                return abilityDamage(hero, 0.67f, damage);
+            }
+        };
         float delay = Math.max(gun1.delayFactor(hero), gun2.delayFactor(hero));
-        gun1.burstShoot(cell, 0);
+        gun1.burstShoot(cell, 0, abilityAccuracy(hero, 1f), false, true, hitProc);
+        Gun.HitProc finalHitProc = hitProc;
         hero.sprite.parent.add(new Tweener(hero.sprite.parent, 0.1f) {
             @Override
             protected void updateValues(float progress) {}
 
             @Override
             protected void onComplete() {
-                gun2.shoot(cell, delay);
+                gun2.shoot(cell, delay, abilityAccuracy(hero, 1f), false, true, finalHitProc);
                 super.onComplete();
             }
         });
@@ -392,8 +418,12 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             return;
         }
         float delay = 2 * gun.knockBullet().delayFactor(hero);
-        gun.shoot(cell, delay);
-        System.out.println(delay);
+        gun.shoot(cell, delay, abilityAccuracy(hero, 1f), false, true, new Gun.HitProc() {
+            @Override
+            public int proc(Char attacker, Char defender, int damage) {
+                return abilityDamage(hero, 1f, damage);
+            }
+        });
         Buff.affect(hero, CoverFireBuff.class, delay);
     }
 
@@ -409,13 +439,12 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             reloadAllGuns(hero, gun1, gun2);
             return;
         }
-
         float delay = Math.max(gun1.knockBullet().delayFactor(hero), gun2.knockBullet().delayFactor(hero));
-        gun1.burstShoot(cell, 0, 1f, false, true, new Gun.HitProc() {
+        gun1.burstShoot(cell, 0, abilityAccuracy(hero, 1f), false, true, new Gun.HitProc() {
             @Override
             public int proc(Char attacker, Char defender, int damage) {
                 Buff.affect(defender, Vulnerable.class, delay);
-                return damage;
+                return abilityDamage(hero, 0.67f, damage);
             }
         });
         hero.sprite.parent.add(new Tweener(hero.sprite.parent, 0.1f) {
@@ -424,7 +453,12 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
             @Override
             protected void onComplete() {
-                gun2.shoot(cell, delay);
+                gun2.shoot(cell, delay, abilityAccuracy(hero, 1f), false, true, new Gun.HitProc() {
+                    @Override
+                    public int proc(Char attacker, Char defender, int damage) {
+                        return abilityDamage(hero, 0.67f, damage);
+                    }
+                });
                 super.onComplete();
             }
         });
@@ -478,6 +512,12 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             final int finalBlastAmount = blastAmount;
             final float finalDelay = tweenerDelay;
             boolean finalIsPrimaryGun = isPrimaryGun;
+            Gun.HitProc hitProc = new Gun.HitProc() {
+                @Override
+                public int proc(Char attacker, Char defender, int damage) {
+                    return abilityDamage(hero, 0.67f, damage);
+                }
+            };
             Dungeon.hero.sprite.parent.add(new Tweener(Dungeon.hero.sprite.parent, finalDelay) {
                 @Override
                 protected void updateValues(float progress) {}
@@ -489,10 +529,10 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                         @Override
                         public void call() {
                             if (finalIsPrimaryGun) {
-                                gun1.shootWithoutBullet(finalCell, 1f, false, true, true, null);
+                                gun1.shootWithoutBullet(finalCell, abilityAccuracy(hero, 1f), false, true, true, hitProc);
                                 gun1.useRound();
                             } else {
-                                gun2.shootWithoutBullet(finalCell, 1f, false, true, true, null);
+                                gun2.shootWithoutBullet(finalCell, abilityAccuracy(hero, 1f), false, true, true, hitProc);
                                 gun2.useRound();
                             }
                             CellEmitter.center(finalCell).burst(BlastParticle.FACTORY, 4);
@@ -520,17 +560,19 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         int distance = 1;
         int degree = 90;
 
+        Gun.HitProc hitProc = new Gun.HitProc() {
+            @Override
+            public int proc(Char attacker, Char defender, int damage) {
+                return abilityDamage(hero, 0.5f, damage);
+            }
+        };
+
         //정면 범위 타격
         Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.WONT_STOP);
         ConeAOE aoe = new ConeAOE(aim, distance, degree, Ballistica.STOP_SOLID | Ballistica.STOP_TARGET);
         for (int c : aoe.cells) {
             CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
-            gun1.shootWithoutBullet(c, 2f, false, false, false, new Gun.HitProc() {
-                @Override
-                public int proc(Char attacker, Char defender, int damage) {
-                    return Math.round(damage * 0.5f);
-                }
-            });
+            gun1.shootWithoutBullet(c, abilityAccuracy(hero, 2f), false, false, false, hitProc);
         }
 
         //후면 범위 타격
@@ -538,12 +580,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         aoe = new ConeAOE(aim, distance, degree, Ballistica.STOP_SOLID | Ballistica.STOP_TARGET);
         for (int c : aoe.cells) {
             CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
-            gun2.shootWithoutBullet(c, 2f, false, false, false, new Gun.HitProc() {
-                @Override
-                public int proc(Char attacker, Char defender, int damage) {
-                    return Math.round(damage * 0.5f);
-                }
-            });
+            gun2.shootWithoutBullet(c, abilityAccuracy(hero, 2f), false, false, false, hitProc);
         }
 
         //격발 이펙트
@@ -578,10 +615,10 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         for (int c : aoe.cells) {
             CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(c)), 3);
             CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
-            gun1.shootWithoutBullet(c, 1f, false, false, false, new Gun.HitProc() {
+            gun1.shootWithoutBullet(c, abilityAccuracy(hero, 1f), false, false, false, new Gun.HitProc() {
                 @Override
                 public int proc(Char attacker, Char defender, int damage) {
-                    return Math.round(damage * 0.67f);
+                    return abilityDamage(hero, 0.67f, damage);
                 }
             });
         }
@@ -597,11 +634,11 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 for (int c : aoe.cells) {
                     CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
                     CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(c)), 3);
-                    gun2.shootWithoutBullet(c, 1f, false, false, false, new Gun.HitProc() {
+                    gun2.shootWithoutBullet(c, abilityAccuracy(hero, 1f), false, false, false, new Gun.HitProc() {
                         @Override
                         public int proc(Char attacker, Char defender, int damage) {
                             Elastic.pushEnemy(attacker, defender, gun2, 3);
-                            return Math.round(damage * 0.33f);
+                            return abilityDamage(hero, 0.33f, damage);
                         }
                     });
                 }
@@ -620,6 +657,12 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.DASH);
         int distance = Dungeon.level.distance(hero.pos, aim.collisionPos);
         int count = 0;
+        Gun.HitProc hitProc = new Gun.HitProc() {
+            @Override
+            public int proc(Char attacker, Char defender, int damage) {
+                return abilityDamage(hero, 0.5f, damage);
+            }
+        };
         for (int c : aim.subPath(1, distance)) {
             int finalCount = count;
             Dungeon.hero.sprite.parent.add(new Tweener(Dungeon.hero.sprite.parent, finalCount * 0.05f) {
@@ -630,18 +673,8 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 protected void onComplete() {
                     CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(c)), 3);
                     gun1.knockBullet().throwSound();
-                    gun1.shootWithoutBullet(c, 1f, false, false, true, new Gun.HitProc() {
-                        @Override
-                        public int proc(Char attacker, Char defender, int damage) {
-                            return Math.round(damage*0.5f);
-                        }
-                    });
-                    gun2.shootWithoutBullet(c, 1f, false, false, true, new Gun.HitProc() {
-                        @Override
-                        public int proc(Char attacker, Char defender, int damage) {
-                            return Math.round(damage*0.5f);
-                        }
-                    });
+                    gun1.shootWithoutBullet(c, abilityAccuracy(hero, 1f), false, false, true, hitProc);
+                    gun2.shootWithoutBullet(c, abilityAccuracy(hero, 1f), false, false, true, hitProc);
 
                     if (finalCount == distance-1) {
                         hero.spendAndNext(delay);
@@ -669,11 +702,20 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         } else {
             finalCell = cell;
         }
+
         hero.busy();
         hero.sprite.zap(finalCell);
+
         int rounds = gun1.round()+gun2.round();
         float delay = Math.max(gun1.knockBullet().delayFactor(hero), gun2.knockBullet().delayFactor(hero));
         boolean isPrimaryGun = gun1.round() >= gun2.round();
+        Gun.HitProc hitProc = new Gun.HitProc() {
+            @Override
+            public int proc(Char attacker, Char defender, int damage) {
+                return abilityDamage(hero, 0.5f, damage);
+            }
+        };
+
         for (int i = 0; i < rounds; i++) {
             int c = finalCell+PathFinder.NEIGHBOURS9[Random.Int(9)];
             int finalI = i;
@@ -686,19 +728,9 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 protected void onComplete() {
                     CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(c)), 3);
                     if (finalIsPrimaryGun) {
-                        gun1.burstShoot(c, 0, 1f, false, true, new Gun.HitProc() {
-                            @Override
-                            public int proc(Char attacker, Char defender, int damage) {
-                                return Math.round(damage*0.5f);
-                            }
-                        });
+                        gun1.burstShoot(c, 0, 1f, false, true, hitProc);
                     } else {
-                        gun2.burstShoot(c, 0, 1f, false, true, new Gun.HitProc() {
-                            @Override
-                            public int proc(Char attacker, Char defender, int damage) {
-                                return Math.round(damage*0.5f);
-                            }
-                        });
+                        gun2.burstShoot(c, 0, 1f, false, true, hitProc);
                     }
 
                     if (finalI == rounds-1) {
