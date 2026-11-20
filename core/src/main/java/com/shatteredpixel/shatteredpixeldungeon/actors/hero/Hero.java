@@ -790,12 +790,19 @@ public class Hero extends Char {
 		}
 		if (belongings.weapon() != null && !RingOfForce.fightingUnarmed(this))  {
 			int wepDr = Random.NormalIntRange( 0 , belongings.weapon().defenseFactor( this ) );
-			wepDr += Random.NormalIntRange( 0, belongings.secondWep().defenseFactor(this));
 			if (STR() < ((Weapon)belongings.weapon()).STRReq()){
 				wepDr -= 2*(((Weapon)belongings.weapon()).STRReq() - STR());
 			}
 			if (wepDr > 0) dr += wepDr;
 			BeyondTheLumination.defenseProc(this, belongings.weapon(), wepDr);
+		}
+		if (belongings.secondWep != null && !RingOfForce.fightingUnarmed(this))  {
+			int wepDr = Random.NormalIntRange( 0 , belongings.secondWep().defenseFactor( this ) );
+			if (STR() < ((Weapon)belongings.secondWep()).STRReq()){
+				wepDr -= 2*(((Weapon)belongings.secondWep()).STRReq() - STR());
+			}
+			if (wepDr > 0) dr += wepDr;
+			BeyondTheLumination.defenseProc(this, belongings.secondWep(), wepDr);
 		}
 
 		if (buff(HoldFast.class) != null){
