@@ -106,7 +106,7 @@ public class Helicopter extends ArmorAbility {
                                     @Override
                                     protected void onComplete() {
                                         super.onComplete();
-                                        gun.shoot(enemy.pos, 0, true, false, false, null);
+                                        gun.shoot(enemy.pos, 0, 1f, true, true, null);
                                         System.out.println("enemy pos: "+enemy.pos);
                                     }
                                 });

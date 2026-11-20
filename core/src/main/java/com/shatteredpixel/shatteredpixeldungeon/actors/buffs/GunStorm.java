@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -20,6 +22,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SG.SG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.SMG;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.SR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.special.FlashShield;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
+import com.shatteredpixel.shatteredpixeldungeon.mechanics.ConeAOE;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -243,6 +247,14 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             reloadAllGuns((Hero)target, ((Hero) target).belongings.weapon, ((Hero) target).belongings.secondWep);
             return;
         }
+
+        if (abilityType() == AbilityType.DUEL_HG){
+            KindOfWeapon w1 = hero.belongings.weapon;
+            KindOfWeapon w2 = hero.belongings.secondWep;
+            showTime(hero, (Gun)w1, (Gun)w2);
+            return;
+        }
+
         GameScene.selectCell(shooter);
     }
 
@@ -275,6 +287,9 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                     break;
                 case DUEL_GL:
                     saturationBombing(hero, (Gun)w1, (Gun)w2, cell);
+                    break;
+                case DUEL_HG:
+                    //doAction()에서 구현함
                     break;
             }
 
@@ -388,7 +403,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         }
 
         float delay = Math.max(gun1.knockBullet().delayFactor(hero), gun2.knockBullet().delayFactor(hero));
-        gun1.burstShoot(cell, 0, false, false, false, new Gun.HitProc() {
+        gun1.burstShoot(cell, 0, 1f, false, true, new Gun.HitProc() {
             @Override
             public int proc(Char attacker, Char defender, int damage) {
                 Buff.affect(defender, Vulnerable.class, delay);
@@ -466,10 +481,10 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                         @Override
                         public void call() {
                             if (finalIsPrimaryGun) {
-                                gun1.shootWithoutBullet(finalCell, false, true, false, false);
+                                gun1.shootWithoutBullet(finalCell, 1f, false, true, true, null);
                                 gun1.useRound();
                             } else {
-                                gun2.shootWithoutBullet(finalCell, false, true, false, false);
+                                gun2.shootWithoutBullet(finalCell, 1f, false, true, true, null);
                                 gun2.useRound();
                             }
                             CellEmitter.center(finalCell).burst(BlastParticle.FACTORY, 4);
@@ -484,5 +499,56 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             tweenerDelay += 0.1f;
             isPrimaryGun = !isPrimaryGun;
         }
+    }
+
+    //더블 HG
+    public static void showTime(Hero hero, Gun gun1, Gun gun2) {
+        hero.busy();
+        int index = Random.Int(8);
+        int cell = hero.pos+PathFinder.NEIGHBOURS8[index];
+        int oppositeCell = hero.pos+PathFinder.NEIGHBOURS8[7-index];
+
+        hero.sprite.zap(cell);
+        int distance = 1;
+        int degree = 90;
+
+        //정면 범위 타격
+        Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.WONT_STOP);
+        ConeAOE aoe = new ConeAOE(aim, distance, degree, Ballistica.STOP_SOLID | Ballistica.STOP_TARGET);
+        for (int c : aoe.cells) {
+            CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
+            gun1.shootWithoutBullet(c, 2f, false, false, false, new Gun.HitProc() {
+                @Override
+                public int proc(Char attacker, Char defender, int damage) {
+                    return damage/2;
+                }
+            });
+        }
+
+        //후면 범위 타격
+        aim = new Ballistica(hero.pos, oppositeCell, Ballistica.WONT_STOP);
+        aoe = new ConeAOE(aim, distance, degree, Ballistica.STOP_SOLID | Ballistica.STOP_TARGET);
+        for (int c : aoe.cells) {
+            CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
+            gun2.shootWithoutBullet(c, 2f, false, false, false, new Gun.HitProc() {
+                @Override
+                public int proc(Char attacker, Char defender, int damage) {
+                    return damage/2;
+                }
+            });
+        }
+
+        //격발 이펙트
+        CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(cell)), 6);
+        CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(oppositeCell)), 6);
+        //격발 사운드
+        gun1.knockBullet().throwSound();
+        gun2.knockBullet().throwSound();
+        //탄환 소모
+        gun1.useRound();
+        gun2.useRound();
+
+        hero.next();
+
     }
 }

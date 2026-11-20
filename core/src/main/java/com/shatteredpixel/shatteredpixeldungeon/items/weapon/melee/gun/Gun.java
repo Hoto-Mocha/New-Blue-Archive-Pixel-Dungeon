@@ -879,14 +879,15 @@ public class Gun extends MeleeWeapon {
     }
 
     public void shootWithoutBullet(int cell) { //탄환 투사체 없이 공격 판정만 발생시킴. 주로 광역 공격에 사용하므로 각각의 타격은 탄환을 소모하지 않음
-        shootWithoutBullet(cell, false, false, false, false);
+        shootWithoutBullet(cell, 1f, false, false, true, null);
     }
 
-    public void shootWithoutBullet(int cell, boolean useRound, boolean ignoreWall, boolean isSpecial, boolean isSnipe) {
+    public void shootWithoutBullet(int cell, float acc, boolean useRound, boolean ignoreWall, boolean hitEffect, HitProc proc) {
         Bullet bullet = knockBullet();
+        bullet.setAccMulti(acc);
         bullet.setIgnoreWall(ignoreWall);
-        bullet.setSpecialShot(isSpecial);
-        bullet.setSnipeShot(isSnipe);
+        bullet.setHitEffect(hitEffect);
+        bullet.setHitProc(proc);
         bullet.shoot(cell, useRound);
     }
 
@@ -895,16 +896,16 @@ public class Gun extends MeleeWeapon {
     }
 
     public void shoot(int cell, float forcedDelay) {
-        shoot(cell, forcedDelay, false, false, false, null);
+        shoot(cell, forcedDelay, 1f, false, true, null);
     }
 
-    public void shoot(int cell, float forcedDelay, boolean ignoreWall, boolean isSpecial, boolean isSnipe, HitProc proc) {
+    public void shoot(int cell, float forcedDelay, float acc, boolean ignoreWall, boolean hitEffect, HitProc proc) {
         if (round() <= 0) return;
         Bullet bullet = knockBullet();
         bullet.setDelay(forcedDelay); //만약 forcedDelay가 음수라면 총기의 원래 턴 소모량이 된다. 0 이상일 경우 지정한 턴만큼 소모한다.
+        bullet.setAccMulti(acc);
         bullet.setIgnoreWall(ignoreWall);
-        bullet.setSpecialShot(isSpecial);
-        bullet.setSnipeShot(isSnipe);
+        bullet.setHitEffect(hitEffect);
         bullet.setHitProc(proc);
         bullet.cast(hero, cell);
     }
@@ -914,18 +915,18 @@ public class Gun extends MeleeWeapon {
     }
 
     public void burstShoot(int cell, float forcedDelay) {
-        burstShoot(cell, forcedDelay, false, false, false, null);
+        burstShoot(cell, forcedDelay, 1f, false, true, null);
     }
 
-    public void burstShoot(int cell, float forcedDelay, boolean ignoreWall, boolean isSpecial, boolean isSnipe, HitProc proc) {
+    public void burstShoot(int cell, float forcedDelay, float acc, boolean ignoreWall, boolean hitEffect, HitProc proc) {
         //BurstBullet은 Tweener를 통한 여러 발 사격 구현 시 마지막 사격을 제외한 나머지 탄환에 사용되는 탄환으로,
         //일반 탄환과 똑같지만 턴을 소모하고도 행동 종료(hero.next())를 하지 않도록 설계되어 있다.
         if (round() <= 0) return;
         Bullet bullet = knockBurstBullet();
         bullet.setDelay(forcedDelay);
+        bullet.setAccMulti(acc);
         bullet.setIgnoreWall(ignoreWall);
-        bullet.setSpecialShot(isSpecial);
-        bullet.setSnipeShot(isSnipe);
+        bullet.setHitEffect(hitEffect);
         bullet.setHitProc(proc);
         bullet.cast(hero, cell);
     }
@@ -1017,6 +1018,7 @@ public class Gun extends MeleeWeapon {
         private boolean snipeShot = false;
         private float forcedDelay = -1;
         private HitProc hitProc = null;
+        private boolean hitEffect = true;
 
         {
             image = ItemSpriteSheet.SINGLE_BULLET;
@@ -1055,10 +1057,6 @@ public class Gun extends MeleeWeapon {
             this.snipeShot = isSnipe;
         }
 
-        public boolean isSnipeShot() {
-            return this.snipeShot;
-        }
-
         public void setDelay(float turns) {
             this.forcedDelay = turns;
         }
@@ -1069,6 +1067,10 @@ public class Gun extends MeleeWeapon {
 
         public void setHitProc(HitProc proc) {
             this.hitProc = proc;
+        }
+
+        public void setHitEffect(boolean hitEffect) {
+            this.hitEffect = hitEffect;
         }
 
         @Override
@@ -1190,7 +1192,7 @@ public class Gun extends MeleeWeapon {
                             bulletMax()));
                 }
             }
-            if (isSnipeShot()) {
+            if (snipeShot) {
                 Char enemy = hero.attackTarget();
                 switch ((Dungeon.level.distance(owner.pos, enemy.pos)-1) / 3 + 1) {
                     case 1:
@@ -1235,7 +1237,7 @@ public class Gun extends MeleeWeapon {
 
         @Override
         public float accuracyFactor(Char owner, Char target) {
-            if (isSnipeShot()) return Char.INFINITE_ACCURACY;
+            if (snipeShot) return Char.INFINITE_ACCURACY;
 
             float ACC = super.accuracyFactor(owner, target);
             ACC *= shootingAccuracy * accMulti;
@@ -1340,20 +1342,24 @@ public class Gun extends MeleeWeapon {
             for (int i = 0; i < shotPerShoot(); i++) { //데미지 입히는 것과 발사 시 주변에서 나는 연기를 shotPerShoot만큼 반복
                 if (enemy == null || enemy == curUser || !enemy.isAlive()) {
                     parent = null;
-                    CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
-                    CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                    if (hitEffect) {
+                        CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
+                        CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                    }
                 } else {
                     if (curUser.buff(HPBullet.HPBulletBuff.class) != null) {
                         if (!curUser.buff(HPBullet.HPBulletBuff.class).proc(enemy, damageRoll(curUser))) {
-                            if (!curUser.shoot( enemy, this )) {
+                            if (!curUser.shoot( enemy, this ) && hitEffect) {
                                 CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
                                 CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
                             }
                         }
                     } else {
                         if (!curUser.shoot( enemy, this )) {
-                            CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
-                            CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                            if (hitEffect) {
+                                CellEmitter.get(cell).burst(SmokeParticle.FACTORY, 2);
+                                CellEmitter.center(cell).burst(BlastParticle.FACTORY, 2);
+                            }
                             if (curUser.hasTalent(Talent.YUZU_T1_4) && Dungeon.level.adjacent(curUser.pos, enemy.pos) && hero.buff(Talent.SafetyTriggerCooldown.class) == null) {
                                 Buff.affect(hero, Barrier.class).setShield(2+3*curUser.pointsInTalent(Talent.YUZU_T1_4));
                                 Buff.affect(hero, Talent.SafetyTriggerCooldown.class, Talent.SafetyTriggerCooldown.DURATION);
@@ -1377,7 +1383,7 @@ public class Gun extends MeleeWeapon {
             for (int i : shootArea){
                 int c = cell + i;
                 if (c >= 0 && c < Dungeon.level.length()) {
-                    if (Dungeon.level.heroFOV[c]) {
+                    if (Dungeon.level.heroFOV[c] && hitEffect) {
                         CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
                         CellEmitter.center(cell).burst(BlastParticle.FACTORY, 4);
                     }
