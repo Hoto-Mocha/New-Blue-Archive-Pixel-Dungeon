@@ -447,6 +447,10 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         }
         hero.sprite.operate(hero.pos);
         Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
+        if (!gun1Full && !gun2Full && hero.hasTalent(Talent.KURUMI_EX1_2)) {
+            reloadTurns -= hero.pointsInTalent(Talent.KURUMI_EX1_2);
+        }
+        reloadTurns = Math.max(0, reloadTurns);
         hero.spendAndNext(reloadTurns);
     }
 
