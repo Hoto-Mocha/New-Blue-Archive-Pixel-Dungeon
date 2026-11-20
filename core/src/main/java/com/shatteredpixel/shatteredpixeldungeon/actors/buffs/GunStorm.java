@@ -34,6 +34,9 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
+import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
+import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
@@ -63,6 +66,8 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
     }
 
     private AbilityType abilityType = AbilityType.NONE;
+    private boolean isTargeting = false;
+    private Image crossM;
 
     public AbilityType checkWeapon(Hero hero) {
         if (hero == null || hero.belongings == null) {
@@ -116,7 +121,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         boolean w1Available = w1 instanceof Gun && ((Gun) w1).round() > 0;
         boolean w2Available = w2 instanceof Gun && ((Gun) w2).round() > 0;
 
-        return w1Available || w2Available;
+        return w1Available && w2Available;
     }
 
     @Override
@@ -258,53 +263,104 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             return;
         }
 
-        GameScene.selectCell(shooter);
+        Char lastTarget = QuickSlotButton.lastTarget;
+
+        boolean hasValidTarget = lastTarget != null &&
+                lastTarget.isAlive() &&
+                lastTarget.alignment != Char.Alignment.ALLY &&
+                Dungeon.level.heroFOV[lastTarget.pos];
+
+        if (isTargeting && hasValidTarget) {
+            int cell = QuickSlotButton.autoAim(lastTarget);
+            if (cell == -1) cell = lastTarget.pos;
+
+            clearTargeting();
+            performAction(cell);
+        } else if (hasValidTarget) {
+            isTargeting = true;
+            showTargetCrosshair(lastTarget);
+            ActionIndicator.refresh();
+            GameScene.selectCell(shooter);
+        } else {
+            clearTargeting();
+            GameScene.selectCell(shooter);
+        }
+    }
+
+    private  void showTargetCrosshair(Char targetChar) {
+        if (targetChar != null && targetChar.sprite != null && targetChar.sprite.parent != null) {
+            if (crossM == null) {
+                crossM = Icons.TARGET.get();
+            }
+            targetChar.sprite.parent.addToFront(crossM);
+            crossM.point(targetChar.sprite.center(crossM));
+        }
+    }
+
+    public void clearTargeting() {
+        if (crossM != null) {
+            crossM.remove();
+            crossM = null;
+        }
+        if (isTargeting) {
+            isTargeting = false;
+        }
+    }
+
+    private static void performAction(Integer cell) {
+        Hero hero = Dungeon.hero;
+        if (cell == null) {
+            hero.buff(GunStorm.class).clearTargeting();
+            return;
+        }
+
+        KindOfWeapon w1 = hero.belongings.weapon;
+        KindOfWeapon w2 = hero.belongings.secondWep;
+        AbilityType abilityType = hero.buff(GunStorm.class).abilityType();
+
+        if (cell == hero.pos) {
+            reloadAllGuns(hero, w1, w2);
+            return;
+        }
+
+        switch (abilityType) {
+            case DOUBLE_GUN:
+                shootDifferentGuns(hero, (Gun)w1, (Gun)w2, cell);
+                break;
+            case GUN_N_SHIELD:
+                if (w1 instanceof Gun) coverFire(hero, (Gun)w1, cell);
+                else if (w2 instanceof Gun) coverFire(hero, (Gun)w2, cell);
+                break;
+            case DUEL_AR:
+                onePointShot(hero, (Gun)w1, (Gun)w2, cell);
+                break;
+            case DUEL_GL:
+                saturationBombing(hero, (Gun)w1, (Gun)w2, cell);
+                break;
+            case DUEL_HG:
+                //doAction()에서 구현함
+                break;
+            case DUEL_SG:
+                spreadShot(hero, (Gun)w1, (Gun)w2, cell);
+                break;
+            case DUEL_MG:
+                serialShot(hero, (Gun)w1, (Gun)w2, cell);
+                break;
+            case DUEL_SMG:
+                focusShot(hero, (Gun)w1, (Gun)w2, cell);
+                break;
+            case DUEL_SR:
+                serialSniping(hero, (Gun)w1, (Gun)w2, cell);
+                break;
+        }
+
+        hero.buff(GunStorm.class).clearTargeting();
     }
 
     private static CellSelector.Listener shooter = new CellSelector.Listener() {
         @Override
         public void onSelect( Integer cell ) {
-            if (cell == null) return;
-
-            Hero hero = Dungeon.hero;
-
-            KindOfWeapon w1 = hero.belongings.weapon;
-            KindOfWeapon w2 = hero.belongings.secondWep;
-            AbilityType abilityType = hero.buff(GunStorm.class).abilityType();
-
-            if (cell == hero.pos) {
-                reloadAllGuns(hero, w1, w2);
-                return;
-            }
-
-            switch (abilityType) {
-                case DOUBLE_GUN:
-                    shootDifferentGuns(hero, (Gun)w1, (Gun)w2, cell);
-                    break;
-                case GUN_N_SHIELD:
-                    if (w1 instanceof Gun) coverFire(hero, (Gun)w1, cell);
-                    else if (w2 instanceof Gun) coverFire(hero, (Gun)w2, cell);
-                    break;
-                case DUEL_AR:
-                    onePointShot(hero, (Gun)w1, (Gun)w2, cell);
-                    break;
-                case DUEL_GL:
-                    saturationBombing(hero, (Gun)w1, (Gun)w2, cell);
-                    break;
-                case DUEL_HG:
-                    //doAction()에서 구현함
-                    break;
-                case DUEL_SG:
-                    spreadShot(hero, (Gun)w1, (Gun)w2, cell);
-                    break;
-                case DUEL_MG:
-                    serialShot(hero, (Gun)w1, (Gun)w2, cell);
-                    break;
-                case DUEL_SMG:
-                    focusShot(hero, (Gun)w1, (Gun)w2, cell);
-                    break;
-            }
-
+            performAction(cell);
         }
 
         @Override
@@ -354,13 +410,40 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             return;
         }
         float reloadTurns = 0;
+
+        boolean gun1Full = false;
+        boolean gun2Full = false;
+
         if (gun1 != null) {
-            gun1.quickReload();
+            if (gun1.round() < gun1.maxRound()) {
+                gun1.beforeReload();
+                gun1.quickReload();
+                gun1.afterReload();
+            } else {
+                gun1Full = true; //탄창이 가득찬 경우 재장전이 불필요함
+            }
             reloadTurns += gun1.reloadTime();
+        } else {
+            gun1Full = true; //총이 아니거나 없을 경우 재장전이 불필요함
         }
+
         if (gun2 != null) {
-            gun2.quickReload();
+            if (gun2.round() < gun2.maxRound()) {
+                gun2.beforeReload();
+                gun2.quickReload();
+                gun2.afterReload();
+            } else {
+                gun2Full = true; //탄창이 가득찬 경우 재장전이 불필요함
+            }
             reloadTurns += gun2.reloadTime();
+        } else {
+            gun2Full = true; //총이 아니거나 없을 경우 재장전이 불필요함
+        }
+
+        //두 총 모두 없거나 가득 찬 상태라면 재장전을 하지 않음
+        if (gun1Full && gun2Full) {
+            GLog.w(Messages.get(Gun.class, "already_loaded"));
+            return;
         }
         hero.sprite.operate(hero.pos);
         Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
@@ -369,11 +452,6 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
     //서로 다른 총
     public static void shootDifferentGuns(Hero hero, Gun gun1, Gun gun2, int cell) {
-        if (gun1.round() <= 0 && gun2.round() <= 0) {
-            reloadAllGuns(hero, gun1, gun2);
-            return;
-        }
-
         Gun.HitProc hitProc;
         hitProc = new Gun.HitProc() {
             @Override
@@ -413,10 +491,6 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
     //방패와 총
     public static void coverFire(Hero hero, Gun gun, int cell) {
         hero.busy();
-        if (gun.round() <= 0) {
-            reloadAllGuns(hero, gun, null);
-            return;
-        }
         float delay = 2 * gun.knockBullet().delayFactor(hero);
         gun.shoot(cell, delay, abilityAccuracy(hero, 1f), false, true, new Gun.HitProc() {
             @Override
@@ -435,10 +509,6 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
     //더블 AR
     public static void onePointShot(Hero hero, Gun gun1, Gun gun2, int cell) {
-        if (gun1.round() <= 0 || gun2.round() <= 0) {
-            reloadAllGuns(hero, gun1, gun2);
-            return;
-        }
         float delay = Math.max(gun1.knockBullet().delayFactor(hero), gun2.knockBullet().delayFactor(hero));
         gun1.burstShoot(cell, 0, abilityAccuracy(hero, 1f), false, true, new Gun.HitProc() {
             @Override
@@ -466,11 +536,6 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
     //더블 GL
     public static void saturationBombing(Hero hero, Gun gun1, Gun gun2, int cell) {
-        if (gun1.round() <= 0 || gun2.round() <= 0) {
-            reloadAllGuns(hero, gun1, gun2);
-            return;
-        }
-
         hero.busy();
         hero.sprite.zap(cell);
 
@@ -603,11 +668,6 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
     //더블 SG
     public static void spreadShot(Hero hero, Gun gun1, Gun gun2, int cell) {
-        if (gun1.round() <= 0 || gun2.round() <= 0) {
-            reloadAllGuns(hero, gun1, gun2);
-            return;
-        }
-
         hero.busy();
         hero.sprite.zap(cell, new Callback() {
             @Override
@@ -660,11 +720,6 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
     //더블 MG
     public static void serialShot(Hero hero, Gun gun1, Gun gun2, int cell) {
-        if (gun1.round() <= 0 || gun2.round() <= 0) {
-            reloadAllGuns(hero, gun1, gun2);
-            return;
-        }
-
         hero.busy();
         hero.sprite.zap(cell);
 
@@ -704,11 +759,6 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
     //더블 SMG
     public static void focusShot(Hero hero, Gun gun1, Gun gun2, int cell) {
-        if (gun1.round() <= 0 || gun2.round() <= 0) {
-            reloadAllGuns(hero, gun1, gun2);
-            return;
-        }
-
         int maxDistance = 1+6; //영웅 '앞' 6타일이므로 실질적인 최대 거리는 7타일
         int minDistance = 1+1;
         Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.STOP_SOLID);
@@ -764,11 +814,6 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
     }
 
     public static void serialSniping(Hero hero, Gun gun1, Gun gun2, int cell) {
-        if (gun1.round() <= 0 || gun2.round() <= 0) {
-            reloadAllGuns(hero, gun1, gun2);
-            return;
-        }
-
         hero.busy();
         hero.sprite.zap(cell);
         Gun.HitProc hitProc = new Gun.HitProc() {
