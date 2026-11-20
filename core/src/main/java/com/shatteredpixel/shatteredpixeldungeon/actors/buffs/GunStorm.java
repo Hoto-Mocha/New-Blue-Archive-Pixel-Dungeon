@@ -466,6 +466,11 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
     //더블 GL
     public static void saturationBombing(Hero hero, Gun gun1, Gun gun2, int cell) {
+        if (gun1.round() <= 0 || gun2.round() <= 0) {
+            reloadAllGuns(hero, gun1, gun2);
+            return;
+        }
+
         hero.busy();
         hero.sprite.zap(cell);
 
@@ -598,6 +603,11 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
     //더블 SG
     public static void spreadShot(Hero hero, Gun gun1, Gun gun2, int cell) {
+        if (gun1.round() <= 0 || gun2.round() <= 0) {
+            reloadAllGuns(hero, gun1, gun2);
+            return;
+        }
+
         hero.busy();
         hero.sprite.zap(cell, new Callback() {
             @Override
@@ -650,6 +660,11 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
     //더블 MG
     public static void serialShot(Hero hero, Gun gun1, Gun gun2, int cell) {
+        if (gun1.round() <= 0 || gun2.round() <= 0) {
+            reloadAllGuns(hero, gun1, gun2);
+            return;
+        }
+
         hero.busy();
         hero.sprite.zap(cell);
 
@@ -689,6 +704,11 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
     //더블 SMG
     public static void focusShot(Hero hero, Gun gun1, Gun gun2, int cell) {
+        if (gun1.round() <= 0 || gun2.round() <= 0) {
+            reloadAllGuns(hero, gun1, gun2);
+            return;
+        }
+
         int maxDistance = 1+6; //영웅 '앞' 6타일이므로 실질적인 최대 거리는 7타일
         int minDistance = 1+1;
         Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.STOP_SOLID);
