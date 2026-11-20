@@ -12,6 +12,8 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BulletParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.AR.AR;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.GL.GL;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
@@ -291,6 +293,9 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 case DUEL_HG:
                     //doAction()에서 구현함
                     break;
+                case DUEL_SG:
+                    spreadShot(hero, (Gun)w1, (Gun)w2, cell);
+                    break;
             }
 
         }
@@ -550,5 +555,57 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
         hero.next();
 
+    }
+
+    //더블 SG
+    public static void spreadShot(Hero hero, Gun gun1, Gun gun2, int cell) {
+        hero.busy();
+        hero.sprite.zap(cell, new Callback() {
+            @Override
+            public void call() {
+                hero.sprite.idle();
+            }
+        });
+        float delay = Math.max(gun1.knockBullet().delayFactor(hero), gun2.knockBullet().delayFactor(hero));
+        int distance = 4;
+        float degree = 90;
+        Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.WONT_STOP);
+        ConeAOE aoe = new ConeAOE(aim, distance, degree, Ballistica.STOP_SOLID | Ballistica.STOP_TARGET);
+
+        gun1.knockBullet().throwSound();
+        for (int c : aoe.cells) {
+            CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(c)), 3);
+            CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
+            gun1.shootWithoutBullet(c, 1f, false, false, false, new Gun.HitProc() {
+                @Override
+                public int proc(Char attacker, Char defender, int damage) {
+                    return Math.round(damage * 0.67f);
+                }
+            });
+        }
+        gun1.useRound();
+
+        Dungeon.hero.sprite.parent.add(new Tweener(Dungeon.hero.sprite.parent, 0.2f) {
+            @Override
+            protected void updateValues(float progress) {}
+
+            @Override
+            protected void onComplete() {
+                gun2.knockBullet().throwSound();
+                for (int c : aoe.cells) {
+                    CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
+                    CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(c)), 3);
+                    gun2.shootWithoutBullet(c, 1f, false, false, false, new Gun.HitProc() {
+                        @Override
+                        public int proc(Char attacker, Char defender, int damage) {
+                            Elastic.pushEnemy(attacker, defender, gun2, 3);
+                            return Math.round(damage * 0.33f);
+                        }
+                    });
+                }
+                gun2.useRound();
+                hero.spendAndNext(delay);
+            }
+        });
     }
 }
