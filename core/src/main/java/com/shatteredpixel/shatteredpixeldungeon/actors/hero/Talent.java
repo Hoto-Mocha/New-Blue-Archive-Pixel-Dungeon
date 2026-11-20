@@ -590,12 +590,12 @@ public enum Talent {
 	NOA_T3_1(9, 5, 3),
 	NOA_T3_2(10, 5, 3),
 
-	//Professional Riding T3
+	//Double Barrel T3
 	NOA_EX1_1(11, 5, 3),
 	NOA_EX1_2(12, 5, 3),
 	NOA_EX1_3(13, 5, 3),
 
-	//Bank Robber T3
+	//Conversation T3
 	NOA_EX2_1(14, 5, 3),
 	NOA_EX2_2(15, 5, 3),
 	NOA_EX2_3(16, 5, 3),
