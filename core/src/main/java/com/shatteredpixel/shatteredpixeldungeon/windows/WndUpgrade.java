@@ -44,6 +44,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SMG.Beyon
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.JusticeIncarnate;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.SR.WineRedAdmire;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.quick.AssassinsKunai;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.special.FlashShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Tomahawk;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
@@ -297,6 +298,11 @@ public class WndUpgrade extends Window {
 			bottom = fillFields(Messages.get(this, "blocking"),
 					0 + "-" + ((Greatshield) toUpgrade).DRMax(levelFrom),
 					0 + "-" + ((Greatshield) toUpgrade).DRMax(levelTo),
+					bottom);
+		} else if (toUpgrade instanceof FlashShield){
+			bottom = fillFields(Messages.get(this, "blocking"),
+					0 + "-" + ((FlashShield) toUpgrade).DRMax(levelFrom),
+					0 + "-" + ((FlashShield) toUpgrade).DRMax(levelTo),
 					bottom);
 		}
 

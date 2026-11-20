@@ -32,9 +32,9 @@ public class FlashShield extends MeleeWeapon {
     @Override
     public String statsInfo() {
         if (isIdentified()){
-            return Messages.get(this, "stats_desc", tier()*buffedLvl()+1, 20, -2, tier());
+            return Messages.get(this, "stats_desc", DRMax(), 20, -2, tier());
         } else {
-            return Messages.get(this, "typical_stats_desc", tier()+1, 20, -2, tier());
+            return Messages.get(this, "typical_stats_desc", DRMax(0), 20, -2, tier());
         }
     }
 
@@ -44,9 +44,20 @@ public class FlashShield extends MeleeWeapon {
         else return super.tier();
     }
 
+
+
     @Override
-    public int defenseFactor(Char owner) {
-        return tier()*buffedLvl()+1;
+    public int defenseFactor( Char owner ) {
+        return DRMax();
+    }
+
+    public int DRMax(){
+        return DRMax(buffedLvl());
+    }
+
+    //6 extra defence, plus 2 per level
+    public int DRMax(int lvl){
+        return tier()*lvl+1;
     }
 
     public static float bulletAccuracyFactor(Hero hero) {
