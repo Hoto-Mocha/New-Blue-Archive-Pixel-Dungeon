@@ -2,7 +2,10 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.special;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlashShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -70,5 +73,23 @@ public class FlashShield extends MeleeWeapon {
         FlashShield shield = hero.belongings.getItem(FlashShield.class);
         if (shield != null && shield.isEquipped(hero)) return -2;
         else return 0;
+    }
+
+    @Override
+    public boolean doEquip(Hero hero) {
+        boolean result = super.doEquip(hero);
+        if (hero.subClass == HeroSubClass.SHIELD_DEPLOY) {
+            Buff.affect(hero, FlashShieldBuff.class).checkShield(hero);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean doUnequip(Hero hero, boolean collect, boolean single) {
+        boolean result = super.doUnequip(hero, collect, single);
+        if (hero.subClass == HeroSubClass.SHIELD_DEPLOY) {
+            Buff.affect(hero, FlashShieldBuff.class).checkShield(hero);
+        }
+        return result;
     }
 }

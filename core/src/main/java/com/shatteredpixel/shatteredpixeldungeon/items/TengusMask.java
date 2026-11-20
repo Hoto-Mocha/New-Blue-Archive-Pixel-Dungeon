@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AvantGardeKunBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BankRobber;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Conversation;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlashShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GunStorm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitSquadBuff;
@@ -149,6 +150,9 @@ public class TengusMask extends Item {
 		}
 		if (way == HeroSubClass.GUN_STORM) {
 			Buff.affect(curUser, GunStorm.class).checkWeapon(curUser);
+		}
+		if (way == HeroSubClass.SHIELD_DEPLOY) {
+			Buff.affect(curUser, FlashShieldBuff.class);
 		}
 
 		((HeroSprite)curUser.sprite).updateArmor();

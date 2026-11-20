@@ -41,6 +41,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Conversation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.EnhancedRings;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlashShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GunStorm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
@@ -2197,6 +2198,10 @@ public enum Talent {
 				&& hero.HP < hero.HT*0.05f*hero.pointsInTalent(Talent.MIKA_T1_4)) {
 			Buff.affect(hero, Barrier.class).setShield(10);
 			Buff.affect(hero, PitifulGirlCooldown.class, PitifulGirlCooldown.DURATION);
+		}
+
+		if (hero.buff(FlashShieldBuff.FlashCooldown.class) != null) {
+			hero.buff(FlashShieldBuff.FlashCooldown.class).hit();
 		}
 
 		return damage;
