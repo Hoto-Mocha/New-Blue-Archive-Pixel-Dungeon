@@ -1020,6 +1020,23 @@ public class Gun extends MeleeWeapon {
 
             }
         }
+        if (!evaluatingTwinUpgrades && hero != null && isEquipped(hero)){
+            KindOfWeapon other = null;
+            if (hero.belongings.weapon() != this) other = hero.belongings.weapon();
+            if (hero.belongings.secondWep() != this) other = hero.belongings.secondWep();
+
+            if (other instanceof FlashShield) {
+                evaluatingTwinUpgrades = true;
+                int otherLevel = other.buffedLvl();
+                evaluatingTwinUpgrades = false;
+
+                if (tier() <= ((FlashShield) other).tier()
+                        && otherLevel > super.buffedLvl()) {
+                    return otherLevel;
+                }
+
+            }
+        }
         if (hero != null && hero.buff(NoticeTracker.class) != null && !NoticeTracker.isNoticed() && this.isEquipped(hero)) {
             level += hero.pointsInTalent(Talent.MIYU_T3_2);
         }
