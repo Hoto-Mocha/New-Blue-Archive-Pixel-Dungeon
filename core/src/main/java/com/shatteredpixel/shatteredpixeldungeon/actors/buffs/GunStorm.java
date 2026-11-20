@@ -296,6 +296,9 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 case DUEL_SG:
                     spreadShot(hero, (Gun)w1, (Gun)w2, cell);
                     break;
+                case DUEL_MG:
+                    serialShot(hero, (Gun)w1, (Gun)w2, cell);
+                    break;
             }
 
         }
@@ -525,7 +528,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             gun1.shootWithoutBullet(c, 2f, false, false, false, new Gun.HitProc() {
                 @Override
                 public int proc(Char attacker, Char defender, int damage) {
-                    return damage/2;
+                    return Math.round(damage * 0.5f);
                 }
             });
         }
@@ -538,7 +541,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             gun2.shootWithoutBullet(c, 2f, false, false, false, new Gun.HitProc() {
                 @Override
                 public int proc(Char attacker, Char defender, int damage) {
-                    return damage/2;
+                    return Math.round(damage * 0.5f);
                 }
             });
         }
@@ -554,7 +557,6 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         gun2.useRound();
 
         hero.next();
-
     }
 
     //더블 SG
@@ -607,5 +609,48 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 hero.spendAndNext(delay);
             }
         });
+    }
+
+    //더블 MG
+    public static void serialShot(Hero hero, Gun gun1, Gun gun2, int cell) {
+        hero.busy();
+        hero.sprite.zap(cell);
+
+        float delay = Math.max(gun1.knockBullet().delayFactor(hero), gun2.knockBullet().delayFactor(hero));
+        Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.DASH);
+        int distance = Dungeon.level.distance(hero.pos, aim.collisionPos);
+        int count = 0;
+        for (int c : aim.subPath(1, distance)) {
+            int finalCount = count;
+            Dungeon.hero.sprite.parent.add(new Tweener(Dungeon.hero.sprite.parent, finalCount * 0.05f) {
+                @Override
+                protected void updateValues(float progress) {}
+
+                @Override
+                protected void onComplete() {
+                    CellEmitter.heroCenter(hero.pos).burst(BulletParticle.factory(DungeonTilemap.tileCenterToWorld(c)), 3);
+                    gun1.knockBullet().throwSound();
+                    gun1.shootWithoutBullet(c, 1f, false, false, true, new Gun.HitProc() {
+                        @Override
+                        public int proc(Char attacker, Char defender, int damage) {
+                            return Math.round(damage*0.5f);
+                        }
+                    });
+                    gun2.shootWithoutBullet(c, 1f, false, false, true, new Gun.HitProc() {
+                        @Override
+                        public int proc(Char attacker, Char defender, int damage) {
+                            return Math.round(damage*0.5f);
+                        }
+                    });
+
+                    if (finalCount == distance-1) {
+                        hero.spendAndNext(delay);
+                    }
+                }
+            });
+            count++;
+        }
+        gun1.useRound();
+        gun2.useRound();
     }
 }
