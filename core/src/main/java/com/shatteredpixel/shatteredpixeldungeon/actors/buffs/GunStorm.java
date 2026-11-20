@@ -742,4 +742,35 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             isPrimaryGun = !isPrimaryGun;
         }
     }
+
+    public static void serialSniping(Hero hero, Gun gun1, Gun gun2, int cell) {
+        if (gun1.round() <= 0 || gun2.round() <= 0) {
+            reloadAllGuns(hero, gun1, gun2);
+            return;
+        }
+
+        hero.busy();
+        hero.sprite.zap(cell);
+        Gun.HitProc hitProc = new Gun.HitProc() {
+            @Override
+            public int proc(Char attacker, Char defender, int damage) {
+                int distance = Dungeon.level.distance(attacker.pos, defender.pos) - 1;
+                float multiplier = Math.min(3f, 1.2f * (float)Math.pow(1.125f, distance));
+                return abilityDamage(hero, 0.5f*multiplier, damage);
+            }
+        };
+
+        float delay = Math.max(gun1.knockBullet().delayFactor(hero), gun2.knockBullet().delayFactor(hero));
+        gun1.burstShoot(cell, 0, abilityAccuracy(hero, 0.2f), false, true, hitProc);
+        hero.sprite.parent.add(new Tweener(hero.sprite.parent, 0.1f) {
+            @Override
+            protected void updateValues(float progress) {}
+
+            @Override
+            protected void onComplete() {
+                gun2.shoot(cell, delay, abilityAccuracy(hero, 0.2f), false, true, hitProc);
+                super.onComplete();
+            }
+        });
+    }
 }
