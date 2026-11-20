@@ -357,7 +357,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         hero.buff(GunStorm.class).clearTargeting();
     }
 
-    private static CellSelector.Listener shooter = new CellSelector.Listener() {
+    private CellSelector.Listener shooter = new CellSelector.Listener() {
         @Override
         public void onSelect( Integer cell ) {
             performAction(cell);
