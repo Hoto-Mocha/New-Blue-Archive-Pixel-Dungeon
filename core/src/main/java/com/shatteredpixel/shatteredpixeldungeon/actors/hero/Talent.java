@@ -1706,6 +1706,9 @@ public enum Talent {
 		if (item instanceof MissileWeapon){
 			factor *= 1f + 2.0f*hero.pointsInTalent(IZUNA_T1_2);
 		}
+		if (item instanceof Gun) {
+			factor *= 1f + 1.5f*hero.pointsInTalent(KURUMI_T1_2);
+		}
 		return factor;
 	}
 
@@ -1946,6 +1949,9 @@ public enum Talent {
 			identify = true;
 		}
 		if (hero.hasTalent(MIKA_T1_2) && (item instanceof Armor)) {
+			identify = true;
+		}
+		if (hero.pointsInTalent(KURUMI_T1_2) == 2 && (item instanceof Gun)) {
 			identify = true;
 		}
 
