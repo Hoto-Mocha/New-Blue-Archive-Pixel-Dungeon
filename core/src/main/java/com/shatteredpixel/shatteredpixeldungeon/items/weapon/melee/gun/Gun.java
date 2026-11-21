@@ -442,7 +442,7 @@ public class Gun extends MeleeWeapon {
     }
 
     public void reload() {
-        
+
         if (hero.heroClass == HeroClass.MARI) {
             CrossNecklace necklace = hero.belongings.getItem(CrossNecklace.class);
             if (necklace == null || (!necklace.isEquipped(hero) && !hero.hasTalent(Talent.MARI_T3_2))) {
@@ -464,15 +464,15 @@ public class Gun extends MeleeWeapon {
         }
 
         afterReload();
-
-        hero.busy();
-        hero.sprite.operate(hero.pos);
-        Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
-        hero.spendAndNext(reloadTime());
-        GLog.i(Messages.get(this, "reload"));
     }
 
     public void beforeReload() { //재장전 시 작동하는 메서드. 장탄수가 바뀌기 전에 작동한다.
+        hero.busy();
+        hero.spendAndNext(reloadTime());
+        hero.sprite.operate(hero.pos);
+        Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
+        GLog.i(Messages.get(this, "reload"));
+
         if (round == 0 && hero.hasTalent(Talent.HOSHINO_T1_4)) {
             Buff.affect(hero, Barrier.class).setShield(1+2*hero.pointsInTalent(Talent.HOSHINO_T1_4));
         }
@@ -593,6 +593,10 @@ public class Gun extends MeleeWeapon {
 
         if (hero != null && hero.subClass == HeroSubClass.DOUBLE_BARREL && hero.belongings.secondWep() == this) {
             amount += 1;
+        }
+
+        if (hero != null && hero.hasTalent(Talent.KURUMI_T3_1) && round() > 0) {
+            amount -= hero.pointsInTalent(Talent.KURUMI_T3_1);
         }
 
         amount = Math.max(0, amount);
