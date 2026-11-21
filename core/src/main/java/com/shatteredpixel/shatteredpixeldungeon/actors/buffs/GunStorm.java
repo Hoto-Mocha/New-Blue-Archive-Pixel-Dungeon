@@ -577,6 +577,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         float delay = Math.max(gun1.knockBullet().delayFactor(hero), gun2.knockBullet().delayFactor(hero));
         int blastAmount = gun1.round()+gun2.round();
         boolean isPrimaryGun = gun1.round() >= gun2.round();
+        final int[] round = {gun1.round(), gun2.round()};
 
         while (blastAmount > 0) {
             int finalCell = cell + PathFinder.NEIGHBOURS9[Random.Int(9)];
@@ -619,7 +620,10 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 }
             });
             tweenerDelay += 0.1f;
-            isPrimaryGun = !isPrimaryGun;
+            if (round[0] > 0 && round[1] > 0) {
+                isPrimaryGun = !isPrimaryGun;
+            }
+            round[!isPrimaryGun ? 0 : 1]--;
         }
     }
 
@@ -789,6 +793,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 return abilityDamage(hero, 0.5f, damage);
             }
         };
+        final int[] round = {gun1.round(), gun2.round()};
 
         for (int i = 0; i < rounds; i++) {
             int c = finalCell+PathFinder.NEIGHBOURS9[Random.Int(9)];
@@ -813,7 +818,10 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 }
             });
 
-            isPrimaryGun = !isPrimaryGun;
+            if (round[0] > 0 && round[1] > 0) {
+                isPrimaryGun = !isPrimaryGun;
+            }
+            round[!isPrimaryGun ? 0 : 1]--;
         }
     }
 
