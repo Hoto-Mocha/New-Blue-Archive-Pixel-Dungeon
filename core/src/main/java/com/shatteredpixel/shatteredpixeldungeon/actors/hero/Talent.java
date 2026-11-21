@@ -2178,6 +2178,14 @@ public enum Talent {
 			Buff.affect(hero, ShootingStar.class).hit();
 		}
 
+		if (hero.hasTalent(KURUMI_T1_3)){
+			if (hero.buff(PatientShotTracker.class) != null
+					&& hero.belongings.attackingWeapon() instanceof Gun.Bullet){
+				hero.buff(PatientShotTracker.class).detach();
+				dmg += Random.IntRange(hero.pointsInTalent(Talent.KURUMI_T1_3)-1, 1);
+			}
+		}
+
 		return dmg;
 	}
 
@@ -2524,6 +2532,33 @@ public enum Talent {
 			return Messages.get(this, "desc", 1+2*Dungeon.hero.pointsInTalent(Talent.MARI_T1_1));
 		}
 	}
+
+	public static class PatientShotTracker extends Buff {
+		public int pos;
+		{ type = Buff.buffType.POSITIVE; }
+		public int icon() { return BuffIndicator.TIME; }
+		public void tintIcon(Image icon) { icon.hardlight(0.5f, 0f, 1f); }
+		@Override
+		public boolean act() {
+			if (pos != target.pos) {
+				detach();
+			} else {
+				spend(TICK);
+			}
+			return true;
+		}
+		private static final String POS = "pos";
+		@Override
+		public void storeInBundle(Bundle bundle) {
+			super.storeInBundle(bundle);
+			bundle.put(POS, pos);
+		}
+		@Override
+		public void restoreFromBundle(Bundle bundle) {
+			super.restoreFromBundle(bundle);
+			pos = bundle.getInt(POS);
+		}
+	};
 
 	//new buff here
 
