@@ -50,6 +50,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Conversation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.DoubleBarrelMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlashShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Foresight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
@@ -716,6 +717,10 @@ public class Hero extends Char {
 		
 		if (paralysed > 0) {
 			evasion /= 2;
+		}
+
+		if (hasTalent(Talent.KURUMI_EX2_3) && buff(FlashShieldBuff.class) != null) {
+			evasion *= (1-0.4f/(4f-pointsInTalent(Talent.KURUMI_EX2_3)));
 		}
 
 		if (belongings.armor() != null) {
@@ -1956,6 +1961,10 @@ public class Hero extends Char {
 
 		if (buff(GunStorm.CoverFireBuff.class) != null) {
 			dmg = (int)Math.ceil(dmg * buff(GunStorm.CoverFireBuff.class).damageResistance());
+		}
+
+		if (hasTalent(Talent.KURUMI_EX2_3) && buff(FlashShieldBuff.class) != null) {
+			dmg = (int)Math.ceil(dmg * (1-0.4f/(4f-pointsInTalent(Talent.KURUMI_EX2_3))));
 		}
 
         if (hasTalent(Talent.NONOMI_T2_3)) {
