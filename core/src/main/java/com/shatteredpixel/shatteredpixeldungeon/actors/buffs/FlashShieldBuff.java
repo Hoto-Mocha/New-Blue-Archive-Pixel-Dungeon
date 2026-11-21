@@ -113,7 +113,7 @@ public class FlashShieldBuff extends Buff implements ActionIndicator.Action {
             hero.spendAndNext(1f);
             if (hero.buff(FlashShieldBuff.class) != null) {
                 hero.buff(FlashShieldBuff.class).detach();
-                Buff.affect(target, FlashCooldown.class).set(50);
+                Buff.affect(target, FlashCooldown.class).set(100);
             }
             if (hero.belongings.weapon() instanceof Gun) {
                 ((Gun)hero.belongings.weapon()).quickReload();

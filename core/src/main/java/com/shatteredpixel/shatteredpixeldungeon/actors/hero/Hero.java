@@ -69,6 +69,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.NoticeTracker;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RabbitSquadBuff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Rage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Snipe;
@@ -1822,6 +1823,11 @@ public class Hero extends Char {
 		if (damage > 0 && subClass == HeroSubClass.BERSERKER){
 			Berserk berserk = Buff.affect(this, Berserk.class);
 			berserk.damage(damage);
+		}
+
+		if (damage > 0 && subClass == HeroSubClass.SHIELD_DEPLOY) {
+			Rage rage = Buff.affect(this, Rage.class);
+			rage.damage(damage);
 		}
 		
 		if (belongings.armor() != null) {
