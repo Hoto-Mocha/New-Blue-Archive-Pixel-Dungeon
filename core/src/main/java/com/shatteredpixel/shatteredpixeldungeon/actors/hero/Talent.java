@@ -1857,6 +1857,9 @@ public enum Talent {
 			((Gun) hero.belongings.weapon).quickReload();
 			Buff.affect(hero, LightBullet.LightMagazine.class).set(((Gun) hero.belongings.weapon), bulletsToLoad);
 		}
+		if (hero.hasTalent(Talent.KURUMI_T2_2)) {
+			Buff.affect(hero, ScrollUpgrade.class, ScrollUpgrade.DURATION*factor).set(hero.pointsInTalent(Talent.KURUMI_T2_2));
+		}
 	}
 
 	public static void onRunestoneUsed( Hero hero, int pos, Class<?extends Item> cls ){
@@ -2565,6 +2568,64 @@ public enum Talent {
 	};
 
 	public static class DefensiveStance extends FlavourBuff {}
+
+	public static class ScrollUpgrade extends FlavourBuff {
+		public static final float DURATION = 15f;
+		private int level;
+
+		@Override
+		public boolean attachTo(Char target) {
+			boolean result = super.attachTo(target);
+			Item.updateQuickslot();
+			return result;
+		}
+
+		@Override
+		public void detach() {
+			super.detach();
+			Item.updateQuickslot();
+		}
+
+		@Override
+		public int icon() {
+			return BuffIndicator.UPGRADE;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(0x00FFFF);
+		}
+
+		@Override
+		public float iconFadePercent() {
+			return Math.max(0, (DURATION-visualcooldown())/DURATION);
+		}
+
+		public void set(int lvl) {
+			this.level = lvl;
+		}
+
+		public int level() {
+			return this.level;
+		}
+
+		@Override
+		public String desc() {
+			return Messages.get(this, "desc", level, dispTurns());
+		}
+
+		private static final String LEVEL = "level";
+		@Override
+		public void storeInBundle(Bundle bundle) {
+			super.storeInBundle(bundle);
+			bundle.put(LEVEL, level);
+		}
+		@Override
+		public void restoreFromBundle(Bundle bundle) {
+			super.restoreFromBundle(bundle);
+			level = bundle.getInt(LEVEL);
+		}
+	}
 
 	//new buff here
 

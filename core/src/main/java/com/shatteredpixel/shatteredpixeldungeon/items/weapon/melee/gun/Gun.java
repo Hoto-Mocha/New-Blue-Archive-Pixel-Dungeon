@@ -996,8 +996,8 @@ public class Gun extends MeleeWeapon {
 
                 //weaker weapon needs to be 2/1/0 tiers lower, based on talent level
                 if ((tier() + (3 - hero.pointsInTalent(Talent.NOA_EX1_2))) <= ((Gun) other).tier()
-                        && otherLevel > super.buffedLvl()) {
-                    return otherLevel;
+                        && otherLevel > level) {
+                    level = otherLevel;
                 }
 
             }
@@ -1014,8 +1014,8 @@ public class Gun extends MeleeWeapon {
 
                 //weaker weapon needs to be 2/1/0 tiers lower, based on talent level
                 if ((tier() + (3 - hero.pointsInTalent(Talent.KURUMI_EX1_2))) <= ((Gun) other).tier()
-                        && otherLevel > super.buffedLvl()) {
-                    return otherLevel;
+                        && otherLevel > level) {
+                    level = otherLevel;
                 }
 
             }
@@ -1031,17 +1031,21 @@ public class Gun extends MeleeWeapon {
                 evaluatingTwinUpgrades = false;
 
                 if (tier() <= ((FlashShield) other).tier()
-                        && otherLevel > super.buffedLvl()) {
-                    return otherLevel;
+                        && otherLevel > level) {
+                    level = otherLevel;
                 }
 
             }
         }
+
         if (hero != null && hero.buff(NoticeTracker.class) != null && !NoticeTracker.isNoticed() && this.isEquipped(hero)) {
             level += hero.pointsInTalent(Talent.MIYU_T3_2);
         }
         if (hero != null && hero.buff(AvantGardeKunBuff.GunUpgradeBuff.class) != null) {
             level = Math.max(Math.min(level+1+hero.pointsInTalent(Talent.YUZU_EX1_2), 3+hero.pointsInTalent(Talent.YUZU_EX1_2)), level);
+        }
+        if (hero != null && hero.buff(Talent.ScrollUpgrade.class) != null) {
+            level += hero.buff(Talent.ScrollUpgrade.class).level();
         }
 
         return level;
