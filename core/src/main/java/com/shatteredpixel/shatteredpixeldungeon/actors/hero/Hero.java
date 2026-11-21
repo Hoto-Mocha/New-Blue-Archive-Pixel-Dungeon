@@ -836,6 +836,10 @@ public class Hero extends Char {
 			dr += buff(Protection.ProtectionBuff.class).defenseBonus(this);
 		}
 
+		if (buff(Talent.DefensiveStance.class) != null) {
+			dr += Random.NormalIntRange(0, 1+pointsInTalent(Talent.KURUMI_T1_4));
+		}
+
 		return dr;
 	}
 	

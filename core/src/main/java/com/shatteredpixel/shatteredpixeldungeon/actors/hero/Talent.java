@@ -2186,6 +2186,10 @@ public enum Talent {
 			}
 		}
 
+		if (hero.hasTalent(KURUMI_T1_4)) {
+			Buff.affect(hero, DefensiveStance.class, hero.cooldown());
+		}
+
 		return dmg;
 	}
 
@@ -2559,6 +2563,8 @@ public enum Talent {
 			pos = bundle.getInt(POS);
 		}
 	};
+
+	public static class DefensiveStance extends FlavourBuff {}
 
 	//new buff here
 
