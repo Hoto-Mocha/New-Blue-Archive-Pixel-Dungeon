@@ -1662,6 +1662,13 @@ public enum Talent {
 				ScrollOfRecharging.charge(hero);
 			}
 		}
+		if (hero.hasTalent(KURUMI_T1_1)){
+			//4/6 HP healed, when hero is below 33% health (with a little rounding up)
+			if (hero.HP/(float)hero.HT < 0.334f) {
+				int healing = 2 + 2 * hero.pointsInTalent(KURUMI_T1_1);
+				hero.heal(healing);
+			}
+		}
 	}
 
 	public static class WarriorFoodImmunity extends FlavourBuff{
