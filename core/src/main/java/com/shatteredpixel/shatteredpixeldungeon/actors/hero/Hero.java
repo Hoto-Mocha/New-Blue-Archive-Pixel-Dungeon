@@ -87,6 +87,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.El
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.hoshino.ShieldParry;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.izuna.Blink;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.kurumi.DefensivePosition;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mari.MariTrinity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mika.PerfectDeception;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.shiroko.GPSRoute;
@@ -501,6 +502,10 @@ public class Hero extends Char {
 			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, pitch);
 			return true;
 		}
+		if (buff(DefensivePosition.DamageImmunity.class) != null) {
+			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, pitch);
+			return true;
+		}
 		return super.blockSound(pitch);
 	}
 
@@ -671,6 +676,10 @@ public class Hero extends Char {
 	
 	@Override
 	public int defenseSkill( Char enemy ) {
+
+		if (buff(DefensivePosition.DamageImmunity.class) != null) {
+			return 0;
+		}
 
 		if (buff(Combo.ParryTracker.class) != null){
 			if (canAttack(enemy) && !isCharmedBy(enemy)){
@@ -1963,6 +1972,13 @@ public class Hero extends Char {
 
 			if (pointsInTalent(Talent.KURUMI_T2_1) == 1)       damage /= 4f;
 			else if (pointsInTalent(Talent.KURUMI_T2_1) == 2)  damage = 0;
+		}
+
+		if (buff(DefensivePosition.DamageImmunity.class) != null) {
+			damage = 0;
+			if (src instanceof Char) {
+				buff(DefensivePosition.DamageImmunity.class).damage(this, (Char) src);
+			}
 		}
 
 		dmg = Math.round(damage);

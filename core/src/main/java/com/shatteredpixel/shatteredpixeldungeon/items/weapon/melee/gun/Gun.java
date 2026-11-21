@@ -526,6 +526,13 @@ public class Gun extends MeleeWeapon {
         updateQuickslot();
     }
 
+    public void manualOverLoad(int amount, int maxOverRound) { //최대 초과 수치를 정한 과장전 메서드
+        round += amount;
+        if (round > maxRound()+maxOverRound) {
+            round = maxRound()+maxOverRound;
+        }
+    }
+
     public boolean isReloaded() {
         return round >= maxRound();
     }

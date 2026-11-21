@@ -164,6 +164,7 @@ public class BuffIndicator extends Component {
 	public static final int TRINITY_RED_BLUE = 123;
 	public static final int TRINITY_ALL = 124;
 	public static final int ENCORE = 125;
+	public static final int GUN_STORM = 126;
 
 	public static final int SIZE_SMALL  = 7;
 	public static final int SIZE_LARGE  = 16;
