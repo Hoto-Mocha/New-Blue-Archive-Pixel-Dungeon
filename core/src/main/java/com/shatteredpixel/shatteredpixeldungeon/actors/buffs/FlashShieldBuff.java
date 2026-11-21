@@ -103,6 +103,9 @@ public class FlashShieldBuff extends Buff implements ActionIndicator.Action {
                     continue;
                 }
                 Buff.affect(ch, Blindness.class, 5f);
+                if (hero.hasTalent(Talent.KURUMI_EX2_2)) {
+                    Buff.affect(ch, Paralysis.class, hero.pointsInTalent(Talent.KURUMI_EX2_2));
+                }
             }
             GameScene.flash(0x60FFFFFF);
             int barrier = currentShieldBoost();
@@ -117,9 +120,15 @@ public class FlashShieldBuff extends Buff implements ActionIndicator.Action {
             }
             if (hero.belongings.weapon() instanceof Gun) {
                 ((Gun)hero.belongings.weapon()).quickReload();
+                if (hero.hasTalent(Talent.KURUMI_EX2_2)) {
+                    ((Gun)hero.belongings.weapon()).manualReload(hero.pointsInTalent(Talent.KURUMI_EX2_2), true);
+                }
             }
             if (hero.belongings.secondWep()instanceof Gun) {
                 ((Gun)hero.belongings.secondWep()).quickReload();
+                if (hero.hasTalent(Talent.KURUMI_EX2_2)) {
+                    ((Gun)hero.belongings.secondWep()).manualReload(hero.pointsInTalent(Talent.KURUMI_EX2_2), true);
+                }
             }
         }
 
