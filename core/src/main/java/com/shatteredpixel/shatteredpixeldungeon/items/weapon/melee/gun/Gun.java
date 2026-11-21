@@ -1052,6 +1052,9 @@ public class Gun extends MeleeWeapon {
         if (hero != null && hero.buff(Talent.ScrollUpgrade.class) != null) {
             level += hero.buff(Talent.ScrollUpgrade.class).level();
         }
+        if (hero != null && hero.hasTalent(Talent.KURUMI_T3_2) && maxRound() > 1 && round() == 1) {
+            level += hero.pointsInTalent(Talent.KURUMI_T3_2);
+        }
 
         return level;
     }
