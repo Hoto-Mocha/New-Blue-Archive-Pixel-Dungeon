@@ -1977,6 +1977,10 @@ public class Hero extends Char {
 			dmg = (int)Math.ceil(dmg * (1-0.4f/(4f-pointsInTalent(Talent.KURUMI_EX2_3))));
 		}
 
+		if (hasTalent(Talent.KURUMI_T2_3) && HP/(float)HT < 0.334f) {
+			dmg = (int)Math.ceil(dmg * (1-0.1f*(pointsInTalent(Talent.KURUMI_T2_3)+1)));
+		}
+
         if (hasTalent(Talent.NONOMI_T2_3)) {
             int enemyNo = 0;
             for (Char ch : Actor.chars()) {
