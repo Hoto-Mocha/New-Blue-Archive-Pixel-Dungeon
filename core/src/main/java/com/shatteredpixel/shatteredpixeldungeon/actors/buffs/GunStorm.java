@@ -416,26 +416,22 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
 
         if (gun1 != null) {
             if (gun1.round() < gun1.maxRound()) {
-                gun1.beforeReload();
                 gun1.quickReload();
-                gun1.afterReload();
+                reloadTurns += gun1.reloadTime();
             } else {
                 gun1Full = true; //탄창이 가득찬 경우 재장전이 불필요함
             }
-            reloadTurns += gun1.reloadTime();
         } else {
             gun1Full = true; //총이 아니거나 없을 경우 재장전이 불필요함
         }
 
         if (gun2 != null) {
             if (gun2.round() < gun2.maxRound()) {
-                gun2.beforeReload();
                 gun2.quickReload();
-                gun2.afterReload();
+                reloadTurns += gun2.reloadTime();
             } else {
                 gun2Full = true; //탄창이 가득찬 경우 재장전이 불필요함
             }
-            reloadTurns += gun2.reloadTime();
         } else {
             gun2Full = true; //총이 아니거나 없을 경우 재장전이 불필요함
         }
