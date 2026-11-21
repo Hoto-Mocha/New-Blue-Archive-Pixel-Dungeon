@@ -1396,6 +1396,9 @@ public abstract class Level implements Bundlable {
 			if (c.buff(MagicalSight.class) != null){
 				sense = Math.max( MagicalSight.DISTANCE, sense );
 			}
+			if (c.buff(Talent.SightBuff.class) != null) {
+				sense = Math.max( c.buff(Talent.SightBuff.class).distance(), sense );
+			}
 			if (c.buff(MariTrinity.TrinityBuff.class) != null){
 				sense = Math.max( c.buff(MariTrinity.TrinityBuff.class).mindVisionRange(), sense );
 			}

@@ -2627,6 +2627,31 @@ public enum Talent {
 		}
 	}
 
+	public static class SightBuff extends FlavourBuff {
+		public static final float DURATION = 50f;
+
+		private int distance;
+
+		{
+			type = buffType.POSITIVE;
+		}
+
+		public void set(int distance) {
+			this.distance = distance;
+		}
+
+		public int distance() {
+			return this.distance;
+		}
+
+		@Override
+		public void detach() {
+			super.detach();
+			Dungeon.observe();
+			GameScene.updateFog();
+		}
+	}
+
 	//new buff here
 
 	public static final int MAX_TALENT_TIERS = 4;

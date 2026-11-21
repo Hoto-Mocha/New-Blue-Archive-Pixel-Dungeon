@@ -171,6 +171,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
+import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfClairvoyance;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ThirteenLeafClover;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
@@ -3154,6 +3155,11 @@ public class Hero extends Char {
 		if (buff(Blink.PerfectAssassination.class) != null) {
 			buff(Blink.PerfectAssassination.class).detach();
 			Buff.affect(this, Talent.LethalMomentumTracker.class, 0f);
+		}
+		if (hasTalent(Talent.KURUMI_T2_4)) {
+			int distance = 2+2*pointsInTalent(Talent.KURUMI_T2_4);
+			Buff.affect(this, Talent.SightBuff.class, 1f).set(distance);
+			StoneOfClairvoyance.mapping(pos, distance);
 		}
 	}
 

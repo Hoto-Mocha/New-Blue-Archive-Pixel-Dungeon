@@ -916,6 +916,10 @@ public class Dungeon {
 			dist = Math.max( dist, MagicalSight.DISTANCE );
 		}
 
+		if (Dungeon.hero.buff(Talent.SightBuff.class) != null){
+			dist = Math.max( dist, Dungeon.hero.buff(Talent.SightBuff.class).distance() );
+		}
+
 		if (Dungeon.hero.buff(MariTrinity.TrinityBuff.class) != null) {
 			dist = Math.max( dist, Dungeon.hero.buff(MariTrinity.TrinityBuff.class).mindVisionRange());
 		}
