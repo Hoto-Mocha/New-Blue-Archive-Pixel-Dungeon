@@ -1487,7 +1487,7 @@ public enum Talent {
 				|| talent == NOA_EX1_2
 				|| talent == IZUNA_T1_1 || talent == IZUNA_EX2_3
 				|| talent == MIKA_T3_1
-				|| talent == KURUMI_EX1_2) {
+				|| talent == KURUMI_T2_5 || talent == KURUMI_EX1_2) {
 			Item.updateQuickslot();
 		}
 

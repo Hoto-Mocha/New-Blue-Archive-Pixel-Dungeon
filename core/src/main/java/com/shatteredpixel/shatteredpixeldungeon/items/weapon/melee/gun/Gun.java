@@ -625,6 +625,7 @@ public class Gun extends MeleeWeapon {
         if (masteryPotionBonus) req -= 2;
         if (hero != null && hero.heroClass == HeroClass.KURUMI) req += 2;
         if (hero != null) req += FlashShield.gunSTRFactor(hero);
+        if (hero != null && hero.hasTalent(Talent.KURUMI_T2_5) && FlashShield.gunSTRFactor(hero) == 0) req -= hero.pointsInTalent(Talent.KURUMI_T2_5);
         return req;
     }
 
