@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
@@ -145,6 +146,60 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         if (!(target instanceof Hero)) detach();
         if (checkWeapon((Hero)target) == AbilityType.NONE) detach();
         return super.act();
+    }
+
+    @Override
+    public int icon() {
+        return BuffIndicator.GUN_STORM;
+    }
+
+    @Override
+    public String name() {
+        return Messages.get(this, "action_name_"+abilityType().name());
+    }
+
+    @Override
+    public String desc() {
+        Hero hero = (Hero)target;
+
+        if (abilityType() == AbilityType.GUN_N_SHIELD) {
+            float delay;
+            if (hero.belongings.weapon() instanceof Gun) {
+                delay = 2*((Gun)hero.belongings.weapon()).knockBullet().delayFactor(hero);
+            } else {
+                delay = 2*((Gun)hero.belongings.secondWep()).knockBullet().delayFactor(hero);
+            }
+            return Messages.get(this, "desc_"+abilityType().name(), Messages.decimalFormat("#.##", delay));
+        }
+
+        if (abilityType == AbilityType.DUEL_AR
+                || abilityType == AbilityType.DUEL_GL
+                || abilityType == AbilityType.DUEL_HG
+                || abilityType == AbilityType.DUEL_MG
+                || abilityType == AbilityType.DUEL_SG
+                || abilityType == AbilityType.DUEL_SMG
+                || abilityType == AbilityType.DUEL_SR
+                || abilityType == AbilityType.SINGLE_GUN
+                || abilityType == AbilityType.DOUBLE_GUN) {
+            Gun gun1 = (Gun)hero.belongings.weapon;
+            Gun gun2 = (Gun)hero.belongings.secondWep;
+            float delay;
+            if (gun1 != null && gun2 != null) {
+                delay = Math.max(gun1.knockBullet().delayFactor(hero), gun2.knockBullet().delayFactor(hero));
+            } else if (gun1 != null) {
+                delay = gun1.knockBullet().delayFactor(hero);
+            } else if (gun2 != null) {
+                delay = gun2.knockBullet().delayFactor(hero);
+            } else {
+                delay = 0;
+            }
+            if (abilityType() == AbilityType.DUEL_HG) {
+                return Messages.get(this, "desc_"+abilityType().name(), Messages.decimalFormat("#.##", 0.5f*delay));
+            }
+            return Messages.get(this, "desc_"+abilityType().name(), Messages.decimalFormat("#.##", delay));
+        }
+
+        return Messages.get(this, "desc_"+abilityType().name());
     }
 
     @Override
@@ -629,6 +684,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         int index = Random.Int(8);
         int cell = hero.pos+PathFinder.NEIGHBOURS8[index];
         int oppositeCell = hero.pos+PathFinder.NEIGHBOURS8[7-index];
+        float delay = Math.max(gun1.knockBullet().delayFactor(hero), gun2.knockBullet().delayFactor(hero));
 
         hero.sprite.zap(cell);
         int distance = 1;
@@ -667,7 +723,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         gun1.useRound();
         gun2.useRound();
 
-        hero.next();
+        hero.spendAndNext(delay/2);
     }
 
     //더블 SG
