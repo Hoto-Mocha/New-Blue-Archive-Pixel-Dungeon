@@ -1525,7 +1525,7 @@ public enum Talent {
 				hero.heal(healing);
 			}
 		}
-		if (hero.hasTalent(IRON_STOMACH) || hero.hasTalent(Talent.ARIS_T2_1)){
+		if (hero.hasTalent(IRON_STOMACH) || hero.hasTalent(Talent.ARIS_T2_1) || hero.hasTalent(Talent.KURUMI_T2_1)){
 			if (hero.cooldown() > 0) {
 				Buff.affect(hero, WarriorFoodImmunity.class, hero.cooldown());
 			}

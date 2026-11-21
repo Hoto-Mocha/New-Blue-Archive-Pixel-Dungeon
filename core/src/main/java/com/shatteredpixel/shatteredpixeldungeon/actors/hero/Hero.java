@@ -1959,6 +1959,9 @@ public class Hero extends Char {
 
 			if (pointsInTalent(Talent.ARIS_T2_1) == 1)       damage /= 4f;
 			else if (pointsInTalent(Talent.ARIS_T2_1) == 2)  damage = 0;
+
+			if (pointsInTalent(Talent.KURUMI_T2_1) == 1)       damage /= 4f;
+			else if (pointsInTalent(Talent.KURUMI_T2_1) == 2)  damage = 0;
 		}
 
 		dmg = Math.round(damage);
