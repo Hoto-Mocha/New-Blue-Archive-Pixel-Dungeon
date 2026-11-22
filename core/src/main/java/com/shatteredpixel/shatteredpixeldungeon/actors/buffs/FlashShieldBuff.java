@@ -81,6 +81,7 @@ public class FlashShieldBuff extends Buff implements ActionIndicator.Action {
             if (cell == null) return;
 
             Hero hero = Dungeon.hero;
+            hero.yellP("flash_shield_"+Random.Int(1, 3));
             hero.busy();
             ArrayList<Char> affected = new ArrayList<>();
 
