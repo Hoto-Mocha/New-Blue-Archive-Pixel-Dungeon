@@ -13,6 +13,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.gun.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
@@ -23,14 +24,7 @@ public class DefensivePosition extends ArmorAbility {
 
     @Override
     public int icon() {
-        return super.icon();
-    }
-
-    @Override
-    public float chargeUse(Hero hero) {
-        float chargeUse = super.chargeUse(hero);
-
-        return chargeUse;
+        return HeroIcon.KURUMI_1;
     }
 
     @Override

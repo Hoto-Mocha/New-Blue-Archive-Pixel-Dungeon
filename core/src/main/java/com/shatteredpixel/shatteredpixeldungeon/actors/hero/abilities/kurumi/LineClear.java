@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.BArray;
@@ -49,7 +50,7 @@ public class LineClear extends ArmorAbility {
 
     @Override
     public int icon() {
-        return super.icon();
+        return HeroIcon.KURUMI_2;
     }
 
     @Override
@@ -60,13 +61,6 @@ public class LineClear extends ArmorAbility {
     @Override
     public String targetingPrompt() {
         return Messages.get(this, "prompt");
-    }
-
-    @Override
-    public float chargeUse(Hero hero) {
-        float chargeUse = super.chargeUse(hero);
-
-        return chargeUse;
     }
 
     @Override
