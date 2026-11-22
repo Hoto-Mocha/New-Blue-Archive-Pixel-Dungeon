@@ -19,10 +19,12 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -59,10 +61,8 @@ public class FlashShieldBuff extends Buff implements ActionIndicator.Action {
     }
 
     @Override
-    public Visual primaryVisual() {
-        Image icon;
-        icon = new ItemSprite(ItemSpriteSheet.FLASH_SHIELD);
-        return icon;
+    public int actionIcon() {
+        return HeroIcon.SHIELD_DEPLOY_ACTION;
     }
 
     @Override
@@ -84,6 +84,12 @@ public class FlashShieldBuff extends Buff implements ActionIndicator.Action {
             hero.yellP("flash_shield_"+Random.Int(1, 3));
             hero.busy();
             ArrayList<Char> affected = new ArrayList<>();
+            hero.sprite.zap(cell, new Callback() {
+                @Override
+                public void call() {
+                    hero.sprite.idle();
+                }
+            });
 
             Ballistica aim = new Ballistica(hero.pos, cell, Ballistica.WONT_STOP);
             int distance = 4;
