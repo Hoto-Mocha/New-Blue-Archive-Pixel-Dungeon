@@ -196,6 +196,7 @@ public class HeroIcon extends Image {
   	public static final int CHASE_ACTION				= 128+76;
   	public static final int CALL_OF_STAR_ACTION			= 128+77;
   	public static final int SHOOTING_STAR_ACTION 		= 128+78;
+  	public static final int SHIELD_DEPLOY_ACTION 		= 128+79;
 
 	//Yuzu abilities
 	public static final int SHOP_1			= 128 + 88;
