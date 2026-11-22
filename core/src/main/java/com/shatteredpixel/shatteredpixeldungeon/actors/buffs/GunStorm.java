@@ -299,7 +299,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             case DUEL_SMG:
             case DUEL_SR:
                 return 0x161616;
-            default: return 0xFDE1AA;
+            default: return 0xE6E68A;
         }
     }
 

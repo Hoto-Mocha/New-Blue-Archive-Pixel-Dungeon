@@ -67,7 +67,7 @@ public class FlashShieldBuff extends Buff implements ActionIndicator.Action {
 
     @Override
     public int indicatorColor() {
-        return 0xFDE1AA;
+        return 0xE6E68A;
     }
 
     @Override
