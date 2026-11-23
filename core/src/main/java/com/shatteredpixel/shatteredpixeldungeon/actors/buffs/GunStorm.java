@@ -122,7 +122,7 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         boolean w1Available = w1 instanceof Gun && ((Gun) w1).round() > 0;
         boolean w2Available = w2 instanceof Gun && ((Gun) w2).round() > 0;
 
-        return w1Available && w2Available;
+        return w1Available || w2Available;
     }
 
     @Override
@@ -179,7 +179,6 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 || abilityType == AbilityType.DUEL_SG
                 || abilityType == AbilityType.DUEL_SMG
                 || abilityType == AbilityType.DUEL_SR
-                || abilityType == AbilityType.SINGLE_GUN
                 || abilityType == AbilityType.DOUBLE_GUN) {
             Gun gun1 = (Gun)hero.belongings.weapon;
             Gun gun2 = (Gun)hero.belongings.secondWep;
@@ -195,6 +194,15 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
             }
             if (abilityType() == AbilityType.DUEL_HG) {
                 return Messages.get(this, "desc_"+abilityType().name(), Messages.decimalFormat("#.##", 0.5f*delay));
+            }
+            return Messages.get(this, "desc_"+abilityType().name(), Messages.decimalFormat("#.##", delay));
+        }
+        if (abilityType() == AbilityType.SINGLE_GUN) {
+            float delay = 0f;
+            if (hero.belongings.weapon instanceof Gun) {
+                delay = ((Gun)hero.belongings.weapon).knockBullet().delayFactor(hero);
+            } else if (hero.belongings.secondWep instanceof Gun) {
+                delay = ((Gun)hero.belongings.secondWep).knockBullet().delayFactor(hero);
             }
             return Messages.get(this, "desc_"+abilityType().name(), Messages.decimalFormat("#.##", delay));
         }
@@ -275,10 +283,6 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
                 else ico = new ItemSprite(hero.belongings.secondWep);
                 break;
             case SINGLE_GUN:
-                if (hero.belongings.weapon instanceof Gun) ico = new ItemSprite(hero.belongings.weapon);
-                else if (hero.belongings.secondWep instanceof Gun) ico = new ItemSprite(hero.belongings.secondWep);
-                else ico = null;
-                break;
             case NONE: default:
                 ico = null;
         }
@@ -379,6 +383,13 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         }
 
         switch (abilityType) {
+            case SINGLE_GUN:
+                if (w1 instanceof Gun) {
+                    shoot(hero, (Gun)w1, cell);
+                } else {
+                    shoot(hero, (Gun)w2, cell);
+                }
+                break;
             case DOUBLE_GUN:
                 shootDifferentGuns(hero, (Gun)w1, (Gun)w2, cell);
                 break;
@@ -503,6 +514,11 @@ public class GunStorm extends Buff implements ActionIndicator.Action {
         }
         reloadTurns = Math.max(0, reloadTurns);
         hero.spendAndNext(reloadTurns);
+    }
+
+    public static void shoot(Hero hero, Gun gun, int cell) {
+        hero.busy();
+        gun.shoot(cell);
     }
 
     //서로 다른 총
