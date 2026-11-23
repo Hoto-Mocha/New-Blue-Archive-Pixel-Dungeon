@@ -33,6 +33,7 @@ public enum Gallery {
     IZUNA,
     MIKA,
     MARI,
+    KURUMI,
     SORA;
 
     private final LinkedHashMap<Class<?>, Boolean> seen = new LinkedHashMap<>();
