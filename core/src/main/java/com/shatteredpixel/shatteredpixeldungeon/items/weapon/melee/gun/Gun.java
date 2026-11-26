@@ -885,11 +885,6 @@ public class Gun extends MeleeWeapon {
         return new Bullet();
     }
 
-    //needs to be overridden
-    public Bullet knockBurstBullet(){
-        return new BurstBullet();
-    }
-
     public void shootWithoutBullet(int cell) { //탄환 투사체 없이 공격 판정만 발생시킴. 주로 광역 공격에 사용하므로 각각의 타격은 탄환을 소모하지 않음
         shootWithoutBullet(cell, 1f, false, false, true, null);
     }
@@ -931,10 +926,11 @@ public class Gun extends MeleeWeapon {
     }
 
     public void burstShoot(int cell, float forcedDelay, float acc, boolean ignoreWall, boolean hitEffect, HitProc proc) {
-        //BurstBullet은 Tweener를 통한 여러 발 사격 구현 시 마지막 사격을 제외한 나머지 탄환에 사용되는 탄환으로,
+        //isBurst가 true인 Bullet은 Tweener를 통한 여러 발 사격 구현 시 마지막 사격을 제외한 나머지 탄환에 사용되는 탄환으로,
         //일반 탄환과 똑같지만 턴을 소모하고도 행동 종료(hero.next())를 하지 않도록 설계되어 있다.
         if (round() <= 0) return;
-        Bullet bullet = knockBurstBullet();
+        Bullet bullet = knockBullet();
+        bullet.setBurst();
         bullet.setDelay(forcedDelay);
         bullet.setAccMulti(acc);
         bullet.setIgnoreWall(ignoreWall);
@@ -1073,6 +1069,7 @@ public class Gun extends MeleeWeapon {
         private float forcedDelay = -1;
         private HitProc hitProc = null;
         private boolean hitEffect = true;
+        private boolean isBurst = false;
 
         {
             image = ItemSpriteSheet.SINGLE_BULLET;
@@ -1125,6 +1122,10 @@ public class Gun extends MeleeWeapon {
 
         public void setHitEffect(boolean hitEffect) {
             this.hitEffect = hitEffect;
+        }
+
+        public void setBurst() {
+            this.isBurst = true;
         }
 
         @Override
@@ -1509,50 +1510,47 @@ public class Gun extends MeleeWeapon {
 
         @Override
         public void cast(final Hero user, final int dst) {
-            super.cast(user, dst);
-        }
-    }
-
-    public class BurstBullet extends Bullet {
-        @Override
-        public void cast(Hero user, int dst) {
-            final int cell = throwPos( user, dst );
-            user.sprite.zap( cell );
-            user.busy();
-
-            throwSound();
-
-            Char enemy = Actor.findChar( cell );
-            QuickSlotButton.target(enemy);
-
-            final float delay = castDelay(user, cell);
-
-            if (enemy != null) {
-                ((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
-                        reset(user.sprite,
-                                enemy.sprite,
-                                this,
-                                new Callback() {
-                                    @Override
-                                    public void call() {
-                                        curUser = user;
-                                        user.spend(delay);
-                                        BurstBullet.this.onThrow(cell);
-                                    }
-                                });
+            if (!isBurst) {
+                super.cast(user, dst);
             } else {
-                ((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
-                        reset(user.sprite,
-                                cell,
-                                this,
-                                new Callback() {
-                                    @Override
-                                    public void call() {
-                                        curUser = user;
-                                        user.spend(delay);
-                                        BurstBullet.this.onThrow(cell);
-                                    }
-                                });
+                final int cell = throwPos( user, dst );
+                user.sprite.zap( cell );
+                user.busy();
+
+                throwSound();
+
+                Char enemy = Actor.findChar( cell );
+                QuickSlotButton.target(enemy);
+
+                final float delay = castDelay(user, cell);
+
+                if (enemy != null) {
+                    ((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
+                            reset(user.sprite,
+                                    enemy.sprite,
+                                    this,
+                                    new Callback() {
+                                        @Override
+                                        public void call() {
+                                            curUser = user;
+                                            user.spend(delay);
+                                            Bullet.this.onThrow(cell);
+                                        }
+                                    });
+                } else {
+                    ((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
+                            reset(user.sprite,
+                                    cell,
+                                    this,
+                                    new Callback() {
+                                        @Override
+                                        public void call() {
+                                            curUser = user;
+                                            user.spend(delay);
+                                            Bullet.this.onThrow(cell);
+                                        }
+                                    });
+                }
             }
         }
     }

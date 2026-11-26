@@ -59,7 +59,8 @@ public class SniperSupport extends ArmorAbility {
         }
         Gun sr = new SR_T6();
         sr.upgrade(10);
-        Gun.Bullet bullet = sr.knockBurstBullet();
+        Gun.Bullet bullet = sr.knockBullet();
+        bullet.setBurst();
         bullet.setAccMulti(1 + 0.5f*hero.pointsInTalent(Talent.KURUMI_ARMOR3_3));
         bullet.setHitProc(new Gun.HitProc() {
             @Override
