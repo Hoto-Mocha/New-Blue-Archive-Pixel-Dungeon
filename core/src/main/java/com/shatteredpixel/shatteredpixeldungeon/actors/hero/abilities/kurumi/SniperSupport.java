@@ -109,7 +109,7 @@ public class SniperSupport extends ArmorAbility {
         }
 
         Invisibility.dispel();
-//        armor.charge -= chargeUse(hero);
+        armor.charge -= chargeUse(hero);
         armor.updateQuickslot();
     }
 
