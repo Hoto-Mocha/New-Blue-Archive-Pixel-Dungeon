@@ -1643,7 +1643,7 @@ public enum Talent {
 			PotionOfCleansing.cleanseDebuff(hero, hero.pointsInTalent(Talent.YUZU_T2_1) == 2 ? 2 : 0);
 		}
 		if (hero.hasTalent(Talent.MIKA_T2_1)) {
-			Buff.affect(hero, Swiftthistle.TimeBubble.class).reset(1+2*hero.pointsInTalent(Talent.MIKA_T2_1));
+			Buff.affect(hero, Swiftthistle.TimeBubble.class).reset(2*hero.pointsInTalent(Talent.MIKA_T2_1));
 		}
 		if (hero.hasTalent(Talent.MIKA_T2_2)) {
 			if (Random.Float() < 0.1f+0.1f*hero.pointsInTalent(Talent.MIKA_T2_2)) {
